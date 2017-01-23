@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost/ums_dummy
+    username: root
+    password: Osbo_7890
+    driver-class-name: com.mysql.jdbc.Driver
