@@ -50,7 +50,7 @@ body
 
 .jumbotron 
 {
-    background: #81817F;
+    background: #2E3542;
     color: white;
     text-align: center;
     font-family: 'Cabin', sans-serif;
@@ -63,14 +63,14 @@ body
 
 .btn-primary {
   color: #fff;
-  background-color: #F2C73A;
+  background-color: #81817F;
   border-color: white;
   margin-bottom: 5px;
 }
 
 .btn-primary:hover {
   color: black;
-  background-color: #F2C73A;
+  background-color: #81817F;
   border-color: white;
   border-color: white;
 }
@@ -92,9 +92,15 @@ body
     text-align: center;
 }
 
-.row h3, .row p
+.row h3
 {
     color: #F2C73A;
+    text-align: center;
+}
+
+.row p
+{
+    color: white;
     text-align: center;
 }
 
