@@ -1,0 +1,124 @@
+body 
+{
+    background: #2E3542;
+    padding-top: 50px;
+    font-family: 'Cabin', sans-serif;
+}
+
+.navbar-brand 
+{
+    padding: 0;
+}
+
+
+.navbar-brand img
+{
+    height: 100%;
+    padding: 10px;
+    width: auto;
+}
+
+.navbar .navbar-collapse 
+{
+  text-align: center;
+}
+
+#navbar li a
+{
+    color: white;
+}
+
+.dropdown-menu
+{
+    background-color: #222;
+}
+
+#navbar .active > a, 
+#navbar .active > a:hover, 
+#navbar .active > a:focus,
+#navbar li a:hover
+{
+    color: #F2C73A;
+    background: #2E3542;
+}
+
+#navbar .navbar-right, #navbar .navbar-right p
+{
+    color: white;
+    display: block;
+}
+
+.jumbotron 
+{
+    background: #81817F;
+    color: white;
+    text-align: center;
+    font-family: 'Cabin', sans-serif;
+}
+
+.jumbotron h1
+{
+    color: #F2C73A;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #F2C73A;
+  border-color: white;
+  margin-bottom: 5px;
+}
+
+.btn-primary:hover {
+  color: black;
+  background-color: #F2C73A;
+  border-color: white;
+  border-color: white;
+}
+
+.row
+{
+    color: white;
+    font-family: 'Cabin', sans-serif;
+}
+
+.col-md-4
+{
+    margin-bottom: 40px;
+}
+
+[class^="glyphicon-"], [class*="glyphicon-"] 
+{
+    width: 100%;
+    text-align: center;
+}
+
+.row h3, .row p
+{
+    color: #F2C73A;
+    text-align: center;
+}
+
+.outer-cell
+{
+    width: 70px;
+}
+
+.middle-cell
+{
+    width: 40px;
+}
+
+.row table
+{
+    text-align: center;
+    margin-left: calc((100% - 180px)/2);
+    margin-right: calc((100% - 180px)/2);
+}
+
+footer
+{
+    color: white;
+    text-align: center;
+    bottom:0;
+    width:100%;
+}

@@ -4,3 +4,5 @@ spring:
     username: root
     password: Osbo_7890
     driver-class-name: com.mysql.jdbc.Driver
+  thymeleaf:
+    cache: false

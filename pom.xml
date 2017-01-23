@@ -48,7 +48,26 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-	</dependencies>
+		<!-- https://mvnrepository.com/artifact/org.webjars/bootstrap -->
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>bootstrap</artifactId>
+			<version>3.3.7-1</version>
+		</dependency>
+        <!-- https://mvnrepository.com/artifact/org.webjars/jquery -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+            <version>3.1.1-1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.webjars.bower/tether -->
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>tether</artifactId>
+            <version>1.4.0</version>
+        </dependency>
+
+    </dependencies>
 
 	<build>
 		<plugins>

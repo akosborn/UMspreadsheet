@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<layout:html lang="en"
+             layout:decorator="layouts/main"
+             xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>UMSpreadsheet</title>
+    </head>
+
+    <body>
+
+        <div layout:fragment="content">
+
+            <div class="jumbotron">
+                <div class="container">
+                    <h1>Welcome to UMSpreadsheet</h1>
+                    <p>UMSpreadsheet was created to serve as a community-based resource for umphreaks. This resource allows participants to give a rating to every song over Umphrey's entire career in an effort to create a rather unique view of the music we love.  The goal is help people find and listen to music that they may not have found on their own, plain and simple.</p>
+                    <p>
+                        <a class="btn btn-primary btn-lg" href="#" role="button">Join »</a>
+                        <a class="btn btn-primary btn-lg" th:href="@{/login}" role="button">Login »</a>
+                    </p>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <span class="glyphicon glyphicon-stats" aria-hidden="true"></span>
+                        <h3>Top-Rated</h3>
+                        <p>Check out the community's most highly-rated shows and songs, and judge for yourself.</p>
+                    </div>
+                    <div class="col-md-4">
+                        <i class="glyphicon glyphicon-arrow-up" aria-hidden="true"></i>
+                        <h3>Full Ranking System</h3>
+                        <p>Rate every song ever played, including both live shows and albums. Conditional formatting to quickly see how a show looks based on the following scale:</p>
+                        <table>
+                            <tr>
+                                <td class="outer-cell">(95 - 100)</td>
+                                <td class="middle-cell">=</td>
+                                <td class="outer-cell">Diamond</td>
+                            </tr>
+                            <tr>
+                                <td class="outer-cell">(90-95)</td>
+                                <td class="middle-cell">=</td>
+                                <td class="outer-cell">Gold</td>
+                            </tr>
+                            <tr>
+                                <td class="outer-cell">(80 - 90)</td>
+                                <td class="middle-cell">=</td>
+                                <td class="outer-cell">Silver</td>
+                            </tr>
+                            <tr>
+                                <td class="outer-cell">(70-80)</td>
+                                <td class="middle-cell">=</td>
+                                <td class="outer-cell">Bronze</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-4">
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                        <h3>Coming Soon</h3>
+                        <p>Use the live chat to discuss shows with other users in real time.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </body>
+</layout:html>
