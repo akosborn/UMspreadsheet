@@ -1,8 +1,15 @@
 spring:
+
   datasource:
-    url: jdbc:mysql://localhost/ums_dummy
+    url: jdbc:mysql://localhost/ums_dummy?autoReconnect=true&useSSL=false
     username: root
-    password: Osbo_7890
+    password: Osbo_789
     driver-class-name: com.mysql.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    Show-sql: true
+
   thymeleaf:
     cache: false

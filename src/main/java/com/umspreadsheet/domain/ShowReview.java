@@ -14,10 +14,12 @@ public class ShowReview
     @Id
     @GeneratedValue
     private Long id;
-    private Show show;
 
     @ManyToOne
-    private Author author;
+    private UmShow show;
+
+    @ManyToOne
+    private UserProfile userProfile;
 
     @Column(columnDefinition = "TEXT")
     private String comment;
@@ -31,24 +33,24 @@ public class ShowReview
         return id;
     }
 
-    public Show getShow()
+    public UmShow getShow()
     {
         return show;
     }
 
-    public void setShow(Show show)
+    public void setShow(UmShow show)
     {
         this.show = show;
     }
 
-    public Author getAuthor()
+    public UserProfile getUserProfile()
     {
-        return author;
+        return userProfile;
     }
 
-    public void setAuthor(Author author)
+    public void setUserProfile(UserProfile userProfile)
     {
-        this.author = author;
+        this.userProfile = userProfile;
     }
 
     public String getComment()

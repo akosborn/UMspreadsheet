@@ -1,26 +1,34 @@
 package com.umspreadsheet.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
+// 'UmShow' is a keyword in MySQL, so another name must be used
 @Entity
-public class Show
+public class UmShow
 {
     // Needed for JPA
-    private Show(){}
+    public UmShow(){}
 
     @Id
-    @Column(name = "show_id")
     @GeneratedValue
     private Long id;
+
+    @Temporal(TemporalType.DATE)
     private Date date;
     private String city;
     private String state;
     private String venue;
 
-    // One show has many tracks
-    @OneToMany(mappedBy = "show")
+    @OneToMany(mappedBy = "show", fetch = FetchType.LAZY)
+    private List<ShowReview> showReviews;
+
+    // One show has many
+    @JsonIgnore
+    @OneToMany(mappedBy = "show", fetch = FetchType.LAZY)
     private List<Track> tracks;
 
     @Column(columnDefinition = "TEXT")
@@ -29,6 +37,11 @@ public class Show
     public Long getId()
     {
         return id;
+    }
+
+    public void setShowReviews(List<ShowReview> showReviews)
+    {
+        this.showReviews = showReviews;
     }
 
     public Date getDate()

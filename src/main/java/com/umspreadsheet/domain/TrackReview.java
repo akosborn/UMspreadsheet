@@ -1,6 +1,10 @@
 package com.umspreadsheet.domain;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Entity
 public class TrackReview
@@ -11,7 +15,9 @@ public class TrackReview
     @Id
     @GeneratedValue
     private Long id;
-    private Author author;
+
+    @ManyToOne
+    private UserProfile userProfile;
 
     @Column(columnDefinition = "TEXT")
     private String comment;
@@ -19,20 +25,26 @@ public class TrackReview
     @ManyToOne
     private Track track;
 
+    @NotNull
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date reviewedOn;
+
+    @Column(columnDefinition = "TINYINT")
+    private int score;
+
     public Long getId()
     {
         return id;
     }
 
-
-    public Author getAuthor()
+    public UserProfile getUserProfile()
     {
-        return author;
+        return userProfile;
     }
 
-    public void setAuthor(Author author)
+    public void setUserProfile(UserProfile userProfile)
     {
-        this.author = author;
+        this.userProfile = userProfile;
     }
 
     public String getComment()

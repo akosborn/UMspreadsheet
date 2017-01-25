@@ -10,18 +10,19 @@ public class Track
     private Track() {}
 
     @Id
-    @Column(name = "track_id")
     @GeneratedValue
-    private Long trackId;
+    private Long id;
 
     @ManyToOne
-    private Show show;
+    private UmShow show;
     private Integer setNumber;
     private Integer trackNumber;
 
     @ManyToOne
     private Song song;
     private Double songLength;
+
+    @Column(columnDefinition = "TINYINT(1)")
     private Boolean segueToNext;
     private Double trackAverageRating;
     private String trackNotes;
@@ -29,17 +30,12 @@ public class Track
     @OneToMany(mappedBy = "track")
     private List<TrackReview> trackReviews;
 
-    public Long getTrackId()
+    public Long getId()
     {
-        return trackId;
+        return id;
     }
 
-    public Show getShow()
-    {
-        return show;
-    }
-
-    public void setShow(Show show)
+    public void setShow(UmShow show)
     {
         this.show = show;
     }
@@ -123,4 +119,6 @@ public class Track
     {
         this.trackReviews = trackReviews;
     }
+
+
 }

@@ -1,7 +1,6 @@
 package com.umspreadsheet.domain;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 public class Song
@@ -15,9 +14,6 @@ public class Song
     private Long id;
     private String name;
     private String album;
-
-    @OneToMany(mappedBy = "song")
-    private List<Track> tracks;
 
     public Long getId()
     {
@@ -42,15 +38,5 @@ public class Song
     public void setAlbum(String album)
     {
         this.album = album;
-    }
-
-    public List<Track> getTracks()
-    {
-        return tracks;
-    }
-
-    public void setTracks(List<Track> tracks)
-    {
-        this.tracks = tracks;
     }
 }

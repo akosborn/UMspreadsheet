@@ -1,30 +1,61 @@
 package com.umspreadsheet.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.Date;
 import java.util.List;
 
 @Entity
-public class Author
+public class UserProfile
 {
     // Needed for JPA
-    private Author() {}
+    private UserProfile() {}
 
     @Id
     @GeneratedValue
     private Long id;
+
+    @NotNull
     private String firstName;
     private String LastName;
-    private String email;
 
-    // Show Reviews
-    @OneToMany(mappedBy = "author")
+    @NotNull
+    private String username;
+
+    @NotNull
+    @Temporal(TemporalType.DATE)
+    private Date joinedOn;
+
+    @OneToMany(mappedBy = "userProfile")
     private List<ShowReview> showReviews;
 
-    @OneToMany(mappedBy = "author")
+    @OneToMany(mappedBy = "userProfile")
     private List<TrackReview> trackReviews;
+
+    public void setId(Long id)
+    {
+        this.id = id;
+    }
+
+    public String getUsername()
+    {
+        return username;
+    }
+
+    public void setUsername(String username)
+    {
+        this.username = username;
+    }
+
+    public Date getJoinedOn()
+    {
+        return joinedOn;
+    }
+
+    public void setJoinedOn(Date joinedOn)
+    {
+        this.joinedOn = joinedOn;
+    }
 
     public Long getId()
     {
@@ -49,16 +80,6 @@ public class Author
     public void setLastName(String lastName)
     {
         LastName = lastName;
-    }
-
-    public String getEmail()
-    {
-        return email;
-    }
-
-    public void setEmail(String email)
-    {
-        this.email = email;
     }
 
     public List<ShowReview> getShowReviews()

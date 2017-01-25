@@ -1,0 +1,19 @@
+h2
+{
+    color: white;
+}
+
+.table-striped tbody tr:nth-child(odd)
+{
+    background: white;
+}
+
+.table-striped tbody tr:nth-child(even)
+{
+    background: #F9F9F9;
+}
+
+th
+{
+    color: #F2C73A;
+}
