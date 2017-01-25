@@ -1,8 +1,10 @@
 body 
 {
     background: #2E3542;
-    padding-top: 50px;
+    padding-top: 100px;
     font-family: 'Arsenal', sans-serif;
+    padding-left: 50px;
+    padding-right: 50px;
 }
 
 .navbar-brand 
@@ -48,12 +50,19 @@ body
     display: block;
 }
 
+h1, h2, h3
+{
+    color: #F2C73A;
+}
+
 .jumbotron 
 {
     background: #2E3542;
     color: white;
     text-align: center;
     font-family: 'Arsenal', sans-serif;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 .jumbotron h1
@@ -73,6 +82,11 @@ body
   background-color: #81817F;
   border-color: white;
   border-color: white;
+}
+
+.box-content-top
+{
+    border-bottom: solid;
 }
 
 .row
@@ -114,11 +128,17 @@ body
     width: 40px;
 }
 
-.row table
+#medals-table
 {
     text-align: center;
     margin-left: calc((100% - 180px)/2);
     margin-right: calc((100% - 180px)/2);
+}
+
+.side-blog-list ul
+{
+    list-style-type: none;
+    padding: 0;
 }
 
 footer
@@ -127,4 +147,10 @@ footer
     text-align: center;
     bottom:0;
     width:100%;
+}
+
+.breadcrumb
+{
+    background: transparent;
+    padding-left: 0;
 }

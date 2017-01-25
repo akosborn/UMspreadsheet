@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<layout:html lang="en"
+             layout:decorator="layouts/main"
+             xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>UMSpreadsheet</title>
+        <link href="css/showhome.css" rel="stylesheet"/>
+    </head>
+
+    <body>
+
+        <div layout:fragment="content">
+
+            <ol class="breadcrumb">
+                <li><a href="/">Home</a></li>
+                <li>Show Reviews</li>
+            </ol>
+
+            <h2>Show Reviews</h2>
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>City</th>
+                    <th>State</th>
+                    <th>Venue</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="show : ${recentlyReviewedShows}">
+                    <td th:text="${show.date}">[date]</td>
+                    <td th:text="${show.city}">[city]</td>
+                    <td th:text="${show.state}">[ST]</td>
+                    <td th:text="${show.venue}">[venue]</td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+    </body>
+</layout:html>

@@ -15,11 +15,10 @@ public class Track
 
     @ManyToOne
     private UmShow show;
-    private Integer setNumber;
+    private String setNumber;
     private Integer trackNumber;
 
-    @ManyToOne
-    private Song song;
+    private String song;
     private Double songLength;
 
     @Column(columnDefinition = "TINYINT(1)")
@@ -40,12 +39,12 @@ public class Track
         this.show = show;
     }
 
-    public Integer getSetNumber()
+    public String getSetNumber()
     {
         return setNumber;
     }
 
-    public void setSetNumber(Integer setNumber)
+    public void setSetNumber(String setNumber)
     {
         this.setNumber = setNumber;
     }
@@ -60,12 +59,12 @@ public class Track
         this.trackNumber = trackNumber;
     }
 
-    public Song getSong()
+    public String getSong()
     {
         return song;
     }
 
-    public void setSong(Song song)
+    public void setSong(String song)
     {
         this.song = song;
     }

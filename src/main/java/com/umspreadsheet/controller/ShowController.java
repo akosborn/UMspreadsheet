@@ -24,8 +24,8 @@ public class ShowController
     @RequestMapping("")
     public String getAllShows(Model model)
     {
-        // Recently reviewed descending
-        return "show/list";
+        model.addAttribute("recentlyReviewedShows", showService.getAllShowsHavingReviews());
+        return "show/home";
     }
 
     @RequestMapping("/{year}")

@@ -40,11 +40,11 @@
                 <ul class="nav navbar-nav">
                     <li><a th:href="@{/}"><span class="glyphicon glyphicon-home"></span></a></li>
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" th:href="@{/shows}">SHOWS
+                        <a class="dropdown-toggle" data-toggle="dropdown" th:href="@{/shows}">SHOW REVIEWS
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="#">TOP-RATED</a></li>
-                            <li><a href="#">RECENT</a></li>
+                            <li><a href="#">RECENTLY-REVIEWED</a></li>
                             <li class="dropdown-submenu">
                                 <a tabindex="-1" href="#">YEAR</a>
                                 <ul class="dropdown-menu">
@@ -83,7 +83,33 @@
         </div>
     </nav>
 
-    <div layout:fragment="content"></div>
+    <div class="container-fluid">
+
+        <div class="row">
+
+            <div class="col-xs-12 col-sm-12 col-md-10">
+                <div layout:fragment="content"></div>
+            </div>
+
+            <div class="hidden-xs hidden-sm col-md-2 text-center" id="right-column">
+                <div class="box-content-top side-blog-list">
+                    <h2>WormBlog</h2>
+                    <ul>
+                        <li><p>Post 1</p></li>
+                        <li><p>Post 2</p></li>
+                        <li><p>Post 3</p></li>
+                    </ul>
+                </div>
+                <div>
+                    <h2>Feed</h2>
+                    <a class="twitter-timeline" data-height="400" href="https://twitter.com/UMspreadsheet">
+                        Tweets by UMspreadsheet</a>
+                    <script async="async" src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
     <footer>
         <p>&copy; UMSpreadsheet 2017</p>
