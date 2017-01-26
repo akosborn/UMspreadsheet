@@ -6,11 +6,13 @@ h2
 .table-striped tbody tr:nth-child(odd)
 {
     background: white;
+    color: black;
 }
 
 .table-striped tbody tr:nth-child(even)
 {
     background: #F9F9F9;
+    color: black;
 }
 
 th

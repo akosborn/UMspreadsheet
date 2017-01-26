@@ -13,3 +13,10 @@ spring:
 
   thymeleaf:
     cache: false
+debug: false
+
+#security:
+  #user:
+    #name: andrew
+    #password: password
+    #role: USER

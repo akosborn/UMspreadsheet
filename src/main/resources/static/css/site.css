@@ -12,7 +12,6 @@ body
     padding: 0;
 }
 
-
 .navbar-brand img
 {
     height: 100%;
@@ -53,6 +52,11 @@ body
 h1, h2, h3
 {
     color: #F2C73A;
+}
+
+.glyphicon-log-out
+{
+    vertical-align: middle;
 }
 
 .jumbotron 

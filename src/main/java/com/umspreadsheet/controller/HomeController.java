@@ -2,6 +2,7 @@ package com.umspreadsheet.controller;
 
 import com.umspreadsheet.service.ShowService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +18,6 @@ public class HomeController
         this.showService = showService;
     }
 
-    // Model being used for test only
     @RequestMapping("/")
     public String home()
     {

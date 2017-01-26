@@ -13,12 +13,19 @@
 
         <div class="container">
 
-            <form class="form-signin">
+            <form name="f" th:action="@{/login}" method="post" class="form-signin">
                 <h2 class="form-signin-heading">LOGIN TO UMSpreadsheet</h2>
+
+                <div th:if="${param.error}" class="alert alert-danger">
+                    Invalid username and password.
+                </div>
+                <div th:if="${param.logout}" class="alert alert-success">
+                    You have been logged out.
+                </div>
                 <label for="username" class="sr-only">Username</label>
-                <input type="text" id="username" class="form-control" placeholder="Email address" required="true" autofocus="true" />
+                <input type="text" id="username" name="username" class="form-control" placeholder="username" required="true" autofocus="true" />
                 <label for="password" class="sr-only">Password</label>
-                <input type="password" id="password" class="form-control" placeholder="Password" required="true" />
+                <input type="password" id="password" name="password" class="form-control" placeholder="Password" required="true" />
                 <div class="checkbox">
                     <label>
                         <input type="checkbox" value="remember-me"/> Remember me

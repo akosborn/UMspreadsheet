@@ -2,7 +2,7 @@
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:https="http://www.w3.org/1999/xhtml">
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3" xmlns:layout="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -20,6 +20,7 @@
     <!-- Custom styles for this template -->
     <link href="css/custom/site.css" th:href="@{/css/site.css}" rel="stylesheet"/>
     <link href="css/custom/dropdown-submenu.css" th:href="@{/css/dropdown-submenu.css}" rel="stylesheet"/>
+    <link th:href="@{/css/showlist.css}" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Arsenal" rel="stylesheet"/>
 </head>
 
@@ -34,7 +35,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" th:href="@{/}"><img src="img/logo-multicolor-greygrid.png"
-                                                      th:src="@{/img/logo-temp-blueum.png}"/></a>
+                                                      th:src="@{/images/logo-temp-blueum.png}"/></a>
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
@@ -74,11 +75,30 @@
                     </li>
                     <li><a href="#contact">WORMBLOG</a></li>
                 </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><p class="navbar-text">Welcome, Guest</p></li>
-                    <li><a th:href="@{/profile}"><span class="glyphicon glyphicon-user"></span></a></li>
-                    <li><a th:href="@{/login}"><span class="glyphicon glyphicon-log-in"></span></a></li>
-                </ul>
+                <div class="navbar-right">
+                    <ul class="nav navbar-nav navbar-right">
+
+                        <li>
+                            <p class="navbar-text">Welcome, <span sec:authentication="name">Guest</span></p>
+                        </li>
+
+                        <li>
+                            <form sec:authorize="isAuthenticated()" id="frmlogout" th:action="@{/logout}" method="post" class="navbar-form">
+                                <a href="javascript:{}" onclick="document.getElementById('frmlogout').submit(); return false;">
+                                    <div class="form-group">
+                                        <span class="glyphicon glyphicon-log-out"></span>
+                                    </div>
+                                </a>
+                            </form>
+                            <a sec:authorize="isAnonymous()" href="/login"><span class="glyphicon glyphicon-log-in"></span></a>
+                        </li>
+
+                        <li sec:authorize="isAuthenticated()">
+                            <a href="/profile"><span class="glyphicon glyphicon-user"></span></a>
+                        </li>
+
+                    </ul>
+                </div>
             </div><!--/.nav-collapse -->
         </div>
     </nav>
@@ -102,8 +122,7 @@
                 </div>
                 <div>
                     <h2>Feed</h2>
-                    <a class="twitter-timeline" data-height="400" href="https://twitter.com/UMspreadsheet">
-                        Tweets by UMspreadsheet</a>
+                    <a class="twitter-timeline" data-height="700" data-link-color="#FAB81E" href="https://twitter.com/UMspreadsheet">Tweets by UMspreadsheet</a>
                     <script async="async" src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
                 </div>
             </div>
