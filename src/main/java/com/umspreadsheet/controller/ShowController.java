@@ -33,6 +33,7 @@ public class ShowController
     public String getShowsByYear(@PathVariable("year") int year, Model model) throws ParseException
     {
         model.addAttribute("shows", showService.getAllShowsByYearWithoutTracks(year));
-        return "show/list";
+        model.addAttribute("year", year);
+        return "show/year";
     }
 }

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<layout:html lang="en"
+             layout:decorator="show/list"
+             xmlns:layout="http://www.w3.org/1999/xhtml"
+             xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>UMSpreadsheet</title>
+    </head>
+    <body>
+
+    <ol layout:fragment="custom-breadcrumb" class="breadcrumb">
+        <li><a href="/">Home</a></li>
+        <li><a href="/shows">Reviews</a></li>
+        <li th:text="${year}" >Year</li>
+    </ol>
+
+    <h2 layout:fragment="custom-h2" th:text="${year}" >Year</h2>
+
+    </body>
+</layout:html>

@@ -19,7 +19,7 @@ public class ShowReview
     private UmShow show;
 
     @ManyToOne
-    private UserProfile userProfile;
+    private User user;
 
     @Column(columnDefinition = "TEXT")
     private String comment;
@@ -43,14 +43,14 @@ public class ShowReview
         this.show = show;
     }
 
-    public UserProfile getUserProfile()
+    public User getUser()
     {
-        return userProfile;
+        return user;
     }
 
-    public void setUserProfile(UserProfile userProfile)
+    public void setUser(User user)
     {
-        this.userProfile = userProfile;
+        this.user = user;
     }
 
     public String getComment()

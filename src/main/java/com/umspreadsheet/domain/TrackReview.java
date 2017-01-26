@@ -1,7 +1,5 @@
 package com.umspreadsheet.domain;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
@@ -17,7 +15,7 @@ public class TrackReview
     private Long id;
 
     @ManyToOne
-    private UserProfile userProfile;
+    private User user;
 
     @Column(columnDefinition = "TEXT")
     private String comment;
@@ -37,14 +35,14 @@ public class TrackReview
         return id;
     }
 
-    public UserProfile getUserProfile()
+    public User getUser()
     {
-        return userProfile;
+        return user;
     }
 
-    public void setUserProfile(UserProfile userProfile)
+    public void setUser(User user)
     {
-        this.userProfile = userProfile;
+        this.user = user;
     }
 
     public String getComment()
