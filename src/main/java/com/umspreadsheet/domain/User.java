@@ -41,9 +41,8 @@ public class User
     private Set<Role> roles = new HashSet<>();
 
     @CreatedDate
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(pattern="yyyy-MM-dd")
-    private Date joinedOn;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date joinedOn = new Date();
 
     @OneToMany(mappedBy = "user")
     private List<ShowReview> showReviews;
