@@ -158,3 +158,8 @@ footer
     background: transparent;
     padding-left: 0;
 }
+
+.glyphicon-large
+{
+    font-size: 100px;
+}
