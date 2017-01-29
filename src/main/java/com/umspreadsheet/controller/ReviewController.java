@@ -11,22 +11,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.text.ParseException;
 
 @Controller
-@RequestMapping("/shows")
-public class ShowController
+@RequestMapping("/reviews")
+public class ReviewController
 {
     private ShowService showService;
 
     @Autowired
-    public ShowController(ShowService showService)
+    public ReviewController(ShowService showService)
     {
         this.showService = showService;
     }
 
     @RequestMapping("")
-    public String getAllShows(Model model)
+    public String reviewsHome(Model model)
     {
         model.addAttribute("recentlyReviewedShows", showService.getAllShowsHavingReviews());
-        return "show/home";
+        return "layouts/modular";
     }
 
     @RequestMapping("/{year}")

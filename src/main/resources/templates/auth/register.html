@@ -12,12 +12,12 @@
     <div layout:fragment="content">
 
         <div class="container">
-            <h2 class="form-signin-heading">JOIN UMSpreadsheet</h2>
 
             <div th:if="${signup}" class="alert alert-danger">
                 Sign up failed. Try again.
             </div>
-                <form name="f" th:action="@{/register}" method="post" th:object="${user}" class="form-horizontal">
+                <form name="f" th:action="@{/register}" method="post" th:object="${user}" class="form-signin">
+                    <h2 class="form-signin-heading">JOIN UMSpreadsheet</h2>
                     <input type="hidden" th:field="*{id}" />
                     <div class="form-group">
                         <label for="username" class="sr-only">Username</label>

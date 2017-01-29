@@ -34,6 +34,11 @@ public class Track
         return id;
     }
 
+    public UmShow getShow()
+    {
+        return show;
+    }
+
     public void setShow(UmShow show)
     {
         this.show = show;

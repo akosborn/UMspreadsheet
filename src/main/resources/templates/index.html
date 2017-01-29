@@ -17,8 +17,8 @@
                     <h1>Welcome to UMSpreadsheet</h1>
                     <p>UMSpreadsheet was created to serve as a community-based resource for umphreaks. This resource allows participants to give a rating to every song over Umphrey's entire career in an effort to create a rather unique view of the music we love.  The goal is help people find and listen to music that they may not have found on their own, plain and simple.</p>
                     <p>
-                        <a class="btn btn-primary btn-lg" th:href="@{/register}" role="button">Join »</a>
-                        <a class="btn btn-primary btn-lg" th:href="@{/login}" role="button">Login »</a>
+                        <a class="btn btn-primary btn-lg" sec:authorize="isAnonymous()" th:href="@{/register}" role="button">Join »</a>
+                        <a class="btn btn-primary btn-lg" sec:authorize="isAnonymous()" th:href="@{/login}" role="button">Login »</a>
                     </p>
 
                 </div>

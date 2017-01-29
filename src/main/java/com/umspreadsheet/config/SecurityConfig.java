@@ -32,13 +32,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     {
         http
                 .authorizeRequests()
-                    .antMatchers("/", "/register", "/shows", "/shows/*").permitAll()
+                    .antMatchers("/", "/register", "/reviews", "/reviews/*").permitAll()
                     .antMatchers("/admin/**").hasRole("ADMIN")
                     .anyRequest().authenticated()
                     .and()
                 .formLogin()
                     .loginPage("/login")    // directs Spring to login page
-                    .usernameParameter("email")
+                    .usernameParameter("username")
                     .permitAll()    // grants access for all to login page
                     .and()
                 .logout()

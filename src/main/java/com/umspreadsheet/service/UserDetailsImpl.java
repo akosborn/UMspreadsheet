@@ -41,7 +41,7 @@ public class UserDetailsImpl implements UserDetails
     @Override
     public String getUsername()
     {
-        return user.getEmail();
+        return user.getUsername();
     }
 
     @Override
@@ -53,7 +53,7 @@ public class UserDetailsImpl implements UserDetails
     @Override
     public boolean isAccountNonLocked()
     {
-        return true;
+        return user.isNotSuspended() && user.isNotBanned();
     }
 
     @Override

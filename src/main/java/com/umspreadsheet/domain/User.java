@@ -6,10 +6,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "users")
@@ -32,13 +29,13 @@ public class User
     @Column(nullable = false)
     private String password;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    // gives new users ROLE_USER privilege
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
             joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id")}
-    )
-    private Set<Role> roles = new HashSet<>();
+            inverseJoinColumns = {@JoinColumn(name = "role_id")})
+    private Set<Role> roles = new HashSet<>(Collections.singletonList(Role.defaultRole()));
 
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
@@ -49,6 +46,34 @@ public class User
 
     @OneToMany(mappedBy = "user")
     private List<TrackReview> trackReviews;
+
+    @NotNull
+    @Column(columnDefinition = "TINYINT(1)")
+    private boolean isNotSuspended = true;
+
+    @NotNull
+    @Column(columnDefinition = "TINYINT(1)")
+    private boolean isNotBanned = true;
+
+    public boolean isNotSuspended()
+    {
+        return isNotSuspended;
+    }
+
+    public void setNotSuspended(boolean notSuspended)
+    {
+        isNotSuspended = notSuspended;
+    }
+
+    public boolean isNotBanned()
+    {
+        return isNotBanned;
+    }
+
+    public void setNotBanned(boolean notBanned)
+    {
+        isNotBanned = notBanned;
+    }
 
     public String getPassword()
     {
