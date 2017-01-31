@@ -2,17 +2,11 @@
 {
     margin: 0;
     padding: 20px 10px 20px 10px;
-    border-bottom: solid gainsboro;
 }
 
-.top-show .fa-trophy
+[class*="fa-"]
 {
-    color: gold;
-}
-
-.top-show .fa-diamond
-{
-    color: #b9f2ff;
+    color: black;
 }
 
 [class*="-3"], [class*="-4"]
@@ -23,31 +17,53 @@
 
 .panel
 {
-    height: 300px;
+    width: 100%;
     margin: 0;
     border: none;
-    border-top:  5px solid grey;
-    background-color: #2E3542;
+    border-radius: 0;
+    color: black;
+    padding: 0 5px 0 5px;
 }
 
-.panel-heading
+.panel-title h1
 {
-    background-image: -webkit-linear-gradient(330deg, grey 20%, #2E3542 20%);
-    border-bottom: none;
+    display: inline;
+    color: black;
+    font-size: 2em;
+}
+
+.top-show, .top-song
+{
+    font-weight: bold;
+}
+
+.panel-container
+{
+    border-bottom: 1px solid #2E3542;
+}
+
+.setlist, .data
+{
+    min-height: 200px;
+}
+
+.setlist p, .data p
+{
+    color: black;
+}
+
+.setlist p
+{
     text-align: left;
-    margin: 0;
-    font-size: 20px;
-    font-weight: bolder;
-    padding: 5px;
 }
 
-.panel-default h4
+.data p
 {
-    margin: 0;
-    color: black;
+    font-size: 35px;
 }
 
-.row p
+.data h2, .fa-diamond
 {
     color: black;
+    text-align: center;
 }
