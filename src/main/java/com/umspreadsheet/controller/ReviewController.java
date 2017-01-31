@@ -1,6 +1,8 @@
 package com.umspreadsheet.controller;
 
-import com.umspreadsheet.service.ShowService;
+import com.umspreadsheet.domain.Track;
+import com.umspreadsheet.service.ReviewService;
+import com.umspreadsheet.service.TrackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -14,25 +16,28 @@ import java.text.ParseException;
 @RequestMapping("/reviews")
 public class ReviewController
 {
-    private ShowService showService;
+    private ReviewService reviewService;
+    private TrackService trackService;
 
     @Autowired
-    public ReviewController(ShowService showService)
+    public ReviewController(ReviewService reviewService,
+                            TrackService trackService)
     {
-        this.showService = showService;
+        this.reviewService = reviewService;
+        this.trackService = trackService;
     }
 
     @RequestMapping("")
     public String reviewsHome(Model model)
     {
-        model.addAttribute("recentlyReviewedShows", showService.getAllShowsHavingReviews());
+        model.addAttribute("topFiveSongs", trackService.getTopFiveSongs());
         return "layouts/modular";
     }
 
     @RequestMapping("/{year}")
     public String getShowsByYear(@PathVariable("year") int year, Model model) throws ParseException
     {
-        model.addAttribute("shows", showService.getAllShowsByYearWithoutTracks(year));
+        model.addAttribute("shows", reviewService.getAllShowsByYearWithoutTracks(year));
         model.addAttribute("year", year);
         return "show/year";
     }

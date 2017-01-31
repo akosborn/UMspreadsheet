@@ -30,16 +30,16 @@
                             <div class="row panel-container">
                                 <div class="col-sm-8 setlist">
                                     <p>
-                                        Set 1: Domino Theory, Loose Ends > Turn and Dub > Yoga Pants > The Linear[1],
-                                        Example 1[1], Make It Right[1]
+                                        Set 1: Domino Theory, Loose Ends > Turn and Dub > Yoga Pants > The Linear,
+                                        Example 1, Make It Right
                                     </p>
                                     <p>
-                                        Set 2: The Triple Wide[2] > Upward[1] > 1000 Places to See Before You Die[1] >
-                                        Similar Skin[1], Lively Up Yourself[1], Robot World -> Front Porch >
-                                        Muff II: The Revenge > Front Porch[3]
+                                        Set 2: The Triple Wide > Upward > 1000 Places to See Before You Die >
+                                        Similar Skin, Lively Up Yourself, Robot World -> Front Porch >
+                                        Muff II: The Revenge > Front Porch
                                     </p>
                                     <p>
-                                        Encore: Orfeo[4], Waiting Room
+                                        Encore: Orfeo, Waiting Room
                                     </p>
                                 </div>
                                 <div class="col-sm-4 data">
@@ -53,14 +53,20 @@
                 <div class="col-md-6">
                     <div class="panel panel-default">
                         <div class="panel-body">
-                            <h1 class="panel-title top-song pull-left">In the Kitchen</h1>
+                            <h1 class="panel-title top-song pull-left" th:text="${topFiveSongs[0].song}">In the Kitchen</h1>
                             <h1 class="panel-title pull-right">
                                 #1
                                 <span class="fa fa-diamond"></span>
                             </h1>
                             <br />
-                            <h1 class="panel-title">2016/01/22 New York, NY</h1>
+                            <h1 class="panel-title">
+                                <span th:text="${topFiveSongs[0].show.date}">[date]</span>
+                                <span th:text="${topFiveSongs[0].show.city}">[city]</span>,
+                                <span th:text="${topFiveSongs[0].show.state}">[st]</span>
+                                <span th:text="${topFiveSongs[0].show.venue}">[venue]</span>
+                            </h1>
                             <br />
+                            <p class="rating" th:text="${topFiveSongs[0].trackAverageRating}">[rating]</p>
                         </div>
                     </div>
                 </div>

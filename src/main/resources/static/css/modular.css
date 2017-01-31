@@ -67,3 +67,14 @@
     color: black;
     text-align: center;
 }
+
+.rating
+{
+    color: black;
+    font-size: 35px;
+}
+
+.row p
+{
+    color: black;
+}

@@ -1,27 +1,25 @@
 package com.umspreadsheet.service;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
+import com.umspreadsheet.domain.Track;
 import com.umspreadsheet.domain.UmShow;
-import com.umspreadsheet.repository.ShowRepository;
-import org.hibernate.Hibernate;
+import com.umspreadsheet.repository.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 @Service
-public class ShowService
+public class ReviewService
 {
-    private ShowRepository showRepository;
+    private ReviewRepository reviewRepository;
 
     @Autowired
-    public ShowService(ShowRepository showRepository)
+    public ReviewService(ReviewRepository reviewRepository)
     {
-        this.showRepository = showRepository;
+        this.reviewRepository = reviewRepository;
     }
 
     // Find all shows by year,  but don't load setlist entity
@@ -36,21 +34,21 @@ public class ShowService
         cal.set(Calendar.DAY_OF_MONTH, 31); // new years eve
         Date lastDay = cal.getTime();
 
-        return (List<UmShow>) showRepository.findByDateBetween(firstDay, lastDay);
+        return (List<UmShow>) reviewRepository.findByDateBetween(firstDay, lastDay);
     }
 
     public UmShow getShowByIdWithTracks(Long id)
     {
-        return showRepository.findByIdAndFetchTracksEagerly(id);
+        return reviewRepository.findByIdAndFetchTracksEagerly(id);
     }
 
     public UmShow getShowByIdWithoutTracks(Long id)
     {
-        return showRepository.findOne(id);
+        return reviewRepository.findOne(id);
     }
 
-    public Iterable<UmShow> getAllShowsHavingReviews()
+    public List<UmShow> getAllShowsHavingReviews()
     {
-        return showRepository.findAllWithReviews();
+        return reviewRepository.findAllWithReviews();
     }
 }
