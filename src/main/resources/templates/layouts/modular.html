@@ -50,25 +50,30 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            <h1 class="panel-title top-song pull-left" th:text="${topFiveSongs[0].song}">In the Kitchen</h1>
-                            <h1 class="panel-title pull-right">
-                                #1
-                                <span class="fa fa-diamond"></span>
-                            </h1>
-                            <br />
-                            <h1 class="panel-title">
-                                <span th:text="${topFiveSongs[0].show.date}">[date]</span>
-                                <span th:text="${topFiveSongs[0].show.city}">[city]</span>,
-                                <span th:text="${topFiveSongs[0].show.state}">[st]</span>
-                                <span th:text="${topFiveSongs[0].show.venue}">[venue]</span>
-                            </h1>
-                            <br />
-                            <p class="rating" th:text="${topFiveSongs[0].trackAverageRating}">[rating]</p>
+                <div class="col-md-6" th:each="track, iterStatus : ${topFiveSongs}">
+
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <h1 class="panel-title top-song pull-left" th:text="${track.song}">In the Kitchen</h1>
+                                <h1 class="panel-title pull-right">
+                                    #
+                                    <span th:text="${iterStatus.count}"></span>
+                                    <span class="fa fa-diamond" th:if="${track.trackAverageRating >= 95}"></span>
+                                    <span class="fa fa-trophy" th:if="${track.trackAverageRating ge 90 and
+                                    track.trackAverageRating lt 95}"></span>
+                                </h1>
+                                <br />
+                                <h1 class="panel-title">
+                                    <span th:text="${track.show.date}">[date]</span>
+                                    <span th:text="${track.show.city}">[city]</span>,
+                                    <span th:text="${track.show.state}">[st]</span>
+                                    <span th:text="${track.show.venue}">[venue]</span>
+                                </h1>
+                                <br />
+                                <p class="rating" th:text="${track.trackAverageRating}">[rating]</p>
+                            </div>
                         </div>
-                    </div>
+
                 </div>
 
             </div>
