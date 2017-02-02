@@ -201,3 +201,8 @@ footer
 {
     font-size: 100px;
 }
+
+select
+{
+    color: black;
+}
