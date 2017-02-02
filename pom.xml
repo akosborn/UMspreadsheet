@@ -87,7 +87,19 @@
             <artifactId>font-awesome</artifactId>
             <version>4.7.0</version>
         </dependency>
-    </dependencies>
+		<!-- https://mvnrepository.com/artifact/org.springframework.social/spring-social-core -->
+		<dependency>
+			<groupId>org.springframework.social</groupId>
+			<artifactId>spring-social-core</artifactId>
+			<version>1.1.4.RELEASE</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.springframework.social/spring-social-twitter -->
+		<dependency>
+			<groupId>org.springframework.social</groupId>
+			<artifactId>spring-social-twitter</artifactId>
+			<version>1.1.2.RELEASE</version>
+		</dependency>
+	</dependencies>
 
 	<build>
 		<plugins>
