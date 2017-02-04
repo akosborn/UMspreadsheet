@@ -36,15 +36,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" th:href="@{/}"><img src="img/logo-multicolor-greygrid.png"
-                                                            th:src="@{/images/logo-temp-blueum-smaller.png}"/></a>
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li><a th:href="@{/}"><span class="glyphicon glyphicon-home"></span></a></li>
                     <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" th:href="@{/shows}">REVIEWS
-                            <span class="caret"></span></a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" th:href="@{/shows}">
+                            REVIEWS
+                            <span class="caret"></span>
+                        </a>
                         <ul class="dropdown-menu">
                             <li><a th:href="@{/reviews}">HOME</a></li>
                             <li><a href="#">TOP-RATED SHOWS</a></li>
@@ -57,26 +57,33 @@
                 </ul>
                 <div class="navbar-right">
                     <ul class="nav navbar-nav navbar-right">
-
-                        <li>
-                            <p class="navbar-text">Welcome, <span sec:authentication="name">Guest</span></p>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" th:href="@{/}">
+                                <span sec:authorize="isAnonymous()">Guest</span>
+                                <span sec:authorize="isAuthenticated()" sec:authentication="name">[username]</span>
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li sec:authorize="isAuthenticated()">
+                                    <a href="/profile">Dashboard</a>
+                                </li>
+                                <li>
+                                    <form sec:authorize="isAuthenticated()" id="frmlogout" th:action="@{/logout}" method="post" class="navbar-form">
+                                        <a href="javascript:{}" onclick="document.getElementById('frmlogout').submit(); return false;">
+                                            <div class="form-group">
+                                                <span class="glyphicon glyphicon-log-out"></span>
+                                            </div>
+                                        </a>
+                                    </form>
+                                </li>
+                                <li>
+                                    <a sec:authorize="isAnonymous()" href="/login">Login</a>
+                                </li>
+                                <li>
+                                    <a sec:authorize="isAnonymous()" href="/signup">Sign Up</a>
+                                </li>
+                            </ul>
                         </li>
-
-                        <li>
-                            <form sec:authorize="isAuthenticated()" id="frmlogout" th:action="@{/logout}" method="post" class="navbar-form">
-                                <a href="javascript:{}" onclick="document.getElementById('frmlogout').submit(); return false;">
-                                    <div class="form-group">
-                                        <span class="glyphicon glyphicon-log-out"></span>
-                                    </div>
-                                </a>
-                            </form>
-                            <a sec:authorize="isAnonymous()" href="/login"><span class="glyphicon glyphicon-log-in"></span></a>
-                        </li>
-
-                        <li sec:authorize="isAuthenticated()">
-                            <a href="/profile"><span class="glyphicon glyphicon-user"></span></a>
-                        </li>
-
                     </ul>
                 </div>
             </div><!--/.nav-collapse -->
