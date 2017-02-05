@@ -11,6 +11,7 @@
 
 [class*="-3"], [class*="-4"]
 {
+    color: ;
     padding-left: 10px;
     padding-right: 10px;
 }
