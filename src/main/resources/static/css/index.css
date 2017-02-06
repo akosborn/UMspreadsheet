@@ -34,3 +34,35 @@ COLUMNS
 /*******************************
 MOST RECENT SHOW
 *******************************/
+#most-recent-show-header
+{
+    border-bottom: solid thick darkgray;
+    padding-bottom: 5px;
+}
+
+#most-recent-show-header h4
+{
+    color: #F2C73A;
+}
+
+#most-recent-show-header .fa-trophy
+{
+    color: silver;
+}
+
+#most-recent-show-div #most-recent-show-header h4,
+#most-recent-show-div #most-recent-show-header .rating-and-medal
+{
+    display: inline;
+}
+
+#most-recent-show-div .fa-trophy
+{
+    margin-right: 40px;
+}
+
+#most-recent-show-div #show-rating-and-medal
+{
+    margin-top: 0;
+    margin-bottom: 0;
+}

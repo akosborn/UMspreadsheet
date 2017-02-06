@@ -33,8 +33,9 @@
             data.addColumn({type: 'string', role: 'style'});
             for (i = 0; i < topThreeSongs.length; i++)
             {
-                data.addRow([topThreeSongs[i].song + '\n' + topThreeSongs[i].show.date,
-                    topThreeSongs[i].trackAverageRating, 'opacity: 0.2; color: yellow']);
+                data.addRow([topThreeSongs[i].song + '\n' + topThreeSongs[i].show.date  + ' ' +
+                topThreeSongs[i].show.city + ', ' + topThreeSongs[i].show.state,
+                    topThreeSongs[i].trackAverageRating, 'opacity: 0.4; color: yellow']);
             }
 
             // Set chart options
@@ -86,7 +87,7 @@
             for (i = 0; i < topThreeShows.length; i++)
             {
                 data.addRow([topThreeShows[i].date + ' ' + topThreeShows[i].city + ', ' + topThreeShows[i].state,
-                    topThreeShows[i].averageRating, 'opacity: 0.2; color: green']);
+                    topThreeShows[i].averageRating, 'opacity: 0.4; color: yellow']);
             }
 
             // Set chart options
@@ -128,13 +129,22 @@
 
             <p th:text="${googleChartTopThree}"></p>
 
-            <hr/>
+            <br>
+            <br>
+            <br>
+            <br>
 
             <div class="row">
                 <div id="most-recent-show-div" class="col-md-6">
-                    <h4>2017-02-03 Detroit, MI</h4>
+                    <div id="most-recent-show-header">
+                        <h4 id="show-title">2017-02-03 Detroit, MI</h4>
+                        <h4 id="show-rating-and-medal" class="pull-right"><i class="fa fa-trophy" aria-hidden="true"></i> 87.34</h4>
+                    </div>
+
+
+
                     <br/>
-                    <br/>
+
                     <h6>
                         <strong>Set 1</strong>: There's No Crying In Mexico > Attachments, All In Time >
                         Day Nurse, Educated Guess, Alex's House > Bridgeless > No Comment > Believe the Lie
@@ -148,7 +158,6 @@
                     </h6>
                     <br/>
                     <br/>
-                    <h4 style="text-align: center">87.34</h4>
                     <h5 style="text-align: center"><a th:href="@{/shows/unique/show/url}">3 reviews</a> | <a th:href="@{/user/review}">Review</a></h5>
                 </div>
                 <div id="chart-data-div" class="col-md-6">
