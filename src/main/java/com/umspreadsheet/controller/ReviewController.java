@@ -30,7 +30,7 @@ public class ReviewController
     @RequestMapping("")
     public String reviewsHome(Model model)
     {
-        model.addAttribute("topFiveSongs", trackService.getTopFiveSongs());
+        model.addAttribute("topFiveSongs", trackService.getTopThreeSongs());
         return "layouts/modular";
     }
 

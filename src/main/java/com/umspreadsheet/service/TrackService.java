@@ -18,8 +18,8 @@ public class TrackService
         this.trackRepository = trackRepository;
     }
 
-    public List<Track> getTopFiveSongs()
+    public List<Track> getTopThreeSongs()
     {
-        return trackRepository.findTopFiveSongs();
+        return trackRepository.findTopThreeSongs();
     }
 }

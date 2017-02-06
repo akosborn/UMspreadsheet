@@ -12,7 +12,7 @@ public interface TrackRepository extends CrudRepository<Track, Long>
 {
     @Query(value = "SELECT track.* " +
             "FROM track " +
-            "ORDER BY track_average_rating DESC LIMIT 2",
+            "ORDER BY track_average_rating DESC LIMIT 3",
             nativeQuery = true)
-    public List<Track> findTopFiveSongs();
+    public List<Track> findTopThreeSongs();
 }

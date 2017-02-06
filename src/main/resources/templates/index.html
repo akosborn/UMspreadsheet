@@ -30,16 +30,18 @@
 
             // Create the data table.
             var data = new google.visualization.DataTable();
-            data.addColumn('string', 'Show');
+            data.addColumn('string', 'Song');
             data.addColumn('number', 'Rating');
+            data.addColumn({type: 'string', role: 'style'});
             for (i = 0; i < topThreeSongs.length; i++)
             {
-                data.addRow([topThreeSongs[i].name, topThreeSongs[i].rating]);
+                data.addRow([topThreeSongs[i].song + ' | ' + topThreeSongs[i].show.date,
+                    topThreeSongs[i].trackAverageRating, 'opacity: 0.2; color: gray']);
             }
 
             // Set chart options
             var options = {
-                'title':'Top Shows',
+                'title':'Top Songs',
                 'backgroundColor':'transparent',
                 'titleTextStyle': {
                     'color':'white'
