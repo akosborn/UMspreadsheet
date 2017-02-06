@@ -1,0 +1,36 @@
+/*******************************
+GOOGLE CHARTS
+*******************************/
+[class*="chart_div"]
+{
+    width: 100%;
+}
+
+@media (min-width: 992px)
+{
+    #chart-data-div
+    {
+        border-left: thin solid #fff;
+    }
+}
+
+@media (max-width: 991px)
+{
+    #most-recent-show-div
+    {
+        border-bottom: thin solid #fff;
+    }
+}
+
+
+/*******************************
+COLUMNS
+*******************************/
+/*[class*="col-"], .row
+{
+    border: thin solid black;
+}*/
+
+/*******************************
+MOST RECENT SHOW
+*******************************/

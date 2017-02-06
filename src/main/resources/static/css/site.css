@@ -8,7 +8,8 @@ body
     height: 100%;
     width: 100%;
     font-size: 14px;
-    color: black;
+    font-family: "Roboto Slab", serif;
+    color: #fff;
     background-color: #2E3542;
 }
 
@@ -34,6 +35,22 @@ body
     {
         width: 90%;
     }
+}
+
+#header-title
+{
+    font-family: 'Permanent Marker', cursive;
+    font-size: 40px;
+    color: #F2C73A;
+}
+
+#header-statement
+{
+    max-width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    font-size: 16px;
 }
 
 

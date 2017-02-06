@@ -124,5 +124,20 @@ public class Track
         this.trackReviews = trackReviews;
     }
 
-
+    @Override
+    public String toString()
+    {
+        return "Track{" +
+                "id=" + id +
+                ", show=" + show +
+                ", setNumber='" + setNumber + '\'' +
+                ", trackNumber=" + trackNumber +
+                ", song='" + song + '\'' +
+                ", songLength=" + songLength +
+                ", segueToNext=" + segueToNext +
+                ", trackAverageRating=" + trackAverageRating +
+                ", trackNotes='" + trackNotes + '\'' +
+                ", trackReviews=" + trackReviews +
+                '}';
+    }
 }

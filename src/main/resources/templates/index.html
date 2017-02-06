@@ -10,11 +10,150 @@
     <title>UMSpreadsheet</title>
 
     <link rel="stylesheet" th:href="@{/css/index.css}"/>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" th:inline="javascript">
+
+        // Load the Visualization API and the corechart package.
+        google.charts.load('current', {'packages':['corechart']});
+
+        // Set a callback to run when the Google Visualization API is loaded.
+        google.charts.setOnLoadCallback(drawChart);
+
+        // Callback that creates and populates a data table,
+        // instantiates the pie chart, passes in the data and
+        // draws it.
+        function drawChart() {
+
+            var topThreeSongs = [[${googleChartTopThree}]];
+
+            console.log(topThreeSongs[0]);
+
+            // Create the data table.
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Show');
+            data.addColumn('number', 'Rating');
+            for (i = 0; i < topThreeSongs.length; i++)
+            {
+                data.addRow([topThreeSongs[i].name, topThreeSongs[i].rating]);
+            }
+
+            // Set chart options
+            var options = {
+                'title':'Top Shows',
+                'backgroundColor':'transparent',
+                'titleTextStyle': {
+                    'color':'white'
+                },
+                'vAxis': {
+                    'textStyle': {
+                        'color':'white'
+                    }
+                },
+                'hAxis': {
+                    'textStyle': {
+                        'color':'white'
+                    }
+                },
+                'legend':'none'
+            };
+
+            // Instantiate and draw our chart, passing in some options.
+            var chart = new google.visualization.ColumnChart(
+                document.getElementById('top_show_chart_div'));
+            chart.draw(data, options);
+        }
+    </script>
+    <script type="text/javascript">
+
+        // Load the Visualization API and the corechart package.
+        google.charts.load('current', {'packages':['corechart']});
+
+        // Set a callback to run when the Google Visualization API is loaded.
+        google.charts.setOnLoadCallback(drawChart);
+
+        // Callback that creates and populates a data table,
+        // instantiates the pie chart, passes in the data and
+        // draws it.
+        function drawChart() {
+
+            // Create the data table.
+            var data = google.visualization.arrayToDataTable([
+                ['Show', 'Rating', { role: 'style' }],
+                ['1348 | 2015/03/24', 92.94, 'opacity: 0.2; color: gray'],            // RGB value
+                ['The Triple Wide | 2016/12/30', 91.75, 'opacity: 0.2; color: gray'],            // English color name
+                ['Nothing Too Fancy | 2015/01/21', 91.54, 'opacity: 0.2; color: gray']
+            ]);
+
+            // Set chart options
+            var options = {
+                'title':'Top Songs',
+                'backgroundColor':'transparent',
+                'titleTextStyle': {
+                    'color':'white'
+                },
+                'vAxis': {
+                    'textStyle': {
+                        'color':'white'
+                    }
+                },
+                'hAxis': {
+                    'textStyle': {
+                        'color':'white'
+                    }
+                },
+                'legend':'none'
+            };
+
+            // Instantiate and draw our chart, passing in some options.
+            var chart = new google.visualization.ColumnChart(
+                document.getElementById('top_song_chart_div'));
+            chart.draw(data, options);
+        }
+    </script>
 </head>
 <body>
 
     <div layout:fragment="content">
+        <div class="container">
+            <h1 id="header-title" class="text-center">UMSpreadsheet</h1>
+            <p id="header-statement">UMSpreadsheet was created to serve as a community-based resource for umphreaks.
+                This resource allows participants to give a rating to every song over Umphrey's entire career in an
+                effort to create a rather unique view of the music we love.  The goal is to help people find and listen
+                to music that they may not have discovered on their own, plain and simple.</p>
 
+            <p th:text="${googleChartTopThree}"></p>
+
+            <hr/>
+
+            <div class="row">
+                <div id="most-recent-show-div" class="col-md-6">
+                    <h4>2017-02-03 Detroit, MI</h4>
+                    <br/>
+                    <br/>
+                    <h6>
+                        <strong>Set 1</strong>: There's No Crying In Mexico > Attachments, All In Time >
+                        Day Nurse, Educated Guess, Alex's House > Bridgeless > No Comment > Believe the Lie
+                    </h6>
+                    <h6>
+                        <strong>Set 2</strong>: Miss Tinkle's Overture, Remind Me, Cemetery Walk >
+                        Cemetery Walk II, Out Of Order, Wappy Sprayberry > All In Time
+                    </h6>
+                    <h6>
+                        <strong>Encore</strong>: Glory > Bridgeless
+                    </h6>
+                    <br/>
+                    <br/>
+                    <h4 style="text-align: center">87.34</h4>
+                    <h5 style="text-align: center"><a th:href="@{/shows/unique/show/url}">3 reviews</a> | <a th:href="@{/user/review}">Review</a></h5>
+                </div>
+                <div id="chart-data-div" class="col-md-6">
+                    <div id="top_show_chart_div"></div>
+                    <div class="row">
+                        <div id="top_song_chart_div"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 </body>
