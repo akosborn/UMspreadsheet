@@ -51,4 +51,10 @@ public class ReviewService
     {
         return reviewRepository.findAllWithReviews();
     }
+
+    public List<UmShow> getTopThreeShows()
+    {
+        System.out.println("made it...........");
+        return reviewRepository.findTopThreeShows();
+    }
 }

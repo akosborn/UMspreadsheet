@@ -23,6 +23,7 @@ public class UmShow
     private String state;
     private String venue;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "show", fetch = FetchType.LAZY)
     private List<ShowReview> showReviews;
 
@@ -30,6 +31,7 @@ public class UmShow
     @JsonIgnore
     @OneToMany(mappedBy = "show", fetch = FetchType.LAZY)
     private List<Track> tracks;
+    private Double averageRating;
 
     @Column(columnDefinition = "TEXT")
     private String notes;
@@ -37,6 +39,16 @@ public class UmShow
     public Long getId()
     {
         return id;
+    }
+
+    public Double getAverageRating()
+    {
+        return averageRating;
+    }
+
+    public void setAverageRating(Double averageRating)
+    {
+        this.averageRating = averageRating;
     }
 
     public void setShowReviews(List<ShowReview> showReviews)
@@ -84,6 +96,7 @@ public class UmShow
         this.venue = venue;
     }
 
+    @JsonIgnore
     public List<Track> getTracks()
     {
         return tracks;

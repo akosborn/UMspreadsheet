@@ -1,5 +1,7 @@
 package com.umspreadsheet.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -26,6 +28,7 @@ public class Track
     private Double trackAverageRating;
     private String trackNotes;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "track")
     private List<TrackReview> trackReviews;
 

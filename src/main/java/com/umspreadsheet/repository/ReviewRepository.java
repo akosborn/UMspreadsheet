@@ -27,4 +27,10 @@ public interface ReviewRepository extends CrudRepository<UmShow, Long>
     public List<UmShow> findAllWithReviews();
 
     public List<UmShow> findByDateBetween(Date first, Date last);
+
+    @Query(value = "SELECT um_show.* " +
+            "FROM um_show " +
+            "ORDER BY average_rating DESC LIMIT 3",
+            nativeQuery = true)
+    public List<UmShow> findTopThreeShows();
 }

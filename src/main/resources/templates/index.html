@@ -24,9 +24,7 @@
         // draws it.
         function drawChart() {
 
-            var topThreeSongs = [[${googleChartTopThree}]];
-
-            console.log(topThreeSongs[0]);
+            var topThreeSongs = [[${topThreeSongs}]];
 
             // Create the data table.
             var data = new google.visualization.DataTable();
@@ -35,8 +33,8 @@
             data.addColumn({type: 'string', role: 'style'});
             for (i = 0; i < topThreeSongs.length; i++)
             {
-                data.addRow([topThreeSongs[i].song + ' | ' + topThreeSongs[i].show.date,
-                    topThreeSongs[i].trackAverageRating, 'opacity: 0.2; color: gray']);
+                data.addRow([topThreeSongs[i].song + '\n' + topThreeSongs[i].show.date,
+                    topThreeSongs[i].trackAverageRating, 'opacity: 0.2; color: yellow']);
             }
 
             // Set chart options
@@ -65,7 +63,7 @@
             chart.draw(data, options);
         }
     </script>
-    <script type="text/javascript">
+    <script type="text/javascript" th:inline="javascript">
 
         // Load the Visualization API and the corechart package.
         google.charts.load('current', {'packages':['corechart']});
@@ -78,13 +76,18 @@
         // draws it.
         function drawChart() {
 
+            var topThreeShows = [[${topThreeShows}]];
+
             // Create the data table.
-            var data = google.visualization.arrayToDataTable([
-                ['Show', 'Rating', { role: 'style' }],
-                ['1348 | 2015/03/24', 92.94, 'opacity: 0.2; color: gray'],            // RGB value
-                ['The Triple Wide | 2016/12/30', 91.75, 'opacity: 0.2; color: gray'],            // English color name
-                ['Nothing Too Fancy | 2015/01/21', 91.54, 'opacity: 0.2; color: gray']
-            ]);
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Show');
+            data.addColumn('number', 'Rating');
+            data.addColumn({type: 'string', role: 'style'});
+            for (i = 0; i < topThreeShows.length; i++)
+            {
+                data.addRow([topThreeShows[i].date + ' ' + topThreeShows[i].city + ', ' + topThreeShows[i].state,
+                    topThreeShows[i].averageRating, 'opacity: 0.2; color: green']);
+            }
 
             // Set chart options
             var options = {
