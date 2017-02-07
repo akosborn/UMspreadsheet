@@ -22,7 +22,7 @@ public class ShowService
     }
 
     // Find all shows by year,  but don't load setlist entity
-    public List<UmShow> getAllShowsByYearWithoutTracks(int year) throws ParseException
+    /*public List<UmShow> getAllShowsByYearWithoutTracks(int year) throws ParseException
     {
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.YEAR, year);
@@ -54,7 +54,7 @@ public class ShowService
     public List<UmShow> getTopThreeShows()
     {
         return showRepository.findTopThreeShows();
-    }
+    }*/
 
     public List<UmShow> getLastTwoShows()
     {

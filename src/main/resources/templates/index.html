@@ -147,17 +147,10 @@
                             </h4>
                         </div>
                         <br/>
-                        <h6>
-                            <strong>Set 1</strong>: There's No Crying In Mexico > Attachments, All In Time >
-                            Day Nurse, Educated Guess, Alex's House > Bridgeless > No Comment > Believe the Lie
+                        <h6 th:each="set : *{sets}" th:object="${set}">
+                            <strong th:text="${set.name}"></strong>: <span th:each="track : *{tracks}" th:text="${track.song} + ', '"></span>
                         </h6>
-                        <h6>
-                            <strong>Set 2</strong>: Miss Tinkle's Overture, Remind Me, Cemetery Walk >
-                            Cemetery Walk II, Out Of Order, Wappy Sprayberry > All In Time
-                        </h6>
-                        <h6>
-                            <strong>Encore</strong>: Glory > Bridgeless
-                        </h6>
+
                         <h5 style="text-align: center"><a th:href="@{/shows/unique/show/url}">3 reviews</a> | <a th:href="@{/user/review}">Review</a></h5>
                         <br>
                     </div>

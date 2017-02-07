@@ -2,6 +2,7 @@ package com.umspreadsheet.domain;
 
 
 import java.util.*;
+import java.util.Set;
 
 public class CurrentUser
 {

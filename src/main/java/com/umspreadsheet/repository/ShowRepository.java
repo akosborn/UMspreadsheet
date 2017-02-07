@@ -13,11 +13,11 @@ import java.util.List;
 public interface ShowRepository extends CrudRepository<UmShow, Long>
 {
     // SHOW WITH TRACKS ==================================================
-    @Query("SELECT u FROM UmShow u JOIN FETCH u.tracks WHERE u.id = (:id)")
+    /*@Query("SELECT u FROM UmShow u JOIN FETCH u.tracks WHERE u.id = (:id)")
     public UmShow findByIdAndFetchTracksEagerly(@Param("id") Long id);
 
-    @Query(value = "select um_show.* " +
-            "from um_show " +
+    @Query(value = "select shows.* " +
+            "from shows " +
             "join " +
             "(select distinct track.show_id " +
             "from track " +
@@ -31,7 +31,7 @@ public interface ShowRepository extends CrudRepository<UmShow, Long>
             "FROM um_show " +
             "ORDER BY average_rating DESC LIMIT 3",
             nativeQuery = true)
-    public List<UmShow> findTopThreeShows();
+    public List<UmShow> findTopThreeShows();*/
 
     public List<UmShow> findTop2ByOrderByDateDesc();
 }

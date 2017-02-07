@@ -7,6 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -35,7 +36,7 @@ public class User
             name = "users_roles",
             joinColumns = {@JoinColumn(name = "user_id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id")})
-    private Set<Role> roles = new HashSet<>(Collections.singletonList(Role.defaultRole()));
+    private java.util.Set<Role> roles = new HashSet<>(Collections.singletonList(Role.defaultRole()));
 
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)

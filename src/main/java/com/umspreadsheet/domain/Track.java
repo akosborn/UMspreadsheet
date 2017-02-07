@@ -17,24 +17,31 @@ public class Track
 
     @ManyToOne
     private UmShow show;
-    private String setNumber;
-    private Integer trackNumber;
+
+    @ManyToOne
+    private Set set;
+    private Integer showTrackNumber;
 
     private String song;
     private Double songLength;
 
     @Column(columnDefinition = "TINYINT(1)")
-    private Boolean segueToNext;
-    private Double trackAverageRating;
-    private String trackNotes;
+    private Boolean segue;
+    private Double averageRating;
+    private String notes;
 
     @JsonIgnore
     @OneToMany(mappedBy = "track")
-    private List<TrackReview> trackReviews;
+    private List<TrackReview> reviews;
 
     public Long getId()
     {
         return id;
+    }
+
+    public void setId(Long id)
+    {
+        this.id = id;
     }
 
     public UmShow getShow()
@@ -47,24 +54,24 @@ public class Track
         this.show = show;
     }
 
-    public String getSetNumber()
+    public Set getSet()
     {
-        return setNumber;
+        return set;
     }
 
-    public void setSetNumber(String setNumber)
+    public void setSet(Set set)
     {
-        this.setNumber = setNumber;
+        this.set = set;
     }
 
-    public Integer getTrackNumber()
+    public Integer getShowTrackNumber()
     {
-        return trackNumber;
+        return showTrackNumber;
     }
 
-    public void setTrackNumber(Integer trackNumber)
+    public void setShowTrackNumber(Integer showTrackNumber)
     {
-        this.trackNumber = trackNumber;
+        this.showTrackNumber = showTrackNumber;
     }
 
     public String getSong()
@@ -87,44 +94,44 @@ public class Track
         this.songLength = songLength;
     }
 
-    public Boolean getSegueToNext()
+    public Boolean getSegue()
     {
-        return segueToNext;
+        return segue;
     }
 
-    public void setSegueToNext(Boolean segueToNext)
+    public void setSegue(Boolean segue)
     {
-        this.segueToNext = segueToNext;
+        this.segue = segue;
     }
 
-    public Double getTrackAverageRating()
+    public Double getAverageRating()
     {
-        return trackAverageRating;
+        return averageRating;
     }
 
-    public void setTrackAverageRating(Double trackAverageRating)
+    public void setAverageRating(Double averageRating)
     {
-        this.trackAverageRating = trackAverageRating;
+        this.averageRating = averageRating;
     }
 
-    public String getTrackNotes()
+    public String getNotes()
     {
-        return trackNotes;
+        return notes;
     }
 
-    public void setTrackNotes(String trackNotes)
+    public void setNotes(String notes)
     {
-        this.trackNotes = trackNotes;
+        this.notes = notes;
     }
 
-    public List<TrackReview> getTrackReviews()
+    public List<TrackReview> getReviews()
     {
-        return trackReviews;
+        return reviews;
     }
 
-    public void setTrackReviews(List<TrackReview> trackReviews)
+    public void setReviews(List<TrackReview> reviews)
     {
-        this.trackReviews = trackReviews;
+        this.reviews = reviews;
     }
 
     @Override
@@ -133,14 +140,14 @@ public class Track
         return "Track{" +
                 "id=" + id +
                 ", show=" + show +
-                ", setNumber='" + setNumber + '\'' +
-                ", trackNumber=" + trackNumber +
+                ", set=" + set +
+                ", showTrackNumber=" + showTrackNumber +
                 ", song='" + song + '\'' +
                 ", songLength=" + songLength +
-                ", segueToNext=" + segueToNext +
-                ", trackAverageRating=" + trackAverageRating +
-                ", trackNotes='" + trackNotes + '\'' +
-                ", trackReviews=" + trackReviews +
+                ", segue=" + segue +
+                ", averageRating=" + averageRating +
+                ", notes='" + notes + '\'' +
+                ", reviews=" + reviews +
                 '}';
     }
 }

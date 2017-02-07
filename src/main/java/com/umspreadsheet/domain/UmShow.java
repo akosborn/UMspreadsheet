@@ -8,6 +8,7 @@ import java.util.List;
 
 // 'UmShow' is a keyword in MySQL, so another name must be used
 @Entity
+@Table(name = "shows")
 public class UmShow
 {
     // Needed for JPA
@@ -27,10 +28,8 @@ public class UmShow
     @OneToMany(mappedBy = "show", fetch = FetchType.LAZY)
     private List<ShowReview> showReviews;
 
-    // One show has many
-    @JsonIgnore
     @OneToMany(mappedBy = "show", fetch = FetchType.LAZY)
-    private List<Track> tracks;
+    private List<Set> sets;
     private Double averageRating;
 
     @Column(columnDefinition = "TEXT")
@@ -41,19 +40,9 @@ public class UmShow
         return id;
     }
 
-    public Double getAverageRating()
+    public void setId(Long id)
     {
-        return averageRating;
-    }
-
-    public void setAverageRating(Double averageRating)
-    {
-        this.averageRating = averageRating;
-    }
-
-    public void setShowReviews(List<ShowReview> showReviews)
-    {
-        this.showReviews = showReviews;
+        this.id = id;
     }
 
     public Date getDate()
@@ -96,15 +85,34 @@ public class UmShow
         this.venue = venue;
     }
 
-    @JsonIgnore
-    public List<Track> getTracks()
+    public List<ShowReview> getShowReviews()
     {
-        return tracks;
+        return showReviews;
     }
 
-    public void setTracks(List<Track> tracks)
+    public void setShowReviews(List<ShowReview> showReviews)
     {
-        this.tracks = tracks;
+        this.showReviews = showReviews;
+    }
+
+    public List<Set> getSets()
+    {
+        return sets;
+    }
+
+    public void setSets(List<Set> sets)
+    {
+        this.sets = sets;
+    }
+
+    public Double getAverageRating()
+    {
+        return averageRating;
+    }
+
+    public void setAverageRating(Double averageRating)
+    {
+        this.averageRating = averageRating;
     }
 
     public String getNotes()

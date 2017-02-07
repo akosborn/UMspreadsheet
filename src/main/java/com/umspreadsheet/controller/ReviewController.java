@@ -28,14 +28,14 @@ public class ReviewController
     @RequestMapping("")
     public String reviewsHome(Model model)
     {
-        model.addAttribute("topFiveSongs", trackService.getTopThreeSongs());
+        //model.addAttribute("topFiveSongs", trackService.getTopThreeSongs());
         return "layouts/modular";
     }
 
     @RequestMapping("/{year}")
     public String getShowsByYear(@PathVariable("year") int year, Model model) throws ParseException
     {
-        model.addAttribute("shows", showService.getAllShowsByYearWithoutTracks(year));
+        //model.addAttribute("shows", showService.getAllShowsByYearWithoutTracks(year));
         model.addAttribute("year", year);
         return "show/year";
     }
