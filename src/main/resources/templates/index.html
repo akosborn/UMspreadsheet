@@ -136,32 +136,35 @@
 
             <div class="row">
                 <div id="most-recent-show-div" class="col-md-6">
-                    <div id="most-recent-show-header">
-                        <h4 id="show-title">2017-02-03 Detroit, MI</h4>
-                        <h4 id="show-rating-and-medal" class="pull-right"><i class="fa fa-trophy" aria-hidden="true"></i> 87.34</h4>
+                    <div id="th-most-recent-show" th:each="show : ${lastTwoShows}" th:object="${show}">
+                        <div id="most-recent-show-header">
+                            <h4 id="show-title" th:text="*{#dates.format(date, 'yyyy/MM/dd') + ' ' + city + ', ' + state}">
+                                2017-02-03 Detroit, MI
+                            </h4>
+                            <h4 id="show-rating-and-medal" class="pull-right">
+                                <i class="fa fa-trophy" aria-hidden="true"></i>
+                                <span th:text="*{#numbers.formatDecimal(averageRating, 1, 2)}">87.34</span>
+                            </h4>
+                        </div>
+                        <br/>
+                        <h6>
+                            <strong>Set 1</strong>: There's No Crying In Mexico > Attachments, All In Time >
+                            Day Nurse, Educated Guess, Alex's House > Bridgeless > No Comment > Believe the Lie
+                        </h6>
+                        <h6>
+                            <strong>Set 2</strong>: Miss Tinkle's Overture, Remind Me, Cemetery Walk >
+                            Cemetery Walk II, Out Of Order, Wappy Sprayberry > All In Time
+                        </h6>
+                        <h6>
+                            <strong>Encore</strong>: Glory > Bridgeless
+                        </h6>
+                        <h5 style="text-align: center"><a th:href="@{/shows/unique/show/url}">3 reviews</a> | <a th:href="@{/user/review}">Review</a></h5>
+                        <br>
                     </div>
-
-
-
-                    <br/>
-
-                    <h6>
-                        <strong>Set 1</strong>: There's No Crying In Mexico > Attachments, All In Time >
-                        Day Nurse, Educated Guess, Alex's House > Bridgeless > No Comment > Believe the Lie
-                    </h6>
-                    <h6>
-                        <strong>Set 2</strong>: Miss Tinkle's Overture, Remind Me, Cemetery Walk >
-                        Cemetery Walk II, Out Of Order, Wappy Sprayberry > All In Time
-                    </h6>
-                    <h6>
-                        <strong>Encore</strong>: Glory > Bridgeless
-                    </h6>
-                    <br/>
-                    <br/>
-                    <h5 style="text-align: center"><a th:href="@{/shows/unique/show/url}">3 reviews</a> | <a th:href="@{/user/review}">Review</a></h5>
                 </div>
                 <div id="chart-data-div" class="col-md-6">
                     <div id="top_show_chart_div"></div>
+                    <br>
                     <div class="row">
                         <div id="top_song_chart_div"></div>
                     </div>

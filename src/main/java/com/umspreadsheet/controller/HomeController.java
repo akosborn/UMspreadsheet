@@ -1,7 +1,8 @@
 package com.umspreadsheet.controller;
 
-import com.umspreadsheet.service.ReviewService;
+import com.umspreadsheet.service.ShowService;
 import com.umspreadsheet.service.TrackService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,20 +11,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HomeController
 {
     private TrackService trackService;
-    private ReviewService reviewService;
+    private ShowService showService;
 
+    @Autowired
     public HomeController(TrackService trackService,
-                          ReviewService reviewService)
+                          ShowService showService)
     {
         this.trackService = trackService;
-        this.reviewService = reviewService;
+        this.showService = showService;
     }
 
     @RequestMapping("/")
     public String home(Model model)
     {
         model.addAttribute("topThreeSongs", trackService.getTopThreeSongs());
-        model.addAttribute("topThreeShows", reviewService.getTopThreeShows());
+        model.addAttribute("topThreeShows", showService.getTopThreeShows());
+        model.addAttribute("lastTwoShows", showService.getLastTwoShows());
         return "index";
     }
 }

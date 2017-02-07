@@ -1,6 +1,5 @@
 package com.umspreadsheet.repository;
 
-import com.umspreadsheet.domain.Track;
 import com.umspreadsheet.domain.UmShow;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -11,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @Repository
-public interface ReviewRepository extends CrudRepository<UmShow, Long>
+public interface ShowRepository extends CrudRepository<UmShow, Long>
 {
     // SHOW WITH TRACKS ==================================================
     @Query("SELECT u FROM UmShow u JOIN FETCH u.tracks WHERE u.id = (:id)")
@@ -33,4 +32,6 @@ public interface ReviewRepository extends CrudRepository<UmShow, Long>
             "ORDER BY average_rating DESC LIMIT 3",
             nativeQuery = true)
     public List<UmShow> findTopThreeShows();
+
+    public List<UmShow> findTop2ByOrderByDateDesc();
 }

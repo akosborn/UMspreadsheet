@@ -1,8 +1,7 @@
 package com.umspreadsheet.service;
 
-import com.umspreadsheet.domain.Track;
 import com.umspreadsheet.domain.UmShow;
-import com.umspreadsheet.repository.ReviewRepository;
+import com.umspreadsheet.repository.ShowRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,14 +11,14 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class ReviewService
+public class ShowService
 {
-    private ReviewRepository reviewRepository;
+    private ShowRepository showRepository;
 
     @Autowired
-    public ReviewService(ReviewRepository reviewRepository)
+    public ShowService(ShowRepository showRepository)
     {
-        this.reviewRepository = reviewRepository;
+        this.showRepository = showRepository;
     }
 
     // Find all shows by year,  but don't load setlist entity
@@ -34,27 +33,31 @@ public class ReviewService
         cal.set(Calendar.DAY_OF_MONTH, 31); // new years eve
         Date lastDay = cal.getTime();
 
-        return (List<UmShow>) reviewRepository.findByDateBetween(firstDay, lastDay);
+        return (List<UmShow>) showRepository.findByDateBetween(firstDay, lastDay);
     }
 
     public UmShow getShowByIdWithTracks(Long id)
     {
-        return reviewRepository.findByIdAndFetchTracksEagerly(id);
+        return showRepository.findByIdAndFetchTracksEagerly(id);
     }
 
     public UmShow getShowByIdWithoutTracks(Long id)
     {
-        return reviewRepository.findOne(id);
+        return showRepository.findOne(id);
     }
 
     public List<UmShow> getAllShowsHavingReviews()
     {
-        return reviewRepository.findAllWithReviews();
+        return showRepository.findAllWithReviews();
     }
 
     public List<UmShow> getTopThreeShows()
     {
-        System.out.println("made it...........");
-        return reviewRepository.findTopThreeShows();
+        return showRepository.findTopThreeShows();
+    }
+
+    public List<UmShow> getLastTwoShows()
+    {
+        return showRepository.findTop2ByOrderByDateDesc();
     }
 }
