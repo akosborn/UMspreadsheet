@@ -49,12 +49,13 @@ public class ShowService
     public List<UmShow> getAllShowsHavingReviews()
     {
         return showRepository.findAllWithReviews();
-    }
+    }*/
 
     public List<UmShow> getTopThreeShows()
     {
-        return showRepository.findTopThreeShows();
-    }*/
+        System.out.println(showRepository.findTop3ByOrderByAverageRating());
+        return showRepository.findTop3ByOrderByAverageRating();
+    }
 
     public List<UmShow> getLastTwoShows()
     {

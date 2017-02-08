@@ -33,5 +33,7 @@ public interface ShowRepository extends CrudRepository<UmShow, Long>
             nativeQuery = true)
     public List<UmShow> findTopThreeShows();*/
 
-    public List<UmShow> findTop2ByOrderByDateDesc();
+    List<UmShow> findTop3ByOrderByAverageRating();
+
+    List<UmShow> findTop2ByOrderByDateDesc();
 }

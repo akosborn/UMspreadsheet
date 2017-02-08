@@ -15,4 +15,6 @@ public interface TrackRepository extends CrudRepository<Track, Long>
             "ORDER BY track_average_rating DESC LIMIT 3",
             nativeQuery = true)
     public List<Track> findTopThreeSongs();*/
+
+    List<Track> findTop3ByOrderByAverageRating();
 }

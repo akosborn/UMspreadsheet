@@ -19,6 +19,7 @@ public class Track
     private UmShow show;
 
     @ManyToOne
+    @JsonIgnore
     private Set set;
     private Integer showTrackNumber;
 

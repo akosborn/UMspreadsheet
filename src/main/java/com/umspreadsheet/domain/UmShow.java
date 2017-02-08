@@ -28,6 +28,7 @@ public class UmShow
     @OneToMany(mappedBy = "show", fetch = FetchType.LAZY)
     private List<ShowReview> showReviews;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "show", fetch = FetchType.LAZY)
     private List<Set> sets;
     private Double averageRating;
@@ -123,5 +124,21 @@ public class UmShow
     public void setNotes(String notes)
     {
         this.notes = notes;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "UmShow{" +
+                "id=" + id +
+                ", date=" + date +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", venue='" + venue + '\'' +
+                ", showReviews=" + showReviews +
+                ", sets=" + sets +
+                ", averageRating=" + averageRating +
+                ", notes='" + notes + '\'' +
+                '}';
     }
 }
