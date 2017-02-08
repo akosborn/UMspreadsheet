@@ -27,6 +27,9 @@ public class Track
 
     @Column(columnDefinition = "TINYINT(1)")
     private Boolean segue;
+
+    @Column(columnDefinition = "TINYINT(1)")
+    private Boolean fluidSegue;
     private Double averageRating;
     private String notes;
 
@@ -102,6 +105,16 @@ public class Track
     public void setSegue(Boolean segue)
     {
         this.segue = segue;
+    }
+
+    public Boolean getFluidSegue()
+    {
+        return fluidSegue;
+    }
+
+    public void setFluidSegue(Boolean fluidSegue)
+    {
+        this.fluidSegue = fluidSegue;
     }
 
     public Double getAverageRating()
