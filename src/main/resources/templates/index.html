@@ -158,7 +158,12 @@
                             </th:block>
                         </h6>
 
-                        <h5 style="text-align: center"><a th:href="@{/shows/unique/show/url}">3 reviews</a>&nbsp|&nbsp<a th:href="@{/user/review}">Review</a></h5>
+                        <h5 style="text-align: center">
+                            <a th:href="@{/shows/unique/show/url}" th:text="${#lists.size(show.showReviews)} + (${#lists.size(show.showReviews)} == 1? ' Review': ' Reviews')">
+                            3 reviews</a>
+                            &nbsp|&nbsp
+                            <a th:href="@{/user/review}">Review</a>
+                        </h5>
                         <br>
                     </div>
                 </div>
