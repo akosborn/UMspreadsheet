@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.text.ParseException;
 
 @Controller
-@RequestMapping("/reviews")
+@RequestMapping("/user/review")
 public class ReviewController
 {
     private ShowService showService;
@@ -28,6 +28,7 @@ public class ReviewController
     @RequestMapping("")
     public String reviewsHome(Model model)
     {
+
         //model.addAttribute("topFiveSongs", trackService.getTopThreeSongs());
         return "layouts/modular";
     }

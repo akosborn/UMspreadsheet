@@ -93,7 +93,7 @@
 
             // Set chart options
             var options = {
-                'title':'Top Songs',
+                'title':'Top Shows',
                 'backgroundColor':'transparent',
                 'titleTextStyle': {
                     'color':'white'
@@ -128,8 +128,6 @@
                 effort to create a rather unique view of the music we love.  The goal is to help people find and listen
                 to music that they may not have discovered on their own, plain and simple.</p>
 
-            <p th:text="${googleChartTopThree}"></p>
-
             <br>
             <br>
             <br>
@@ -159,10 +157,10 @@
                         </h6>
 
                         <h5 style="text-align: center">
-                            <a th:href="@{/shows/unique/show/url}" th:text="${#lists.size(show.showReviews)} + (${#lists.size(show.showReviews)} == 1? ' Review': ' Reviews')">
+                            <a th:href="@{/shows(showId=*{id})}" th:text="${#lists.size(show.showReviews)} + (${#lists.size(show.showReviews)} == 1? ' Review': ' Reviews')">
                             3 reviews</a>
                             &nbsp|&nbsp
-                            <a th:href="@{/user/review}">Review</a>
+                            <a th:href="@{/user/review(showId=*{id})}">Review</a>
                         </h5>
                         <br>
                     </div>
