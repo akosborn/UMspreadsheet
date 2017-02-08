@@ -61,4 +61,9 @@ public class ShowService
     {
         return showRepository.findTop2ByOrderByDateDesc();
     }
+
+    public UmShow findById(Long id)
+    {
+        return showRepository.findById(id);
+    }
 }

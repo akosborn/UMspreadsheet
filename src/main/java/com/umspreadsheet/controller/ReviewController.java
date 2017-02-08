@@ -1,5 +1,7 @@
 package com.umspreadsheet.controller;
 
+import com.umspreadsheet.domain.ShowReview;
+import com.umspreadsheet.domain.UmShow;
 import com.umspreadsheet.service.ShowService;
 import com.umspreadsheet.service.TrackService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +9,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.ParseException;
 
@@ -25,19 +29,12 @@ public class ReviewController
         this.trackService = trackService;
     }
 
-    @RequestMapping("")
-    public String reviewsHome(Model model)
+    // Returns an instance of ShowReview to be used in the review form
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public void reviewShow(@RequestParam("showId") Long showId,
+                           Model model, ShowReview showReview)
     {
-
-        //model.addAttribute("topFiveSongs", trackService.getTopThreeSongs());
-        return "layouts/modular";
-    }
-
-    @RequestMapping("/{year}")
-    public String getShowsByYear(@PathVariable("year") int year, Model model) throws ParseException
-    {
-        //model.addAttribute("shows", showService.getAllShowsByYearWithoutTracks(year));
-        model.addAttribute("year", year);
-        return "show/year";
+        model.addAttribute("show", showService.findById(showId));
+        model.addAttribute("showReview", showReview);
     }
 }

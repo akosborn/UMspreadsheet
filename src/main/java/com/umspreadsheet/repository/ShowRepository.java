@@ -36,4 +36,6 @@ public interface ShowRepository extends CrudRepository<UmShow, Long>
     List<UmShow> findTop3ByOrderByAverageRating();
 
     List<UmShow> findTop2ByOrderByDateDesc();
+
+    UmShow findById(Long id);
 }
