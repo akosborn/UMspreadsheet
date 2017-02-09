@@ -12,13 +12,12 @@
 
     <div layout:fragment="content">
         <div class="container">
-            <h2 th:text="${#dates.format(track.show.date, 'yyyy/MM/dd') + ' ' + track.show.city + ', '  + track.show.state}"></h2>
-            <h3 th:text="${track.show.venue}"></h3>
+            <h2 th:text="${#dates.format(trackReview.track.show.date, 'yyyy/MM/dd') + ' ' + trackReview.track.show.city + ', '  + trackReview.track.show.state}"></h2>
+            <h3 th:text="${trackReview.track.show.venue}"></h3>
             <br>
-            <h4 th:text="Review + ' \'' + ${track.song} + '\''"></h4>
-            <form class="form-horizontal" th:object="${trackReview}" th:action="@{/user/review/song}" method="post">
-                <input type="hidden" th:field="*{id}" />
-                <input type="hidden" th:field="*{user}" />
+            <h4 th:text="Review + ' \'' + ${trackReview.track.song} + '\''"></h4>
+            <form class="form-horizontal" th:object="${trackReview}" th:action="@{/user/review/track}" method="post">
+                <input type="hidden" th:field="*{track}">
                 <div class="form-group">
                     <label class="col-sm-2 control-label" style="width: 100px;">Rating: </label>
                     <div class="col-sm-10">

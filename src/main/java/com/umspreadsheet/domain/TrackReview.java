@@ -12,6 +12,11 @@ public class TrackReview
     // Needed for JPA
     public TrackReview() {}
 
+    public TrackReview(Track track)
+    {
+        this.track = track;
+    }
+
     @Id
     @GeneratedValue
     private Long id;
@@ -27,7 +32,7 @@ public class TrackReview
 
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
-    private Date reviewedOn;
+    private Date reviewedOn = new Date();
 
     @Column(columnDefinition = "TINYINT")
     private int score;

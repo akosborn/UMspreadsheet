@@ -19,6 +19,9 @@
             <h3 th:text="${show.venue}"></h3>
             <br>
             <br>
+            <div th:if="${submitted == 'true'}" class="alert alert-success">
+                Your review was submitted!
+            </div>
             <table id="show-set-table" class="table table-striped table-condensed" th:each="set : ${show.sets}">
                 <h4 th:text="${set.name}">Set 1</h4>
                 <thead>
