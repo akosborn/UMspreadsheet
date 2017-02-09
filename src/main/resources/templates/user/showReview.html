@@ -45,19 +45,20 @@
                     <tr th:each="trackAndReviewEntry,iterStat : ${setEntry.value}"
                         th:class="${trackAndReviewEntry.value != null}? 'success'">
                         <td th:text="${trackAndReviewEntry.key.song}">[song]</td>
-                        <td th:text="(${trackAndReviewEntry.key.averageRating}?: '-')">[avg. rating]</td>
+                        <td th:text="(${trackAndReviewEntry.value == null}? '-' : ${trackAndReviewEntry.value.score})">[avg. rating]</td>
                         <td>
-                            <a th:href="@{/user/review/track(trackId=${trackAndReviewEntry.key.id})}">
+                            <a th:href="@{/user/review/track(trackId=${trackAndReviewEntry.key.id})}"
+                               th:class="${trackAndReviewEntry.value != null}? 'disabled'">
                                 <i class="fa fa-plus" aria-hidden="true" style="color: green;"></i>
                             </a>
                         </td>
                         <td>
-                            <a href="#" class="disabled">
+                            <a href="#" th:class="${trackAndReviewEntry.value == null}? 'disabled'">
                                 <i class="fa fa-pencil" aria-hidden="true"></i>
                             </a>
                         </td>
                         <td>
-                            <a href="#" class="disabled" style="color: red">
+                            <a href="#" th:class="${trackAndReviewEntry.value == null}? 'disabled'" style="color: red">
                                 <i class="fa fa-trash" aria-hidden="true"></i>
                             </a>
                         </td>
