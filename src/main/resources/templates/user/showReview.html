@@ -8,6 +8,8 @@
 <head>
     <meta charset="UTF-8"/>
     <title>UMSpreadsheet</title>
+
+    <link rel="stylesheet" th:href="@{/css/showReview.css}">
 </head>
 
 <body>
@@ -17,7 +19,7 @@
             <h3 th:text="${show.venue}"></h3>
             <br>
             <br>
-            <table class="table" th:each="set : ${show.sets}">
+            <table id="show-set-table" class="table table-striped table-condensed" th:each="set : ${show.sets}">
                 <h4 th:text="${set.name}">Set 1</h4>
                 <thead>
                     <tr>
@@ -29,21 +31,21 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="track : ${set.tracks}">
+                    <tr th:each="track,iterStat : ${set.tracks}">
                         <td th:text="${track.song}">[song]</td>
-                        <td th:text="${track.averageRating}">[avg. rating]</td>
+                        <td th:text="(${track.averageRating}?: '-')">[avg. rating]</td>
                         <td>
                             <a href="#">
                                 <i class="fa fa-plus" aria-hidden="true" style="color: green;"></i>
                             </a>
                         </td>
                         <td>
-                            <a href="#">
+                            <a href="#" class="disabled">
                                 <i class="fa fa-pencil" aria-hidden="true"></i>
                             </a>
                         </td>
                         <td>
-                            <a href="#">
+                            <a href="#" class="disabled" style="color: red">
                                 <i class="fa fa-trash" aria-hidden="true"></i>
                             </a>
                         </td>

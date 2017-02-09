@@ -1,0 +1,25 @@
+/***************************
+TRACKLIST TABLE
+***************************/
+.table-striped tbody
+{
+    color: #000;
+}
+
+.table-striped>tbody>tr:nth-child(even)>td,
+.table-striped>tbody>tr:nth-child(even)>th
+{
+    background-color: #F5F5F5;
+}
+
+.disabled
+{
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.4;
+}
+
+#show-set-table
+{
+    margin-bottom: 40px;
+}
