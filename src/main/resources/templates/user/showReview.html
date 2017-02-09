@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorator="layouts/site"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>UMSpreadsheet</title>
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <div class="container">
+            <h2 th:text="${#dates.format(show.date, 'yyyy/MM/dd') + ' ' + show.city + ', '  + show.state}"></h2>
+            <h3 th:text="${show.venue}"></h3>
+            <br>
+            <br>
+            <table class="table" th:each="set : ${show.sets}">
+                <h4 th:text="${set.name}">Set 1</h4>
+                <thead>
+                    <tr>
+                        <th>Song</th>
+                        <th>Rating</th>
+                        <th>Review</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="track : ${set.tracks}">
+                        <td th:text="${track.song}">[song]</td>
+                        <td th:text="${track.averageRating}">[avg. rating]</td>
+                        <td>
+                            <a href="#">
+                                <i class="fa fa-plus" aria-hidden="true" style="color: green;"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#">
+                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>

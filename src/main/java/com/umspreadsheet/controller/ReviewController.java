@@ -32,10 +32,11 @@ public class ReviewController
 //    TODO return view with show review form
     // Returns an instance of ShowReview to be used in the review form
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public void reviewShow(@RequestParam("showId") Long showId,
-                           Model model, ShowReview showReview)
+    public String reviewShow(@RequestParam("showId") Long showId,
+                           Model model)
     {
         model.addAttribute("show", showService.findById(showId));
-        model.addAttribute("showReview", showReview);
+
+        return "/user/showReview";
     }
 }

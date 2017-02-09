@@ -143,7 +143,7 @@
                             <h4 id="show-rating-and-medal" class="pull-right">
                                 <i class="fa fa-trophy" aria-hidden="true"></i>
                                 <span th:if="*{averageRating != null}" th:text="*{#numbers.formatDecimal(averageRating, 1, 2)}">87.34</span>
-                                <span th:if="*{averageRating == null}">No Reviews!</span>
+                                <span th:if="*{averageRating == null}">No Rating</span>
                             </h4>
                         </div>
                         <br/>
