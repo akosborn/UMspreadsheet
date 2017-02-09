@@ -1,6 +1,7 @@
 package com.umspreadsheet.controller;
 
 import com.umspreadsheet.domain.ShowReview;
+import com.umspreadsheet.domain.TrackReview;
 import com.umspreadsheet.domain.UmShow;
 import com.umspreadsheet.service.ShowService;
 import com.umspreadsheet.service.TrackService;
@@ -30,7 +31,7 @@ public class ReviewController
     }
 
 //    TODO return view with show review form
-    // Returns an instance of ShowReview to be used in the review form
+    // Returns view for all reviewable tracks for the specified show
     @RequestMapping(value = "", method = RequestMethod.GET)
     public String reviewShow(@RequestParam("showId") Long showId,
                            Model model)
@@ -38,5 +39,15 @@ public class ReviewController
         model.addAttribute("show", showService.findById(showId));
 
         return "/user/showReview";
+    }
+
+    @RequestMapping(value = "/track")
+    public String reviewTrack(@RequestParam("trackId") Long trackId,
+                              Model model)
+    {
+        model.addAttribute("track", trackService.findById(trackId));
+        model.addAttribute("trackReview", new TrackReview());
+
+        return "/user/trackReviewForm";
     }
 }

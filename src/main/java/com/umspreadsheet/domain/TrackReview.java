@@ -10,7 +10,7 @@ import java.util.Date;
 public class TrackReview
 {
     // Needed for JPA
-    private TrackReview() {}
+    public TrackReview() {}
 
     @Id
     @GeneratedValue
@@ -65,5 +65,30 @@ public class TrackReview
     public void setTrack(Track track)
     {
         this.track = track;
+    }
+
+    public void setId(Long id)
+    {
+        this.id = id;
+    }
+
+    public Date getReviewedOn()
+    {
+        return reviewedOn;
+    }
+
+    public void setReviewedOn(Date reviewedOn)
+    {
+        this.reviewedOn = reviewedOn;
+    }
+
+    public int getScore()
+    {
+        return score;
+    }
+
+    public void setScore(int score)
+    {
+        this.score = score;
     }
 }

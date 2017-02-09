@@ -1,16 +1,41 @@
 <!DOCTYPE html>
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml"
-      layout:decorator="layouts/minimal"
+      layout:decorator="layouts/site"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.w3.org/1999/xhtml">
 <head>
+    <link rel="stylesheet" th:href="@{/css/trackReviewForm.css}">
 </head>
 <body>
 
     <div layout:fragment="content">
+        <div class="container">
+            <h2 th:text="${#dates.format(track.show.date, 'yyyy/MM/dd') + ' ' + track.show.city + ', '  + track.show.state}"></h2>
+            <h3 th:text="${track.show.venue}"></h3>
+            <br>
+            <h4 th:text="Review + ' \'' + ${track.song} + '\''"></h4>
+            <form class="form-horizontal" th:object="${trackReview}" th:action="@{/user/review/song}" method="post">
+                <input type="hidden" th:field="*{id}" />
+                <input type="hidden" th:field="*{user}" />
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" style="width: 100px;">Rating: </label>
+                    <div class="col-sm-10">
+                        <input type="number" min="1" max="100" class="form-control" th:field="*{score}" style="width: 70px"/>
+                    </div>
+                </div>
 
+                <div class="form-group">
+                    <label class="col-sm-2 control-label" style="width: 100px;">Comments: </label>
+                    <div class="col-sm-10">
+                        <textarea id="comment-text-area" placeholder="You know what they say about opinions..." class="form-control" rows="5"
+                                  th:field="*{comment}"></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+        </div>
     </div>
 
 </body>

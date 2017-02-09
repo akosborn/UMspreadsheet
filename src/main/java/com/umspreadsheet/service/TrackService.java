@@ -22,4 +22,9 @@ public class TrackService
     {
         return trackRepository.findTop3ByOrderByAverageRating();
     }
+
+    public Track findById(Long id)
+    {
+        return trackRepository.findOne(id);
+    }
 }

@@ -35,7 +35,7 @@
                         <td th:text="${track.song}">[song]</td>
                         <td th:text="(${track.averageRating}?: '-')">[avg. rating]</td>
                         <td>
-                            <a href="#">
+                            <a th:href="@{/user/review/track(trackId=${track.id})}">
                                 <i class="fa fa-plus" aria-hidden="true" style="color: green;"></i>
                             </a>
                         </td>

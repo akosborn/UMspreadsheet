@@ -1,0 +1,15 @@
+/***********************
+TRACK REVIEW FORM
+************************/
+#comment-text-area
+{
+    width: 100%;
+}
+
+@media (min-width: 768px)
+{
+    #comment-text-area
+    {
+        width: 50%;
+    }
+}
