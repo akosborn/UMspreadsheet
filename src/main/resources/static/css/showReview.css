@@ -12,6 +12,12 @@ TRACKLIST TABLE
     background-color: #F5F5F5;
 }
 
+.table-striped>tbody>tr:nth-child(even).success>td,
+.table-striped>tbody>tr:nth-child(even).success>td
+{
+    background-color: #DFF0D8 !important;
+}
+
 .disabled
 {
     pointer-events: none;

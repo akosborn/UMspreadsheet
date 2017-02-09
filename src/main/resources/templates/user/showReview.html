@@ -22,8 +22,8 @@
             <div th:if="${submitted == 'true'}" class="alert alert-success">
                 Your review was submitted!
             </div>
-            <table id="show-set-table" class="table table-striped table-condensed" th:each="set : ${show.sets}">
-                <h4 th:text="${set.name}">Set 1</h4>
+            <table id="show-set-table" class="table table-striped table-condensed" th:each="setEntry : ${trackAndReviewMap}">
+                <h4 th:text="${setEntry.key}">Set 1</h4>
                 <thead>
                     <tr>
                         <th>Song</th>
@@ -34,11 +34,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="track,iterStat : ${set.tracks}">
-                        <td th:text="${track.song}">[song]</td>
-                        <td th:text="(${track.averageRating}?: '-')">[avg. rating]</td>
+                    <th:block th:each="track,iterStat : ${setEntry.value}">
+                        <th:block th:each="review : ${trackReviews}">
+                            <th:block th:if="${review.track} == ${track}">
+                                <tr></tr>
+                            </th:block>
+                        </th:block>
+                    </th:block>
+
+                    <tr th:each="trackAndReviewEntry,iterStat : ${setEntry.value}"
+                        th:class="${trackAndReviewEntry.value != null}? 'success'">
+                        <td th:text="${trackAndReviewEntry.key.song}">[song]</td>
+                        <td th:text="(${trackAndReviewEntry.key.averageRating}?: '-')">[avg. rating]</td>
                         <td>
-                            <a th:href="@{/user/review/track(trackId=${track.id})}">
+                            <a th:href="@{/user/review/track(trackId=${trackAndReviewEntry.key.id})}">
                                 <i class="fa fa-plus" aria-hidden="true" style="color: green;"></i>
                             </a>
                         </td>

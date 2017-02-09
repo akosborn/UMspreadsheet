@@ -1,15 +1,13 @@
 package com.umspreadsheet.controller;
 
-import com.umspreadsheet.domain.ShowReview;
-import com.umspreadsheet.domain.Track;
-import com.umspreadsheet.domain.TrackReview;
-import com.umspreadsheet.domain.UmShow;
+import com.umspreadsheet.domain.*;
 import com.umspreadsheet.repository.TrackRepository;
 import com.umspreadsheet.repository.TrackReviewRepository;
 import com.umspreadsheet.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,6 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/user/review")
@@ -44,6 +46,31 @@ public class ReviewController
     public String reviewShow(@RequestParam("showId") Long showId,
                            Model model)
     {
+        UmShow show = showService.findById(showId);
+        List<TrackReview> trackReviews = trackReviewService.findByUserAndShow(show, userService.findByUsername
+                ("akosborn"));
+
+        Map<String, Map<Track, TrackReview>> trackAndReviewMap = new LinkedHashMap<>();
+        for (Set set : show.getSets())
+        {
+            Map<Track, TrackReview> map = new LinkedHashMap<>();
+            trackAndReviewMap.put(set.getName(), map);
+
+            for (Track track : set.getTracks())
+            {
+                map.put(track, null);
+                for (TrackReview trackReview : trackReviews)
+                {
+                    if (track.getId().equals(trackReview.getTrack().getId()))
+                    {
+                        map.put(track, trackReview);
+                        break;
+                    }
+                }
+            }
+        }
+
+        model.addAttribute("trackAndReviewMap", trackAndReviewMap);
         model.addAttribute("show", showService.findById(showId));
 
         return "/user/showReview";
