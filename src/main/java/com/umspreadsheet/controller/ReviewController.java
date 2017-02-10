@@ -42,9 +42,8 @@ public class ReviewController
     }
 
     // Returns view for all reviewable tracks for the specified show
-    @RequestMapping(value = "", method = RequestMethod.GET)
-    public String reviewShow(@RequestParam("showId") Long showId,
-                           Model model)
+    @RequestMapping(value = "", params = "showId", method = RequestMethod.GET)
+    public String reviewShow(@RequestParam("showId") Long showId, Model model)
     {
         UmShow show = showService.findById(showId);
         List<TrackReview> trackReviews = trackReviewService.findByUserAndShow(show, userService.findByUsername
@@ -76,25 +75,52 @@ public class ReviewController
         return "/user/showReview";
     }
 
-    @RequestMapping(value = "/track")
-    public String reviewTrack(@RequestParam("trackId") Long trackId,
-                              Model model)
+    @RequestMapping(value = "", method = RequestMethod.DELETE)
+    public String deleteTrackReview(@RequestParam("reviewId") Long reviewId,
+                                    @RequestParam("showId") Long showId, RedirectAttributes redirectAttributes)
     {
-        Track track = trackService.findById(trackId);
-        model.addAttribute("trackReview", new TrackReview(track));
+        trackReviewService.delete(reviewId);
+
+        redirectAttributes.addAttribute("showId", showId);
+        redirectAttributes.addFlashAttribute("reviewDeleted", "true");
+
+        return "redirect:/user/review";
+    }
+
+    @RequestMapping(value = "/track", params = "trackId")
+    public String reviewTrack(@RequestParam("trackId") Long trackId, Model model)
+    {
+        model.addAttribute("trackReview", new TrackReview(trackService.findById(trackId)));
+
+        return "/user/trackReviewForm";
+    }
+
+    @RequestMapping(value = "/track", params = "reviewId", method = RequestMethod.GET)
+    public String updateTrackReview(@RequestParam("reviewId") Long reviewId, Model model)
+    {
+        model.addAttribute("trackReview", trackReviewService.findById(reviewId));
+        model.addAttribute("update", "true");
 
         return "/user/trackReviewForm";
     }
 
     @RequestMapping(value = "/track", method = RequestMethod.POST)
-    public String saveTrackReview(TrackReview trackReview,
-                                  RedirectAttributes redirectAttributes)
+    public String saveTrackReview(TrackReview trackReview, RedirectAttributes redirectAttributes)
     {
-        System.out.println(trackReview);
         trackReview.setUser(userService.findByUsername("akosborn"));
         TrackReview savedReview = trackReviewService.save(trackReview);
+
         redirectAttributes.addAttribute("showId", savedReview.getTrack().getShow().getId());
         redirectAttributes.addFlashAttribute("submitted", "true");
+
+        return "redirect:/user/review";
+    }
+
+    @RequestMapping(value = "/track", method = RequestMethod.PUT)
+    public String updateTrackReview(TrackReview trackReview, RedirectAttributes redirectAttributes)
+    {
+        redirectAttributes.addAttribute("showId", trackReviewService.save(trackReview).getTrack().getShow().getId());
+        redirectAttributes.addFlashAttribute("edited", "true");
 
         return "redirect:/user/review";
     }

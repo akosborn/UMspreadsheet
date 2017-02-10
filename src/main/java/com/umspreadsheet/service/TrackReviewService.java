@@ -25,8 +25,18 @@ public class TrackReviewService
         return trackReviewRepository.save(trackReview);
     }
 
+    public void delete(Long id)
+    {
+        trackReviewRepository.delete(id);
+    }
+
     public List<TrackReview> findByUserAndShow(UmShow show, User user)
     {
         return trackReviewRepository.findAllByUserAndShow(show, user);
+    }
+
+    public TrackReview findById(Long id)
+    {
+        return trackReviewRepository.findOne(id);
     }
 }
