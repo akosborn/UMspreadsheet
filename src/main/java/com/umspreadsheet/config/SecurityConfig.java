@@ -1,8 +1,6 @@
 package com.umspreadsheet.config;
 
-import com.umspreadsheet.service.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -13,13 +11,24 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+
+
 @Configuration
 @EnableGlobalMethodSecurity(securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter
 {
-    @Autowired
     private UserDetailsService userDetailsService;
 
+    @Autowired
+    public SecurityConfig(UserDetailsService userDetailsService)
+    {
+        this.userDetailsService = userDetailsService;
+    }
+
+    /**
+     * Defines custom authentication as UserDetailsService
+     * Defines password encoding type as BCryptPasswordEncoder
+     */
     @Autowired
     public void configureAuth(AuthenticationManagerBuilder auth) throws Exception
     {
@@ -32,13 +41,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     {
         http
                 .authorizeRequests()
-                    .antMatchers("/", "/register", "/reviews", "/reviews/*", "/user/review/**").permitAll()
+                    .antMatchers("/", "/register", "/reviews", "/reviews/*", "/user/review/**")
+                .permitAll()
                     .antMatchers("/admin/**").hasRole("ADMIN")
                     .anyRequest().authenticated()
                     .and()
                 .formLogin()
                     .loginPage("/login")    // directs Spring to login page
-                    .usernameParameter("username")
                     .permitAll()    // grants access for all to login page
                     .and()
                 .logout()
@@ -49,8 +58,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     @Bean
     public PasswordEncoder passwordEncoder()
     {
-        PasswordEncoder encoder = new BCryptPasswordEncoder();
-
-        return encoder;
+        return new BCryptPasswordEncoder();
     }
 }
