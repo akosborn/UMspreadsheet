@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.sql.DataSource;
 
 
 @Configuration
@@ -18,9 +19,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig extends WebSecurityConfigurerAdapter
 {
     private UserDetailsService userDetailsService;
+    private DataSource dataSource;
 
     @Autowired
-    public SecurityConfig(UserDetailsService userDetailsService)
+    public SecurityConfig(UserDetailsService userDetailsService, DataSource dataSource)
     {
         this.userDetailsService = userDetailsService;
     }
