@@ -23,7 +23,7 @@
         // instantiates the pie chart, passes in the data and
         // draws it.
         function drawChart() {
-
+            /*<![CDATA[*/
             var topThreeSongs = [[${topThreeSongs}]];
 
             // Create the data table.
@@ -63,8 +63,10 @@
                 document.getElementById('top_show_chart_div'));
             chart.draw(data, options);
         }
+        /*]]>*/
     </script>
     <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
 
         // Load the Visualization API and the corechart package.
         google.charts.load('current', {'packages':['corechart']});
@@ -116,6 +118,7 @@
                 document.getElementById('top_song_chart_div'));
             chart.draw(data, options);
         }
+        /*]]>*/
     </script>
 </head>
 <body>
@@ -128,10 +131,10 @@
                 effort to create a rather unique view of the music we love.  The goal is to help people find and listen
                 to music that they may not have discovered on their own, plain and simple.</p>
 
-            <br>
-            <br>
-            <br>
-            <br>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
 
             <div class="row">
                 <div id="most-recent-show-div" class="col-md-6">
@@ -152,23 +155,23 @@
                             <th:block th:each="track,iterStat : *{tracks}" >
                                 <span th:text="${track.song}"></span>
                                 <span th:if="${track.segue and !iterStat.last}"> > </span>
-                                <span th:if="${!track.segue and !track.fluidSegue and !iterStat.last}">,&nbsp</span>
-                                <span th:if="${track.fluidSegue}">&nbsp->&nbsp</span>
+                                <span th:if="${!track.segue and !track.fluidSegue and !iterStat.last}">,&nbsp;</span>
+                                <span th:if="${track.fluidSegue}">&nbsp;->&nbsp;</span>
                             </th:block>
                         </h6>
 
                         <h5 style="text-align: center">
                             <a th:href="@{/shows(showId=*{id})}" th:text="${#lists.size(show.showReviews)} + (${#lists.size(show.showReviews)} == 1? ' Review': ' Reviews')">
                             3 reviews</a>
-                            &nbsp|&nbsp
+                            &nbsp;|&nbsp;
                             <a th:href="@{/user/review(showId=*{id})}">Review</a>
                         </h5>
-                        <br>
+                        <br/>
                     </div>
                 </div>
                 <div id="chart-data-div" class="col-md-6">
                     <div id="top_show_chart_div"></div>
-                    <br>
+                    <br/>
                     <div class="row">
                         <div id="top_song_chart_div"></div>
                     </div>

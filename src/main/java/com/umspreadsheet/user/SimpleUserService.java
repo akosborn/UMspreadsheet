@@ -16,13 +16,11 @@ public class SimpleUserService implements UserService
         this.userRepository = userRepository;
     }
 
-    @Override
     public User findByEmail(String email)
     {
         return userRepository.findByEmail(email);
     }
 
-    @Override
     public User save(User user)
     {
         return userRepository.save(user);
@@ -31,12 +29,22 @@ public class SimpleUserService implements UserService
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
     {
-        User user = userRepository.findByUsername(username);
+        User user = findByUsername(username);
         if (user == null)
         {
             throw new UsernameNotFoundException(username);
         }
 
         return new SimpleUserDetails(user);
+    }
+
+    public User findByUserId(String userId)
+    {
+        return userRepository.findByUserId(userId);
+    }
+
+    public User findByUsername(String username)
+    {
+        return userRepository.findByUsername(username);
     }
 }

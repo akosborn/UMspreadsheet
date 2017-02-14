@@ -22,6 +22,10 @@ public class User
     @GeneratedValue
     private Long id;
 
+    // Identifies UserConnection
+    @Column(unique = true)
+    private String userId;
+
     @Column(unique = true, nullable = false)
     @NotNull
     private String username;
@@ -157,6 +161,16 @@ public class User
     public void setTrackReviews(List<TrackReview> trackReviews)
     {
         this.trackReviews = trackReviews;
+    }
+
+    public String getUserId()
+    {
+        return userId;
+    }
+
+    public void setUserId(String userId)
+    {
+        this.userId = userId;
     }
 
     @Override
