@@ -1,5 +1,9 @@
-package com.umspreadsheet.domain;
+package com.umspreadsheet.user;
 
+
+import com.umspreadsheet.model.Role;
+import com.umspreadsheet.model.ShowReview;
+import com.umspreadsheet.model.TrackReview;
 
 import java.util.*;
 import java.util.Set;

@@ -1,21 +1,19 @@
-package com.umspreadsheet.controller;
+package com.umspreadsheet.review;
 
-import com.umspreadsheet.domain.*;
-import com.umspreadsheet.repository.TrackRepository;
-import com.umspreadsheet.repository.TrackReviewRepository;
-import com.umspreadsheet.service.*;
+import com.umspreadsheet.model.*;
+import com.umspreadsheet.show.Show;
+import com.umspreadsheet.show.ShowService;
+import com.umspreadsheet.track.Track;
+import com.umspreadsheet.track.TrackService;
+import com.umspreadsheet.user.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StopWatch;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +43,7 @@ public class ReviewController
     @RequestMapping(value = "", params = "showId", method = RequestMethod.GET)
     public String reviewShow(@RequestParam("showId") Long showId, Model model)
     {
-        UmShow show = showService.findById(showId);
+        Show show = showService.findById(showId);
         List<TrackReview> trackReviews = trackReviewService.findByUserAndShow(show, userService.findByUsername
                 ("akosborn"));
 

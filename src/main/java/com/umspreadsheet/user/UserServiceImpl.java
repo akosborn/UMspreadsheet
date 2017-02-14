@@ -1,7 +1,5 @@
-package com.umspreadsheet.service;
+package com.umspreadsheet.user;
 
-import com.umspreadsheet.domain.User;
-import com.umspreadsheet.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

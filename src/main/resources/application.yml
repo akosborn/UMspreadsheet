@@ -1,6 +1,8 @@
 spring:
+  application:
+    name: umspreadsheet
   datasource:
-    url: jdbc:mysql://localhost/spring-social?autoReconnect=true&useSSL=false
+    url: jdbc:mysql://localhost/spring-social
     username: root
     password: Osbo_789
   jpa:
@@ -20,5 +22,4 @@ spring:
         app-id: 964513099769-moqm18t6ftg0rhflraouctiunitv6sjv.apps.googleusercontent.com
         app-secret: AfBOG29GRoCyWTUpe8v3mgA3
 
-debug: false
-
+debug: true

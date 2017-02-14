@@ -1,22 +1,26 @@
-package com.umspreadsheet.domain;
+package com.umspreadsheet.model;
 
-import org.springframework.data.annotation.CreatedDate;
+import com.umspreadsheet.track.Track;
+import com.umspreadsheet.user.User;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
-public class ShowReview
+public class TrackReview
 {
     // Needed for JPA
-    private ShowReview() {}
+    public TrackReview() {}
+
+    public TrackReview(Track track)
+    {
+        this.track = track;
+    }
 
     @Id
     @GeneratedValue
     private Long id;
-
-    @ManyToOne
-    private UmShow show;
 
     @ManyToOne
     private User user;
@@ -24,23 +28,19 @@ public class ShowReview
     @Column(columnDefinition = "TEXT")
     private String comment;
 
-    @CreatedDate
+    @ManyToOne
+    private Track track;
+
+    @NotNull
     @Temporal(TemporalType.TIMESTAMP)
-    private Date reviewedOn;
+    private Date reviewedOn = new Date();
+
+    @Column(columnDefinition = "TINYINT")
+    private int score;
 
     public Long getId()
     {
         return id;
-    }
-
-    public UmShow getShow()
-    {
-        return show;
-    }
-
-    public void setShow(UmShow show)
-    {
-        this.show = show;
     }
 
     public User getUser()
@@ -63,6 +63,21 @@ public class ShowReview
         this.comment = comment;
     }
 
+    public Track getTrack()
+    {
+        return track;
+    }
+
+    public void setTrack(Track track)
+    {
+        this.track = track;
+    }
+
+    public void setId(Long id)
+    {
+        this.id = id;
+    }
+
     public Date getReviewedOn()
     {
         return reviewedOn;
@@ -71,5 +86,15 @@ public class ShowReview
     public void setReviewedOn(Date reviewedOn)
     {
         this.reviewedOn = reviewedOn;
+    }
+
+    public int getScore()
+    {
+        return score;
+    }
+
+    public void setScore(int score)
+    {
+        this.score = score;
     }
 }

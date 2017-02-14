@@ -1,7 +1,6 @@
-package com.umspreadsheet.repository;
+package com.umspreadsheet.track;
 
-import com.umspreadsheet.domain.Track;
-import org.springframework.data.jpa.repository.Query;
+import com.umspreadsheet.track.Track;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

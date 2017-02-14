@@ -1,6 +1,9 @@
-package com.umspreadsheet.domain;
+package com.umspreadsheet.track;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.umspreadsheet.model.Set;
+import com.umspreadsheet.model.TrackReview;
+import com.umspreadsheet.show.Show;
 
 import javax.persistence.*;
 import java.util.List;
@@ -16,7 +19,7 @@ public class Track
     private Long id;
 
     @ManyToOne
-    private UmShow show;
+    private Show show;
 
     @ManyToOne
     @JsonIgnore
@@ -48,12 +51,12 @@ public class Track
         this.id = id;
     }
 
-    public UmShow getShow()
+    public Show getShow()
     {
         return show;
     }
 
-    public void setShow(UmShow show)
+    public void setShow(Show show)
     {
         this.show = show;
     }

@@ -1,4 +1,6 @@
-package com.umspreadsheet.domain;
+package com.umspreadsheet.model;
+
+import com.umspreadsheet.user.User;
 
 import javax.persistence.*;
 import java.util.HashSet;

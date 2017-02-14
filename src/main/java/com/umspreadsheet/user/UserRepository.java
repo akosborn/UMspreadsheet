@@ -1,6 +1,5 @@
-package com.umspreadsheet.repository;
+package com.umspreadsheet.user;
 
-import com.umspreadsheet.domain.User;
 import org.springframework.data.repository.CrudRepository;
 
 public interface UserRepository extends CrudRepository<User, Long>

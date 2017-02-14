@@ -1,7 +1,9 @@
-package com.umspreadsheet.domain;
+package com.umspreadsheet.user;
 
+import com.umspreadsheet.model.Role;
+import com.umspreadsheet.model.ShowReview;
+import com.umspreadsheet.model.TrackReview;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.*;

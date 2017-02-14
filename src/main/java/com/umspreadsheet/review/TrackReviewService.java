@@ -1,9 +1,9 @@
-package com.umspreadsheet.service;
+package com.umspreadsheet.review;
 
-import com.umspreadsheet.domain.TrackReview;
-import com.umspreadsheet.domain.UmShow;
-import com.umspreadsheet.domain.User;
-import com.umspreadsheet.repository.TrackReviewRepository;
+import com.umspreadsheet.model.TrackReview;
+import com.umspreadsheet.show.Show;
+import com.umspreadsheet.user.User;
+import com.umspreadsheet.review.TrackReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +30,7 @@ public class TrackReviewService
         trackReviewRepository.delete(id);
     }
 
-    public List<TrackReview> findByUserAndShow(UmShow show, User user)
+    public List<TrackReview> findByUserAndShow(Show show, User user)
     {
         return trackReviewRepository.findAllByUserAndShow(show, user);
     }

@@ -1,7 +1,6 @@
-package com.umspreadsheet.service;
+package com.umspreadsheet.user;
 
-import com.umspreadsheet.domain.Role;
-import com.umspreadsheet.domain.User;
+import com.umspreadsheet.model.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

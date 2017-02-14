@@ -1,14 +1,11 @@
 package com.umspreadsheet.controller;
 
-import com.umspreadsheet.domain.User;
-import com.umspreadsheet.service.UserService;
+import com.umspreadsheet.user.User;
+import com.umspreadsheet.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller

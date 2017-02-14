@@ -1,18 +1,20 @@
-package com.umspreadsheet.domain;
+package com.umspreadsheet.show;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.umspreadsheet.model.Set;
+import com.umspreadsheet.model.ShowReview;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
-// 'UmShow' is a keyword in MySQL, so another name must be used
+// 'Show' is a keyword in MySQL, so another name must be used
 @Entity
 @Table(name = "shows")
-public class UmShow
+public class Show
 {
     // Needed for JPA
-    public UmShow(){}
+    public Show(){}
 
     @Id
     @GeneratedValue
@@ -129,7 +131,7 @@ public class UmShow
     @Override
     public String toString()
     {
-        return "UmShow{" +
+        return "Show{" +
                 "id=" + id +
                 ", date=" + date +
                 ", city='" + city + '\'' +

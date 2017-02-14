@@ -1,4 +1,7 @@
-package com.umspreadsheet.domain;
+package com.umspreadsheet.model;
+
+import com.umspreadsheet.show.Show;
+import com.umspreadsheet.track.Track;
 
 import javax.persistence.*;
 import java.util.List;
@@ -19,7 +22,7 @@ public class Set
     private Double averageRating;
 
     @ManyToOne
-    private UmShow show;
+    private Show show;
 
     public Long getId()
     {
@@ -41,12 +44,12 @@ public class Set
         this.name = name;
     }
 
-    public UmShow getShow()
+    public Show getShow()
     {
         return show;
     }
 
-    public void setShow(UmShow show)
+    public void setShow(Show show)
     {
         this.show = show;
     }

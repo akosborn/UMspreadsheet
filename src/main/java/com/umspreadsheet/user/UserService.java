@@ -1,6 +1,4 @@
-package com.umspreadsheet.service;
-
-import com.umspreadsheet.domain.User;
+package com.umspreadsheet.user;
 
 public interface UserService
 {
