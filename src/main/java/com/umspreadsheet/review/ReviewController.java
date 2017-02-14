@@ -5,7 +5,7 @@ import com.umspreadsheet.show.Show;
 import com.umspreadsheet.show.ShowService;
 import com.umspreadsheet.track.Track;
 import com.umspreadsheet.track.TrackService;
-import com.umspreadsheet.user.UserServiceImpl;
+import com.umspreadsheet.user.SimpleUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,13 +25,13 @@ public class ReviewController
     private ShowService showService;
     private TrackService trackService;
     private TrackReviewService trackReviewService;
-    private UserServiceImpl userService;
+    private SimpleUserService userService;
 
     @Autowired
     public ReviewController(ShowService showService,
                             TrackService trackService,
                             TrackReviewService trackReviewService,
-                            UserServiceImpl userService)
+                            SimpleUserService userService)
     {
         this.showService = showService;
         this.trackService = trackService;

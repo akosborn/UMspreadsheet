@@ -1,8 +1,5 @@
 package com.umspreadsheet.user;
 
-import com.umspreadsheet.user.CurrentUser;
-import com.umspreadsheet.user.User;
-import com.umspreadsheet.user.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,10 +11,10 @@ import java.security.Principal;
 @Controller
 public class UserController
 {
-    private UserServiceImpl userService;
+    private SimpleUserService userService;
 
     @Autowired
-    public UserController(UserServiceImpl userService)
+    public UserController(SimpleUserService userService)
     {
         this.userService = userService;
     }

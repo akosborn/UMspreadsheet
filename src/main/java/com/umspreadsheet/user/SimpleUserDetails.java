@@ -9,11 +9,11 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-public class UserDetailsImpl implements UserDetails
+public class SimpleUserDetails implements UserDetails
 {
     private User user;
 
-    public UserDetailsImpl(User user)
+    public SimpleUserDetails(User user)
     {
         this.user = user;
     }
@@ -52,7 +52,7 @@ public class UserDetailsImpl implements UserDetails
     @Override
     public boolean isAccountNonLocked()
     {
-        return user.isNotSuspended() && user.isNotBanned();
+        return true;
     }
 
     @Override
