@@ -1,5 +1,6 @@
 package com.umspreadsheet.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.umspreadsheet.model.Role;
 import com.umspreadsheet.model.ShowReview;
 import com.umspreadsheet.model.TrackReview;
@@ -22,17 +23,22 @@ public class User
     @GeneratedValue
     private Long id;
 
-    // Identifies UserConnection
-    @Column(unique = true)
-    private String userId;
-
     @Column(unique = true, nullable = false)
     @NotNull
     private String username;
 
+    /**
+     * A social user's social username (ie. @Twitter)
+     *
+     * This is not the displayed name on UMSpreadsheet
+     */
+    @Column(unique = true)
+    private String userId;
+
     @Column(unique = true, nullable = false)
     private String email;
 
+    @JsonIgnore
     @Column(nullable = false)
     private String password;
 
@@ -161,16 +167,6 @@ public class User
     public void setTrackReviews(List<TrackReview> trackReviews)
     {
         this.trackReviews = trackReviews;
-    }
-
-    public String getUserId()
-    {
-        return userId;
-    }
-
-    public void setUserId(String userId)
-    {
-        this.userId = userId;
     }
 
     @Override

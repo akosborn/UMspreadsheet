@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <layout:html lang="en"
+             xmlns:th="http://www.thymeleaf.org"
+             xmlns:social="http://spring.io/springsocial"
              layout:decorator="layouts/site"
-             xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+             xmlns:layout="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8"/>
     <title>UMSpreadsheet</title>
@@ -35,6 +37,31 @@
                     </label>
                 </div>
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+            </form>
+
+            <!-- FACEBOOK SIGNIN -->
+            <form name="fb_signin" id="fb_signin" th:action="@{/signin/facebook}" method="post" class="form-signin">
+                <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                <input type="hidden" name="scope" value="email"/>
+                <button class="btn btn-social btn-facebook" type="submit">
+                    <span class="fa fa-facebook"></span> Sign in with Facebook
+                </button>
+            </form>
+
+            <!-- GOOGLE SIGNIN -->
+            <form id="gl_signin" th:action="@{/signin/google}" method="post" class="form-signin">
+                <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                <button class="btn btn-social btn-google" type="submit">
+                    <span class="fa fa-google"></span> Sign in with Google
+                </button>
+            </form>
+
+            <!-- TWITTER SIGNIN -->
+            <form id="tw_signin" th:action="@{/signin/twitter}" method="post" class="form-signin">
+                <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+                <button class="btn btn-social btn-twitter" type="submit">
+                    <span class="fa fa-facebook"></span> Sign in with Twitter
+                </button>
             </form>
 
         </div> <!-- /container -->
