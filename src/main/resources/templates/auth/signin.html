@@ -15,7 +15,7 @@
 
         <div class="container">
 
-            <form name="f" th:action="@{/login}" method="post" class="form-signin">
+            <form name="f" th:action="@{/signin/authenticate}" method="post" class="form-signin">
                 <h2 class="form-signin-heading">LOGIN TO UMSpreadsheet</h2>
 
                 <div th:if="${param.error}" class="alert alert-danger">

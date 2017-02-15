@@ -1,5 +1,6 @@
 package com.umspreadsheet.user;
 
+import com.umspreadsheet.signup.SignupForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,6 +24,17 @@ public class SimpleUserService implements UserService
 
     public User save(User user)
     {
+        return userRepository.save(user);
+    }
+
+    public User save(SignupForm signupForm)
+    {
+        User user = new User();
+        user.setUsername(signupForm.getUsername());
+        user.setEmail(signupForm.getEmail());
+        user.setUserId(signupForm.getUserId());
+        user.setPassword(signupForm.getPassword());
+
         return userRepository.save(user);
     }
 

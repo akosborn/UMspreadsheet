@@ -1,5 +1,7 @@
 package com.umspreadsheet.signup;
 
+import com.umspreadsheet.user.SimpleUserService;
+import com.umspreadsheet.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.social.connect.Connection;
@@ -16,14 +18,14 @@ import org.springframework.web.context.request.WebRequest;
 @Controller
 public class SignupController
 {
-    private UserDetailsService userDetailsService;
+    private SimpleUserService simpleUserService;
     private ProviderSignInUtils providerSignInUtils;
 
     @Autowired
-    public SignupController(UserDetailsService userDetailsService,
+    public SignupController(SimpleUserService simpleUserService,
                             ProviderSignInUtils providerSignInUtils)
     {
-        this.userDetailsService = userDetailsService;
+        this.simpleUserService = simpleUserService;
         this.providerSignInUtils = providerSignInUtils;
     }
 
@@ -43,5 +45,17 @@ public class SignupController
         }
 
         return "/auth/signup";
+    }
+
+    @RequestMapping(value = "/signup", method = RequestMethod.POST)
+    public String signup(SignupForm signupForm, WebRequest webRequest)
+    {
+        User user = simpleUserService.save(signupForm);
+        if (user != null)
+        {
+            providerSignInUtils.doPostSignUp(user.getUserId(), webRequest);
+        }
+
+        return "redirect:/";
     }
 }
