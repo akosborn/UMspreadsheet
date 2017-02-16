@@ -83,7 +83,6 @@
         <dependency>
             <groupId>org.thymeleaf.extras</groupId>
             <artifactId>thymeleaf-extras-springsecurity4</artifactId>
-			<version>3.0.1.RELEASE</version>
         </dependency>
 		<dependency>
 			<groupId>mysql</groupId>
@@ -104,13 +103,12 @@
 			<artifactId>bootstrap</artifactId>
 			<version>3.3.7-1</version>
 		</dependency>
-        <!-- https://mvnrepository.com/artifact/org.webjars/jquery -->
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>jquery</artifactId>
-            <version>3.1.1-1</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.webjars.bower/tether -->
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>jquery</artifactId>
+			<version>3.1.1-1</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.webjars.bower/tether -->
         <dependency>
             <groupId>org.webjars.bower</groupId>
             <artifactId>tether</artifactId>
@@ -123,7 +121,7 @@
             <version>4.7.0</version>
         </dependency>
 		<dependency>
-			<groupId>org.webjars.bower</groupId>
+			<groupId>org.webjars</groupId>
 			<artifactId>bootstrap-social</artifactId>
 			<version>5.0.0</version>
 		</dependency>

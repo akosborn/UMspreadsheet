@@ -51,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     {
         web
                 .ignoring()
-                    .antMatchers("/**/*.css", "/**/*.png", "/**/*.gif", "/**/*.jpg");
+                    .antMatchers("/**/*.css", "/**/*.png", "/**/*.gif", "/**/*.jpg", "/webjars/**");
     }
 
     @Override
@@ -68,7 +68,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                         .deleteCookies("JSESSIONID")
                 .and()
                     .authorizeRequests()
-                        .antMatchers("/", "/signin/**", "/signup/**", "/resources/**", "/disconnect/facebook").permitAll()
+                        .antMatchers("/", "/signin/**", "/signup/**", "/resources/**", "/disconnect/facebook", "/test")
+                .permitAll()
                         .antMatchers("/**").authenticated()
                 .and()
                     .rememberMe();

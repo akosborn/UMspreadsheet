@@ -36,7 +36,8 @@ public class SimpleSignInAdapter implements SignInAdapter
         HttpServletRequest nativeReq = request.getNativeRequest(HttpServletRequest.class);
         HttpServletResponse nativeRes = request.getNativeResponse(HttpServletResponse.class);
         SavedRequest saved = requestCache.getRequest(nativeReq, nativeRes);
-        if (saved == null) {
+        if (saved == null)
+        {
             return null;
         }
         requestCache.removeRequest(nativeReq, nativeRes);
