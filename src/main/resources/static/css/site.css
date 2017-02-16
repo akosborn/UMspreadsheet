@@ -101,3 +101,13 @@ body
             color: #fff;
         }
     }
+
+
+/*******************************
+SOCIAL SIGN UP BUTTON
+*******************************/
+.form-actions
+{
+    margin: 0;
+    text-align: center;
+}

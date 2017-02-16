@@ -1,5 +1,6 @@
 package com.umspreadsheet.config;
 
+import com.umspreadsheet.user.SimpleUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,11 +31,13 @@ import javax.sql.DataSource;
 public class SocialConfig extends SocialConfigurerAdapter
 {
     private DataSource dataSource;
+    private SimpleUserService simpleUserService;
 
     @Autowired
-    public SocialConfig(DataSource dataSource)
+    public SocialConfig(DataSource dataSource, SimpleUserService simpleUserService)
     {
         this.dataSource = dataSource;
+        this.simpleUserService = simpleUserService;
     }
 
 
@@ -83,6 +86,6 @@ public class SocialConfig extends SocialConfigurerAdapter
     @Bean
     public SignInAdapter signInAdapter()
     {
-        return new SimpleSignInAdapter(new HttpSessionRequestCache());
+        return new SimpleSignInAdapter(simpleUserService, new HttpSessionRequestCache());
     }
 }

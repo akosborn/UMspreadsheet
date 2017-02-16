@@ -1,5 +1,10 @@
 package com.umspreadsheet.config;
 
+import com.umspreadsheet.user.SimpleUserDetails;
+import com.umspreadsheet.user.SimpleUserService;
+import com.umspreadsheet.user.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.savedrequest.RequestCache;
 import org.springframework.security.web.savedrequest.SavedRequest;
@@ -14,20 +19,24 @@ import javax.servlet.http.HttpSession;
 
 public class SimpleSignInAdapter implements SignInAdapter
 {
-    private SignInUtils signInUtils;
+    private SimpleUserService simpleUserService;
 
     private final RequestCache requestCache;
 
     @Inject
-    public SimpleSignInAdapter(RequestCache requestCache)
+    public SimpleSignInAdapter(SimpleUserService simpleUserService,
+                               RequestCache requestCache)
     {
+        this.simpleUserService = simpleUserService;
         this.requestCache = requestCache;
     }
 
     @Override
     public String signIn(String localUserId, Connection<?> connection, NativeWebRequest request)
     {
-        signInUtils.signin(localUserId);
+        UserDetails userDetails = new SimpleUserDetails(simpleUserService.findByUserId(localUserId));
+        SignInUtils.signin(userDetails);
+
         return extractOriginalUrl(request);
     }
 
@@ -42,6 +51,7 @@ public class SimpleSignInAdapter implements SignInAdapter
         }
         requestCache.removeRequest(nativeReq, nativeRes);
         removeAuthenticationAttributes(nativeReq.getSession(false));
+
         return saved.getRedirectUrl();
     }
 

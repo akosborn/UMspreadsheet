@@ -1,8 +1,11 @@
 package com.umspreadsheet.signup;
 
+import com.umspreadsheet.config.SignInUtils;
+import com.umspreadsheet.user.SimpleUserDetails;
 import com.umspreadsheet.user.SimpleUserService;
 import com.umspreadsheet.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.UserProfile;
@@ -20,6 +23,7 @@ public class SignupController
 {
     private SimpleUserService simpleUserService;
     private ProviderSignInUtils providerSignInUtils;
+    private SignInUtils signInUtils;
 
     @Autowired
     public SignupController(SimpleUserService simpleUserService,
@@ -51,8 +55,10 @@ public class SignupController
     public String signup(SignupForm signupForm, WebRequest webRequest)
     {
         User user = simpleUserService.save(signupForm);
+        UserDetails userDetails = new SimpleUserDetails(user);
         if (user != null)
         {
+            SignInUtils.signin(userDetails);
             providerSignInUtils.doPostSignUp(user.getUserId(), webRequest);
         }
 

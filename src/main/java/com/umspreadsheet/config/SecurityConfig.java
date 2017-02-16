@@ -51,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     {
         web
                 .ignoring()
-                    .antMatchers("/**/*.css", "/**/*.png", "/**/*.gif", "/**/*.jpg", "/webjars/**");
+                    .antMatchers("/**/*.css", "/**/*.png", "/**/*.gif", "/**/*.jpg", "/webjars/**", "/js/**");
     }
 
     @Override
@@ -61,14 +61,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                 .formLogin()
                     .loginPage("/signin")
                     .loginProcessingUrl("/signin/authenticate")
+                    .defaultSuccessUrl("/", true)
                     .failureUrl("/signin?error=bad_credentials")
                 .and()
                     .logout()
-                        .logoutUrl("signout")
+                        .logoutUrl("/signout")
                         .deleteCookies("JSESSIONID")
                 .and()
                     .authorizeRequests()
-                        .antMatchers("/", "/signin/**", "/signup/**", "/resources/**", "/disconnect/facebook", "/test")
+                        .antMatchers("/", "/signin/**", "/signup/**", "/resources/**", "/disconnect/facebook")
                 .permitAll()
                         .antMatchers("/**").authenticated()
                 .and()

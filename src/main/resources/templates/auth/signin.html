@@ -16,7 +16,7 @@
         <div class="container">
 
             <form name="f" th:action="@{/signin/authenticate}" method="post" class="form-signin">
-                <h2 class="form-signin-heading">LOGIN TO UMSpreadsheet</h2>
+                <h2 class="form-signin-heading">Login to UMSpreadsheet</h2>
 
                 <div th:if="${param.error}" class="alert alert-danger">
                     Invalid username and password.
@@ -27,10 +27,14 @@
                 <div th:if="${signup}" class="alert alert-success" role="alert">
                     Signup successful.
                 </div>
-                <label for="username" class="sr-only">Username</label>
-                <input type="text" id="username" name="username" class="form-control" placeholder="Username" required="true" autofocus="true" />
-                <label for="password" class="sr-only">Password</label>
-                <input type="password" id="password" name="password" class="form-control" placeholder="Password" required="true" />
+                <div class="form-group">
+                    <label for="username" class="sr-only">Username</label>
+                    <input type="text" id="username" name="username" class="form-control" placeholder="Username" required="true" autofocus="true" />
+                </div>
+                <div class="form-group">
+                    <label for="password" class="sr-only">Password</label>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Password" required="true" />
+                </div>
                 <div class="checkbox">
                     <label>
                         <input type="checkbox" value="remember-me"/> Remember me
@@ -39,29 +43,16 @@
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
             </form>
 
-            <!-- FACEBOOK SIGNIN -->
-            <form name="fb_signin" id="fb_signin" th:action="@{/signin/facebook}" method="post" class="form-signin">
-                <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-                <input type="hidden" name="scope" value="email"/>
-                <button class="btn btn-social btn-facebook" type="submit">
-                    <span class="fa fa-facebook"></span> Sign in with Facebook
-                </button>
-            </form>
+            <hr style="max-width: 300px"/>
 
             <!-- GOOGLE SIGNIN -->
             <form id="gl_signin" th:action="@{/signin/google}" method="post" class="form-signin">
                 <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-                <button class="btn btn-social btn-google" type="submit">
-                    <span class="fa fa-google"></span> Sign in with Google
-                </button>
-            </form>
-
-            <!-- TWITTER SIGNIN -->
-            <form id="tw_signin" th:action="@{/signin/twitter}" method="post" class="form-signin">
-                <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-                <button class="btn btn-social btn-twitter" type="submit">
-                    <i class="fa fa-twitter"></i> Sign in with Twitter
-                </button>
+                <div class="form-actions">
+                    <button class="btn btn-social btn-google" type="submit">
+                        <span class="fa fa-google"></span> Sign in with Google
+                    </button>
+                </div>
             </form>
 
         </div> <!-- /container -->
