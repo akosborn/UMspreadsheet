@@ -32,7 +32,9 @@ public class SimpleUserService implements UserService
         User user = new User();
         user.setUsername(signupForm.getUsername());
         user.setEmail(signupForm.getEmail());
-        user.setUserId(signupForm.getUserId());
+        // if the user signed up via social
+        if (!signupForm.getUserId().equals(""))
+            user.setUserId(signupForm.getUserId());
         user.setPassword(signupForm.getPassword());
 
         return userRepository.save(user);

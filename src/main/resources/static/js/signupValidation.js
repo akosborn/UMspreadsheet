@@ -4,7 +4,7 @@ var errors = "";
 
 function validateForm()
 {
-    if (!validateUsername() | !validateEmail() | !validatePassword())
+    if (!validateUsername() || !validateEmail() || !validatePassword())
     {
         alert(errors);
         errors = "";
@@ -113,8 +113,9 @@ function validatePassword()
     {
         password.style.background = 'White';
         passwordConfirmation.style.background = 'White';
+
+        return true;
     }
-    return true;
 }
 
 /*]]>*/
