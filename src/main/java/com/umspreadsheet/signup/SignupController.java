@@ -85,6 +85,11 @@ public class SignupController
         {
             model.addAttribute("emailTaken", "Email \"" + signupForm.getEmail() + "\" is already in use.");
 
+            if (simpleUserService.findByUsername(signupForm.getUsername()) != null)
+            {
+                model.addAttribute("usernameTaken", "Username \"" + signupForm.getUsername() + "\" is taken.");
+            }
+
             return null;
         }
 
@@ -93,6 +98,11 @@ public class SignupController
         {
             model.addAttribute("usernameTaken", "Username \"" + signupForm.getUsername() + "\" is taken.");
 
+            if (simpleUserService.findByEmail(signupForm.getEmail()) != null)
+            {
+                model.addAttribute("emailTaken", "Email \"" + signupForm.getEmail() + "\" is already in use.");
+            }
+            
             return null;
         }
 

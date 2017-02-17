@@ -18,9 +18,16 @@
             <div th:if="${signup}" class="alert alert-danger">
                 Sign up failed. Correct any errors noted below.
             </div>
+            <div th:if="${usernameTaken}" th:text="${usernameTaken}" class="alert alert-danger">
+                [username taken]
+            </div>
+            <div th:if="${emailTaken}" th:text="${emailTaken}" class="alert alert-danger">
+                [email taken]
+            </div>
+
             <form name="signupForm" th:action="@{/signup}" method="post" th:object="${signupForm}" class="form-signin">
                 <h2 class="form-signin-heading">Join UMSpreadsheet</h2>
-                <input th:if="*{email != null} and ${!#fields.hasErrors('username')} and ${!#fields.hasErrors('email')} and ${!#fields.hasErrors('password')}"
+                <input th:if="*{email != null} and ${!#fields.hasErrors('username')} and ${!#fields.hasErrors('email')} and ${!#fields.hasErrors('password')} and ${emailTaken == null}"
                        type="hidden" th:field="*{email}" />
                 <input type="hidden" th:field="*{userId}" />
                 <div class="form-group" th:classappend="${#fields.hasErrors('username')}? 'has-error'">
@@ -28,7 +35,7 @@
                     <input type="text" id="username" name="username" th:field="*{username}" class="form-control" placeholder="Username" required="true" autofocus="true" />
                     <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" th:class="help-block">[username errors]</span>
                 </div>
-                <div th:if="*{email == null} or ${#fields.hasErrors('username')} or ${#fields.hasErrors('email')} or ${#fields.hasErrors('password')}"
+                <div th:if="*{email == null} or ${#fields.hasErrors('username')} or ${#fields.hasErrors('email')} or ${#fields.hasErrors('password')} or ${emailTaken != null} or ${usernameTaken != null}"
                      class="form-group" th:classappend="${#fields.hasErrors('email')}? 'has-error'">
                     <label for="emailaddress" class="sr-only">Email</label>
                     <input type="text" id="emailaddress" name="email" th:field="*{email}" class="form-control" placeholder="Email Address" required="true" />
