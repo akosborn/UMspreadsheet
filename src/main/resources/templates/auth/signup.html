@@ -20,7 +20,7 @@
             <form name="signupForm" th:action="@{/signup}" method="post" th:object="${signupForm}" class="form-signin"
                   onsubmit="return validateForm();">
                 <h2 class="form-signin-heading">Join UMSpreadsheet</h2>
-                <input type="hidden" th:field="*{email}" />
+                <input th:if="*{email != null}" type="hidden" th:field="*{email}" />
                 <input type="hidden" th:field="*{userId}" />
                 <div class="form-group">
                     <label for="username" class="sr-only">Username</label>
