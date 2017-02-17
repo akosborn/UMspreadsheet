@@ -14,9 +14,12 @@ import org.springframework.social.facebook.api.Facebook;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.context.request.WebRequest;
+
+import javax.validation.Valid;
 
 @Controller
 public class SignupController
@@ -52,16 +55,47 @@ public class SignupController
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public String signup(SignupForm signupForm, WebRequest webRequest)
+    public String signup(@Valid SignupForm signupForm, BindingResult formBinding,
+                         WebRequest webRequest, Model model)
     {
-        User user = simpleUserService.save(signupForm);
-        UserDetails userDetails = new SimpleUserDetails(user);
-        if (user != null)
+        if (formBinding.hasErrors())
         {
-            SignInUtils.signin(userDetails);
-            providerSignInUtils.doPostSignUp(user.getUserId(), webRequest);
+            return "/auth/signup";
         }
 
-        return "redirect:/";
+        User user = createUser(signupForm, formBinding, model);
+
+        if (user == null)
+        {
+            return "/auth/signup";
+        }
+        else
+        {
+            SignInUtils.signin(new SimpleUserDetails(user));
+            providerSignInUtils.doPostSignUp(user.getUserId(), webRequest);
+
+            return "redirect:/";
+        }
+    }
+
+    private User createUser(SignupForm signupForm, BindingResult formBinding, Model model)
+    {
+        // Check for duplicate email
+        if (simpleUserService.findByEmail(signupForm.getEmail()) != null)
+        {
+            model.addAttribute("emailTaken", "Email \"" + signupForm.getEmail() + "\" is already in use.");
+
+            return null;
+        }
+
+        // Check for duplicate username
+        if (simpleUserService.findByUsername(signupForm.getUsername()) != null)
+        {
+            model.addAttribute("usernameTaken", "Username \"" + signupForm.getUsername() + "\" is taken.");
+
+            return null;
+        }
+
+        return simpleUserService.save(signupForm);
     }
 }

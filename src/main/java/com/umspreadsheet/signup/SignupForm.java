@@ -1,19 +1,32 @@
 package com.umspreadsheet.signup;
 
-import org.springframework.security.crypto.encrypt.TextEncryptor;
-import org.springframework.social.connect.Connection;
-import org.springframework.social.connect.ConnectionFactoryLocator;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.social.connect.UserProfile;
-import org.springframework.social.connect.jdbc.JdbcUsersConnectionRepository;
 
-import javax.sql.DataSource;
+import javax.validation.constraints.Pattern;
 
 public class SignupForm
 {
+    @NotEmpty
+    @Length(min = 3, max = 25)
+    @Pattern(regexp = ".*\\w") // only numbers, letters, and underscores
     private String username;
     private String userId;
+
+    @NotEmpty
+    @Length(min = 8, max = 128)
+    @Pattern(regexp = ".*\\w") // only numbers, letters, and underscores
     private String password;
+
+    @NotEmpty
+    @Length(min = 7, max = 128)
     private String passwordConfirmation;
+
+    @NotEmpty
+    @Email
+    @Length(max = 254)
     private String email;
 
     public static SignupForm fromProviderUser(UserProfile userProfile)

@@ -1,7 +1,9 @@
 package com.umspreadsheet.user;
 
 import com.umspreadsheet.signup.SignupForm;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -32,6 +34,7 @@ public class SimpleUserService implements UserService
         User user = new User();
         user.setUsername(signupForm.getUsername());
         user.setEmail(signupForm.getEmail());
+
         // if the user signed up via social
         if (!signupForm.getUserId().equals(""))
             user.setUserId(signupForm.getUserId());

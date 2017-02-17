@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <layout:html lang="en"
+             xmlns:th="http://www.thymeleaf.org"
              layout:decorator="layouts/site"
-             xmlns:layout="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+             xmlns:layout="http://www.w3.org/1999/xhtml">
     <head>
         <meta charset="UTF-8"/>
         <title>UMSpreadsheet</title>
@@ -15,24 +16,28 @@
         <div class="container">
 
             <div th:if="${signup}" class="alert alert-danger">
-                Sign up failed. Try again.
+                Sign up failed. Correct any errors noted below.
             </div>
-            <form name="signupForm" th:action="@{/signup}" method="post" th:object="${signupForm}" class="form-signin"
-                  onsubmit="return validateForm();">
+            <form name="signupForm" th:action="@{/signup}" method="post" th:object="${signupForm}" class="form-signin">
                 <h2 class="form-signin-heading">Join UMSpreadsheet</h2>
-                <input th:if="*{email != null}" type="hidden" th:field="*{email}" />
+                <input th:if="*{email != null} and ${!#fields.hasErrors('username')} and ${!#fields.hasErrors('email')} and ${!#fields.hasErrors('password')}"
+                       type="hidden" th:field="*{email}" />
                 <input type="hidden" th:field="*{userId}" />
-                <div class="form-group">
+                <div class="form-group" th:classappend="${#fields.hasErrors('username')}? 'has-error'">
                     <label for="username" class="sr-only">Username</label>
                     <input type="text" id="username" name="username" th:field="*{username}" class="form-control" placeholder="Username" required="true" autofocus="true" />
+                    <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" th:class="help-block">[username errors]</span>
                 </div>
-                <div th:if="*{email == null}" class="form-group">
+                <div th:if="*{email == null} or ${#fields.hasErrors('username')} or ${#fields.hasErrors('email')} or ${#fields.hasErrors('password')}"
+                     class="form-group" th:classappend="${#fields.hasErrors('email')}? 'has-error'">
                     <label for="emailaddress" class="sr-only">Email</label>
                     <input type="text" id="emailaddress" name="email" th:field="*{email}" class="form-control" placeholder="Email Address" required="true" />
+                    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" th:class="help-block">[email errors]</span>
                 </div>
-                <div class="form-group">
+                <div class="form-group" th:classappend="${#fields.hasErrors('password')}? 'has-error'">
                     <label for="password" class="sr-only">Password</label>
                     <input type="password" id="password" name="password" th:field="*{password}" class="form-control" placeholder="Password" required="true" />
+                    <span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" th:class="help-block">[password errors]</span>
                 </div>
                 <div class="form-group">
                     <label for="passwordConfirmation" class="sr-only">Password</label>

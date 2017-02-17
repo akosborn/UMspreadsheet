@@ -25,10 +25,10 @@ function validateUsername()
 
         return false;
 
-    } else if ((username.value.length < 5) || (username.value.length > 15))
+    } else if ((username.value.length < 3) || (username.value.length > 25))
     {
         username.style.background = 'Yellow';
-        errors += "Username must be at least 5 characters.\n";
+        errors += "Username must be between 3 and 25 characters in length.\n";
 
         return false;
 
@@ -55,7 +55,7 @@ function validateEmail()
     if (!re.test(email.value))
     {
         email.style.background = 'Yellow';
-        errors += "Please enter a valid email.\n";
+        errors += "Email is invalid.\n";
 
         return false;
     }
@@ -72,7 +72,8 @@ function validatePassword()
     var password = document.getElementById("password");
     var passwordConfirmation = document.getElementById("passwordConfirmation");
 
-    var illegalChars = /[\W_]/; // allow only letters and numbers
+    // only numbers, letters, and underscores
+    var illegalChars = /[\W]/;
 
     if (password.value != passwordConfirmation.value)
     {
@@ -88,23 +89,16 @@ function validatePassword()
 
         return false;
 
-    } else if ((password.value.length < 7) || (password.value.length > 15))
+    } else if ((password.value.length < 8) || (password.value.length > 128))
     {
-        errors += "Password must be between 7 and 15 characters.\n";
+        errors += "Password must be between 8 and 128 characters in length.\n";
         password.style.background = 'Yellow';
 
         return false;
 
-    } else if (illegalChars.test(fld.value))
+    } else if (illegalChars.test(password.value))
     {
         errors += "The password contains illegal characters.\n";
-        password.style.background = 'Yellow';
-
-        return false;
-
-    } else if ( (password.value.search(/[a-zA-Z]+/)==-1) || (password.value.search(/[0-9]+/)==-1) )
-    {
-        errors += "The password must contain at least one numeral.\n";
         password.style.background = 'Yellow';
 
         return false;
