@@ -102,7 +102,7 @@ public class SignupController
             {
                 model.addAttribute("emailTaken", "Email \"" + signupForm.getEmail() + "\" is already in use.");
             }
-            
+
             return null;
         }
 

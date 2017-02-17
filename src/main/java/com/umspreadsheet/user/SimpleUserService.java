@@ -3,6 +3,7 @@ package com.umspreadsheet.user;
 import com.umspreadsheet.signup.SignupForm;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -40,7 +41,13 @@ public class SimpleUserService implements UserService
             user.setUserId(signupForm.getUserId());
         user.setPassword(signupForm.getPassword());
 
-        return userRepository.save(user);
+        try
+        {
+            return userRepository.save(user);
+        } catch (DataAccessException ex)
+        {
+            return null;
+        }
     }
 
     @Override

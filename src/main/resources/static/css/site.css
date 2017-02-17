@@ -65,6 +65,18 @@ body
         font-family: "Roboto Slab", serif;
     }
 
+    .navbar-brand
+    {
+        padding: 0;
+    }
+
+    .navbar-brand>img
+    {
+        height: 100%;
+        padding: 2px;
+        width: auto;
+    }
+
     .navbar-default .navbar-nav>li>a,
     .navbar-default .navbar-brand,
     .navbar-default .navbar-brand:hover,
