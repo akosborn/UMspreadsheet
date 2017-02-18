@@ -9,7 +9,7 @@
     <meta charset="UTF-8"/>
     <title>UMSpreadsheet</title>
 
-    <link rel="stylesheet" th:href="@{/css/showReview.css}" />
+    <link rel="stylesheet" th:href="@{/css/show.css}" />
     <link rel="stylesheet" th:href="@{/webjars/seiyria-bootstrap-slider/9.3.0/dist/css/bootstrap-slider.min.css}" />
 
     <script th:src="@{/webjars/seiyria-bootstrap-slider/9.3.0/dist/bootstrap-slider.min.js}" type="text/javascript"></script>
@@ -37,20 +37,30 @@
                     <tr>
                         <th>Song</th>
                         <th>Community Rating</th>
-                        <th>Review</th>
+                        <th>My Rating</th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:each="trackAndReviewEntry,iterStat : ${setEntry.value}"
-                        th:class="${trackAndReviewEntry.value != null}? 'success'">
+                        th:class="${trackAndReviewEntry.value.id != null}? 'success'">
                         <td th:text="${trackAndReviewEntry.key.song}">[song]</td>
-                        <td th:text="(${trackAndReviewEntry.value == null}? '-' : ${trackAndReviewEntry.value.score})">[avg. rating]</td>
+                        <td>[avg. rating]</td>
                         <td>
                             <!--<a th:if="${trackAndReviewEntry.value == null}" th:href="@{/user/review/track(trackId=${trackAndReviewEntry.key.id})}">-->
-                                <input th:id="'track' + ${iterStat.count}" data-slider-id='track1slider' type="text"
-                                       data-slider-min="0" data-slider-max="10" data-slider-step="0.25" data-slider-value="1"/>
+                            <form th:object="${trackReviewForm}" th:action="@{/reviews/shows/show}" method="post">
+                                <input type="hidden" th:if="${trackAndReviewEntry.value.id != null}"
+                                       th:value="${trackAndReviewEntry.value.id}" th:name="id" th:id="id" />
+                                <input type="hidden" th:value="${trackAndReviewEntry.value.trackId}" th:name="trackId"
+                                       th:id="trackId"/>
+                                <input type="hidden" th:field="*{username}" />
+                                <input th:id="'track' + ${trackAndReviewEntry.key.id}"
+                                       th:name="score" data-slider-id='trackReviewSlider'
+                                       type="number" data-slider-min="0" data-slider-max="10"
+                                       data-slider-step="0.25" data-slider-value="0" />
+                                <button type="submit" class="btn">Save</button>
+                            </form>
                                 <!-- <i class="fa fa-plus" aria-hidden="true" style="color: green;"></i> -->
                             <!--</a>-->
                         </td>
@@ -74,13 +84,28 @@
         </div>
     </div>
     <th:block layout:fragment="script">
-        <script type="text/javascript">
+        <script type="text/javascript" th:inline="javascript">
             /*<![CDATA[*/
-            var slider = new Slider('#track1', {
-                formatter: function(value) {
-                    return 'Current value: ' + value;
-                }
+
+            var trackIdMap = [[${trackIdMap}]];
+
+            Object.keys(trackIdMap).forEach(function (key)
+            {
+                createSlider(key, trackIdMap[key])
             });
+
+            function createSlider(trackId, score)
+            {
+                var slider = new Slider('#track' + trackId, {
+                    formatter: function (value) {
+                        return 'Current value: ' + value;
+                    }
+                });
+
+                if (score != null)
+                    slider.setValue(score);
+            }
+
             /*]]>*/
         </script>
     </th:block>

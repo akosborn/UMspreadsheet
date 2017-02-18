@@ -139,9 +139,11 @@
                 <div id="most-recent-show-div" class="col-md-6">
                     <div id="th-most-recent-show" th:each="show : ${lastTwoShows}" th:object="${show}">
                         <div id="most-recent-show-header">
-                            <h4 id="show-title" th:text="*{#dates.format(date, 'yyyy/MM/dd') + ' ' + city + ', ' + state}">
-                                2017-02-03 Detroit, MI
-                            </h4>
+                            <a th:href="@{/reviews/shows/show(showId=*{id})}">
+                                <h4 id="show-title" th:text="*{#dates.format(date, 'yyyy/MM/dd') + ' ' + city + ', ' + state}">
+                                    2017-02-03 Detroit, MI
+                                </h4>
+                            </a>
                             <h4 id="show-rating-and-medal" class="pull-right">
                                 <i class="fa fa-trophy" aria-hidden="true"></i>
                                 <span th:if="*{averageRating != null}" th:text="*{#numbers.formatDecimal(averageRating, 1, 2)}">87.34</span>

@@ -27,6 +27,7 @@ public class HomeController
         model.addAttribute("topThreeSongs", trackService.getTopThreeSongs());
         model.addAttribute("topThreeShows", showService.getTopThreeShows());
         model.addAttribute("lastTwoShows", showService.getLastTwoShows());
+
         return "index";
     }
 }

@@ -1,12 +1,15 @@
 package com.umspreadsheet.review;
 
 import com.umspreadsheet.model.*;
+import com.umspreadsheet.model.Set;
 import com.umspreadsheet.show.Show;
 import com.umspreadsheet.show.ShowService;
 import com.umspreadsheet.track.Track;
 import com.umspreadsheet.track.TrackService;
 import com.umspreadsheet.user.SimpleUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,12 +17,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.security.Principal;
+import java.util.*;
 
 @Controller
-@RequestMapping("/user/review")
+@RequestMapping("/reviews/shows")
 public class ReviewController
 {
     private ShowService showService;
@@ -28,10 +30,8 @@ public class ReviewController
     private SimpleUserService userService;
 
     @Autowired
-    public ReviewController(ShowService showService,
-                            TrackService trackService,
-                            TrackReviewService trackReviewService,
-                            SimpleUserService userService)
+    public ReviewController(ShowService showService, TrackService trackService,
+                            TrackReviewService trackReviewService, SimpleUserService userService)
     {
         this.showService = showService;
         this.trackService = trackService;
@@ -40,39 +40,29 @@ public class ReviewController
     }
 
     // Returns view for all reviewable tracks for the specified show
-    @RequestMapping(value = "", params = "showId", method = RequestMethod.GET)
+    @RequestMapping(value = "/show", params = "showId", method = RequestMethod.GET)
     public String reviewShow(@RequestParam("showId") Long showId, Model model)
     {
+        // Find the current user's username
+        String username = getCurrentUsername();
         Show show = showService.findById(showId);
-        List<TrackReview> trackReviews = trackReviewService.findByUserAndShow(show, userService.findByUsername
-                ("akosborn"));
 
-        Map<String, Map<Track, TrackReview>> trackAndReviewMap = new LinkedHashMap<>();
-        for (Set set : show.getSets())
-        {
-            Map<Track, TrackReview> map = new LinkedHashMap<>();
-            trackAndReviewMap.put(set.getName(), map);
+        // List of the show's track IDs to be used for Javascript dynamic slider creation
+        Map<Long, Double> trackIdMap = new HashMap<>();
 
-            for (Track track : set.getTracks())
-            {
-                map.put(track, null);
-                for (TrackReview trackReview : trackReviews)
-                {
-                    if (track.getId().equals(trackReview.getTrack().getId()))
-                    {
-                        map.put(track, trackReview);
-                        break;
-                    }
-                }
-            }
-        }
+        // Create a map for the show where the string represents a set
+        Map<String, Map<Track, TrackReviewForm>> trackAndReviewMap =
+                getUsersTracksAndReviews(username, show, trackIdMap);
 
+        model.addAttribute("trackIdMap", trackIdMap);
         model.addAttribute("trackAndReviewMap", trackAndReviewMap);
         model.addAttribute("show", showService.findById(showId));
+        model.addAttribute("trackReviewForm", new TrackReviewForm(username));
 
-        return "/user/showReview";
+        return "/user/show";
     }
 
+    // Delete a review
     @RequestMapping(value = "", method = RequestMethod.DELETE)
     public String deleteTrackReview(@RequestParam("reviewId") Long reviewId,
                                     @RequestParam("showId") Long showId, RedirectAttributes redirectAttributes)
@@ -102,16 +92,25 @@ public class ReviewController
         return "/user/trackReviewForm";
     }
 
-    @RequestMapping(value = "/track", method = RequestMethod.POST)
-    public String saveTrackReview(TrackReview trackReview, RedirectAttributes redirectAttributes)
+    // Endpoint for new track reviews
+    @RequestMapping(value = "/show", method = RequestMethod.POST)
+    public String saveTrackReview(TrackReviewForm trackReviewForm, RedirectAttributes redirectAttributes)
     {
-        trackReview.setUser(userService.findByUsername("akosborn"));
-        TrackReview savedReview = trackReviewService.save(trackReview);
+        TrackReview trackReview = new TrackReview();
+        if (trackReviewForm.getId() != null)
+            trackReview.setId(trackReviewForm.getId());
 
-        redirectAttributes.addAttribute("showId", savedReview.getTrack().getShow().getId());
+        trackReview.setScore(trackReviewForm.getScore());
+        trackReview.setUser(userService.findByUsername(trackReviewForm.getUsername()));
+        trackReview.setTrack(trackService.findById(trackReviewForm.getTrackId()));
+        trackReview.setComment(trackReviewForm.getComment());
+
+        TrackReview savedTrackReview = trackReviewService.save(trackReview);
+
+        redirectAttributes.addAttribute("showId", savedTrackReview.getTrack().getShow().getId());
         redirectAttributes.addFlashAttribute("submitted", "true");
 
-        return "redirect:/user/review";
+        return "redirect:/reviews/shows/show";
     }
 
     @RequestMapping(value = "/track", method = RequestMethod.PUT)
@@ -121,5 +120,67 @@ public class ReviewController
         redirectAttributes.addFlashAttribute("edited", "true");
 
         return "redirect:/user/review";
+    }
+
+    private String getCurrentUsername()
+    {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username;
+
+        if (principal instanceof UserDetails)
+        {
+            username = ((UserDetails) principal).getUsername();
+        } else
+        {
+            username = principal.toString();
+        }
+
+        return username;
+    }
+
+    private Map<String, Map<Track, TrackReviewForm>> getUsersTracksAndReviews(String username, Show show,
+                                                                          Map<Long, Double> trackIdMap)
+    {
+        // Find the current user's reviews for the specified show
+        List<TrackReview> trackReviews = trackReviewService.findByUserAndShow
+                (show, userService.findByUsername(username));
+
+        Map<String, Map<Track, TrackReviewForm>> trackAndReviewMap = new LinkedHashMap<>();
+        // Loop through each set
+        for (Set set : show.getSets())
+        {
+            // Create a map for the set
+            Map<Track, TrackReviewForm> map = new LinkedHashMap<>();
+            // Add the set name(String) and the map of its tracks/reviews
+            trackAndReviewMap.put(set.getName(), map);
+
+            // Loop through all tracks in the set
+            for (Track track : set.getTracks())
+            {
+                // Set default score to null for Javascript slider dynamic setting
+                Double score = null;
+
+                // Create new trackReviewForm and set username via constructor
+                TrackReviewForm trackReviewForm = new TrackReviewForm(username, track.getId());
+
+                // Loop through user's reviews for this show
+                for (TrackReview trackReview : trackReviews)
+                {
+                    // Check if the user has reviewed the track
+                    if (track.getId().equals(trackReview.getTrack().getId()))
+                    {
+                        // If user has reviewed the track, populate a new trackReviewForm
+                        trackReviewForm = new TrackReviewForm(trackReview);
+                        score = trackReview.getScore();
+                        break;
+                    }
+                }
+
+                map.put(track, trackReviewForm);
+                trackIdMap.put(track.getId(), score);
+            }
+        }
+
+        return trackAndReviewMap;
     }
 }

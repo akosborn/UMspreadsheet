@@ -10,7 +10,6 @@ import java.util.Date;
 @Entity
 public class TrackReview
 {
-    // Needed for JPA
     public TrackReview() {}
 
     public TrackReview(Track track)
@@ -35,8 +34,8 @@ public class TrackReview
     @Temporal(TemporalType.TIMESTAMP)
     private Date reviewedOn = new Date();
 
-    @Column(columnDefinition = "TINYINT")
-    private int score;
+    @Column(columnDefinition = "DECIMAL(4,2)")
+    private Double score;
 
     public Long getId()
     {
@@ -88,12 +87,12 @@ public class TrackReview
         this.reviewedOn = reviewedOn;
     }
 
-    public int getScore()
+    public Double getScore()
     {
         return score;
     }
 
-    public void setScore(int score)
+    public void setScore(Double score)
     {
         this.score = score;
     }
