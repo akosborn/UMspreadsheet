@@ -10,8 +10,7 @@
 
     <link rel="stylesheet" th:href="@{/css/index.css}"/>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <!--<script type="text/javascript" th:inline="javascript">
-        /*<![CDATA[*/
+    <script type="text/javascript" th:inline="javascript">
         // Load the Visualization API and the corechart package.
         google.charts.load('current', {'packages':['corechart']});
 
@@ -34,7 +33,7 @@
             {
                 data.addRow([topThreeSongs[i].song + '\n' + topThreeSongs[i].show.date  + ' ' +
                 topThreeSongs[i].show.city + ', ' + topThreeSongs[i].show.state,
-                    topThreeSongs[i].trackAverageRating, 'opacity: 0.4; color: yellow']);
+                    topThreeSongs[i].averageRating, 'opacity: 0.4; color: yellow']);
             }
 
             // Set chart options
@@ -62,10 +61,8 @@
                 document.getElementById('top_show_chart_div'));
             chart.draw(data, options);
         }
-        /*]]>*/
     </script>
     <script type="text/javascript" th:inline="javascript">
-        /*<![CDATA[*/
 
         // Load the Visualization API and the corechart package.
         google.charts.load('current', {'packages':['corechart']});
@@ -116,8 +113,8 @@
                 document.getElementById('top_song_chart_div'));
             chart.draw(data, options);
         }
-        /*]]>*/
-    </script>-->
+
+    </script>
 </head>
 <body>
 
@@ -164,7 +161,7 @@
                         </h6>
 
                         <h5 style="text-align: center">
-                            <a th:href="@{/shows(showId=*{id})}" th:text="${#lists.size(show.numberOfReviews)} + (${#lists.size(show.numberOfReviews)} == 1? ' Review': ' Reviews')">
+                            <a th:href="@{/shows(showId=*{id})}" th:text="${show.numberOfReviews} + (${show.numberOfReviews} == 1? ' Review': ' Reviews')">
                             3 reviews</a>
                         </h5>
                         <br/>
