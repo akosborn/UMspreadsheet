@@ -26,7 +26,9 @@ public class Show
     private String state;
     private String venue;
 
-    @JsonIgnore
+    @Transient
+    private Long numberOfReviews;
+
     @OneToMany(mappedBy = "show", fetch = FetchType.LAZY)
     private List<ShowReview> showReviews;
 
@@ -142,5 +144,15 @@ public class Show
                 ", averageRating=" + averageRating +
                 ", notes='" + notes + '\'' +
                 '}';
+    }
+
+    public Long getNumberOfReviews()
+    {
+        return numberOfReviews;
+    }
+
+    public void setNumberOfReviews(Long numberOfReviews)
+    {
+        this.numberOfReviews = numberOfReviews;
     }
 }

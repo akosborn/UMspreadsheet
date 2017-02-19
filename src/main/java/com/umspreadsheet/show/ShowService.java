@@ -57,6 +57,11 @@ public class ShowService
         return showRepository.findTop2ByOrderByDateDesc();
     }
 
+    public List<Show> getLastThreeShows()
+    {
+        return showRepository.findTop3ByOrderByDateDesc();
+    }
+
     public Show findById(Long id)
     {
         return showRepository.findById(id);

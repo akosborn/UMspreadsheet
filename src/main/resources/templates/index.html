@@ -9,9 +9,9 @@
     <title>UMSpreadsheet</title>
 
     <link rel="stylesheet" th:href="@{/css/index.css}"/>
-    <!--<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript" th:inline="javascript">
-
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <!--<script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
         // Load the Visualization API and the corechart package.
         google.charts.load('current', {'packages':['corechart']});
 
@@ -22,7 +22,7 @@
         // instantiates the pie chart, passes in the data and
         // draws it.
         function drawChart() {
-            /*<![CDATA[*/
+
             var topThreeSongs = [[${topThreeSongs}]];
 
             // Create the data table.
@@ -79,7 +79,6 @@
         function drawChart() {
 
             var topThreeShows = [[${topThreeShows}]];
-            console.log(topThreeShows);
 
             // Create the data table.
             var data = new google.visualization.DataTable();
@@ -137,7 +136,7 @@
 
             <div class="row">
                 <div id="most-recent-show-div" class="col-md-6">
-                    <div id="th-most-recent-show" th:each="show : ${lastTwoShows}" th:object="${show}">
+                    <div id="th-most-recent-show" th:each="show : ${lastThreeShows}" th:object="${show}">
                         <div id="most-recent-show-header">
                             <a th:href="@{/reviews/shows/show(showId=*{id})}">
                                 <h4 id="show-title" th:text="*{#dates.format(date, 'yyyy/MM/dd') + ' ' + city + ', ' + state}">
@@ -145,8 +144,11 @@
                                 </h4>
                             </a>
                             <h4 id="show-rating-and-medal" class="pull-right">
-                                <i class="fa fa-trophy" aria-hidden="true"></i>
-                                <span th:if="*{averageRating != null}" th:text="*{#numbers.formatDecimal(averageRating, 1, 2)}">87.34</span>
+                                <i th:if="*{averageRating gt 6.99 and averageRating lt 8}" class="fa fa-trophy" style="color: #CD7F32;" aria-hidden="true"></i>
+                                <i th:if="*{averageRating gt 7.99 and averageRating lt 9}" class="fa fa-trophy" style="color: #C0C0C0;" aria-hidden="true"></i>
+                                <i th:if="*{averageRating gt 8.99 and averageRating lt 9.5}" class="fa fa-trophy" style="color: #FFD700;" aria-hidden="true"></i>
+                                <i th:if="*{averageRating gt 9.49}" class="fa fa-diamond" style="color: #B9F2FF;" aria-hidden="true"></i>
+                                <span th:if="*{averageRating != null}" th:text="*{#numbers.formatDecimal(averageRating, 1, 2)}">[0.00]</span>
                                 <span th:if="*{averageRating == null}">No Rating</span>
                             </h4>
                         </div>
@@ -162,10 +164,8 @@
                         </h6>
 
                         <h5 style="text-align: center">
-                            <a th:href="@{/shows(showId=*{id})}" th:text="${#lists.size(show.showReviews)} + (${#lists.size(show.showReviews)} == 1? ' Review': ' Reviews')">
+                            <a th:href="@{/shows(showId=*{id})}" th:text="${#lists.size(show.numberOfReviews)} + (${#lists.size(show.numberOfReviews)} == 1? ' Review': ' Reviews')">
                             3 reviews</a>
-                            &nbsp;|&nbsp;
-                            <a th:href="@{/user/review(showId=*{id})}">Review</a>
                         </h5>
                         <br/>
                     </div>

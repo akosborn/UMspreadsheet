@@ -51,9 +51,9 @@ MOST RECENT SHOW
     color: #F2C73A;
 }
 
-#most-recent-show-header .fa-trophy
+#most-recent-show-header a:link, a:visited
 {
-    color: silver;
+    text-decoration: none;
 }
 
 #most-recent-show-div #most-recent-show-header h4,
@@ -62,7 +62,8 @@ MOST RECENT SHOW
     display: inline;
 }
 
-#most-recent-show-div .fa-trophy
+#most-recent-show-div .fa-trophy,
+#most-recent-show-div .fa-diamond
 {
     margin-right: 20px;
 }

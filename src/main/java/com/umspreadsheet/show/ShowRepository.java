@@ -33,5 +33,7 @@ public interface ShowRepository extends CrudRepository<Show, Long>
 
     List<Show> findTop2ByOrderByDateDesc();
 
+    List<Show> findTop3ByOrderByDateDesc();
+
     Show findById(Long id);
 }

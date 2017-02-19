@@ -1,24 +1,33 @@
 package com.umspreadsheet.controller;
 
+import com.umspreadsheet.model.Set;
+import com.umspreadsheet.review.TrackReviewService;
+import com.umspreadsheet.show.Show;
 import com.umspreadsheet.show.ShowService;
+import com.umspreadsheet.track.Track;
 import com.umspreadsheet.track.TrackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 public class HomeController
 {
     private TrackService trackService;
     private ShowService showService;
+    private TrackReviewService trackReviewService;
 
     @Autowired
     public HomeController(TrackService trackService,
-                          ShowService showService)
+                          ShowService showService,
+                          TrackReviewService trackReviewService)
     {
         this.trackService = trackService;
         this.showService = showService;
+        this.trackReviewService = trackReviewService;
     }
 
     @RequestMapping("/")
@@ -26,8 +35,27 @@ public class HomeController
     {
         model.addAttribute("topThreeSongs", trackService.getTopThreeSongs());
         model.addAttribute("topThreeShows", showService.getTopThreeShows());
+        model.addAttribute("lastThreeShows", setNumberOfReviews(showService.getLastThreeShows()));
         model.addAttribute("lastTwoShows", showService.getLastTwoShows());
 
         return "index";
+    }
+
+    private List<Show> setNumberOfReviews(List<Show> shows)
+    {
+        for (Show show : shows)
+        {
+            Long numberOfReviews = 0L;
+            for (Set set: show.getSets())
+            {
+                for (Track track : set.getTracks())
+                {
+                    numberOfReviews += track.getReviews().size();
+                }
+            }
+            show.setNumberOfReviews(numberOfReviews);
+        }
+
+        return shows;
     }
 }
