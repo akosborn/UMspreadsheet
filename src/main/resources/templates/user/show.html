@@ -109,7 +109,6 @@
             {
                 $(".bs-slider").on("slideStop", function (slideEvt)
                 {
-                    alert(slideEvt.target.id + 'Form');
                     $('#' + slideEvt.target.id + 'Form').submit();
                 });
             });
