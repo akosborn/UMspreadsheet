@@ -18,16 +18,13 @@ public class HomeController
 {
     private TrackService trackService;
     private ShowService showService;
-    private TrackReviewService trackReviewService;
 
     @Autowired
     public HomeController(TrackService trackService,
-                          ShowService showService,
-                          TrackReviewService trackReviewService)
+                          ShowService showService)
     {
         this.trackService = trackService;
         this.showService = showService;
-        this.trackReviewService = trackReviewService;
     }
 
     @RequestMapping("/")
