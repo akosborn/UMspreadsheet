@@ -41,7 +41,7 @@ public class ReviewController
 
     // Returns view for all reviewable tracks for the specified show
     @RequestMapping(value = "/show", params = "showId", method = RequestMethod.GET)
-    public String reviewShow(@RequestParam("showId") Long showId, Model model)
+    public String reviewShow(@RequestParam(value = "showId") Long showId, Model model)
     {
         // Find the current user's username
         String username = getCurrentUsername();

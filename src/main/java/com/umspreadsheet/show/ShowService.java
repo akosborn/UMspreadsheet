@@ -48,7 +48,6 @@ public class ShowService
 
     public List<Show> getTopThreeShows()
     {
-        System.out.println(showRepository.findTop3ByOrderByAverageRating());
         return showRepository.findTop3ByOrderByAverageRating();
     }
 
