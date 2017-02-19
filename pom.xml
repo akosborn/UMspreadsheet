@@ -85,6 +85,7 @@
             <artifactId>thymeleaf-extras-springsecurity4</artifactId>
 			<version>3.0.0.RELEASE</version>
 			<!-- version MUST be specified, as default isn't supported by Spring Social config -->
+			<!-- http://stackoverflow.com/questions/37270322/spring-boot-security-thymeleaf-iprocessordialect-class-missing -->
         </dependency>
 		<dependency>
 			<groupId>mysql</groupId>

@@ -17,8 +17,22 @@
 <body>
     <div layout:fragment="content">
         <div id="#home-container" class="container">
-            <h2 th:text="${#dates.format(show.date, 'yyyy/MM/dd') + ' ' + show.city + ', '  + show.state}"></h2>
-            <h3 th:text="${show.venue}"></h3>
+
+            <div id="most-recent-show-header" th:object="${show}">
+                <h2 id="show-title" th:text="${#dates.format(show.date, 'yyyy/MM/dd') + ' ' + show.city + ', '  + show.state}"></h2>
+                <h2 id="show-rating-and-medal" class="pull-right">
+                    <i th:if="*{averageRating gt 6.99 and averageRating lt 8}" class="fa fa-trophy" style="color: #CD7F32;" aria-hidden="true"></i>
+                    <i th:if="*{averageRating gt 7.99 and averageRating lt 9}" class="fa fa-trophy" style="color: #C0C0C0;" aria-hidden="true"></i>
+                    <i th:if="*{averageRating gt 8.99 and averageRating lt 9.5}" class="fa fa-trophy" style="color: #FFD700;" aria-hidden="true"></i>
+                    <i th:if="*{averageRating gt 9.49}" class="fa fa-diamond" style="color: #B9F2FF;" aria-hidden="true"></i>
+                    <span th:if="*{averageRating != null}" th:text="*{#numbers.formatDecimal(averageRating, 1, 2)}">[0.00]</span>
+                    <span th:if="*{averageRating == null}">No Rating</span>
+                </h2>
+                <h3 th:text="${show.venue}"></h3>
+            </div>
+
+            <!--<h2 th:text="${#dates.format(show.date, 'yyyy/MM/dd') + ' ' + show.city + ', '  + show.state}"></h2>
+            <h3 th:text="${show.venue}"></h3>-->
             <br/>
             <br/>
             <div th:if="${submitted == 'true'}" class="alert alert-success">
@@ -31,22 +45,27 @@
                 Review successfully edited.
             </div>
             <table id="show-set-table" class="table table-striped table-condensed" th:each="setEntry : ${trackAndReviewMap}">
-                <h4 th:text="${setEntry.key}">Set 1</h4>
+                <h4 class="set-name" th:text="${setEntry.key}">Set 1</h4>
                 <thead>
                     <tr>
-                        <th>Song</th>
-                        <th>Community Rating</th>
-                        <th>My Rating</th>
-                        <th></th>
-                        <th></th>
+                        <th class="song-column-header">SONG</th>
+                        <th>LENGTH</th>
+                        <th>TYPE</th>
+                        <th>NOTES</th>
+                        <th style="width: 130px">COMMUNITY RATING</th>
+                        <th style="width: 280px;">MY RATING</th>
+                        <th>COMMENTS</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:each="trackAndReviewEntry,iterStat : ${setEntry.value}"
                         th:class="${trackAndReviewEntry.value.id != null}? 'success'">
                         <td th:text="${trackAndReviewEntry.key.song}">[song]</td>
-                        <td>[avg. rating]</td>
-                        <td>
+                        <td>[length]</td>
+                        <td>[type]</td>
+                        <td>[too many notes]</td>
+                        <td th:text="${#numbers.formatDecimal(trackAndReviewEntry.key.averageRating, 0, 'COMMA', 2, 'POINT')}">[avg rating]</td>
+                        <td style="border-left: solid #2E3542 15px;">
                             <!--<a th:if="${trackAndReviewEntry.value == null}" th:href="@{/user/review/track(trackId=${trackAndReviewEntry.key.id})}">-->
                             <form th:id="'track' + ${trackAndReviewEntry.key.id} + 'Form'" th:object="${trackReviewForm}" th:action="@{/reviews/shows/show}" method="post">
                                 <input type="hidden" th:if="${trackAndReviewEntry.value.id != null}"
@@ -54,9 +73,10 @@
                                 <input type="hidden" th:value="${trackAndReviewEntry.value.trackId}" th:name="trackId"
                                        th:id="trackId"/>
                                 <input type="hidden" th:field="*{username}" />
+                                <span th:id="'track' + ${trackAndReviewEntry.key.id} + 'SliderLabel'"></span>
                                 <input th:id="'track' + ${trackAndReviewEntry.key.id}" class="bs-slider"
                                        th:name="score" data-slider-id='trackReviewSlider'
-                                       type="text" data-slider-min="0" data-slider-max="10"
+                                       type="number" data-slider-min="0" data-slider-max="10"
                                        data-slider-step="0.25" data-slider-value="0" />
                             </form>
                                 <!-- <i class="fa fa-plus" aria-hidden="true" style="color: green;"></i> -->
@@ -67,7 +87,7 @@
                                 <i class="fa fa-comment-o" aria-hidden="true"></i>
                             </a>
                         </td>
-                        <td>
+                        <!--<td>
                             <form th:if="${trackAndReviewEntry.value.id != null}" th:object="${trackAndReviewEntry.value}"
                                   th:action="@{/user/review(reviewId=${trackAndReviewEntry.value.id}, showId=${trackAndReviewEntry.key.show.id})}"
                                   th:method="delete" onclick="return confirm('Are you sure you want to delete this review?')">
@@ -75,7 +95,7 @@
                                     <i class="fa fa-trash" aria-hidden="true" style="color: #B33A3A"></i>
                                 </button>
                             </form>
-                        </td>
+                        </td>-->
                     </tr>
                 </tbody>
             </table>
@@ -83,7 +103,6 @@
     </div>
     <th:block layout:fragment="script">
         <script type="text/javascript" th:inline="javascript">
-            /*<![CDATA[*/
 
             var trackIdMap = [[${trackIdMap}]];
 
@@ -92,28 +111,32 @@
                 createSlider(key, trackIdMap[key])
             });
 
-            function createSlider(trackId, score)
-            {
+            function createSlider(trackId, score) {
                 var mySlider = $('#track' + trackId).bootstrapSlider({
-                    formatter: function (value)
-                    {
+                    formatter: function (value) {
                         return 'Current value: ' + value;
                     }
                 });
 
-                if (score != null)
+                if (score != null) {
                     mySlider.bootstrapSlider('setValue', score);
+                    $('#track' + trackId + 'SliderLabel').text(parseFloat(Math.round(score * 100) / 100).toFixed(2));
+                }
             }
 
             $(document).ready(function()
             {
+                $(".bs-slider").on("slide", function (slideEvt)
+                {
+                    $('#' + slideEvt.target.id + 'SliderLabel').text(parseFloat(Math.round(slideEvt.value * 100) / 100).toFixed(2));
+                });
+
                 $(".bs-slider").on("slideStop", function (slideEvt)
                 {
                     $('#' + slideEvt.target.id + 'Form').submit();
                 });
             });
 
-            /*]]>*/
         </script>
     </th:block>
 </body>

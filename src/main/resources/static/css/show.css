@@ -30,6 +30,12 @@ TRACKLIST TABLE
     margin-bottom: 40px;
 }
 
+#show-set-table .song-column-header
+{
+    font-size: 18px;
+    font-weight: bolder;
+}
+
 form .icon-button
 {
     background: none;
@@ -50,4 +56,52 @@ form .icon-button
 {
     background-image: none !important;
     background-color: #2E3542 !important;
+}
+
+[id*="SliderLabel"]
+{
+
+}
+
+
+/******************************************
+SHOW HEADER
+******************************************/
+#most-recent-show-header
+{
+    /*
+    border-bottom: solid thick darkgray;
+    padding-bottom: 5px;
+    */
+}
+
+#most-recent-show-header h2
+{
+    color: #F2C73A;
+}
+
+#most-recent-show-header h2,
+#most-recent-show-header .rating-and-medal
+{
+    display: inline;
+}
+
+.fa-trophy,
+.fa-diamond
+{
+    margin-right: 20px;
+}
+
+#show-rating-and-medal
+{
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+/******************************************
+SHOW SET NAME
+******************************************/
+.set-name
+{
+    font-weight: bolder;
 }

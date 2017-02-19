@@ -105,12 +105,22 @@ body
         background: rgba(0, 0, 0, 0.3);
     }
 
+    .dropdown-menu
+    {
+        background: rgba(0, 0, 0, 0.8);
+    }
+
     @media (max-width: 767px)
     {
         .navbar-default .navbar-nav .open .dropdown-menu>li>a,
         .navbar-default .navbar-nav .open .dropdown-menu>li>a:hover
         {
             color: #fff;
+        }
+
+        .navbar-default .navbar-collapse
+        {
+            background: rgba(0, 0, 0, 0.8);
         }
     }
 

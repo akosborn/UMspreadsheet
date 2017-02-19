@@ -22,4 +22,4 @@ spring:
         app-id: 964513099769-moqm18t6ftg0rhflraouctiunitv6sjv.apps.googleusercontent.com
         app-secret: AfBOG29GRoCyWTUpe8v3mgA3
 
-debug: true
+debug: false
