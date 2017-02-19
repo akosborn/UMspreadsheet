@@ -8,7 +8,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    Show-sql: true
+    Show-sql: false
   thymeleaf:
     cache: false
   social:

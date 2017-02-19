@@ -65,19 +65,19 @@
                                     <span class="glyphicon glyphicon-user">&nbsp;</span>Dashboard
                                 </a>
                             </li>
-                            <li sec:authorize="isAuthenticated()">
+                            <li>
                                 <a href="javascript:document.logoutForm.submit();">
                                     <span class="glyphicon glyphicon-log-in">&nbsp;</span>Log Out
                                 </a>
                             </li>
                         </ul>
-                        <form method="POST" th:action="@{/signout}" name="logoutForm"></form>
+                        <form th:method="POST" th:action="@{/signout}" name="logoutForm"></form>
                     </li>
                     <li sec:authorize="isAnonymous()">
                         <a th:href="@{/signin}">Login</a>
                     </li>
                     <li sec:authorize="isAnonymous()">
-                        <a sec:authorize="isAnonymous()" th:href="@{/signup}">Sign Up</a>
+                        <a th:href="@{/signup}">Sign Up</a>
                     </li>
                 </ul>
             </div>
