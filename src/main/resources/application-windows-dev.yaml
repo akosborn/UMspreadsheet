@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: umspreadsheet
+  datasource:
+    url: jdbc:mysql://localhost/spring-social?autoReconnect=true&useSSL=false
+    username: root
+    password: Osbo_789
+  jpa:
+    hibernate:
+      ddl-auto: update
+    Show-sql: true
+  thymeleaf:
+    cache: false
+  social:
+      facebook:
+        app-id: 1121868971273792
+        app-secret: 401ec59dd72250d20f1035df912af9a6
+      twitter:
+        app-id: Vjz71FPnLEJMwpjAIfvpf1dAl
+        app-secret: AqG4qwAxWEV9O0OYce8IDtDk2Xe8CwdYchYONj2TtKwWpAGOmY
+      google:
+        app-id: 964513099769-moqm18t6ftg0rhflraouctiunitv6sjv.apps.googleusercontent.com
+        app-secret: AfBOG29GRoCyWTUpe8v3mgA3
+
+debug: false
