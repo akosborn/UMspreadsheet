@@ -7,8 +7,8 @@ spring:
     password: Osbo_789
   jpa:
     hibernate:
-      ddl-auto: update
-    Show-sql: false
+      ddl-auto: create-drop
+    Show-sql: true
   thymeleaf:
     cache: false
   social:
