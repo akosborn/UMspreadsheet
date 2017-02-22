@@ -15,5 +15,5 @@ public interface TrackRepository extends CrudRepository<Track, Long>
             nativeQuery = true)
     public List<Track> findTopThreeSongs();*/
 
-    List<Track> findTop3ByOrderByAverageRating();
+    List<Track> findTop3ByOrderByAverageRatingDesc();
 }

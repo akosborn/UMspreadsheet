@@ -18,7 +18,7 @@ public class TrackService
 
     public List<Track> getTopThreeSongs()
     {
-        return trackRepository.findTop3ByOrderByAverageRating();
+        return trackRepository.findTop3ByOrderByAverageRatingDesc();
     }
 
     public Track findById(Long id)
