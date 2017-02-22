@@ -29,7 +29,7 @@ public interface ShowRepository extends CrudRepository<Show, Long>
             nativeQuery = true)
     public List<Show> findTopThreeShows();*/
 
-    List<Show> findTop3ByOrderByAverageRating();
+    List<Show> findTop3ByOrderByAverageRatingDesc();
 
     List<Show> findTop2ByOrderByDateDesc();
 

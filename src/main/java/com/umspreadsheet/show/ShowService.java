@@ -48,7 +48,7 @@ public class ShowService
 
     public List<Show> getTopThreeShows()
     {
-        return showRepository.findTop3ByOrderByAverageRating();
+        return showRepository.findTop3ByOrderByAverageRatingDesc();
     }
 
     public List<Show> getLastTwoShows()
