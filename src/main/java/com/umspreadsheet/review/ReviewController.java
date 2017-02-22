@@ -63,7 +63,7 @@ public class ReviewController
     }
 
     // Delete a review
-    @RequestMapping(value = "", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/show", method = RequestMethod.DELETE)
     public String deleteTrackReview(@RequestParam("reviewId") Long reviewId,
                                     @RequestParam("showId") Long showId, RedirectAttributes redirectAttributes)
     {
@@ -72,10 +72,10 @@ public class ReviewController
         redirectAttributes.addAttribute("showId", showId);
         redirectAttributes.addFlashAttribute("reviewDeleted", "true");
 
-        return "redirect:/user/review";
+        return "redirect:/reviews/shows/show";
     }
 
-    @RequestMapping(value = "/track", params = "trackId")
+    /*@RequestMapping(value = "/track", params = "trackId")
     public String reviewTrack(@RequestParam("trackId") Long trackId, Model model)
     {
         model.addAttribute("trackReview", new TrackReview(trackService.findById(trackId)));
@@ -90,9 +90,9 @@ public class ReviewController
         model.addAttribute("update", "true");
 
         return "/user/trackReviewForm";
-    }
+    }*/
 
-    // Endpoint for new track reviews
+    // Endpoint for new track review submission
     @RequestMapping(value = "/show", method = RequestMethod.POST)
     public String saveTrackReview(TrackReviewForm trackReviewForm, RedirectAttributes redirectAttributes)
     {
@@ -121,6 +121,8 @@ public class ReviewController
 
         return "redirect:/user/review";
     }
+
+    @RequestMapping(value = "/")
 
     private String getCurrentUsername()
     {
