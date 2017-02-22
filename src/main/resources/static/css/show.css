@@ -98,6 +98,11 @@ SHOW HEADER
     margin-bottom: 0;
 }
 
+[id*="track"] span
+{
+    margin-right: 20px;
+}
+
 /******************************************
 SHOW SET NAME
 ******************************************/

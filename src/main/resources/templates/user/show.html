@@ -65,7 +65,7 @@
                         <td>[type]</td>
                         <td>[too many notes]</td>
                         <td th:text="${#numbers.formatDecimal(trackAndReviewEntry.key.averageRating, 0, 'COMMA', 2, 'POINT')}">[avg rating]</td>
-                        <td style="border-left: solid #2E3542 15px;">
+                        <td>
                             <!--<a th:if="${trackAndReviewEntry.value == null}" th:href="@{/user/review/track(trackId=${trackAndReviewEntry.key.id})}">-->
                             <form th:id="'track' + ${trackAndReviewEntry.key.id} + 'Form'" th:object="${trackReviewForm}" th:action="@{/reviews/shows/show}" method="post">
                                 <input type="hidden" th:if="${trackAndReviewEntry.value.id != null}"
@@ -73,7 +73,7 @@
                                 <input type="hidden" th:value="${trackAndReviewEntry.value.trackId}" th:name="trackId"
                                        th:id="trackId"/>
                                 <input type="hidden" th:field="*{username}" />
-                                <span th:id="'track' + ${trackAndReviewEntry.key.id} + 'SliderLabel'"></span>
+                                <span th:id="'track' + ${trackAndReviewEntry.key.id} + 'SliderLabel'">0.00</span>
                                 <input th:id="'track' + ${trackAndReviewEntry.key.id}" class="bs-slider"
                                        th:name="score" data-slider-id='trackReviewSlider'
                                        type="number" data-slider-min="0" data-slider-max="10"
