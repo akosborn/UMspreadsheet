@@ -17,11 +17,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.security.Principal;
 import java.util.*;
 
 @Controller
-@RequestMapping("/reviews/shows")
+@RequestMapping("/reviews")
 public class ReviewController
 {
     private ShowService showService;
@@ -39,8 +38,15 @@ public class ReviewController
         this.userService = userService;
     }
 
+    // Home page for reviews
+    @RequestMapping("")
+    public String reviewHomePage(Model model)
+    {
+        return "/reviews/reviewsHome";
+    }
+
     // Returns view for all reviewable tracks for the specified show
-    @RequestMapping(value = "/show", params = "showId", method = RequestMethod.GET)
+    @RequestMapping(value = "/shows/show", params = "showId", method = RequestMethod.GET)
     public String reviewShow(@RequestParam(value = "showId") Long showId, Model model)
     {
         // Find the current user's username
@@ -63,7 +69,7 @@ public class ReviewController
     }
 
     // Delete a review
-    @RequestMapping(value = "/show", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/shows/show", method = RequestMethod.DELETE)
     public String deleteTrackReview(@RequestParam("reviewId") Long reviewId,
                                     @RequestParam("showId") Long showId, RedirectAttributes redirectAttributes)
     {
@@ -93,7 +99,7 @@ public class ReviewController
     }*/
 
     // Endpoint for new track review submission
-    @RequestMapping(value = "/show", method = RequestMethod.POST)
+    @RequestMapping(value = "/shows/show", method = RequestMethod.POST)
     public String saveTrackReview(TrackReviewForm trackReviewForm, RedirectAttributes redirectAttributes)
     {
         TrackReview trackReview = new TrackReview();
@@ -113,16 +119,15 @@ public class ReviewController
         return "redirect:/reviews/shows/show";
     }
 
-    @RequestMapping(value = "/track", method = RequestMethod.PUT)
+
+    /*@RequestMapping(value = "/track", method = RequestMethod.PUT)
     public String updateTrackReview(TrackReview trackReview, RedirectAttributes redirectAttributes)
     {
         redirectAttributes.addAttribute("showId", trackReviewService.save(trackReview).getTrack().getShow().getId());
         redirectAttributes.addFlashAttribute("edited", "true");
 
         return "redirect:/user/review";
-    }
-
-    @RequestMapping(value = "/")
+    }*/
 
     private String getCurrentUsername()
     {
