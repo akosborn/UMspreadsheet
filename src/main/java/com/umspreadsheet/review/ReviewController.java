@@ -4,10 +4,10 @@ import com.umspreadsheet.model.*;
 import com.umspreadsheet.model.Set;
 import com.umspreadsheet.show.Show;
 import com.umspreadsheet.show.ShowService;
-import com.umspreadsheet.track.Track;
-import com.umspreadsheet.track.TrackService;
+import com.umspreadsheet.track.*;
 import com.umspreadsheet.user.SimpleUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -53,8 +53,16 @@ public class ReviewController
                                    @RequestParam(value = "month", required = false) String month,
                                    @RequestParam(value = "day", required = false) String day,
                                    @RequestParam(value = "rating", required = false) String rating,
-                                   @RequestParam(value = "type", required = false) String type)
+                                   @RequestParam(value = "type", required = false) String type,
+                                   Model model)
     {
+        List<String> requestParams = new ArrayList<>();
+
+        TrackSpecificationsBuilder builder = new TrackSpecificationsBuilder();
+        builder.with("averageRating", ">", "7.99");
+        builder.with("averageRating", "<", "9.0");
+        Specification<Track> specification = builder.build();
+        model.addAttribute("results", trackService.criteriaTest(specification));
 
         return "/track/search";
     }

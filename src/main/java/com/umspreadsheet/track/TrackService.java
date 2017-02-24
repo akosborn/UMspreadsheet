@@ -1,6 +1,7 @@
 package com.umspreadsheet.track;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,5 +30,10 @@ public class TrackService
     public List<Track> getTopFortySongs()
     {
         return trackRepository.findTop40ByOrderByAverageRatingDesc();
+    }
+
+    public List<Track> criteriaTest(Specification<Track> spec)
+    {
+        return trackRepository.findAll(spec);
     }
 }

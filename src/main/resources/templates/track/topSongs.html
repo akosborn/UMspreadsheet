@@ -54,7 +54,8 @@
 
             <br>
 
-            <form id="song-filter-form" class="form-horizontal" method="get" th:action="@{/songs/search}">
+            <form id="song-filter-form" class="form-horizontal" method="get" th:action="@{/songs/search}"
+                  onsubmit="removeEmptyFormFields()">
 
                 <div class="form-group">
                     <label for="year" class="control-label col-sm-3">Year:</label>
@@ -89,7 +90,7 @@
                     <label for="month" class="control-label col-sm-3">Month:</label>
                     <div class="col-sm-9 col-lg-7">
                         <select class="form-control" id="month" name="month">
-                            <option value="0">--</option>
+                            <option value="">--</option>
                             <option value="1">January</option>
                             <option value="2">February</option>
                             <option value="3">March</option>
@@ -110,7 +111,7 @@
                     <label for="day" class="control-label col-sm-3">Day:</label>
                     <div class="col-sm-9 col-lg-7">
                         <select class="form-control" id="day" name="day">
-                            <option value="0">--</option>
+                            <option value="">--</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -211,5 +212,34 @@
 
     </div>
 </div>
+
+<th:block layout:fragment="script">
+
+    <script type="text/javascript">
+
+        function removeEmptyFormFields()
+        {
+            var fieldList = [document.getElementById("year"),
+                            document.getElementById("month"),
+                            document.getElementById("day"),
+                            document.getElementById("rating"),
+                            document.getElementById("type")];
+
+            for (var field of fieldList)
+            {
+                alert(field.value);
+
+                if (field.value === "")
+                {
+                    field.disabled = true;
+                }
+            }
+
+            return true;
+        }
+
+    </script>
+
+</th:block>
 
 </body>
