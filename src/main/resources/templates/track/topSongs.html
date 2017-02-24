@@ -18,7 +18,10 @@
         <div class="col-md-9 shows-div">
             <div class="show-div" th:each="track,iterStat : ${topFortyTracks}" th:object="${track}" th:classappend="${iterStat.first}? 'top-show'">
                 <div class="show-header" th:style="${iterStat.first}? 'border-bottom: none;'">
-                    <h5 th:text="*{#dates.format(show.date, 'yyyy/MM/dd') + ' ' + show.city + ', ' + show.state}">[date, city, st]</h5>
+
+                    <a class="show-url" th:href="@{/shows/show(showId=*{show.id})}">
+                        <h5 th:text="*{#dates.format(show.date, 'yyyy/MM/dd') + ' ' + show.city + ', ' + show.state}">[date, city, st]</h5>
+                    </a>
                     <a th:href="@{/songs/song(songId=*{id})}">
                         <h4 th:text="*{song}">
                             [song title]
@@ -51,13 +54,14 @@
 
             <br>
 
-            <form class="form-horizontal">
+            <form id="song-filter-form" class="form-horizontal" method="get" th:action="@{/songs/search}">
 
                 <div class="form-group">
                     <label for="year" class="control-label col-sm-3">Year:</label>
                     <div class="col-sm-9 col-lg-7">
-                        <select class="form-control" id="year">
+                        <select class="form-control" id="year" name="year">
                             <option value="">--</option>
+                            <option value="2017">2017</option>
                             <option value="2016">2016</option>
                             <option value="2015">2015</option>
                             <option value="2014">2014</option>
@@ -84,8 +88,8 @@
                 <div class="form-group">
                     <label for="month" class="control-label col-sm-3">Month:</label>
                     <div class="col-sm-9 col-lg-7">
-                        <select class="form-control" id="month">
-                            <option value=''>--</option>
+                        <select class="form-control" id="month" name="month">
+                            <option value="0">--</option>
                             <option value="1">January</option>
                             <option value="2">February</option>
                             <option value="3">March</option>
@@ -105,8 +109,8 @@
                 <div class="form-group">
                     <label for="day" class="control-label col-sm-3">Day:</label>
                     <div class="col-sm-9 col-lg-7">
-                        <select class="form-control" id="day">
-                            <option value="">--</option>
+                        <select class="form-control" id="day" name="day">
+                            <option value="0">--</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -145,7 +149,7 @@
                 <div class="form-group">
                     <label for="rating" class="control-label col-sm-3">Rating:</label>
                     <div class="col-sm-9 col-lg-7">
-                        <select class="form-control" id="rating">
+                        <select class="form-control" id="rating" name="rating">
                             <option value="">--</option>
                             <option value="diamond">Diamond (above 9.49)</option>
                             <option value="gold">Gold (9.00 to 9.49)</option>
@@ -159,7 +163,7 @@
                 <div class="form-group">
                     <label for="type" class="control-label col-sm-3">Type:</label>
                     <div class="col-sm-9 col-lg-7">
-                        <select class="form-control" id="type">
+                        <select class="form-control" id="type" name="type">
                             <option value="">--</option>
                             <option value="jo">Jazz Odyssey</option>
                             <option value="js">Jimmy Stewart</option>

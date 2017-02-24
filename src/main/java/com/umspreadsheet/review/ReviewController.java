@@ -42,10 +42,21 @@ public class ReviewController
     @RequestMapping("/songs")
     public String topSongsPage(Model model)
     {
-        model.addAttribute("topFortyTracks", trackService.getTopFourtySongs());
+        model.addAttribute("topFortyTracks", trackService.getTopFortySongs());
         model.addAttribute("recentReviews", trackReviewService.getTenMostRecentReviews());
 
         return "/track/topSongs";
+    }
+
+    @RequestMapping(value = "/songs/search")
+    public String submitSongFilter(@RequestParam(value = "year", required = false) String year,
+                                   @RequestParam(value = "month", required = false) String month,
+                                   @RequestParam(value = "day", required = false) String day,
+                                   @RequestParam(value = "rating", required = false) String rating,
+                                   @RequestParam(value = "type", required = false) String type)
+    {
+
+        return "/track/search";
     }
 
     @RequestMapping("/shows/find")
