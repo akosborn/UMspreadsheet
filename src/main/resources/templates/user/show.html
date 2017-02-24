@@ -44,28 +44,28 @@
             <div th:if="${edited == 'true'}" class="alert alert-success">
                 Review successfully edited.
             </div>
-            <table id="show-set-table" class="table table-striped table-condensed" th:each="setEntry : ${trackAndReviewMap}">
+            <table sec:authorize="isAuthenticated()" id="show-set-table" class="table table-striped table-condensed" th:each="setEntry : ${trackAndReviewMap}">
                 <h4 class="set-name" th:text="${setEntry.key}">Set 1</h4>
                 <thead>
                     <tr>
                         <th class="song-column-header" style="width: 315px">SONG</th>
-                        <th>LENGTH</th>
-                        <th>TYPE</th>
-                        <th>NOTES</th>
-                        <th style="width: 175px;">COMMUNITY RATING</th>
+                        <th class="hidden-xs hidden-sm" style="width: 150px">LENGTH</th>
+                        <th class="hidden-xs" style="width: 130px">TYPE</th>
+                        <th class="hidden-xs hidden-sm" style="width: 275px">NOTES</th>
+                        <th class="hidden-xs" style="width: 175px;">COMMUNITY RATING</th>
                         <th style="width: 280px;">MY RATING</th>
-                        <th style="width: 280px;">COMMENTS</th>
-                        <th></th>
+                        <th class="hidden-xs hidden-sm" style="width: 280px;">COMMENTS</th>
+                        <th class="hidden-xs"></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:each="trackAndReviewEntry,iterStat : ${setEntry.value}"
                         th:class="${trackAndReviewEntry.value.id != null}? 'success'">
                         <td th:text="${trackAndReviewEntry.key.song}">[song]</td>
-                        <td>[length]</td>
-                        <td>[type]</td>
-                        <td>[too many notes]</td>
-                        <td th:text="${#numbers.formatDecimal(trackAndReviewEntry.key.averageRating, 0, 'COMMA', 2, 'POINT')}">[avg rating]</td>
+                        <td class="hidden-xs hidden-sm">[length]</td>
+                        <td class="hidden-xs">[type]</td>
+                        <td class="hidden-xs hidden-sm">[too many notes]</td>
+                        <td class="hidden-xs" th:text="${#numbers.formatDecimal(trackAndReviewEntry.key.averageRating, 0, 'COMMA', 2, 'POINT')}">[avg rating]</td>
                         <td>
                             <!--<a th:if="${trackAndReviewEntry.value == null}" th:href="@{/user/review/track(trackId=${trackAndReviewEntry.key.id})}">-->
                             <form th:id="'track' + ${trackAndReviewEntry.key.id} + 'Form'" th:object="${trackReviewForm}" th:action="@{/shows/show}" method="post">
@@ -83,12 +83,12 @@
                                 <!-- <i class="fa fa-plus" aria-hidden="true" style="color: green;"></i> -->
                             <!--</a>-->
                         </td>
-                        <td>
+                        <td class="hidden-xs hidden-sm">
                             <a th:if="${trackAndReviewEntry.value != null}" th:href="@{/user/review/track(reviewId=${trackAndReviewEntry.value.id})}">
                                 <i class="fa fa-comment-o" aria-hidden="true"></i>
                             </a>
                         </td>
-                        <td>
+                        <td class="hidden-xs">
                             <form th:if="${trackAndReviewEntry.value.id != null}" th:object="${trackAndReviewEntry.value}"
                                   th:action="@{/shows/show(reviewId=${trackAndReviewEntry.value.id}, showId=${trackAndReviewEntry.key.show.id})}"
                                   th:method="delete" onclick="return confirm('Are you sure you want to delete this review?')">
@@ -98,6 +98,28 @@
                             </form>
                         </td>
                     </tr>
+                </tbody>
+            </table>
+
+            <table sec:authorize="isAnonymous()" id="show-set-table" class="table table-striped table-condensed" th:each="setEntry : ${trackAndReviewMap}">
+                <h4 class="set-name" th:text="${setEntry.key}">Set 1</h4>
+                <thead>
+                <tr>
+                    <th style="width: 315px">SONG</th>
+                    <th class="hidden-xs" style="width: 150px">LENGTH</th>
+                    <th style="width: 130px">TYPE</th>
+                    <th class="hidden-xs" style="width: 275px">NOTES</th>
+                    <th style="width: 175px;">COMMUNITY RATING</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="trackAndReviewEntry,iterStat : ${setEntry.value}">
+                    <td th:text="${trackAndReviewEntry.key.song}">[song]</td>
+                    <td class="hidden-xs">[length]</td>
+                    <td>[type]</td>
+                    <td class="hidden-xs">[too many notes]</td>
+                    <td th:text="${#numbers.formatDecimal(trackAndReviewEntry.key.averageRating, 0, 'COMMA', 2, 'POINT')}">[avg rating]</td>
+                </tr>
                 </tbody>
             </table>
             <!--<table id="user-reviews">
