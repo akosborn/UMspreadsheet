@@ -16,7 +16,7 @@
         <h1 id="header-title" class="text-center">Top-Rated Songs</h1>
 
         <div class="col-md-9 shows-div">
-            <div class="show-div" th:each="track,iterStat : ${topFourtyTracks}" th:object="${track}" th:classappend="${iterStat.first}? 'top-show'">
+            <div class="show-div" th:each="track,iterStat : ${topFortyTracks}" th:object="${track}" th:classappend="${iterStat.first}? 'top-show'">
                 <div class="show-header" th:style="${iterStat.first}? 'border-bottom: none;'">
                     <h5 th:text="*{#dates.format(show.date, 'yyyy/MM/dd') + ' ' + show.city + ', ' + show.state}">[date, city, st]</h5>
                     <a th:href="@{/songs/song(songId=*{id})}">
@@ -50,7 +50,7 @@
             <h2>Song Filter</h2>
 
             <br>
-            
+
             <form class="form-horizontal">
 
                 <div class="form-group">
@@ -173,6 +173,36 @@
                     </div>
                 </div>
             </form>
+
+            <br>
+            <br>
+
+            <h2>Recent Reviews</h2>
+            <br>
+            <table id="reviews-table" style="width: 100%">
+                <th:block th:each="review,iterStat : ${recentReviews}">
+                    <tr>
+                        <td>
+                            <a th:href="@{/user/${review.user.username}}">
+                                <span th:text="${review.user.username}"></span>
+                            </a>
+                        </td>
+                        <td style="text-align: right">
+                            <a th:href="@{/songs/song(songId=${review.track.id})}">
+                                <span th:text="${review.track.song}"></span>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr th:style="${!iterStat.last}? 'border-bottom: solid darkgray'">
+                        <td></td>
+                        <td style="text-align: right">
+                            <a th:href="@{/shows/show(showId=${review.track.show.id})}">
+                                <span th:text="${review.track.show.date}"></span>
+                            </a>
+                        </td>
+                    </tr>
+                </th:block>
+            </table>
         </div>
 
     </div>

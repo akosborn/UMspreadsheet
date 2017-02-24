@@ -1,13 +1,17 @@
 package com.umspreadsheet.show;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigInteger;
 import java.util.List;
 
 @Repository
 public interface ShowRepository extends CrudRepository<Show, Long>
 {
+    public static final String FIND_ALL_IDS = "SELECT id FROM shows";
+
     // SHOW WITH TRACKS ==================================================
     /*@Query("SELECT u FROM Show u JOIN FETCH u.tracks WHERE u.id = (:id)")
     public Show findByIdAndFetchTracksEagerly(@Param("id") Long id);
@@ -38,4 +42,7 @@ public interface ShowRepository extends CrudRepository<Show, Long>
     List<Show> findTop3ByOrderByDateDesc();
 
     Show findById(Long id);
+
+    @Query(value = FIND_ALL_IDS, nativeQuery = true)
+    List<BigInteger> findAllIds();
 }

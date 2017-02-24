@@ -70,6 +70,7 @@ RIGHT DIV
 {
     margin-top: 0;
     text-align: center;
+    color: #F2C73A;
 }
 
 select
@@ -80,4 +81,14 @@ select
 .gray-btn
 {
     background-color: darkgray;
+}
+
+#reviews-table
+{
+    width: 100%;
+}
+
+#reviews-table td
+{
+    padding: 0 20px 0 20px;
 }

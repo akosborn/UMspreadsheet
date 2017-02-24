@@ -39,4 +39,9 @@ public class TrackReviewService
     {
         return trackReviewRepository.findOne(id);
     }
+
+    public List<TrackReview> getTenMostRecentReviews()
+    {
+        return trackReviewRepository.findTop10ByOrderByReviewedOnDesc();
+    }
 }

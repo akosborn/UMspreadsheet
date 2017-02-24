@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.math.BigInteger;
 import java.util.*;
 
 @Controller
@@ -41,7 +42,8 @@ public class ReviewController
     @RequestMapping("/songs")
     public String topSongsPage(Model model)
     {
-        model.addAttribute("topFourtyTracks", trackService.getTopFourtySongs());
+        model.addAttribute("topFortyTracks", trackService.getTopFourtySongs());
+        model.addAttribute("recentReviews", trackReviewService.getTenMostRecentReviews());
 
         return "/track/topSongs";
     }
@@ -99,6 +101,14 @@ public class ReviewController
 
         redirectAttributes.addAttribute("showId", showId);
         redirectAttributes.addFlashAttribute("reviewDeleted", "true");
+
+        return "redirect:/shows/show";
+    }
+
+    @RequestMapping("/shows/random")
+    public String randomShow(RedirectAttributes redirectAttributes)
+    {
+        redirectAttributes.addAttribute("showId", getRandomShow());
 
         return "redirect:/shows/show";
     }
@@ -214,20 +224,26 @@ public class ReviewController
     }
 
     private List<Show> setNumberOfReviews(List<com.umspreadsheet.show.Show> shows)
-{
-    for (com.umspreadsheet.show.Show show : shows)
     {
-        Long numberOfReviews = 0L;
-        for (Set set: show.getSets())
+        for (com.umspreadsheet.show.Show show : shows)
         {
-            for (Track track : set.getTracks())
+            Long numberOfReviews = 0L;
+            for (Set set: show.getSets())
             {
-                numberOfReviews += track.getReviews().size();
+                for (Track track : set.getTracks())
+                {
+                    numberOfReviews += track.getReviews().size();
+                }
             }
+            show.setNumberOfReviews(numberOfReviews);
         }
-        show.setNumberOfReviews(numberOfReviews);
+
+        return shows;
     }
 
-    return shows;
-}
+    private BigInteger getRandomShow()
+    {
+        List<BigInteger> idList = showService.findAllShowIds();
+        return idList.get(new Random().nextInt(idList.size()));
+    }
 }

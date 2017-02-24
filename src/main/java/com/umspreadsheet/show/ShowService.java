@@ -3,6 +3,7 @@ package com.umspreadsheet.show;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.util.List;
 
 @Service
@@ -69,5 +70,10 @@ public class ShowService
     public Show findById(Long id)
     {
         return showRepository.findById(id);
+    }
+
+    public List<BigInteger> findAllShowIds()
+    {
+        return showRepository.findAllIds();
     }
 }
