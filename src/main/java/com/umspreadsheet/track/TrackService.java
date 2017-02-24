@@ -25,4 +25,9 @@ public class TrackService
     {
         return trackRepository.findOne(id);
     }
+
+    public List<Track> getTopFourtySongs()
+    {
+        return trackRepository.findTop40ByOrderByAverageRatingDesc();
+    }
 }

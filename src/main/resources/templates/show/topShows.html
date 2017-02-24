@@ -15,8 +15,45 @@
     <div class="container">
         <h1 id="header-title" class="text-center">Top-Rated Shows</h1>
 
+        <div class="col-md-9 shows-div">
+            <div class="show-div" th:each="show,iterStat : ${topTwentyShows}" th:object="${show}"
+                 th:classappend="${iterStat.first}? 'top-show'">
+                <div class="show-header" th:style="${iterStat.first}? 'border-bottom: none;'">
+                    <a th:href="@{/shows/show(showId=*{id})}">
+                        <h4 class="show-title" th:text="*{#dates.format(date, 'yyyy/MM/dd') + ' ' + city + ', ' + state}">
+                            2017-02-03 Detroit, MI
+                        </h4>
+                    </a>
+                    <h4 class="show-rating-and-medal">
+                        <i th:if="*{averageRating gt 6.99 and averageRating lt 8}" class="fa fa-trophy" style="color: #CD7F32;" aria-hidden="true"></i>
+                        <i th:if="*{averageRating gt 7.99 and averageRating lt 9}" class="fa fa-trophy" style="color: #C0C0C0;" aria-hidden="true"></i>
+                        <i th:if="*{averageRating gt 8.99 and averageRating lt 9.5}" class="fa fa-trophy" style="color: #FFD700;" aria-hidden="true"></i>
+                        <i th:if="*{averageRating gt 9.49}" class="fa fa-diamond" style="color: #B9F2FF;" aria-hidden="true"></i>
+                        <span th:if="*{averageRating != null}" th:text="*{#numbers.formatDecimal(averageRating, 1, 2)}">[0.00]</span>
+                        <span th:if="*{averageRating == null}">No Rating</span>
+                    </h4>
+                </div>
+                <br/>
+                <h6 th:each="set : *{sets}" th:object="${set}">
+                    <strong th:text="${set.name}"></strong>:
+                    <th:block th:each="track,iterStat : *{tracks}" >
+                        <span th:text="${track.song}"></span>
+                        <span th:if="${track.segue and !iterStat.last}"> > </span>
+                        <span th:if="${!track.segue and !track.fluidSegue and !iterStat.last}">,&nbsp;</span>
+                        <span th:if="${track.fluidSegue}">&nbsp;->&nbsp;</span>
+                    </th:block>
+                </h6>
 
-        <div class="col-md-3 col-md-push-9 right-div">
+                <h5 th:text="${show.numberOfReviews} + (${show.numberOfReviews} == 1? ' Review': ' Reviews')"
+                    style="text-align: center; font-weight: bold">
+                    <!--<a th:href="@{/reviews/shows/show(showId=*{id}, reviewBookmark='true')}" th:text="${show.numberOfReviews} + (${show.numberOfReviews} == 1? ' Review': ' Reviews')">
+                    3 reviews</a>-->
+                </h5>
+                <br/>
+            </div>
+        </div>
+
+        <div class="col-md-3 right-div" id="show-filter">
             <h2>Show Filter</h2>
 
             <form class="form-horizontal">
@@ -75,37 +112,37 @@
                     <div class="col-sm-9 col-lg-7">
                         <select class="form-control" id="day">
                             <option value="">--</option>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                            <option>6</option>
-                            <option>7</option>
-                            <option>8</option>
-                            <option>9</option>
-                            <option>10</option>
-                            <option>11</option>
-                            <option>12</option>
-                            <option>13</option>
-                            <option>14</option>
-                            <option>15</option>
-                            <option>16</option>
-                            <option>17</option>
-                            <option>18</option>
-                            <option>19</option>
-                            <option>20</option>
-                            <option>21</option>
-                            <option>22</option>
-                            <option>23</option>
-                            <option>24</option>
-                            <option>25</option>
-                            <option>26</option>
-                            <option>27</option>
-                            <option>28</option>
-                            <option>29</option>
-                            <option>30</option>
-                            <option>31</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>
+                            <option value="25">25</option>
+                            <option value="26">26</option>
+                            <option value="27">27</option>
+                            <option value="28">28</option>
+                            <option value="29">29</option>
+                            <option value="30">30</option>
+                            <option value="31">31</option>
                         </select>
                     </div>
                 </div>
@@ -130,43 +167,6 @@
                 </div>
             </form>
         </div>
-
-            <div class="col-md-9 col-md-pull-3 shows-div">
-                <div class="show-div" th:each="show : ${topTwentyShows}" th:object="${show}">
-                    <div class="show-header">
-                        <a th:href="@{/shows/show(showId=*{id})}">
-                            <h4 class="show-title" th:text="*{#dates.format(date, 'yyyy/MM/dd') + ' ' + city + ', ' + state}">
-                                2017-02-03 Detroit, MI
-                            </h4>
-                        </a>
-                        <h4 class="show-rating-and-medal pull-right">
-                            <i th:if="*{averageRating gt 6.99 and averageRating lt 8}" class="fa fa-trophy" style="color: #CD7F32;" aria-hidden="true"></i>
-                            <i th:if="*{averageRating gt 7.99 and averageRating lt 9}" class="fa fa-trophy" style="color: #C0C0C0;" aria-hidden="true"></i>
-                            <i th:if="*{averageRating gt 8.99 and averageRating lt 9.5}" class="fa fa-trophy" style="color: #FFD700;" aria-hidden="true"></i>
-                            <i th:if="*{averageRating gt 9.49}" class="fa fa-diamond" style="color: #B9F2FF;" aria-hidden="true"></i>
-                            <span th:if="*{averageRating != null}" th:text="*{#numbers.formatDecimal(averageRating, 1, 2)}">[0.00]</span>
-                            <span th:if="*{averageRating == null}">No Rating</span>
-                        </h4>
-                    </div>
-                    <br/>
-                    <h6 th:each="set : *{sets}" th:object="${set}">
-                        <strong th:text="${set.name}"></strong>:
-                        <th:block th:each="track,iterStat : *{tracks}" >
-                            <span th:text="${track.song}"></span>
-                            <span th:if="${track.segue and !iterStat.last}"> > </span>
-                            <span th:if="${!track.segue and !track.fluidSegue and !iterStat.last}">,&nbsp;</span>
-                            <span th:if="${track.fluidSegue}">&nbsp;->&nbsp;</span>
-                        </th:block>
-                    </h6>
-
-                    <h5 th:text="${show.numberOfReviews} + (${show.numberOfReviews} == 1? ' Review': ' Reviews')"
-                        style="text-align: center; font-weight: bold">
-                        <!--<a th:href="@{/reviews/shows/show(showId=*{id}, reviewBookmark='true')}" th:text="${show.numberOfReviews} + (${show.numberOfReviews} == 1? ' Review': ' Reviews')">
-                        3 reviews</a>-->
-                    </h5>
-                    <br/>
-                </div>
-            </div>
 
     </div>
 </div>

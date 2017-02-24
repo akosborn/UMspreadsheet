@@ -4,7 +4,7 @@
 }
 
 /*******************************
-SHOW
+SONG
 *******************************/
 .show-div
 {
@@ -35,33 +35,10 @@ SHOW
     text-decoration: none;
 }
 
-@media (min-width: 768px)
+.show-div .show-header h4,
+.show-div .show-header .rating-and-medal
 {
-    .show-div .show-header h4,
-    .show-div .show-header .show-rating-and-medal
-    {
-        display: inline;
-    }
-
-    .show-div .show-rating-and-medal
-    {
-        float: right;
-    }
-}
-
-@media (max-width: 767px)
-{
-    .show-div .show-header h4,
-    .show-div .show-header .show-rating-and-medal
-    {
-        display: block;
-        text-align: center;
-    }
-}
-
-.show-rating-and-medal span
-{
-    color: #ffffff;
+    display: inline;
 }
 
 .show-div .fa-trophy,

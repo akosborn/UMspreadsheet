@@ -16,4 +16,6 @@ public interface TrackRepository extends CrudRepository<Track, Long>
     public List<Track> findTopThreeSongs();*/
 
     List<Track> findTop3ByOrderByAverageRatingDesc();
+
+    List<Track> findTop40ByOrderByAverageRatingDesc();
 }

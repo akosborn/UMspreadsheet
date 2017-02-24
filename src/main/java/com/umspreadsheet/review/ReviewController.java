@@ -41,7 +41,15 @@ public class ReviewController
     @RequestMapping("/songs")
     public String topSongsPage(Model model)
     {
+        model.addAttribute("topFourtyTracks", trackService.getTopFourtySongs());
+
         return "/track/topSongs";
+    }
+
+    @RequestMapping("/shows/find")
+    public String findShowFilter()
+    {
+        return "redirect:/shows#show-filter";
     }
 
     // Top-rated shows page
@@ -51,6 +59,12 @@ public class ReviewController
         model.addAttribute("topTwentyShows", setNumberOfReviews(showService.getTopTwentyShows()));
 
         return "/show/topShows";
+    }
+
+    @RequestMapping("/songs/find")
+    public String findSongFilter()
+    {
+        return "redirect:/songs#song-filter";
     }
 
     // Returns view for all reviewable tracks for the specified show
