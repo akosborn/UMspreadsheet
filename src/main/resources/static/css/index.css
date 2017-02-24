@@ -25,6 +25,7 @@ chart-data-div
     #most-recent-show-div
     {
         border-bottom: thin solid #fff;
+        margin-bottom: 30px;
     }
 }
 

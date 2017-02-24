@@ -1,0 +1,70 @@
+#header-title
+{
+    margin-bottom: 40px;
+}
+
+/*******************************
+TOP SHOW
+*******************************/
+.show-header
+{
+    border-bottom: solid thick darkgray;
+    padding-bottom: 5px;
+}
+
+.show-header h4
+{
+    color: #F2C73A;
+}
+
+.show-header a:link, a:visited
+{
+    text-decoration: none;
+}
+
+.show-div .show-header h4,
+.show-div .show-header .rating-and-medal
+{
+    display: inline;
+}
+
+.show-div .fa-trophy,
+.show-div .fa-diamond
+{
+    margin-right: 20px;
+}
+
+.show-div .show-rating-and-medal
+{
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+
+@media (min-width: 992px)
+{
+    .shows-div
+    {
+        border-right: solid thin darkgray;
+    }
+}
+
+
+/*******************************
+RIGHT DIV
+*******************************/
+.right-div h2
+{
+    margin-top: 0;
+    text-align: center;
+}
+
+select
+{
+    color: #000000;
+}
+
+.gray-btn
+{
+    background-color: darkgray;
+}

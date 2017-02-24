@@ -31,6 +31,8 @@ public interface ShowRepository extends CrudRepository<Show, Long>
 
     List<Show> findTop3ByOrderByAverageRatingDesc();
 
+    List<Show> findTop20ByOrderByAverageRatingDesc();
+
     List<Show> findTop2ByOrderByDateDesc();
 
     List<Show> findTop3ByOrderByDateDesc();

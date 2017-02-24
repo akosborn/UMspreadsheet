@@ -51,6 +51,11 @@ public class ShowService
         return showRepository.findTop3ByOrderByAverageRatingDesc();
     }
 
+    public List<Show> getTopTwentyShows()
+    {
+        return showRepository.findTop20ByOrderByAverageRatingDesc();
+    }
+
     public List<Show> getLastTwoShows()
     {
         return showRepository.findTop2ByOrderByDateDesc();

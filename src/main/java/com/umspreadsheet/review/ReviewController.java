@@ -20,7 +20,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.*;
 
 @Controller
-@RequestMapping("/reviews")
 public class ReviewController
 {
     private ShowService showService;
@@ -38,11 +37,20 @@ public class ReviewController
         this.userService = userService;
     }
 
-    // Home page for reviews
-    @RequestMapping("")
-    public String reviewHomePage(Model model)
+    // Top-rated songs page
+    @RequestMapping("/songs")
+    public String topSongsPage(Model model)
     {
-        return "/reviews/reviewsHome";
+        return "/track/topSongs";
+    }
+
+    // Top-rated shows page
+    @RequestMapping("/shows")
+    public String topShowsPage(Model model)
+    {
+        model.addAttribute("topTwentyShows", setNumberOfReviews(showService.getTopTwentyShows()));
+
+        return "/show/topShows";
     }
 
     // Returns view for all reviewable tracks for the specified show
@@ -78,7 +86,7 @@ public class ReviewController
         redirectAttributes.addAttribute("showId", showId);
         redirectAttributes.addFlashAttribute("reviewDeleted", "true");
 
-        return "redirect:/reviews/shows/show";
+        return "redirect:/shows/show";
     }
 
     /*@RequestMapping(value = "/track", params = "trackId")
@@ -116,7 +124,7 @@ public class ReviewController
         redirectAttributes.addAttribute("showId", savedTrackReview.getTrack().getShow().getId());
         redirectAttributes.addFlashAttribute("submitted", "true");
 
-        return "redirect:/reviews/shows/show";
+        return "redirect:/shows/show";
     }
 
 
@@ -190,4 +198,22 @@ public class ReviewController
 
         return trackAndReviewMap;
     }
+
+    private List<Show> setNumberOfReviews(List<com.umspreadsheet.show.Show> shows)
+{
+    for (com.umspreadsheet.show.Show show : shows)
+    {
+        Long numberOfReviews = 0L;
+        for (Set set: show.getSets())
+        {
+            for (Track track : set.getTracks())
+            {
+                numberOfReviews += track.getReviews().size();
+            }
+        }
+        show.setNumberOfReviews(numberOfReviews);
+    }
+
+    return shows;
+}
 }

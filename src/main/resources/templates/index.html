@@ -30,9 +30,8 @@
             data.addColumn({type: 'string', role: 'style'});
             for (i = 0; i < topThreeSongs.length; i++)
             {
-                data.addRow([topThreeSongs[i].song + '\n' + topThreeSongs[i].show.date  + ' ' +
-                topThreeSongs[i].show.city + ', ' + topThreeSongs[i].show.state,
-                    topThreeSongs[i].averageRating, 'opacity: 0.4; color: yellow']);
+                data.addRow([topThreeSongs[i].song + ' | ' + topThreeSongs[i].show.date,
+                    topThreeSongs[i].averageRating, 'opacity: 1; color: silver']);
             }
 
             // Set chart options
@@ -87,7 +86,7 @@
                 data.addRow([topThreeShows[i].date + ' ' + topThreeShows[i].city + ', ' + topThreeShows[i].state,
                      window.location.href + 'reviews/shows/show?showId=' + [topThreeShows[i].id],
                     topThreeShows[i].averageRating,
-                    'opacity: 0.4; color: yellow']);
+                    'opacity: 1; color: silver']);
             }
 
             // Set chart options
@@ -146,7 +145,7 @@
                 <div id="most-recent-show-div" class="col-md-6">
                     <div id="th-most-recent-show" th:each="show : ${lastThreeShows}" th:object="${show}">
                         <div id="most-recent-show-header">
-                            <a th:href="@{/reviews/shows/show(showId=*{id})}">
+                            <a th:href="@{/shows/show(showId=*{id})}">
                                 <h4 id="show-title" th:text="*{#dates.format(date, 'yyyy/MM/dd') + ' ' + city + ', ' + state}">
                                     2017-02-03 Detroit, MI
                                 </h4>
