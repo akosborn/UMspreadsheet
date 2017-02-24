@@ -89,7 +89,7 @@ public class ReviewController
         model.addAttribute("show", showService.findById(showId));
         model.addAttribute("trackReviewForm", new TrackReviewForm(username));
 
-        return "/user/show";
+        return "/show/show";
     }
 
     // Delete a review

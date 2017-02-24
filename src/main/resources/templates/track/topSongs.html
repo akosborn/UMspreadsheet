@@ -183,7 +183,7 @@
                 <th:block th:each="review,iterStat : ${recentReviews}">
                     <tr>
                         <td>
-                            <a th:href="@{/user/${review.user.username}}">
+                            <a th:href="@{/user/{user}(user=${review.user.username})}">
                                 <span th:text="${review.user.username}"></span>
                             </a>
                         </td>
