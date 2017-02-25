@@ -74,8 +74,16 @@ body
     .navbar
     {
         border-bottom: none;
-        background: rgba(0, 0, 0, 0.15);
+        background: #272D38;
         font-family: "Roboto Slab", serif;
+    }
+
+    .navbar-container
+    {
+    }
+
+    #navbar
+    {
     }
 
     .navbar-brand
@@ -120,7 +128,7 @@ body
 
     .dropdown-menu
     {
-        background: rgba(0, 0, 0, 0.8);
+        background: #272D38;
     }
 
     @media (max-width: 767px)
@@ -133,7 +141,7 @@ body
 
         .navbar-default .navbar-collapse
         {
-            background: rgba(0, 0, 0, 0.8);
+            background: #272D38;
         }
     }
 

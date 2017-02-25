@@ -31,12 +31,18 @@ chart-data-div
 
 
 /*******************************
-COLUMNS
+HEADER
 *******************************/
-/*[class*="col-"], .row
+#header-div,
+.logo-div
 {
-    border: thin solid black;
-}*/
+    padding-top: 50px;
+}
+
+#mobile-logo
+{
+    margin: auto;
+}
 
 /*******************************
 MOST RECENT SHOW

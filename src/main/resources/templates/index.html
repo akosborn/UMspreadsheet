@@ -130,11 +130,22 @@
 
     <div layout:fragment="content">
         <div class="container">
-            <h1 id="header-title" class="text-center">UMSpreadsheet</h1>
-            <p id="header-statement">UMSpreadsheet was created to serve as a community-based resource for umphreaks.
-                This resource allows participants to give a rating to every song over Umphrey's entire career in an
-                effort to create a rather unique view of the music we love.  The goal is to help people find and listen
-                to music that they may not have discovered on their own, plain and simple.</p>
+            <div class="row">
+                <div class="col-md-2 logo-div hidden-xs hidden-sm">
+                    <img th:src="@{/images/ums-logo-gold-no-bg.png}" style="width: 200px; height: auto;"/>
+                </div>
+                <div class="col-md-8" id="header-div">
+                    <img id="mobile-logo" class="visible-xs visible-sm" th:src="@{/images/ums-logo-gold-no-bg.png}" style="width: 100px; height: auto;"/>
+                    <h1 id="header-title" class="text-center">UMSpreadsheet</h1>
+                    <p id="header-statement">UMSpreadsheet was created to serve as a community-based resource for umphreaks.
+                        This resource allows participants to give a rating to every song over Umphrey's entire career in an
+                        effort to create a rather unique view of the music we love.  The goal is to help people find and listen
+                        to music that they may not have discovered on their own, plain and simple.</p>
+                </div>
+                <div class="col-md-2 logo-div hidden-xs hidden-sm">
+                    <img class="pull-right" th:src="@{/images/ums-logo-gold-no-bg.png}" style="width: 200px; height: auto;"/>
+                </div>
+            </div>
 
             <br/>
             <br/>
