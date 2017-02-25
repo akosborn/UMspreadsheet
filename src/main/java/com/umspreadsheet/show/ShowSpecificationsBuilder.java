@@ -1,49 +1,50 @@
-package com.umspreadsheet.track;
+package com.umspreadsheet.show;
 
-import com.umspreadsheet.show.SpecificationsBuilder;
+
+import com.umspreadsheet.track.SearchCriteria;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TrackSpecificationsBuilder implements SpecificationsBuilder
+public class ShowSpecificationsBuilder implements SpecificationsBuilder
 {
     private final List<SearchCriteria> params;
 
-    public TrackSpecificationsBuilder()
+    public ShowSpecificationsBuilder()
     {
         params  = new ArrayList<>();
     }
 
-    public TrackSpecificationsBuilder with(String key, String operation, Object value)
+    public ShowSpecificationsBuilder with(String key, String operation, Object value)
     {
         params.add(new SearchCriteria(key, operation, value));
 
         return this;
     }
 
-    public TrackSpecificationsBuilder with(String key, String operation, Object value, String dateSegment)
+    public ShowSpecificationsBuilder with(String key, String operation, Object value, String dateSegment)
     {
         params.add(new SearchCriteria(key, operation, value, dateSegment));
 
         return this;
     }
 
-    public Specification<Track> build()
+    public Specification<Show> build()
     {
         if (params.size() == 0)
         {
             return null;
         }
 
-        List<Specification<Track>> specifications = new ArrayList<>();
+        List<Specification<Show>> specifications = new ArrayList<>();
         for (SearchCriteria param : params)
         {
-            specifications.add(new TrackSpecification(param));
+            specifications.add(new ShowSpecification(param));
         }
 
-        Specification<Track> result = specifications.get(0);
+        Specification<Show> result = specifications.get(0);
         for (int i = 1; i < specifications.size(); i++)
         {
             result = Specifications.where(result).and(specifications.get(i));

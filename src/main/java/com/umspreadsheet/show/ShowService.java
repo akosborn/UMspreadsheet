@@ -1,6 +1,7 @@
 package com.umspreadsheet.show;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
@@ -75,5 +76,10 @@ public class ShowService
     public List<BigInteger> findAllShowIds()
     {
         return showRepository.findAllIds();
+    }
+
+    public List<Show> getShowsByFilter(Specification<Show> specification)
+    {
+        return showRepository.findAll(specification);
     }
 }

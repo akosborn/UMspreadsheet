@@ -1,16 +1,17 @@
 package com.umspreadsheet.show;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigInteger;
 import java.util.List;
 
 @Repository
-public interface ShowRepository extends CrudRepository<Show, Long>
+public interface ShowRepository extends JpaRepository<Show, Long>, JpaSpecificationExecutor<Show>
 {
-    public static final String FIND_ALL_IDS = "SELECT id FROM shows";
+    String FIND_ALL_IDS = "SELECT id FROM shows";
 
     // SHOW WITH TRACKS ==================================================
     /*@Query("SELECT u FROM Show u JOIN FETCH u.tracks WHERE u.id = (:id)")
@@ -24,14 +25,7 @@ public interface ShowRepository extends CrudRepository<Show, Long>
             "join track_review on track.id = track_review.track_id) as p where um_show.id = p.show_id",
             nativeQuery = true)
     public List<Show> findAllWithReviews();
-
-    public List<Show> findByDateBetween(Date first, Date last);
-
-    @Query(value = "SELECT um_show.* " +
-            "FROM um_show " +
-            "ORDER BY average_rating DESC LIMIT 3",
-            nativeQuery = true)
-    public List<Show> findTopThreeShows();*/
+    */
 
     List<Show> findTop3ByOrderByAverageRatingDesc();
 

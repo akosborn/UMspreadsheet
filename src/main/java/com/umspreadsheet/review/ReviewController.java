@@ -4,6 +4,8 @@ import com.umspreadsheet.model.*;
 import com.umspreadsheet.model.Set;
 import com.umspreadsheet.show.Show;
 import com.umspreadsheet.show.ShowService;
+import com.umspreadsheet.show.ShowSpecificationsBuilder;
+import com.umspreadsheet.show.SpecificationsBuilder;
 import com.umspreadsheet.track.*;
 import com.umspreadsheet.user.SimpleUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,15 +56,9 @@ public class ReviewController
                                    @RequestParam(value = "day", required = false) String day,
                                    @RequestParam(value = "rating", required = false) String rating,
                                    @RequestParam(value = "type", required = false) String type,
+                                   @RequestParam(value = "song", required = false) String song,
                                    Model model)
     {
-        Map<String, String> requestParamMap = new HashMap<>();
-        requestParamMap.put("year", year);
-        requestParamMap.put("month", month);
-        requestParamMap.put("day", day);
-        requestParamMap.put("rating", rating);
-        requestParamMap.put("type", type);
-
         TrackSpecificationsBuilder builder = new TrackSpecificationsBuilder();
 
         if (year != null)
@@ -72,10 +68,18 @@ public class ReviewController
         if (day != null)
             builder.with("date", ":", day, SearchCriteria.DATE_SEGMENT_DAY);
 
-        Specification<Track> specification = builder.build();
-        model.addAttribute("results", trackService.criteriaTest(specification));
+        if (rating != null)
+        {
+            addRatingConstraints(rating, builder);
+        }
 
-        return "/track/search";
+        if (song != null)
+            builder.with("song", ":", song);
+
+        Specification<Track> specification = builder.build();
+        model.addAttribute("trackResults", trackService.criteriaTest(specification));
+
+        return "/track/songSearchResults";
     }
 
     @RequestMapping("/shows/find")
@@ -143,23 +147,6 @@ public class ReviewController
         return "redirect:/shows/show";
     }
 
-    /*@RequestMapping(value = "/track", params = "trackId")
-    public String reviewTrack(@RequestParam("trackId") Long trackId, Model model)
-    {
-        model.addAttribute("trackReview", new TrackReview(trackService.findById(trackId)));
-
-        return "/user/trackReviewForm";
-    }
-
-    @RequestMapping(value = "/track", params = "reviewId", method = RequestMethod.GET)
-    public String updateTrackReview(@RequestParam("reviewId") Long reviewId, Model model)
-    {
-        model.addAttribute("trackReview", trackReviewService.findById(reviewId));
-        model.addAttribute("update", "true");
-
-        return "/user/trackReviewForm";
-    }*/
-
     // Endpoint for new track review submission
     @RequestMapping(value = "/shows/show", method = RequestMethod.POST)
     public String saveTrackReview(TrackReviewForm trackReviewForm, RedirectAttributes redirectAttributes)
@@ -179,6 +166,68 @@ public class ReviewController
         redirectAttributes.addFlashAttribute("submitted", "true");
 
         return "redirect:/shows/show";
+    }
+
+    @RequestMapping(value = "/shows/search")
+    public String submitShowFilter(@RequestParam(value = "year", required = false) String year,
+                                   @RequestParam(value = "month", required = false) String month,
+                                   @RequestParam(value = "day", required = false) String day,
+                                   @RequestParam(value = "rating", required = false) String rating,
+                                   Model model)
+    {
+
+        ShowSpecificationsBuilder builder = new ShowSpecificationsBuilder();
+
+        if (year != null)
+            builder.with("date", ":", year, SearchCriteria.DATE_SEGMENT_YEAR);
+        if (month != null)
+            builder.with("date", ":", month, SearchCriteria.DATE_SEGMENT_MONTH);
+        if (day != null)
+            builder.with("date", ":", day, SearchCriteria.DATE_SEGMENT_DAY);
+
+        if (rating != null)
+        {
+            addRatingConstraints(rating, builder);
+        }
+
+        Specification<Show> specification = builder.build();
+        List<Show> shows = showService.getShowsByFilter(specification);
+        setNumberOfReviews(shows);
+
+        model.addAttribute("showResults", shows);
+
+        return "/show/showSearchResults";
+    }
+
+    private void addRatingConstraints(String rating, SpecificationsBuilder builder)
+    {
+        if (rating.equals("diamond"))
+        {
+            builder.with("averageRating", ">", "9.49");
+        }
+
+        else if (rating.equals("gold"))
+        {
+            builder.with("averageRating", ">", "8.99");
+            builder.with("averageRating", "<", "9.50");
+        }
+
+        else if (rating.equals("silver"))
+        {
+            builder.with("averageRating", ">", "7.99");
+            builder.with("averageRating", "<", "9.00");
+        }
+
+        else if (rating.equals("bronze"))
+        {
+            builder.with("averageRating", ">", "6.99");
+            builder.with("averageRating", "<", "8.00");
+        }
+
+        else if (rating.equals("unranked"))
+        {
+            builder.with("averageRating", "<", "7.00");
+        }
     }
 
 

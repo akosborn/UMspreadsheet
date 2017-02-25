@@ -1,21 +1,14 @@
 package com.umspreadsheet.track;
 
-import org.springframework.data.jpa.domain.Specification;
-
 import javax.persistence.criteria.*;
 
-
-public class TrackSpecification implements Specification<Track>
+/**
+ * Created by andrew on 2/24/17.
+ */
+public abstract class CustomSpecification
 {
     private SearchCriteria criteria;
 
-    public TrackSpecification(final SearchCriteria criteria)
-    {
-        super();
-        this.criteria = criteria;
-    }
-
-    @Override
     public Predicate toPredicate(Root<Track> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder)
     {
         if (criteria.getOperation().equalsIgnoreCase(">"))

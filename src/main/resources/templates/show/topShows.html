@@ -58,12 +58,12 @@
 
             <br>
 
-            <form class="form-horizontal">
+            <form class="form-horizontal" method="get" th:action="@{/shows/search}" onsubmit="removeEmptyFormFields()">
 
                 <div class="form-group">
                     <label for="year" class="control-label col-sm-3">Year:</label>
                     <div class="col-sm-9 col-lg-7">
-                        <select class="form-control" id="year">
+                        <select class="form-control" id="year" name="year">
                             <option value="">--</option>
                             <option value="2016">2016</option>
                             <option value="2015">2015</option>
@@ -91,7 +91,7 @@
                 <div class="form-group">
                     <label for="month" class="control-label col-sm-3">Month:</label>
                     <div class="col-sm-9 col-lg-7">
-                        <select class="form-control" id="month">
+                        <select class="form-control" id="month" name="month">
                             <option value=''>--</option>
                             <option value="1">January</option>
                             <option value="2">February</option>
@@ -112,7 +112,7 @@
                 <div class="form-group">
                     <label for="day" class="control-label col-sm-3">Day:</label>
                     <div class="col-sm-9 col-lg-7">
-                        <select class="form-control" id="day">
+                        <select class="form-control" id="day" name="day">
                             <option value="">--</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -152,7 +152,7 @@
                 <div class="form-group">
                     <label for="rating" class="control-label col-sm-3">Rating:</label>
                     <div class="col-sm-9 col-lg-7">
-                        <select class="form-control" id="rating">
+                        <select class="form-control" id="rating" name="rating">
                             <option value="">--</option>
                             <option value="diamond">Diamond (above 9.49)</option>
                             <option value="gold">Gold (9.00 to 9.49)</option>
@@ -162,6 +162,7 @@
                         </select>
                     </div>
                 </div>
+
                 <div class="form-group">
                     <div class="col-sm-offset-3 col-sm-6">
                         <button type="submit" class="btn btn-default gray-btn">Search</button>
@@ -172,5 +173,31 @@
 
     </div>
 </div>
+
+<th:block layout:fragment="script">
+
+    <script type="text/javascript">
+
+        function removeEmptyFormFields()
+        {
+            var fieldList = [document.getElementById("year"),
+                document.getElementById("month"),
+                document.getElementById("day"),
+                document.getElementById("rating")];
+
+            for (var field of fieldList)
+            {
+                if (field.value == "")
+                {
+                    field.disabled = true;
+                }
+            }
+
+            return true;
+        }
+
+    </script>
+
+</th:block>
 
 </body>

@@ -32,8 +32,8 @@ public class TrackService
         return trackRepository.findTop40ByOrderByAverageRatingDesc();
     }
 
-    public List<Track> criteriaTest(Specification<Track> spec)
+    public List<Track> criteriaTest(Specification<Track> specifications)
     {
-        return trackRepository.findAll(spec);
+        return trackRepository.findAll(specifications);
     }
 }

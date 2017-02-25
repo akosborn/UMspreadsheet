@@ -13,11 +13,11 @@
 
 <div layout:fragment="content">
     <div class="container">
-        <h1 id="header-title" class="text-center">Top-Rated Songs</h1>
+        <h1 id="header-title" class="text-center">Song Search Results</h1>
 
         <div class="col-md-9 shows-div">
-            <div class="show-div" th:each="track,iterStat : ${topFortyTracks}" th:object="${track}" th:classappend="${iterStat.first}? 'top-show'">
-                <div class="show-header" th:style="${iterStat.first}? 'border-bottom: none;'">
+            <div class="show-div" th:each="track,iterStat : ${trackResults}" th:object="${track}">
+                <div class="show-header">
 
                     <a class="show-url" th:href="@{/shows/show(showId=*{show.id})}">
                         <h5 th:text="*{#dates.format(show.date, 'yyyy/MM/dd') + ' ' + show.city + ', ' + show.state}">[date, city, st]</h5>
@@ -172,11 +172,10 @@
                     </div>
                 </div>
 
-
                 <div class="form-group">
                     <label for="song" class="control-label col-sm-3">Song:</label>
                     <div class="col-sm-9 col-lg-7">
-                        <input type="text" class="form-control" id="song" name="song"/>
+                        <input type="text" class="form-control" id="song" name="song" />
                     </div>
                 </div>
 
@@ -228,16 +227,14 @@
         function removeEmptyFormFields()
         {
             var fieldList = [document.getElementById("year"),
-                            document.getElementById("month"),
-                            document.getElementById("day"),
-                            document.getElementById("rating"),
-                            document.getElementById("type"),
-                            document.getElementById("song")];
-
+                document.getElementById("month"),
+                document.getElementById("day"),
+                document.getElementById("rating"),
+                document.getElementById("type"),
+                document.getElementById("song")];
 
             for (var field of fieldList)
             {
-                alert(field.value);
                 if (field.value == "")
                 {
                     field.disabled = true;
