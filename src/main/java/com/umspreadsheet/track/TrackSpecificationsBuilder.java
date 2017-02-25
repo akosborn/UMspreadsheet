@@ -22,6 +22,13 @@ public class TrackSpecificationsBuilder
         return this;
     }
 
+    public TrackSpecificationsBuilder with(String key, String operation, Object value, String dateSegment)
+    {
+        params.add(new SearchCriteria(key, operation, value, dateSegment));
+
+        return this;
+    }
+
     public Specification<Track> build()
     {
         if (params.size() == 0)

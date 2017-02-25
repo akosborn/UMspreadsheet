@@ -56,11 +56,22 @@ public class ReviewController
                                    @RequestParam(value = "type", required = false) String type,
                                    Model model)
     {
-        List<String> requestParams = new ArrayList<>();
+        Map<String, String> requestParamMap = new HashMap<>();
+        requestParamMap.put("year", year);
+        requestParamMap.put("month", month);
+        requestParamMap.put("day", day);
+        requestParamMap.put("rating", rating);
+        requestParamMap.put("type", type);
 
         TrackSpecificationsBuilder builder = new TrackSpecificationsBuilder();
-        builder.with("averageRating", ">", "7.99");
-        builder.with("averageRating", "<", "9.0");
+
+        if (year != null)
+            builder.with("date", ":", year, SearchCriteria.DATE_SEGMENT_YEAR);
+        if (month != null)
+            builder.with("date", ":", month, SearchCriteria.DATE_SEGMENT_MONTH);
+        if (day != null)
+            builder.with("date", ":", day, SearchCriteria.DATE_SEGMENT_DAY);
+
         Specification<Track> specification = builder.build();
         model.addAttribute("results", trackService.criteriaTest(specification));
 
