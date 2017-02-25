@@ -29,7 +29,7 @@ public class TrackService
 
     public List<Track> getTopFortySongs()
     {
-        return trackRepository.findTop40ByOrderByAverageRatingDesc();
+        return trackRepository.findTop40ByAverageRatingIsNotNullOrderByAverageRatingDesc();
     }
 
     public List<Track> criteriaTest(Specification<Track> specifications)

@@ -11,5 +11,5 @@ public interface TrackRepository extends JpaRepository<Track, Long>, JpaSpecific
 {
     List<Track> findTop3ByOrderByAverageRatingDesc();
 
-    List<Track> findTop40ByOrderByAverageRatingDesc();
+    List<Track> findTop40ByAverageRatingIsNotNullOrderByAverageRatingDesc();
 }

@@ -55,7 +55,7 @@ public class ShowService
 
     public List<Show> getTopTwentyShows()
     {
-        return showRepository.findTop20ByOrderByAverageRatingDesc();
+        return showRepository.findTop20ByAverageRatingIsNotNullOrderByAverageRatingDesc();
     }
 
     public List<Show> getLastTwoShows()

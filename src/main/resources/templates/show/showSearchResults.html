@@ -17,7 +17,7 @@
 
         <div class="col-md-9 shows-div">
             <div class="show-div" th:each="show,iterStat : ${showResults}" th:object="${show}">
-                <div class="show-header" th:style="${iterStat.first}? 'border-bottom: none;'">
+                <div class="show-header">
                     <a th:href="@{/shows/show(showId=*{id})}">
                         <h4 class="show-title" th:text="*{#dates.format(date, 'yyyy/MM/dd') + ' ' + city + ', ' + state}">
                             2017-02-03 Detroit, MI
