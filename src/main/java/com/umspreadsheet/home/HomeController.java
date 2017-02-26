@@ -1,4 +1,4 @@
-package com.umspreadsheet.controller;
+package com.umspreadsheet.home;
 
 import com.umspreadsheet.model.Set;
 import com.umspreadsheet.review.TrackReviewService;

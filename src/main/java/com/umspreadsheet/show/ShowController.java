@@ -1,12 +1,12 @@
-package com.umspreadsheet.review;
+package com.umspreadsheet.show;
 
+import com.umspreadsheet.criteria.SearchCriteria;
+import com.umspreadsheet.helper.ControllerHelper;
 import com.umspreadsheet.exception.DataNotFoundException;
 import com.umspreadsheet.model.*;
 import com.umspreadsheet.model.Set;
-import com.umspreadsheet.show.Show;
-import com.umspreadsheet.show.ShowService;
-import com.umspreadsheet.show.ShowSpecificationsBuilder;
-import com.umspreadsheet.show.SpecificationsBuilder;
+import com.umspreadsheet.review.TrackReviewForm;
+import com.umspreadsheet.review.TrackReviewService;
 import com.umspreadsheet.track.*;
 import com.umspreadsheet.user.SimpleUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ import java.math.BigInteger;
 import java.util.*;
 
 @Controller
-public class ReviewController
+public class ShowController
 {
     private ShowService showService;
     private TrackService trackService;
@@ -32,55 +32,13 @@ public class ReviewController
     private SimpleUserService userService;
 
     @Autowired
-    public ReviewController(ShowService showService, TrackService trackService,
-                            TrackReviewService trackReviewService, SimpleUserService userService)
+    public ShowController(ShowService showService, TrackService trackService,
+                          TrackReviewService trackReviewService, SimpleUserService userService)
     {
         this.showService = showService;
         this.trackService = trackService;
         this.trackReviewService = trackReviewService;
         this.userService = userService;
-    }
-
-    // Top-rated songs page
-    @RequestMapping("/songs")
-    public String topSongsPage(Model model)
-    {
-        model.addAttribute("topFortyTracks", trackService.getTopFortySongs());
-        model.addAttribute("recentReviews", trackReviewService.getTenMostRecentReviews());
-
-        return "/track/topSongs";
-    }
-
-    @RequestMapping(value = "/songs/search")
-    public String submitSongFilter(@RequestParam(value = "year", required = false) String year,
-                                   @RequestParam(value = "month", required = false) String month,
-                                   @RequestParam(value = "day", required = false) String day,
-                                   @RequestParam(value = "rating", required = false) String rating,
-                                   @RequestParam(value = "type", required = false) String type,
-                                   @RequestParam(value = "song", required = false) String song,
-                                   Model model)
-    {
-        TrackSpecificationsBuilder builder = new TrackSpecificationsBuilder();
-
-        if (year != null)
-            builder.with("date", ":", year, SearchCriteria.DATE_SEGMENT_YEAR);
-        if (month != null)
-            builder.with("date", ":", month, SearchCriteria.DATE_SEGMENT_MONTH);
-        if (day != null)
-            builder.with("date", ":", day, SearchCriteria.DATE_SEGMENT_DAY);
-
-        if (rating != null)
-        {
-            addRatingConstraints(rating, builder);
-        }
-
-        if (song != null)
-            builder.with("song", ":", song);
-
-        Specification<Track> specification = builder.build();
-        model.addAttribute("trackResults", trackService.criteriaTest(specification));
-
-        return "/track/songSearchResults";
     }
 
     @RequestMapping("/shows/find")
@@ -193,7 +151,7 @@ public class ReviewController
 
         if (rating != null)
         {
-            addRatingConstraints(rating, builder);
+            ControllerHelper.addRatingConstraints(rating, builder);
         }
 
         Specification<Show> specification = builder.build();
@@ -203,37 +161,6 @@ public class ReviewController
         model.addAttribute("showResults", shows);
 
         return "/show/showSearchResults";
-    }
-
-    private void addRatingConstraints(String rating, SpecificationsBuilder builder)
-    {
-        if (rating.equals("diamond"))
-        {
-            builder.with("averageRating", ">", "9.49");
-        }
-
-        else if (rating.equals("gold"))
-        {
-            builder.with("averageRating", ">", "8.99");
-            builder.with("averageRating", "<", "9.50");
-        }
-
-        else if (rating.equals("silver"))
-        {
-            builder.with("averageRating", ">", "7.99");
-            builder.with("averageRating", "<", "9.00");
-        }
-
-        else if (rating.equals("bronze"))
-        {
-            builder.with("averageRating", ">", "6.99");
-            builder.with("averageRating", "<", "8.00");
-        }
-
-        else if (rating.equals("unranked"))
-        {
-            builder.with("averageRating", "<", "7.00");
-        }
     }
 
 

@@ -1,4 +1,4 @@
-package com.umspreadsheet.track;
+package com.umspreadsheet.criteria;
 
 public class SearchCriteria
 {

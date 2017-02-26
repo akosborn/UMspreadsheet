@@ -1,4 +1,4 @@
-package com.umspreadsheet.controller;
+package com.umspreadsheet.exception;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ErrorAttributes;

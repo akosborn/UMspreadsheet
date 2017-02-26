@@ -1,4 +1,4 @@
-package com.umspreadsheet.controller;
+package com.umspreadsheet.auth;
 
 import com.umspreadsheet.user.User;
 import com.umspreadsheet.user.UserService;

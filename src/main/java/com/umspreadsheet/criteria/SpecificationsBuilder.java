@@ -1,7 +1,4 @@
-package com.umspreadsheet.show;
-
-
-import com.umspreadsheet.track.SearchCriteria;
+package com.umspreadsheet.criteria;
 
 public interface SpecificationsBuilder
 {

@@ -1,6 +1,7 @@
 package com.umspreadsheet.track;
 
-import com.umspreadsheet.show.SpecificationsBuilder;
+import com.umspreadsheet.criteria.SearchCriteria;
+import com.umspreadsheet.criteria.SpecificationsBuilder;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
 

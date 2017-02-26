@@ -2,8 +2,6 @@ package com.umspreadsheet.config;
 
 import com.umspreadsheet.user.SimpleUserDetails;
 import com.umspreadsheet.user.SimpleUserService;
-import com.umspreadsheet.user.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.savedrequest.RequestCache;

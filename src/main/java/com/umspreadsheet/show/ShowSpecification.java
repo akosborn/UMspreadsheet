@@ -1,6 +1,6 @@
 package com.umspreadsheet.show;
 
-import com.umspreadsheet.track.SearchCriteria;
+import com.umspreadsheet.criteria.SearchCriteria;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.*;
