@@ -3,7 +3,7 @@ package com.umspreadsheet.user;
 
 import com.umspreadsheet.model.Role;
 import com.umspreadsheet.model.ShowReview;
-import com.umspreadsheet.model.TrackReview;
+import com.umspreadsheet.review.TrackReview;
 
 import java.util.*;
 import java.util.Set;

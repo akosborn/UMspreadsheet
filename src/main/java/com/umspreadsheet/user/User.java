@@ -3,7 +3,7 @@ package com.umspreadsheet.user;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.umspreadsheet.model.Role;
 import com.umspreadsheet.model.ShowReview;
-import com.umspreadsheet.model.TrackReview;
+import com.umspreadsheet.review.TrackReview;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 

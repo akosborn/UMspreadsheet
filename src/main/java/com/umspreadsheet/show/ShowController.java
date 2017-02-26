@@ -3,8 +3,8 @@ package com.umspreadsheet.show;
 import com.umspreadsheet.criteria.SearchCriteria;
 import com.umspreadsheet.helper.ControllerHelper;
 import com.umspreadsheet.exception.DataNotFoundException;
-import com.umspreadsheet.model.*;
 import com.umspreadsheet.model.Set;
+import com.umspreadsheet.review.TrackReview;
 import com.umspreadsheet.review.TrackReviewForm;
 import com.umspreadsheet.review.TrackReviewService;
 import com.umspreadsheet.track.*;
@@ -83,6 +83,8 @@ public class ShowController
         model.addAttribute("trackAndReviewMap", trackAndReviewMap);
         model.addAttribute("show", showService.findById(showId));
 
+        model.addAttribute("allReviews", trackReviewService.getAllByShow(showId));
+
         if (!username.equals("anonymousUser"))
             model.addAttribute("trackReviewForm", new TrackReviewForm(username));
 
@@ -100,6 +102,14 @@ public class ShowController
         redirectAttributes.addFlashAttribute("reviewDeleted", "true");
 
         return "redirect:/shows/show";
+    }
+
+    @RequestMapping("/shows/show/reviews")
+    public String jumpToShowReviews(@RequestParam("showId") Long showId, RedirectAttributes redirectAttributes)
+    {
+        redirectAttributes.addAttribute("showId", showId);
+
+        return "redirect:/shows/show#user-reviews";
     }
 
     @RequestMapping("/shows/random")

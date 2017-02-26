@@ -1,4 +1,4 @@
-package com.umspreadsheet.model;
+package com.umspreadsheet.review;
 
 import com.umspreadsheet.track.Track;
 import com.umspreadsheet.user.User;

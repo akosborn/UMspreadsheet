@@ -1,9 +1,8 @@
 package com.umspreadsheet.review;
 
-import com.umspreadsheet.model.TrackReview;
 import com.umspreadsheet.show.Show;
+import com.umspreadsheet.track.Track;
 import com.umspreadsheet.user.User;
-import com.umspreadsheet.review.TrackReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,5 +42,10 @@ public class TrackReviewService
     public List<TrackReview> getTenMostRecentReviews()
     {
         return trackReviewRepository.findTop10ByOrderByReviewedOnDesc();
+    }
+
+    public List<TrackReview> getAllByShow(Long showId)
+    {
+        return trackReviewRepository.findAllByShow(showId);
     }
 }
