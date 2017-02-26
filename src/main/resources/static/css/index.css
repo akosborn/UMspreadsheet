@@ -36,12 +36,18 @@ HEADER
 #header-div,
 .logo-div
 {
-    padding-top: 50px;
+    padding-top: 20px;
 }
+
+#header-div
+{
+    text-align: center;
+}
+
 
 #mobile-logo
 {
-    margin: auto;
+
 }
 
 /*******************************

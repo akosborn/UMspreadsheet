@@ -25,12 +25,12 @@ TRACKLIST TABLE
     opacity: 0.4;
 }
 
-#show-set-table
+.show-set-table
 {
     margin-bottom: 40px;
 }
 
-#show-set-table .song-column-header
+.show-set-table .song-column-header
 {
     font-size: 18px;
     font-weight: bolder;
@@ -109,4 +109,11 @@ SHOW SET NAME
 .set-name
 {
     font-weight: bolder;
+}
+
+.set-title-row
+{
+    font-weight: bolder;
+    font-size: 18px;
+    background: lightgrey !important;
 }
