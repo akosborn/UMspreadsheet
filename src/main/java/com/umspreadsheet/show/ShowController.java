@@ -62,11 +62,10 @@ public class ShowController
         return "redirect:/songs#song-filter";
     }
 
-    // Returns view for all reviewable tracks for the specified show
+    // Returns a specified show's page
     @RequestMapping(value = "/shows/show", params = "showId", method = RequestMethod.GET)
-    public String reviewShow(@RequestParam(value = "showId") Long showId, Model model) throws DataNotFoundException
+    public String showPage(@RequestParam(value = "showId") Long showId, Model model) throws DataNotFoundException
     {
-        // Find the current user's username
         String username = getCurrentUsername();
         Show show = showService.findById(showId);
 
@@ -111,7 +110,7 @@ public class ShowController
         return "redirect:/shows/show";
     }
 
-    // Endpoint for new track review submission
+    // Submit a new review
     @RequestMapping(value = "/shows/show", method = RequestMethod.POST)
     public String saveTrackReview(TrackReviewForm trackReviewForm, RedirectAttributes redirectAttributes)
     {
@@ -139,7 +138,6 @@ public class ShowController
                                    @RequestParam(value = "rating", required = false) String rating,
                                    Model model)
     {
-
         ShowSpecificationsBuilder builder = new ShowSpecificationsBuilder();
 
         if (year != null)
@@ -162,16 +160,6 @@ public class ShowController
 
         return "/show/showSearchResults";
     }
-
-
-    /*@RequestMapping(value = "/track", method = RequestMethod.PUT)
-    public String updateTrackReview(TrackReview trackReview, RedirectAttributes redirectAttributes)
-    {
-        redirectAttributes.addAttribute("showId", trackReviewService.save(trackReview).getTrack().getShow().getId());
-        redirectAttributes.addFlashAttribute("edited", "true");
-
-        return "redirect:/user/review";
-    }*/
 
     private String getCurrentUsername()
     {

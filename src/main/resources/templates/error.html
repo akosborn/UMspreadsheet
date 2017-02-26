@@ -12,12 +12,10 @@
 <body>
 
 <div layout:fragment="content">
-    <div class="container">
+    <div class="container" style="text-align: center">
 
-        <h2>There's a problem</h2>
+        <h2>Something's gone wrong</h2>
 
-        <p th:text="${timestamp}">[timestamp]</p>
-        <p th:text="${error}">[error]</p>
         <p th:text="${message}">[message]</p>
         <p th:text="${status}">[status]</p>
 
