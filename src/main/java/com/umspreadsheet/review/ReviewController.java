@@ -1,5 +1,6 @@
 package com.umspreadsheet.review;
 
+import com.umspreadsheet.exception.DataNotFoundException;
 import com.umspreadsheet.model.*;
 import com.umspreadsheet.model.Set;
 import com.umspreadsheet.show.Show;
@@ -105,11 +106,14 @@ public class ReviewController
 
     // Returns view for all reviewable tracks for the specified show
     @RequestMapping(value = "/shows/show", params = "showId", method = RequestMethod.GET)
-    public String reviewShow(@RequestParam(value = "showId") Long showId, Model model)
+    public String reviewShow(@RequestParam(value = "showId") Long showId, Model model) throws DataNotFoundException
     {
         // Find the current user's username
         String username = getCurrentUsername();
         Show show = showService.findById(showId);
+
+        if (show == null)
+            throw new DataNotFoundException("Show with id=" + showId + " not found.");
 
         // List of the show's track IDs to be used for Javascript dynamic slider creation
         Map<Long, Double> trackIdMap = new HashMap<>();
@@ -121,7 +125,9 @@ public class ReviewController
         model.addAttribute("trackIdMap", trackIdMap);
         model.addAttribute("trackAndReviewMap", trackAndReviewMap);
         model.addAttribute("show", showService.findById(showId));
-        model.addAttribute("trackReviewForm", new TrackReviewForm(username));
+
+        if (!username.equals("anonymousUser"))
+            model.addAttribute("trackReviewForm", new TrackReviewForm(username));
 
         return "/show/show";
     }
