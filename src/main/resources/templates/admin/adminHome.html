@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorator="layouts/site"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <title>UMSpreadsheet</title>
+
+    <link rel="stylesheet" th:href="@{/css/index.css}"/>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div class="container">
+        <h2>Admin</h2>
+
+        <div class="row">
+            <div class="col-md-4">
+                <h3>Manage Shows</h3>
+                <hr>
+                <p>Add show</p>
+                <p>Edit show</p>
+            </div>
+
+            <div class="col-md-4">
+                <h3>Manage Wormblog</h3>
+                <hr>
+                <p>Add post</p>
+                <p>Edit post</p>
+            </div>
+
+            <div class="col-md-4">
+                <h3>Manage Users</h3>
+                <hr>
+                <p>Edit privileges</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <h3>Communication</h3>
+                <hr>
+                <p>Send email</p>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
