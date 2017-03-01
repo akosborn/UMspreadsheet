@@ -22,3 +22,7 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+
+### Config ###
+application-linux-dev.yaml
+application-windows-dev.yaml
