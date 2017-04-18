@@ -3,11 +3,13 @@
       xmlns="http://www.w3.org/1999/xhtml"
       layout:decorator="layouts/site"
       xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
       xmlns:layout="http://www.w3.org/1999/xhtml">
 <head>
     <title>UMSpreadsheet</title>
 
     <link rel="stylesheet" th:href="@{/css/index.css}"/>
+    <link rel="stylesheet" th:href="@{/css/adminHome.css}"/>
 </head>
 <body>
 
@@ -16,32 +18,51 @@
         <h2>Admin</h2>
 
         <div class="row">
-            <div class="col-md-4">
-                <h3>Manage Shows</h3>
-                <hr>
-                <p>Add show</p>
-                <p>Edit show</p>
-            </div>
-
-            <div class="col-md-4">
-                <h3>Manage Wormblog</h3>
-                <hr>
-                <p>Add post</p>
-                <p>Edit post</p>
-            </div>
-
-            <div class="col-md-4">
-                <h3>Manage Users</h3>
-                <hr>
-                <p>Edit privileges</p>
+            <div id="profile-picture" class="dark-div">
+                <img th:src="@{/images/avatar.svg}" style="height: 100px; width: auto; margin-bottom: 20px;"/>
+                <p sec:authentication="name">[username]</p>
+                <p th:text="'Last login: ' + '' ">[last login]</p>
+                <p th:text="'Joined: ' + ''">[join date]</p>
             </div>
         </div>
 
         <div class="row">
-            <div class="col-md-4">
-                <h3>Communication</h3>
-                <hr>
-                <p>Send email</p>
+            <div class="col-sm-12">
+                <div class="col-sm-12">
+                    <div class="col-md-3 col-sm-6 box">
+                        <div class="dark-div">
+                            <h3>Shows</h3>
+                            <hr>
+                            <p><a href="#">Add show</a></p>
+                            <p><a href="#">Edit show</a></p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6 box">
+                        <div class="dark-div">
+                            <h3>WormBlog</h3>
+                            <hr>
+                            <p>Add post</p>
+                            <p>Edit post</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6 box">
+                        <div class="dark-div">
+                            <h3>Users</h3>
+                            <hr>
+                            <p>Edit privileges</p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-6 box">
+                        <div class="dark-div">
+                            <h3>Communication</h3>
+                            <hr>
+                            <p>Send email</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 

@@ -1,0 +1,30 @@
+.dark-div
+{
+    background: #272D38;
+    text-align: center;
+    height: 150px;
+    padding: 5px;
+}
+
+#profile-picture
+{
+    height: 250px;
+    width: 200px;
+    margin: auto;
+    margin-bottom: 30px;
+}
+
+.box
+{
+    padding: 5px;
+}
+
+.dark-div h3
+{
+    margin: 0 5px 5px 5px;
+}
+
+.dark-div hr
+{
+    margin: 5px 10px 5px 10px;
+}
