@@ -7,6 +7,7 @@ import com.umspreadsheet.set.SetService;
 import com.umspreadsheet.show.Show;
 import com.umspreadsheet.show.ShowDTO;
 import com.umspreadsheet.show.ShowService;
+import com.umspreadsheet.track.Track;
 import com.umspreadsheet.track.TrackService;
 import com.umspreadsheet.user.SimpleUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,6 +79,16 @@ public class AdminController
         setService.save(set);
 
         redirectAttributes.addAttribute("showId", setDTO.getShowId());
+
+        return "redirect:/shows/show";
+    }
+
+    @RequestMapping(value = "/add-track", method = RequestMethod.POST)
+    public String addTrack(Track track, RedirectAttributes redirectAttributes)
+    {
+        Track savedTrack = trackService.save(track);
+
+        redirectAttributes.addAttribute("showId", track.getShowId());
 
         return "redirect:/shows/show";
     }

@@ -3,6 +3,7 @@ package com.umspreadsheet.show;
 import com.umspreadsheet.criteria.SearchCriteria;
 import com.umspreadsheet.helper.ControllerHelper;
 import com.umspreadsheet.exception.DataNotFoundException;
+import com.umspreadsheet.model.Role;
 import com.umspreadsheet.set.Set;
 import com.umspreadsheet.set.SetDTO;
 import com.umspreadsheet.review.TrackReview;
@@ -12,8 +13,12 @@ import com.umspreadsheet.track.*;
 import com.umspreadsheet.user.SimpleUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -65,7 +70,8 @@ public class ShowController
 
     // Returns a specified show's page
     @RequestMapping(value = "/shows/show", params = "showId", method = RequestMethod.GET)
-    public String showPage(@RequestParam(value = "showId") Long showId, Model model) throws DataNotFoundException
+    public String showPage(@RequestParam(value = "showId") Long showId, Model model, Authentication authentication) throws
+            DataNotFoundException
     {
         String username = getCurrentUsername();
         Show show = showService.findById(showId);
@@ -87,6 +93,10 @@ public class ShowController
         SetDTO setDTO = new SetDTO();
         setDTO.setShowId(showId);
         model.addAttribute("set", setDTO);
+
+        Track track = new Track();
+        track.setShowId(showId);
+        model.addAttribute("track", track);
 
         model.addAttribute("allReviews", trackReviewService.getAllByShow(showId));
 

@@ -118,6 +118,19 @@
                                 </form>
                             </td>
                         </tr>
+                        <p id="addTrack" sec:authorize="hasRole('ROLE_ADMIN')"><a href="javascript:;" onclick="showSetForm();">Add song</a></p>
+                        <form sec:authorize="hasRole('ROLE_ADMIN')" th:action="@{/admin/add-track}" id="addSetForm"
+                              name="addSetForm" th:object="${track}" method="post" style="visibility: hidden;">
+                            <input type="hidden" th:field="*{showId}"/>
+                            <input type="hidden" th:value="" th:field="*{setId}"/>
+                            <div class="form-group col-sm-3 col-md-2">
+                                <label class="control-label" for="set">Set</label>
+                                <input type="text" class="form-control" id="set" th:field="*{name}"/>
+                            </div>
+                            <div class="form-group col-sm-3 col-md-2 col-lg-1" style="margin-top: 15px; margin-bottom: 0;">
+                                <button class="btn btn-lg btn-primary btn-block" type="submit">Add</button>
+                            </div>
+                        </form>
                     </th:block>
                 </tbody>
             </table>

@@ -12,7 +12,7 @@ import java.util.List;
 public class Track
 {
     // Needed for JPA
-    private Track() {}
+    public Track() {}
 
     @Id
     @GeneratedValue
@@ -40,6 +40,32 @@ public class Track
     @JsonIgnore
     @OneToMany(mappedBy = "track")
     private List<TrackReview> reviews;
+
+    @Transient
+    private Long showId;
+
+    @Transient
+    private Long setId;
+
+    public Long getSetId()
+    {
+        return setId;
+    }
+
+    public void setSetId(Long setId)
+    {
+        this.setId = setId;
+    }
+
+    public Long getShowId()
+    {
+        return showId;
+    }
+
+    public void setShowId(Long showId)
+    {
+        this.showId = showId;
+    }
 
     public Long getId()
     {

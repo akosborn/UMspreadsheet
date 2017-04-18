@@ -36,4 +36,9 @@ public class TrackService
     {
         return trackRepository.findAll(specifications);
     }
+
+    public Track save(Track track)
+    {
+        return trackRepository.save(track);
+    }
 }
