@@ -3,7 +3,8 @@ package com.umspreadsheet.show;
 import com.umspreadsheet.criteria.SearchCriteria;
 import com.umspreadsheet.helper.ControllerHelper;
 import com.umspreadsheet.exception.DataNotFoundException;
-import com.umspreadsheet.model.Set;
+import com.umspreadsheet.set.Set;
+import com.umspreadsheet.set.SetDTO;
 import com.umspreadsheet.review.TrackReview;
 import com.umspreadsheet.review.TrackReviewForm;
 import com.umspreadsheet.review.TrackReviewService;
@@ -82,6 +83,10 @@ public class ShowController
         model.addAttribute("trackIdMap", trackIdMap);
         model.addAttribute("trackAndReviewMap", trackAndReviewMap);
         model.addAttribute("show", showService.findById(showId));
+
+        SetDTO setDTO = new SetDTO();
+        setDTO.setShowId(showId);
+        model.addAttribute("set", setDTO);
 
         model.addAttribute("allReviews", trackReviewService.getAllByShow(showId));
 

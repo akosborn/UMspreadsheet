@@ -1,7 +1,7 @@
 package com.umspreadsheet.track;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.umspreadsheet.model.Set;
+import com.umspreadsheet.set.Set;
 import com.umspreadsheet.review.TrackReview;
 import com.umspreadsheet.show.Show;
 

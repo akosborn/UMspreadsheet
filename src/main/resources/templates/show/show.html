@@ -29,6 +29,18 @@
                     <span th:if="*{averageRating == null}">No Rating</span>
                 </h2>
                 <h3 th:text="${show.venue}"></h3>
+                <p id="addSet" sec:authorize="hasRole('ROLE_ADMIN')"><a href="javascript:;" onclick="showSetForm();">Add set</a></p>
+                <form sec:authorize="hasRole('ROLE_ADMIN')" th:action="@{/admin/add-set}" id="addSetForm"
+                      name="addSetForm" th:object="${set}" method="post" style="visibility: hidden;">
+                    <input type="hidden" th:field="*{showId}"/>
+                    <div class="form-group col-sm-3 col-md-2">
+                        <label class="control-label" for="set">Set</label>
+                        <input type="text" class="form-control" id="set" th:field="*{name}"/>
+                    </div>
+                    <div class="form-group col-sm-3 col-md-2 col-lg-1" style="margin-top: 15px; margin-bottom: 0;">
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">Add</button>
+                    </div>
+                </form>
             </div>
 
             <!--<h2 th:text="${#dates.format(show.date, 'yyyy/MM/dd') + ' ' + show.city + ', '  + show.state}"></h2>
@@ -75,7 +87,8 @@
                             <td class="hidden-xs" th:text="${#numbers.formatDecimal(trackAndReviewEntry.key.averageRating, 0, 'COMMA', 2, 'POINT')}">[avg rating]</td>
                             <td>
                                 <!--<a th:if="${trackAndReviewEntry.value == null}" th:href="@{/user/review/track(trackId=${trackAndReviewEntry.key.id})}">-->
-                                <form th:id="'track' + ${trackAndReviewEntry.key.id} + 'Form'" th:object="${trackReviewForm}" th:action="@{/shows/show}" method="post">
+                                <form th:id="'track' + ${trackAndReviewEntry.key.id} + 'Form'" th:object="${trackReviewForm}"
+                                      th:action="@{/shows/show}" method="post">
                                     <input type="hidden" th:if="${trackAndReviewEntry.value.id != null}"
                                            th:value="${trackAndReviewEntry.value.id}" th:name="id" th:id="id" />
                                     <input type="hidden" th:value="${trackAndReviewEntry.value.trackId}" th:name="trackId"
@@ -196,6 +209,14 @@
                 });
             });
 
+
+            function showSetForm(event)
+            {
+                var addSetPElement = document.getElementById("addSet");
+                addSetPElement.outerHTML = "";
+                delete addSetPElement;
+                document.getElementById("addSetForm").style.visibility = "visible";
+            }
         </script>
     </th:block>
 </body>

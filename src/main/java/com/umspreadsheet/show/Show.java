@@ -1,7 +1,7 @@
 package com.umspreadsheet.show;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.umspreadsheet.model.Set;
+import com.umspreadsheet.set.Set;
 import com.umspreadsheet.model.ShowReview;
 
 import javax.persistence.*;

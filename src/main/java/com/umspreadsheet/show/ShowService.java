@@ -82,4 +82,9 @@ public class ShowService
     {
         return showRepository.findAll(specification);
     }
+
+    public Show save(Show show)
+    {
+        return showRepository.save(show);
+    }
 }

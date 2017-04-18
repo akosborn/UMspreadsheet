@@ -1,4 +1,4 @@
-package com.umspreadsheet.model;
+package com.umspreadsheet.set;
 
 import com.umspreadsheet.show.Show;
 import com.umspreadsheet.track.Track;
