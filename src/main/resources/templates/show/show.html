@@ -47,15 +47,6 @@
             <h3 th:text="${show.venue}"></h3>-->
             <br/>
             <br/>
-            <div th:if="${submitted == 'true'}" class="alert alert-success">
-                Review successfully submitted!
-            </div>
-            <div th:if="${reviewDeleted == 'true'}" class="alert alert-success">
-                Review successfully deleted.
-            </div>
-            <div th:if="${edited == 'true'}" class="alert alert-success">
-                Review successfully edited.
-            </div>
 
             <table sec:authorize="isAuthenticated()" class="table table-striped show-set-table">
                 <thead>
@@ -87,7 +78,7 @@
                             <td class="hidden-xs hidden-sm">[length]</td>
                             <td class="hidden-xs">[type]</td>
                             <td class="hidden-xs hidden-sm">[too many notes]</td>
-                            <td class="hidden-xs">[avg rating]</td>
+                            <td th:text="${#numbers.formatDecimal(track.averageRating, 0, 'COMMA', 2, 'POINT')}" class="hidden-xs">[avg rating]</td>
                             <td>
                                 <form th:id="'track' + ${track.id} + 'Form'" th:object="${track.trackReviewForm}"
                                       th:action="@{/shows/show}" method="post">
@@ -120,34 +111,36 @@
                 </tbody>
             </table>
 
-            <table sec:authorize="isAnonymous()" class="table table-striped table-condensed show-set-table">
-                <!--<h4 class="set-name" th:text="${setEntry.key}">Set 1</h4>-->
+            <table sec:authorize="isAnonymous()" class="table table-striped show-set-table">
                 <thead>
-                <tr>
-                    <th style="width: 315px">SONG</th>
-                    <th class="hidden-xs" style="width: 150px">LENGTH</th>
-                    <th style="width: 130px">TYPE</th>
-                    <th class="hidden-xs" style="width: 275px">NOTES</th>
-                    <th style="width: 175px;">COMMUNITY RATING</th>
-                </tr>
+                    <tr>
+                        <th style="width: 315px">SONG</th>
+                        <th class="hidden-xs" style="width: 150px">LENGTH</th>
+                        <th style="width: 130px">TYPE</th>
+                        <th class="hidden-xs" style="width: 275px">NOTES</th>
+                        <th style="width: 175px;">COMMUNITY RATING</th>
+                    </tr>
                 </thead>
                 <tbody>
-                    <th:block th:each="setEntry : ${trackAndReviewMap}">
-                        <tr>
-                            <td class="set-title-row" colspan="5" th:text="${setEntry.key}"></td>
-                        </tr>
-                        <tr th:each="trackAndReviewEntry,iterStat : ${setEntry.value}">
-                            <td>
-                                <span th:text="${trackAndReviewEntry.key.song}">[song]</span>
-                                <span th:if="${trackAndReviewEntry.key.segue and !iterStat.last}"> > </span>
-                                <span th:if="${trackAndReviewEntry.key.fluidSegue}">&nbsp;->&nbsp;</span>
-                            </td>
-                            <td class="hidden-xs">[length]</td>
-                            <td>[type]</td>
-                            <td class="hidden-xs">[too many notes]</td>
-                            <td th:text="${#numbers.formatDecimal(trackAndReviewEntry.key.averageRating, 0, 'COMMA', 2, 'POINT')}">[avg rating]</td>
-                        </tr>
-                    </th:block>
+                <!--loop through sets-->
+                <th:block th:each="set : ${show.sets}" th:object="${set}">
+                    <!--print set title-->
+                    <tr>
+                        <td class="set-name" colspan="8" th:text="*{name}">[set title]</td>
+                    </tr>
+                    <!--loop through tracks-->
+                    <tr th:each="track, i : *{tracks}" th:object="${track}">
+                        <td>
+                            <span th:text="*{song}">[song name]</span>
+                            <span th:if="${track.segue and !i.last}"> > </span>
+                            <span th:if="${track.fluidSegue}">&nbsp;->&nbsp;</span>
+                        </td>
+                        <td>[length]</td>
+                        <td>[type]</td>
+                        <td>[too many notes]</td>
+                        <td th:text="${#numbers.formatDecimal(track.averageRating, 0, 'COMMA', 2, 'POINT')}">[avg rating]</td>
+                    </tr>
+                </th:block>
                 </tbody>
             </table>
 
