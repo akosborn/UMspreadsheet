@@ -37,6 +37,8 @@ public class Track
     private Boolean fluidSegue;
     private Double averageRating;
     private String notes;
+    private String type;
+    private String jam;
 
     @Transient
     private Integer segueCode;
@@ -218,6 +220,26 @@ public class Track
         }
 
         this.segueCode = segueCode;
+    }
+
+    public String getType()
+    {
+        return type;
+    }
+
+    public void setType(String type)
+    {
+        this.type = type;
+    }
+
+    public String getJam()
+    {
+        return jam;
+    }
+
+    public void setJam(String jam)
+    {
+        this.jam = jam;
     }
 
     @Override
