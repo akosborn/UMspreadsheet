@@ -3,19 +3,25 @@ TRACKLIST TABLE
 ***************************/
 .table-striped tbody
 {
-    color: #000;
+    color: #fff;
 }
 
 .table-striped>tbody>tr:nth-child(even)>td,
 .table-striped>tbody>tr:nth-child(even)>th
 {
-    background-color: #F5F5F5;
+    background-color: #272D38;
+}
+
+.table-striped>tbody>tr:nth-child(odd)>td,
+.table-striped>tbody>tr:nth-child(odd)>th
+{
+    background-color: #272D38;
 }
 
 .table-striped>tbody>tr:nth-child(even).success>td,
 .table-striped>tbody>tr:nth-child(even).success>td
 {
-    background-color: #DFF0D8 !important;
+    /**background-color: #DFF0D8 !important;**/
 }
 
 .disabled
@@ -108,14 +114,7 @@ SHOW SET NAME
 ******************************************/
 .set-name
 {
-    font-weight: bolder;
-}
-
-.set-title-row
-{
-    font-weight: bolder;
-    font-size: 18px;
-    background: lightgrey !important;
+    color: #F2C73A;
 }
 
 /******************************************

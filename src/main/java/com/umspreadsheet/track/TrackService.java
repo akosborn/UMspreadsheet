@@ -1,5 +1,6 @@
 package com.umspreadsheet.track;
 
+import com.umspreadsheet.show.Show;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -40,5 +41,10 @@ public class TrackService
     public Track save(Track track)
     {
         return trackRepository.save(track);
+    }
+
+    public List<Track> getByShow(Show show)
+    {
+        return trackRepository.findByShow(show);
     }
 }

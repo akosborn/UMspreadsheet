@@ -1,6 +1,7 @@
 package com.umspreadsheet.track;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.umspreadsheet.review.TrackReviewForm;
 import com.umspreadsheet.set.Set;
 import com.umspreadsheet.review.TrackReview;
 import com.umspreadsheet.show.Show;
@@ -46,6 +47,19 @@ public class Track
 
     @Transient
     private Long setId;
+
+    @Transient
+    private TrackReviewForm trackReviewForm;
+
+    public TrackReviewForm getTrackReviewForm()
+    {
+        return trackReviewForm;
+    }
+
+    public void setTrackReviewForm(TrackReviewForm trackReviewForm)
+    {
+        this.trackReviewForm = trackReviewForm;
+    }
 
     public Long getSetId()
     {

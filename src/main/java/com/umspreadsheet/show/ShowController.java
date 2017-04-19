@@ -4,6 +4,7 @@ import com.umspreadsheet.criteria.SearchCriteria;
 import com.umspreadsheet.helper.ControllerHelper;
 import com.umspreadsheet.exception.DataNotFoundException;
 import com.umspreadsheet.model.Role;
+import com.umspreadsheet.review.TrackReviewDTO;
 import com.umspreadsheet.set.Set;
 import com.umspreadsheet.set.SetDTO;
 import com.umspreadsheet.review.TrackReview;
@@ -98,6 +99,38 @@ public class ShowController
         track.setShowId(showId);
         model.addAttribute("track", track);
 
+        /**
+         * refactoring
+         */
+
+        List<TrackReview> trackReviews = trackReviewService.findByUserAndShow(show, userService.findByUsername
+                (username));
+
+        List<Set> sets = show.getSets();
+        List<TrackReviewForm> trackReviewForms = new ArrayList<>();
+
+        for (Set setIter : sets)
+        {
+            for (Track trackIter : setIter.getTracks())
+            {
+                TrackReviewForm trackReviewForm = new TrackReviewForm();
+                for (TrackReview review : trackReviews)
+                {
+                    if (trackIter.getId() == review.getTrack().getId())
+                    {
+                        trackReviewForm = new TrackReviewForm(review);
+                        break;
+                    }
+                }
+                trackIter.setTrackReviewForm(trackReviewForm);
+                trackReviewForms.add(trackIter.getTrackReviewForm());
+            }
+        }
+
+        /**
+         *
+         */
+        model.addAttribute("trackReviewForms", trackReviewForms);
         model.addAttribute("allReviews", trackReviewService.getAllByShow(showId));
 
         if (!username.equals("anonymousUser"))
