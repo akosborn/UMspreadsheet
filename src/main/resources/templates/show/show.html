@@ -115,7 +115,7 @@
                 <thead>
                     <tr>
                         <th style="width: 315px">SONG</th>
-                        <th class="hidden-xs" style="width: 150px">LENGTH</th>
+                        <th style="width: 150px">LENGTH</th>
                         <th style="width: 130px">TYPE</th>
                         <th class="hidden-xs" style="width: 275px">NOTES</th>
                         <th style="width: 175px;">COMMUNITY RATING</th>
@@ -137,7 +137,7 @@
                         </td>
                         <td>[length]</td>
                         <td>[type]</td>
-                        <td>[too many notes]</td>
+                        <td class="hidden-xs">[too many notes]</td>
                         <td th:text="${#numbers.formatDecimal(track.averageRating, 0, 'COMMA', 2, 'POINT')}">[avg rating]</td>
                     </tr>
                 </th:block>
