@@ -38,6 +38,9 @@ public class Track
     private Double averageRating;
     private String notes;
 
+    @Transient
+    private Integer segueCode;
+
     @JsonIgnore
     @OneToMany(mappedBy = "track")
     private List<TrackReview> reviews;
@@ -189,6 +192,32 @@ public class Track
     public void setReviews(List<TrackReview> reviews)
     {
         this.reviews = reviews;
+    }
+
+    public Integer getSegueCode()
+    {
+        return segueCode;
+    }
+
+    public void setSegueCode(Integer segueCode)
+    {
+        if (segueCode == 1)
+        {
+            segue = true;
+            fluidSegue = false;
+        }
+        if (segueCode == 2)
+        {
+            fluidSegue = true;
+            segue = false;
+        }
+        else
+        {
+            fluidSegue = false;
+            segue = false;
+        }
+
+        this.segueCode = segueCode;
     }
 
     @Override

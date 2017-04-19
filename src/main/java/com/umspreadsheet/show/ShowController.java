@@ -100,7 +100,7 @@ public class ShowController
         {
             for (Track trackIter : setIter.getTracks())
             {
-                TrackReviewForm trackReviewForm = new TrackReviewForm();
+                TrackReviewForm trackReviewForm = new TrackReviewForm(username, trackIter.getId());
                 for (TrackReview review : trackReviews)
                 {
                     if (trackIter.getId() == review.getTrack().getId())

@@ -107,6 +107,48 @@
                                 </form>
                             </td>
                         </tr>
+                        <tr>
+                            <td colspan="8">
+                                <!--<button type="button" class="btn btn-info btn-lg" data-toggle="modal"
+                                        th:data-target="'#setId' + *{id} + 'Modal'">Open Modal</button>-->
+                                <a href="#" data-toggle="modal" th:data-target="'#setId' + *{id} + 'Modal'">
+                                    Add song
+                                </a>
+                            </td>
+                        </tr>
+                        <div th:id="'setId' + *{id} + 'Modal'" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content" style="background-color: #313131">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 th:text="'Add song to ' + *{name}" class="modal-title">Modal Header</h4>
+                                    </div>
+                                    <div class="modal-body col-md-8 col-md-offset-2">
+                                        <form th:id="'addSongForm' + ${set.id}" th:action="@{/admin/add-track}" method="post" th:object="${track}">
+                                            <input type="hidden" name="showId" th:field="*{showId}" th:value="${show.id}"/>
+                                            <input type="hidden" name="setId" th:value="${set.id}"/>
+                                            <input type="hidden" name="showTrackNumber" th:value="${#lists.size(set.tracks) + 1}"/>
+                                            <div class="form-group">
+                                                <label class="control-label" for="song">Song</label>
+                                                <input type="text" class="form-control" id="song" th:field="*{song}"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label" for="segueCode">Segue</label>
+                                                <select class="form-control" id="segueCode" th:field="*{segueCode}" style="color: #000">
+                                                    <option value=0>none</option>
+                                                    <option value=1>></option>
+                                                    <option value=2>-></option>
+                                                </select>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="submit" class="btn btn-default" th:form="'addSongForm' + ${set.id}">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </th:block>
                 </tbody>
             </table>
@@ -168,6 +210,7 @@
         <script type="text/javascript" th:inline="javascript">
 
             var trackReviewForms = [[${trackReviewForms}]];
+            console.log(trackReviewForms);
 
             trackReviewForms.forEach(function(trackReviewForm)
             {
@@ -208,6 +251,10 @@
                 delete addSetPElement;
                 document.getElementById("addSetForm").style.visibility = "visible";
             }
+        </script>
+
+        <script type="text/javascript">
+
         </script>
     </th:block>
 </body>

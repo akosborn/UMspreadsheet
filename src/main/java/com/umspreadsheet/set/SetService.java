@@ -18,4 +18,9 @@ public class SetService
     {
         return setRepository.save(set);
     }
+
+    public Set findById(Long id)
+    {
+        return setRepository.findOne(id);
+    }
 }
