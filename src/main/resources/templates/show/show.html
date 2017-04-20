@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" th:href="@{/css/show.css}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.7.2/css/bootstrap-slider.min.css" />
+    <link rel="stylesheet" th:ref="@{/webjars/bootstrap-touchspin/3.1.2/dist/jquery.bootstrap-touchspin.css}"/>
 
 </head>
 
@@ -95,10 +96,15 @@
                         <tr th:each="track, i : *{tracks}" th:object="${track}">
                             <td>
                                 <span th:text="*{song}">[song name]</span>
-                                <span th:if="${track.segue and !i.last}"> > </span>
+                                <span th:if="${track.segue}"> > </span>
                                 <span th:if="${track.fluidSegue}">&nbsp;->&nbsp;</span>
                             </td>
-                            <td th:text="*{songLength}" class="hidden-xs hidden-sm">[length]</td>
+
+                            <td th:if="*{length > 60 && ((length % 60) > 9)}" th:text="*{length / 60} + ':' + *{length % 60}" class="hidden-xs hidden-sm">[length]</td>
+                            <td th:if="*{length > 60 && ((length % 60) < 10)}" th:text="*{length / 60} + ':0' + *{length % 60}" class="hidden-xs hidden-sm">[length]</td>
+                            <td th:if="*{length < 60 && !(length == null)}" th:text="'0:' + *{length}" class="hidden-xs hidden-sm">[length]</td>
+                            <td th:if="*{length == null}" class="hidden-xs hidden-sm"></td>
+
                             <td th:text="*{type}" class="hidden-xs">[type]</td>
                             <td th:text="*{jam}" class="hidden-xs hidden-sm">[jam]</td>
                             <td th:text="${#numbers.formatDecimal(track.averageRating, 0, 'COMMA', 2, 'POINT')}" class="hidden-xs">[avg rating]</td>
@@ -151,39 +157,61 @@
                                                 <input type="hidden" name="showId" th:field="*{showId}" th:value="${show.id}"/>
                                                 <input type="hidden" name="setId" th:value="${set.id}"/>
                                                 <input type="hidden" name="showTrackNumber" th:value="${#lists.size(set.tracks) + 1}"/>
+                                                <input th:id="'length' + ${set.id}" type="hidden" name="length" value="0"/>
                                                 <div class="form-group">
-                                                    <label class="control-label" for="song">Song</label>
-                                                    <input type="text" class="form-control" id="song" th:field="*{song}"/>
+                                                    <div class="col-sm-12">
+                                                        <label for="song">Song</label>
+                                                        <input type="text" class="form-control" id="song" th:field="*{song}"/>
+                                                    </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="control-label" for="segueCode">Segue</label>
-                                                    <select class="form-control" id="segueCode" th:field="*{segueCode}" style="color: #000">
-                                                        <option value=0>None</option>
-                                                        <option value=1>></option>
-                                                        <option value=2>-></option>
-                                                    </select>
+                                                        <div class="col-sm-6">
+                                                            <label th:for="'minutes' + ${set.id}">Length</label>
+                                                            <input placeholder="minutes" class="form-control minutes"
+                                                                   type="number" th:id="'minutes' + ${set.id}"
+                                                                   name="minutes" min=0 max=50 value=0 />
+                                                        </div>
+                                                        <div class="col-sm-6">
+                                                            <label class="control-label" th:for="'seconds' + ${set.id}">&nbsp;</label>
+                                                            <input placeholder="seconds" value=0 class="form-control seconds" type="number"
+                                                                   th:id="'seconds' + ${set.id}" name="seconds" min=0 max=59/>
+                                                        </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="control-label" for="type">Type</label>
-                                                    <select class="form-control" id="type" th:field="*{type}" style="color: #000">
-                                                        <option value="">None</option>
-                                                        <option value="JS">Jimmy Stewart</option>
-                                                        <option value="LS">Lyrical Stew</option>
-                                                        <option value="C">Cover</option>
-                                                        <option value="M">Mashup</option>
-                                                        <option value="N">New song</option>
-                                                    </select>
+                                                    <div class="col-sm-12">
+                                                        <label class="control-label" for="segueCode">Segue</label>
+                                                        <select type="number" class="form-control" id="segueCode" th:field="*{segueCode}" style="color: #000">
+                                                            <option value=0>None</option>
+                                                            <option value=1>></option>
+                                                            <option value=2>-></option>
+                                                        </select>
+                                                    </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="control-label" for="jam">Jam</label>
-                                                    <select class="form-control" id="jam" th:field="*{jam}" style="color: #000">
-                                                        <option value="">None</option>
-                                                        <option value="funk">Funk</option>
-                                                        <option value="uplifting">Uplifting</option>
-                                                        <option value="heavy">Heavy</option>
-                                                        <option value="reggae">Reggae</option>
-                                                        <option value="untz">Untz</option>
-                                                    </select>
+                                                    <div class="col-sm-12">
+                                                        <label class="control-label" for="type">Type</label>
+                                                        <select class="form-control" id="type" th:field="*{type}" style="color: #000">
+                                                            <option value="">None</option>
+                                                            <option value="JS">Jimmy Stewart</option>
+                                                            <option value="LS">Lyrical Stew</option>
+                                                            <option value="C">Cover</option>
+                                                            <option value="M">Mashup</option>
+                                                            <option value="N">New song</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-sm-12">
+                                                        <label class="control-label" for="jam">Jam</label>
+                                                        <select class="form-control" id="jam" th:field="*{jam}" style="color: #000">
+                                                            <option value="">None</option>
+                                                            <option value="funk">Funk</option>
+                                                            <option value="uplifting">Uplifting</option>
+                                                            <option value="heavy">Heavy</option>
+                                                            <option value="reggae">Reggae</option>
+                                                            <option value="untz">Untz</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
                                             </form>
                                         </div>
@@ -252,6 +280,42 @@
     </div>
 
     <th:block layout:fragment="script">
+        <script type="text/javascript">
+            window.onload = function ()
+            {
+                var minutes = 0;
+                var seconds = 0;
+
+                var elementsMin = document.getElementsByClassName('minutes');
+                elementsMin = [].slice.call(elementsMin);
+
+                elementsMin.forEach(function (element)
+                {
+                    element.addEventListener('change', function () {
+                        minutes = parseInt(this.value);
+                        var splitArray = element.id.split("minutes");
+                        updateLengthInput(splitArray[1]);
+                    });
+                });
+
+                var elementsSec = document.getElementsByClassName('seconds');
+                elementsSec = [].slice.call(elementsSec);
+
+                elementsSec.forEach(function (element)
+                {
+                    element.addEventListener('change', function () {
+                        seconds = parseInt(this.value);
+                        var splitArray = element.id.split("seconds");
+                        updateLengthInput(splitArray[1]);
+                    });
+                });
+
+                function updateLengthInput(setId) {
+                    var length = ((minutes * 60) + seconds);
+                    document.getElementById('length' + setId).value = length;
+                }
+            }
+        </script>
         <script type="text/javascript" th:inline="javascript">
 
             var trackReviewForms = [[${trackReviewForms}]];

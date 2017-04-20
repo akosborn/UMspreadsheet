@@ -148,6 +148,11 @@
 			<artifactId>bootstrap-datepicker</artifactId>
 			<version>1.6.4</version>
 		</dependency>
+		<dependency>
+			<groupId>org.webjars.bower</groupId>
+			<artifactId>bootstrap-touchspin</artifactId>
+			<version>3.1.2</version>
+		</dependency>
 	</dependencies>
 
 	<build>

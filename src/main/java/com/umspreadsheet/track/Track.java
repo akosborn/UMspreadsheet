@@ -28,7 +28,7 @@ public class Track
     private Integer showTrackNumber;
 
     private String song;
-    private Double songLength;
+    private Long length;
 
     @Column(columnDefinition = "TINYINT(1)")
     private Boolean segue;
@@ -41,7 +41,7 @@ public class Track
     private String jam;
 
     @Transient
-    private Integer segueCode;
+    private int segueCode;
 
     @JsonIgnore
     @OneToMany(mappedBy = "track")
@@ -136,14 +136,14 @@ public class Track
         this.song = song;
     }
 
-    public Double getSongLength()
+    public Long getLength()
     {
-        return songLength;
+        return length;
     }
 
-    public void setSongLength(Double songLength)
+    public void setLength(Long length)
     {
-        this.songLength = songLength;
+        this.length = length;
     }
 
     public Boolean getSegue()
@@ -196,27 +196,27 @@ public class Track
         this.reviews = reviews;
     }
 
-    public Integer getSegueCode()
+    public int getSegueCode()
     {
         return segueCode;
     }
 
-    public void setSegueCode(Integer segueCode)
+    public void setSegueCode(int segueCode)
     {
         if (segueCode == 1)
         {
-            segue = true;
-            fluidSegue = false;
+            setSegue(true);
+            setFluidSegue(false);
         }
-        if (segueCode == 2)
+        else if (segueCode == 2)
         {
-            fluidSegue = true;
-            segue = false;
+            setFluidSegue(true);
+            setSegue(false);
         }
-        else
+        else if (segueCode == 0)
         {
-            fluidSegue = false;
-            segue = false;
+            setFluidSegue(false);
+            setSegue(false);
         }
 
         this.segueCode = segueCode;
@@ -251,7 +251,7 @@ public class Track
                 ", set=" + set +
                 ", showTrackNumber=" + showTrackNumber +
                 ", song='" + song + '\'' +
-                ", songLength=" + songLength +
+                ", length=" + length +
                 ", segue=" + segue +
                 ", averageRating=" + averageRating +
                 ", notes='" + notes + '\'' +
