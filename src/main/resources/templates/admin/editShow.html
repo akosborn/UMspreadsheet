@@ -122,7 +122,7 @@
                                                 <input type="hidden" name="id" th:value="*{id}"/>
                                                 <input type="hidden" name="averageRating" th:value="*{averageRating}"/>
                                                 <input type="hidden" name="showTrackNumber" th:value="${#lists.size(set.tracks) + 1}"/>
-                                                <input th:id="'length' + ${set.id}" type="hidden" name="length" th:value="*{length}"/>
+                                                <input th:id="'length' + *{id}" type="hidden" name="length" th:value="*{length}"/>
                                                 <div class="form-group">
                                                     <div class="col-sm-12">
                                                         <label for="song">Song</label>
@@ -132,15 +132,15 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="col-sm-6">
-                                                        <label th:for="'minutes' + ${set.id}">Length</label>
-                                                        <input placeholder="minutes" class="form-control minutes"
-                                                               type="number" th:id="'minutes' + ${set.id}"
+                                                        <label th:for="'minutesEdit' + *{id}">Length</label>
+                                                        <input placeholder="minutes" class="form-control minutesEdit"
+                                                               type="number" th:id="'minutesEdit' + *{id}"
                                                                name="minutes" min=0 max=50 />
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <label class="control-label" th:for="'seconds' + ${set.id}">&nbsp;</label>
-                                                        <input placeholder="seconds" class="form-control seconds" type="number"
-                                                               th:id="'seconds' + ${set.id}" name="seconds" min=0 max=59/>
+                                                        <input placeholder="seconds" class="form-control secondsEdit" type="number"
+                                                               th:id="'secondsEdit' + *{id}" name="seconds" min=0 max=59/>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -342,6 +342,50 @@
                 function updateLengthInput(setId) {
                     var length = ((minutes * 60) + seconds);
                     document.getElementById('length' + setId).value = length;
+                }
+
+
+                var elementsMinEdit = document.getElementsByClassName('minutesEdit');
+                elementsMinEdit = [].slice.call(elementsMinEdit);
+
+                elementsMinEdit.forEach(function (element)
+                {
+                    console.log('Minute edit element: ' + element.id);
+                    element.addEventListener('change', function () {
+
+                        console.log(element.id + ' min listener triggered');
+
+                        minutes = parseInt(this.value);
+
+
+                        var splitArray = element.id.split("minutesEdit");
+                        console.log('Minutues split array: ' + splitArray[1]);
+                        updateEditLengthInput(splitArray[1]);
+                    });
+                });
+
+                var elementsSecEdit = document.getElementsByClassName('secondsEdit');
+                elementsSecEdit = [].slice.call(elementsSecEdit);
+
+                elementsSecEdit.forEach(function (element)
+                {
+                    console.log('Seconds edit element: ' + element.id);
+                    element.addEventListener('change', function () {
+
+                        console.log(element.id + ' sec listener triggered');
+
+                        seconds = parseInt(this.value);
+                        var splitArray = element.id.split("secondsEdit");
+                        console.log('Seconds split array: ' + splitArray[1]);
+                        updateEditLengthInput(splitArray[1]);
+                    });
+                });
+
+                function updateEditLengthInput(trackId) {
+                    var length = ((minutes * 60) + seconds);
+                    console.log('Length: ' + length);
+                    console.log('Length element to update: length' + trackId);
+                    document.getElementById('length' + trackId).value = length;
                 }
             }
         </script>
