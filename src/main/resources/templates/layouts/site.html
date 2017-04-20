@@ -43,13 +43,22 @@
                         <li><a th:href="@{/}"><span class="glyphicon glyphicon-home"></span></a></li>
                         <li class="dropdown">
                             <a th:href="@{/shows}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                Rate
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a th:href="@{/shows}">Rate a Show</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a th:href="@{/shows}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                                 Shows
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a th:href="@{/shows}">Top-Rated</a></li>
-                                <li class="visible-xs visible-sm"><a th:href="@{/shows/find}">Find</a></li>
-                                <li><a th:href="@{/shows/random}">Random</a></li>
+                                <li><a th:href="@{/shows}">Top Rated Shows</a></li>
+                                <li class="visible-xs visible-sm"><a th:href="@{/shows/find}">Show Filter</a></li>
+                                <li><a th:href="@{/shows/random}">Random Show</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
@@ -58,11 +67,13 @@
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a th:href="@{/songs}">Top-Rated</a></li>
-                                <li class="visible-xs visible-sm"><a th:href="@{/songs/find}">Find</a></li>
+                                <li><a th:href="@{/songs}">Top Rated Songs</a></li>
+                                <li class="visible-xs visible-sm"><a th:href="@{/songs/find}">Song Filter</a></li>
+                                <li><a th:href="@{/songs/random}">Random Song</a></li>
                             </ul>
                         </li>
-                        <li><a th:href="@{/wormblog}">Wormblog</a></li>
+                        <li><a th:href="@{/wormblog}">WormBlog</a></li>
+                        <li><a th:href="@{/about}">About</a></li>
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
