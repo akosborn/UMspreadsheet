@@ -112,6 +112,7 @@ public class AdminController
         Track oldTrack = trackService.findById(track.getId());
 
         // Update variables that may have changed
+        oldTrack.setSong(track.getSong());
         oldTrack.setSegue(track.getSegue());
         oldTrack.setFluidSegue(track.getFluidSegue());
         oldTrack.setJam(track.getJam());
