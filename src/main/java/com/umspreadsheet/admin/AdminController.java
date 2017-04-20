@@ -104,6 +104,29 @@ public class AdminController
         return "redirect:/admin/edit-show";
     }
 
+    // Edit and update a song
+    @RequestMapping(value = "/edit-track", method = RequestMethod.PUT)
+    public String editTrack(Track track, RedirectAttributes redirectAttributes)
+    {
+        // Retrieve specified track from database
+        Track oldTrack = trackService.findById(track.getId());
+
+        // Update variables that may have changed
+        oldTrack.setSegue(track.getSegue());
+        oldTrack.setFluidSegue(track.getFluidSegue());
+        oldTrack.setJam(track.getJam());
+        oldTrack.setLength(track.getLength());
+        oldTrack.setNotes(track.getNotes());
+        oldTrack.setType(track.getType());
+
+        // Update track and assign to updatedTrack
+        Track updatedTrack = trackService.save(oldTrack);
+
+        redirectAttributes.addAttribute("showId", track.getShowId());
+
+        return "redirect:/admin/edit-show";
+    }
+
     // Returns requested show's edit page
     @RequestMapping(value = "/edit-show", params = "showId", method = RequestMethod.GET)
     public String editShowPage(@RequestParam(value = "showId") Long showId, Model model) throws
