@@ -29,7 +29,10 @@ MAIN CONTENT COLUMN
     display: inline-block;
 }
 
-
+.preview-body-div
+{
+    padding: 10px;
+}
 
 /**********************
 SIDEBAR COLUMN
