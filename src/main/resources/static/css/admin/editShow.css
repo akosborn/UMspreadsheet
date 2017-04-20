@@ -1,0 +1,128 @@
+/***************************
+TRACKLIST TABLE
+***************************/
+.table-striped tbody
+{
+    color: #fff;
+}
+
+.table-striped>tbody>tr:nth-child(even)>td,
+.table-striped>tbody>tr:nth-child(even)>th
+{
+    background-color: #272D38;
+}
+
+.table-striped>tbody>tr:nth-child(odd)>td,
+.table-striped>tbody>tr:nth-child(odd)>th
+{
+    background-color: #272D38;
+}
+
+.table-striped>tbody>tr:nth-child(even).success>td,
+.table-striped>tbody>tr:nth-child(even).success>td
+{
+    /**background-color: #DFF0D8 !important;**/
+}
+
+.disabled
+{
+    pointer-events: none;
+    cursor: default;
+    opacity: 0.4;
+}
+
+.show-set-table
+{
+    margin-bottom: 40px;
+}
+
+.show-set-table .song-column-header
+{
+    font-size: 18px;
+    font-weight: bolder;
+}
+
+form .icon-button
+{
+    background: none;
+    border: none;
+}
+
+#trackReviewSlider .slider-selection
+{
+    background: #BABABA;
+}
+
+.slider-track
+{
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.3) !important;
+}
+
+.slider-handle
+{
+    background-image: none !important;
+    background-color: #2E3542 !important;
+}
+
+[id*="SliderLabel"]
+{
+
+}
+
+
+/******************************************
+SHOW HEADER
+******************************************/
+#most-recent-show-header
+{
+    /*
+    border-bottom: solid thick darkgray;
+    padding-bottom: 5px;
+    */
+}
+
+#most-recent-show-header h2
+{
+    color: #F2C73A;
+}
+
+#most-recent-show-header h2,
+#most-recent-show-header .rating-and-medal
+{
+    display: inline;
+}
+
+.fa-trophy,
+.fa-diamond
+{
+    margin-right: 20px;
+}
+
+#show-rating-and-medal
+{
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+[id*="track"] span
+{
+    margin-right: 20px;
+}
+
+/******************************************
+SHOW SET NAME
+******************************************/
+.set-name
+{
+    color: #F2C73A;
+}
+
+/******************************************
+USER REVIEWS
+******************************************/
+#user-reviews
+{
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+}

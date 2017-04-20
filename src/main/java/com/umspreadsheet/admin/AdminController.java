@@ -1,5 +1,8 @@
 package com.umspreadsheet.admin;
 
+import com.umspreadsheet.exception.DataNotFoundException;
+import com.umspreadsheet.review.TrackReview;
+import com.umspreadsheet.review.TrackReviewForm;
 import com.umspreadsheet.set.Set;
 import com.umspreadsheet.set.SetDTO;
 import com.umspreadsheet.review.TrackReviewService;
@@ -15,7 +18,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
@@ -66,7 +73,8 @@ public class AdminController
 
         redirectAttributes.addAttribute("showId", savedShow.getId());
 
-        return "redirect:/shows/show";
+        // redirects to admin-specific editable show page
+        return "redirect:/admin/edit-show";
     }
 
     @RequestMapping(value = "/add-set", method = RequestMethod.POST)
@@ -93,6 +101,32 @@ public class AdminController
 
         redirectAttributes.addAttribute("showId", track.getShowId());
 
-        return "redirect:/shows/show";
+        return "redirect:/admin/edit-show";
+    }
+
+    // Returns requested show's edit page
+    @RequestMapping(value = "/edit-show", params = "showId", method = RequestMethod.GET)
+    public String editShowPage(@RequestParam(value = "showId") Long showId, Model model) throws
+            DataNotFoundException
+    {
+        Show show = showService.findById(showId);
+
+        if (show == null)
+            throw new DataNotFoundException("Show with id=" + showId + " not found.");
+
+        // Find the requested show using the showID request parameter
+        model.addAttribute("show", showService.findById(showId));
+
+        // Create and add SetDTO to be used in setAddForm
+        SetDTO setDTO = new SetDTO();
+        setDTO.setShowId(showId);
+        model.addAttribute("set", setDTO);
+
+        // Create and add Track to be used in trackAddForm
+        Track track = new Track();
+        track.setShowId(showId);
+        model.addAttribute("track", track);
+
+        return "/admin/editShow";
     }
 }

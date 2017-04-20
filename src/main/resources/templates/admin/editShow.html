@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorator="layouts/site"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>UMSpreadsheet</title>
+
+    <link rel="stylesheet" th:href="@{/css/admin/editShow.css}" />
+
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <div id="#home-container" class="container">
+
+            <div id="most-recent-show-header" th:object="${show}">
+                <h2 id="show-title" th:text="${#dates.format(show.date, 'yyyy/MM/dd') + ' ' + show.city + ', '  + show.state}"></h2>
+                <h2 id="show-rating-and-medal" class="pull-right">
+                    <i th:if="*{averageRating gt 6.99 and averageRating lt 8}" class="fa fa-trophy" style="color: #CD7F32;" aria-hidden="true"></i>
+                    <i th:if="*{averageRating gt 7.99 and averageRating lt 9}" class="fa fa-trophy" style="color: #C0C0C0;" aria-hidden="true"></i>
+                    <i th:if="*{averageRating gt 8.99 and averageRating lt 9.5}" class="fa fa-trophy" style="color: #FFD700;" aria-hidden="true"></i>
+                    <i th:if="*{averageRating gt 9.49}" class="fa fa-diamond" style="color: #B9F2FF;" aria-hidden="true"></i>
+                    <span th:if="*{averageRating != null}" th:text="*{#numbers.formatDecimal(averageRating, 1, 2)}">[0.00]</span>
+                    <span th:if="*{averageRating == null}">No Rating</span>
+                </h2>
+                <h3 th:text="${show.venue}"></h3>
+                <p class="edit-field" id="addSet">
+                    <a href="javascript:" data-toggle="modal" data-target="#add-set-modal">
+                        Add set
+                    </a>
+                </p>
+
+                <div id="add-set-modal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content" style="background-color: #313131">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 th:text="'Add set'" class="modal-title">Modal Header</h4>
+                            </div>
+                            <div class="row">
+                                <div class="modal-body col-sm-8 col-sm-offset-2">
+                                    <form sec:authorize="hasRole('ROLE_ADMIN')" th:action="@{/admin/add-set}" id="addSetForm"
+                                          name="addSetForm" th:object="${set}" method="post">
+                                        <input type="hidden" th:field="*{showId}"/>
+                                        <div class="form-group">
+                                            <label class="control-label" for="set">Set</label>
+                                            <input placeholder="Set 1" type="text" class="form-control" id="set" th:field="*{name}"/>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer" style="text-align: center;">
+                                <button type="submit" class="btn btn-default" form="addSetForm">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br/>
+            <br/>
+
+            <table class="table table-striped show-set-table">
+                <thead>
+                <tr>
+                    <th data-priority="1" class="song-column-header" style="width: 315px">SONG</th>
+                    <th style="width: 150px">LENGTH</th>
+                    <th style="width: 130px">TYPE</th>
+                    <th style="width: 275px">JAM</th>
+                    <th>NOTES</th>
+                </tr>
+                </thead>
+                <tbody>
+                <!--loop through sets-->
+                <th:block th:each="set : ${show.sets}" th:object="${set}">
+                    <!--print set title-->
+                    <tr>
+                        <td class="set-name" colspan="8" th:text="*{name}">[set title]</td>
+                    </tr>
+                    <!--loop through tracks-->
+                    <tr th:each="track, i : *{tracks}" th:object="${track}">
+                        <td>
+                            <span th:text="*{song}">[song name]</span>
+                            <span th:if="${track.segue}"> > </span>
+                            <span th:if="${track.fluidSegue}">&nbsp;->&nbsp;</span>
+                        </td>
+
+                        <td th:if="*{length > 60 && ((length % 60) > 9)}" th:text="*{length / 60} + ':' + *{length % 60}">[length]</td>
+                        <td th:if="*{length > 60 && ((length % 60) < 10)}" th:text="*{length / 60} + ':0' + *{length % 60}">[length]</td>
+                        <td th:if="*{length < 60 && !(length == null)}" th:text="'0:' + *{length}">[length]</td>
+                        <td th:if="*{length == null}"></td>
+
+                        <td th:text="*{type}">[type]</td>
+
+                        <td th:text="*{jam}">[jam]</td>
+                        <td th:text="*{notes}">[notes]</td>
+                    </tr>
+                    <tr class="edit-button">
+                        <td colspan="8">
+                            <a class="edit-field" href="#" data-toggle="modal" th:data-target="'#setId' + *{id} + 'Modal'">
+                                Add song
+                            </a>
+                        </td>
+                    </tr>
+                    <div th:id="'setId' + *{id} + 'Modal'" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <!-- Modal content-->
+                            <div class="modal-content" style="background-color: #313131">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 th:text="'Add song to ' + *{name}" class="modal-title">Modal Header</h4>
+                                </div>
+                                <div class="row">
+                                    <div class="modal-body col-sm-8 col-sm-offset-2">
+                                        <form th:id="'addSongForm' + ${set.id}" th:action="@{/admin/add-track}" method="post" th:object="${track}">
+                                            <input type="hidden" name="showId" th:field="*{showId}" th:value="${show.id}"/>
+                                            <input type="hidden" name="setId" th:value="${set.id}"/>
+                                            <input type="hidden" name="showTrackNumber" th:value="${#lists.size(set.tracks) + 1}"/>
+                                            <input th:id="'length' + ${set.id}" type="hidden" name="length" value="0"/>
+                                            <div class="form-group">
+                                                <div class="col-sm-12">
+                                                    <label for="song">Song</label>
+                                                    <input type="text" class="form-control" id="song" th:field="*{song}"/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-6">
+                                                    <label th:for="'minutes' + ${set.id}">Length</label>
+                                                    <input placeholder="minutes" class="form-control minutes"
+                                                           type="number" th:id="'minutes' + ${set.id}"
+                                                           name="minutes" min=0 max=50 />
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <label class="control-label" th:for="'seconds' + ${set.id}">&nbsp;</label>
+                                                    <input placeholder="seconds" class="form-control seconds" type="number"
+                                                           th:id="'seconds' + ${set.id}" name="seconds" min=0 max=59/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-12">
+                                                    <label class="control-label" for="segueCode">Segue</label>
+                                                    <select type="number" class="form-control" id="segueCode" th:field="*{segueCode}" style="color: #000">
+                                                        <option value=0>None</option>
+                                                        <option value=1>></option>
+                                                        <option value=2>-></option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-12">
+                                                    <label class="control-label" for="type">Type</label>
+                                                    <select class="form-control" id="type" th:field="*{type}" style="color: #000">
+                                                        <option value="">None</option>
+                                                        <option value="JS">Jimmy Stewart</option>
+                                                        <option value="LS">Lyrical Stew</option>
+                                                        <option value="C">Cover</option>
+                                                        <option value="M">Mashup</option>
+                                                        <option value="N">New song</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-12">
+                                                    <label class="control-label" for="jam">Jam</label>
+                                                    <select class="form-control" id="jam" th:field="*{jam}" style="color: #000">
+                                                        <option value="">None</option>
+                                                        <option value="bliss">Bliss</option>
+                                                        <option value="dance">Dance</option>
+                                                        <option value="dark">Dark</option>
+                                                        <option value="emotional">Emotional</option>
+                                                        <option value="funk">Funk</option>
+                                                        <option value="industrial">Industrial</option>
+                                                        <option value="jazz">Jazz</option>
+                                                        <option value="metal">Metal</option>
+                                                        <option value="prog">Prog</option>
+                                                        <option value="reggae">Reggae</option>
+                                                        <option value="rock">Rock</option>
+                                                        <option value="soaring">Soaring</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-sm-12">
+                                                <label for="notes" class="control-label">Notes</label>
+                                                <textarea class="form-control" id="notes" name="notes" rows="4"></textarea>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="modal-footer" style="text-align: center;">
+                                    <button type="submit" class="btn btn-default" th:form="'addSongForm' + ${set.id}">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </th:block>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+    <th:block layout:fragment="script">
+        <script type="text/javascript">
+            window.onload = function ()
+            {
+                var minutes = 0;
+                var seconds = 0;
+
+                var elementsMin = document.getElementsByClassName('minutes');
+                elementsMin = [].slice.call(elementsMin);
+
+                elementsMin.forEach(function (element)
+                {
+                    element.addEventListener('change', function () {
+                        minutes = parseInt(this.value);
+                        var splitArray = element.id.split("minutes");
+                        updateLengthInput(splitArray[1]);
+                    });
+                });
+
+                var elementsSec = document.getElementsByClassName('seconds');
+                elementsSec = [].slice.call(elementsSec);
+
+                elementsSec.forEach(function (element)
+                {
+                    element.addEventListener('change', function () {
+                        seconds = parseInt(this.value);
+                        var splitArray = element.id.split("seconds");
+                        updateLengthInput(splitArray[1]);
+                    });
+                });
+
+                function updateLengthInput(setId) {
+                    var length = ((minutes * 60) + seconds);
+                    document.getElementById('length' + setId).value = length;
+                }
+            }
+        </script>
+
+    </th:block>
+</body>
+</html>

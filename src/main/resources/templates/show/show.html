@@ -11,7 +11,6 @@
 
     <link rel="stylesheet" th:href="@{/css/show.css}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.7.2/css/bootstrap-slider.min.css" />
-    <link rel="stylesheet" th:ref="@{/webjars/bootstrap-touchspin/3.1.2/dist/jquery.bootstrap-touchspin.css}"/>
 
 </head>
 
@@ -29,13 +28,10 @@
                     <span th:if="*{averageRating != null}" th:text="*{#numbers.formatDecimal(averageRating, 1, 2)}">[0.00]</span>
                     <span th:if="*{averageRating == null}">No Rating</span>
                 </h2>
-                <h3 th:text="${show.venue}"></h3>
-                <p id="toggleEdit" sec:authorize="hasRole('ROLE_ADMIN')"><a href="javascript:;" onclick="toggleEditMode();">
-                    Edit mode</a>
-                </p>
-                <p class="edit-field" id="addSet" sec:authorize="hasRole('ROLE_ADMIN')" style="visibility: hidden">
-                    <a href="javascript:" data-toggle="modal" data-target="#add-set-modal">
-                        Add set
+                <h3 th:text="${show.venue}">[venue]</h3>
+                <p sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a th:href="@{/admin/edit-show(showId=${show.id})}">
+                        Edit show
                     </a>
                 </p>
 
