@@ -1,0 +1,44 @@
+/**********************
+MAIN CONTENT COLUMN
+**********************/
+
+#main-content-column
+{
+
+}
+
+.preview-post-div
+{
+    background: #272D38;
+}
+
+.preview-header-div
+{
+    border-bottom: solid thick darkgray;
+}
+
+.preview-header-div h3
+{
+    color: #F2C73A;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.preview-header-div p
+{
+    display: inline-block;
+}
+
+
+
+/**********************
+SIDEBAR COLUMN
+**********************/
+
+@media (min-width: 992px)
+{
+    #sidebar
+    {
+        border-right: solid thin darkgray;
+    }
+}

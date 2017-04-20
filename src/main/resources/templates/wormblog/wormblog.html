@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorator="layouts/site"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <title>UMSpreadsheet</title>
+
+    <link rel="stylesheet" th:href="@{/css/topSongs.css}"/>
+    <link rel="stylesheet" th:href="@{/css/wormblog/wormblog.css}"/>
+</head>
+<body>
+
+    <div layout:fragment="content">
+        <div class="container">
+            <h1 id="header-title" class="text-center">WormBlog</h1>
+
+            <div id="sidebar" class="col-md-2">
+
+            </div>
+
+            <div id="main-content-column container" class="col-md-10">
+                <div class="preview-post-div container">
+                    <div class="preview-header-div">
+                        <h3>First Blog Post</h3>
+                        <p>by admin</p>
+                    </div>
+
+                    <br/>
+
+                    <p>UMSpreadsheet was created to serve as a community-based resource for umphreaks.
+                        This resource allows participants to give a rating to every song over Umphrey's entire career in an
+                        effort to create a rather unique view of the music we love.  The goal is to help people find and listen
+                        to music that they may not have discovered on their own, plain and simple.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <th:block layout:fragment="script">
+
+    </th:block>
+
+</body>
