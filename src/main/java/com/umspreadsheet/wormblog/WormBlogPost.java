@@ -7,8 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "wormblog_posts")
+//@Entity
+//@Table(name = "wormblog_posts")
 public class WormBlogPost
 {
     public WormBlogPost(){}

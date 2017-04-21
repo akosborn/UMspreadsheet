@@ -126,3 +126,14 @@ USER REVIEWS
     margin-left: auto;
     margin-right: auto;
 }
+
+/*****************************************
+PERCENT BAR
+*****************************************/
+.span-percent-bar
+{
+    border-radius: 2px;
+    background-color: white;
+    height: 3px;
+    display: block;
+}

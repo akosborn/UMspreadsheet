@@ -173,3 +173,13 @@ SOCIAL SIGN UP BUTTON
     margin: 0;
     text-align: center;
 }
+
+
+
+/******************************
+PERCENT WRAP
+******************************/
+.percent-wrap
+{
+    width: 15%;
+}

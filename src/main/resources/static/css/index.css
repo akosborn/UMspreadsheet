@@ -14,9 +14,9 @@ chart-data-div
 
 @media (min-width: 992px)
 {
-    #chart-data-div
+    #most-recent-show-div
     {
-        border-left: thin solid #fff;
+        border-right: thin solid #fff;
     }
 }
 
@@ -27,6 +27,11 @@ chart-data-div
         border-bottom: thin solid #fff;
         margin-bottom: 30px;
     }
+}
+
+#chart-data-div h2
+{
+    text-align: center;
 }
 
 
@@ -44,6 +49,10 @@ HEADER
     text-align: center;
 }
 
+#header-title
+{
+    margin-top: 0;
+}
 
 #mobile-logo
 {
@@ -85,4 +94,15 @@ MOST RECENT SHOW
 {
     margin-top: 0;
     margin-bottom: 0;
+}
+
+.setlist-div
+{
+    padding-left: 35px;
+    text-indent: -35px;
+}
+
+#most-recent-show-div h2
+{
+    text-align: center;
 }

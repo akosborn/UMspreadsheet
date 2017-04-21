@@ -28,7 +28,7 @@
                     <span th:if="*{averageRating != null}" th:text="*{#numbers.formatDecimal(averageRating, 1, 2)}">[0.00]</span>
                     <span th:if="*{averageRating == null}">No Rating</span>
                 </h2>
-                <h3 th:text="${show.venue}">[venue]</h3>
+                <h3 th:text="${show.venue}" style="margin-top: 3px;">[venue]</h3>
                 <p sec:authorize="hasRole('ROLE_ADMIN')">
                     <a th:href="@{/admin/edit-show(showId=${show.id})}">
                         Edit show
@@ -65,8 +65,6 @@
 
             <!--<h2 th:text="${#dates.format(show.date, 'yyyy/MM/dd') + ' ' + show.city + ', '  + show.state}"></h2>
             <h3 th:text="${show.venue}"></h3>-->
-            <br/>
-            <br/>
 
             <table sec:authorize="isAuthenticated()" class="table table-striped show-set-table">
                 <thead>
@@ -140,15 +138,16 @@
                 </tbody>
             </table>
 
-            <table sec:authorize="isAnonymous()" class="table table-striped show-set-table">
+            <table sec:authorize="isAnonymous()" class="table table-striped show-set-table" style="width: 100%">
                 <thead>
-                    <tr>
-                        <th style="width: 315px">SONG</th>
-                        <th class="text-right" style="width: 70px; margin-right: 40px;">LENGTH</th>
+                    <tr style="width: 100%">
+                        <th data-priority="1" style="width: 315px">SONG</th>
+                        <th class="hidden-xs hidden-sm text-right" style="width: 70px; margin-right: 40px;">LENGTH</th>
                         <th style="width: 130px">TYPE</th>
                         <th style="width: 175px;">JAM</th>
                         <th style="width: 175px;">RATING</th>
-                        <th class="hidden-xs" style="width: 275px">NOTES</th>
+                        <th class="percent-wrap hidden-xs" style="width: 10%"></th>
+                        <th class="hidden-sm hidden-xs" style="width: 275px">NOTES</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -171,11 +170,24 @@
                         <td th:if="*{length < 60 && !(length == null)}" th:text="'0:' + *{length}" class="hidden-xs hidden-sm text-right">[length]</td>
                         <td th:if="*{length == null}" class="hidden-xs hidden-sm text-right"></td>
 
-                        <td th:text="*{type}" class="hidden-xs">[type]</td>
-                        <td th:text="*{jam}" class="hidden-xs hidden-sm">[jam]</td>
-                        <td th:text="${#numbers.formatDecimal(track.averageRating, 0, 'COMMA', 2, 'POINT')}" class="hidden-xs">[avg rating]</td>
+                        <td th:text="*{type}">[type]</td>
+                        <td th:text="*{jam}">[jam]</td>
+                        <td th:text="${#numbers.formatDecimal(track.averageRating, 0, 'COMMA', 2, 'POINT')}">[avg rating]</td>
 
-                        <td th:text="*{notes}" class="hidden-xs">[too many notes]</td>
+                        <td class="percent-wrap hidden-xs" style="vertical-align: middle;">
+                            <th:block th:if="*{averageRating != null}">
+                                <span class="span-percent-bar" th:if="*{averageRating gt 6.99 and averageRating lt 8}"
+                                      th:style="'background-color: #CD7F32; width: ' + ${(track.averageRating * 10)} + '%;'"></span>
+                                <span class="span-percent-bar" th:if="*{averageRating gt 7.99 and averageRating lt 9}"
+                                      th:style="'background-color: #C0C0C0; width: ' + ${(track.averageRating * 10)} + '%;'"></span>
+                                <span class="span-percent-bar" th:if="*{averageRating gt 8.99 and averageRating lt 9.5}"
+                                      th:style="'background-color: #FFD700; width: ' + ${(track.averageRating * 10)} + '%;'"></span>
+                                <span class="span-percent-bar" th:if="*{averageRating gt 9.49}"
+                                      th:style="'background-color: #B9F2FF; width: ' + ${(track.averageRating * 10)} + '%;'"></span>
+                            </th:block>
+                        </td>
+
+                        <td th:text="*{notes}" class="hidden-xs hidden-sm">[too many notes]</td>
                     </tr>
                 </th:block>
                 </tbody>
