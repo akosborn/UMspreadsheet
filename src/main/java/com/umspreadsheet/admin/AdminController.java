@@ -88,7 +88,7 @@ public class AdminController
 
         redirectAttributes.addAttribute("showId", setDTO.getShowId());
 
-        return "redirect:/shows/show";
+        return "redirect:/admin/edit-show";
     }
 
     @RequestMapping(value = "/add-track", method = RequestMethod.POST)
