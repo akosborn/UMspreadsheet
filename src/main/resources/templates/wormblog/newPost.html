@@ -7,6 +7,14 @@
 <head>
     <title>UMSpreadsheet</title>
 
+    <script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=cqieblmr6k0j8t4uhgiiqd60k8c49x0ru3chyee3jh2ux6ys"></script>
+    <script>
+        tinymce.init({
+            selector: "textarea",  // change this value according to your HTML
+            plugins: "image",
+        });
+    </script>
+
     <link rel="stylesheet" th:href="@{/css/topSongs.css}"/>
     <link rel="stylesheet" th:href="@{/css/wormblog/wormblog.css}"/>
 </head>
@@ -26,19 +34,14 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label">Slug</label>
                 <div class="col-md-10">
-                    <input type="text" class="form-control" th:field="*{slug}" />
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Teaser</label>
-                <div class="col-md-10">
-                    <textarea class="form-control" rows="3" th:field="*{teaser}">teaser</textarea>
+                    <input placeholder="This will be the url path for the post. Ex: umspreadsheet.com/wormblog/this-post-slug"
+                           type="text" class="form-control" th:field="*{slug}" />
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label">Body</label>
                 <div class="col-md-10">
-                    <textarea class="form-control" rows="5" th:field="*{body}">body</textarea>
+                    <textarea class="form-control tinymce" rows="5" th:field="*{body}">body</textarea>
                 </div>
             </div>
             <button type="submit" class="btn btn-default" style="margin-left: auto;">Submit</button>

@@ -16,21 +16,18 @@
         <div class="container">
             <h1 id="header-title" class="text-center">WormBlog</h1>
 
-            <div id="sidebar" class="col-md-2">
-
-            </div>
-
-            <div id="main-content-column container" class="col-md-10">
-                <div th:each="post : ${posts}" th:object="${post}" class="preview-post-div container">
+            <div class="container">
+                <div th:each="post : ${posts}" th:object="${post}" class="preview-post-div container" style="margin-bottom: 20px;">
                     <div class="preview-header-div">
-                        <h3 th:text="*{title}">Test Blog Post</h3>
-                        <p th:text="*{author.username}">by admin</p>
+                        <h3 th:text="*{title}">[title]</h3>
+                        <p th:text="*{author.username}">[author]</p>
+                        <p th:text="'on ' + *{#dates.format(postedOn, 'yyyy/MM/dd')}" style="display: inline-block;">[date]</p>
                     </div>
 
                     <br/>
 
                     <div class="preview-body-div">
-                        <p th:text="*{body}">UMSpreadsheet was created to serve as a community-based resource for umphreaks.
+                        <p th:utext="*{body}">UMSpreadsheet was created to serve as a community-based resource for umphreaks.
                             This resource allows participants to give a rating to every song over Umphrey's entire career in an
                             effort to create a rather unique view of the music we love.  The goal is to help people find and listen
                             to music that they may not have discovered on their own, plain and simple.</p>

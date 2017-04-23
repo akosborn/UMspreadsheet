@@ -2,7 +2,7 @@
 MAIN CONTENT COLUMN
 **********************/
 
-#main-content-column
+.main-content-column
 {
 
 }
@@ -32,6 +32,11 @@ MAIN CONTENT COLUMN
 .preview-body-div
 {
     padding: 10px;
+}
+
+.tinymce
+{
+    max-width: 100%;
 }
 
 /**********************
