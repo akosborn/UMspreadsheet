@@ -79,7 +79,7 @@ SHOW
 
 @media (min-width: 992px)
 {
-    .shows-div
+    .right-div
     {
         border-right: solid thin darkgray;
     }
