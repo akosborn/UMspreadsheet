@@ -20,20 +20,9 @@
     margin-left: 10px;
 }
 
-#logo-div
-{
-    display: inline-block;
-    margin-top: 0;
-}
-
 #rating-table
 {
     font-size: 20px;
     display: inline-block;
     vertical-align: middle;
-}
-
-#rating-table-div
-{
-    display: inline-block;
 }
