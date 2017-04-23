@@ -21,6 +21,6 @@ public class WormBlogService
 
     public Iterable<WormBlogPost> findAll()
     {
-        return wormBlogRepository.findAll();
+        return wormBlogRepository.findAllByOrderByPostedOnDesc();
     }
 }

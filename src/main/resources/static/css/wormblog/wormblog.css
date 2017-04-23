@@ -12,6 +12,11 @@ MAIN CONTENT COLUMN
     background: #272D38;
 }
 
+.preview-post-div iframe, .preview-post-div img
+{
+    max-width: 100%;
+}
+
 .preview-header-div
 {
     border-bottom: solid thick darkgray;
