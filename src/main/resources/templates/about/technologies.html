@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorator="layouts/site"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <title>UMSpreadsheet</title>
+
+    <link rel="stylesheet" th:href="@{/css/about/technologies.css}"/>
+</head>
+<body>
+
+    <div layout:fragment="content">
+
+        <div class="container text-center">
+            <h1 id="header-title">Technologies</h1>
+
+            <p>UMspreadsheet was created by <a href="https://www.twitter.com/andrew4bama">@andrew4bama</a> and
+                <a href="https://www.twitter.com/eeslacker">@eeslacker</a> and was made possible by the following
+                technologies:</p>
+            <br/>
+            <br/>
+            <br/>
+            <div class="row">
+                <div class="col-md-6">
+                    <a href="https://spring.io/"><img class="tech-logo" th:src="@{/images/tech/spring.png}"/></a>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <a href="https://jquery.org"><img class="tech-logo" th:src="@{/images/tech/jquery-mark-light.gif}"/></a>
+                </div>
+                <div class="col-md-6">
+                    <a href="https://www.thymeleaf.io"><img class="tech-logo" th:src="@{/images/tech/thymeleaf.png}"/></a>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <a href="https://www.mysql.com"><img th:src="@{/images/tech/mysql.png}"/></a>
+            </div>
+        </div>
+    </div>
+
+    <th:block layout:fragment="script">
+
+    </th:block>
+
+</body>

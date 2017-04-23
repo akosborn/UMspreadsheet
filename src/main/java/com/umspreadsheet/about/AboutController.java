@@ -12,4 +12,10 @@ public class AboutController
     {
         return "/about/about";
     }
+
+    @RequestMapping("/technologies")
+    public String technologiesPage()
+    {
+        return "/about/technologies";
+    }
 }

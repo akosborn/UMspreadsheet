@@ -73,7 +73,16 @@
                             </ul>
                         </li>
                         <li><a th:href="@{/wormblog}">WormBlog</a></li>
-                        <li><a th:href="@{/about}">About</a></li>
+                        <li class="dropdown">
+                            <a th:href="@{/songs}" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                About
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a th:href="@{/about}">About UMspreadsheet</a></li>
+                                <li><a th:href="@{/about/technologies}">Technologies</a></li>
+                            </ul>
+                        </li>
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
@@ -115,6 +124,10 @@
         <!-- all content in implementing pages goes here -->
         <div layout:fragment="content"></div>
     </div>
+
+    <th:block layout:fragment="footer">
+
+    </th:block>
 
     <footer class="site-footer">
         <div class="container" style="text-align: center;">
