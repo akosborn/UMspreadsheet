@@ -13,61 +13,73 @@
 </head>
 <body>
 
-<div layout:fragment="content">
-    <div class="container">
-        <h2>Admin</h2>
+    <div layout:fragment="content">
+        <div class="container">
+            <h2>Admin</h2>
 
-        <div class="row">
-            <div id="profile-picture" class="dark-div">
-                <img th:src="@{/images/avatar.svg}" style="height: 100px; width: auto; margin-bottom: 20px;"/>
-                <p sec:authentication="name">[username]</p>
-                <p th:text="'Last login: ' + '' ">[last login]</p>
-                <p th:text="'Joined: ' + ''">[join date]</p>
+            <div class="row">
+                <div id="profile-picture" class="dark-div">
+                    <img th:src="@{/images/avatar.svg}" style="height: 100px; width: auto; margin-bottom: 20px;"/>
+                    <p sec:authentication="name">[username]</p>
+                    <p th:text="'Last login: ' + '' ">[last login]</p>
+                    <p th:text="'Joined: ' + ''">[join date]</p>
+                </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col-sm-12">
+            <div class="row">
                 <div class="col-sm-12">
-                    <div class="col-md-3 col-sm-6 box">
-                        <div class="dark-div">
-                            <h3>Shows</h3>
-                            <hr>
-                            <p><a th:href="@{/admin/add-show}">Add show</a></p>
-                            <p><a href="#">Edit show</a></p>
+                    <div class="col-sm-12">
+                        <div class="col-md-3 col-sm-6 box">
+                            <div class="dark-div">
+                                <h3>Shows</h3>
+                                <hr>
+                                <p><a th:href="@{/admin/add-show}">Add show</a></p>
+                                <p><a href="#">Edit show</a></p>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-3 col-sm-6 box">
-                        <div class="dark-div">
-                            <h3>WormBlog</h3>
-                            <hr>
-                            <p>Add post</p>
-                            <p>Edit post</p>
+                        <div class="col-md-3 col-sm-6 box">
+                            <div class="dark-div">
+                                <h3>WormBlog</h3>
+                                <hr>
+                                <p>Add post</p>
+                                <p>Edit post</p>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-3 col-sm-6 box">
-                        <div class="dark-div">
-                            <h3>Users</h3>
-                            <hr>
-                            <p>Edit privileges</p>
+                        <div class="col-md-3 col-sm-6 box">
+                            <div class="dark-div">
+                                <h3>Users</h3>
+                                <hr>
+                                <p>Edit privileges</p>
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-md-3 col-sm-6 box">
-                        <div class="dark-div">
-                            <h3>Communication</h3>
-                            <hr>
-                            <p>Send email</p>
+                        <div class="col-md-3 col-sm-6 box">
+                            <div class="dark-div">
+                                <h3>Communication</h3>
+                                <hr>
+                                <p>Send email</p>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
 
     </div>
-</div>
+
+    <span layout:fragment="footer">
+        <br/>
+        Icons made by
+        <a href="http://www.flaticon.com/authors/gregor-cresnar" title="Gregor Cresnar">
+            Gregor Cresnar
+        </a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by
+        <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">
+            CC 3.0 BY
+        </a>
+    </span>
 
 </body>
 </html>
