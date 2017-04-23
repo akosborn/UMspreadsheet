@@ -27,7 +27,7 @@
                     <span th:if="*{averageRating != null}" th:text="*{#numbers.formatDecimal(averageRating, 1, 2)}">[0.00]</span>
                     <span th:if="*{averageRating == null}">No Rating</span>
                 </h2>
-                <h3 th:text="${show.venue}"></h3>
+                <h3 th:text="${show.venue}" style="margin-top: 3px;"></h3>
                 <p class="edit-field" id="addSet">
                     <a href="javascript:" data-toggle="modal" data-target="#add-set-modal">
                         Add set
@@ -62,10 +62,7 @@
                 </div>
             </div>
 
-            <br/>
-            <br/>
-
-            <table class="table table-striped show-set-table">
+            <table class="table show-set-table">
                 <thead>
                 <tr>
                     <th data-priority="1" class="song-column-header" style="width: 315px">SONG</th>
@@ -80,7 +77,7 @@
                 <!--loop through sets-->
                 <th:block th:each="set : ${show.sets}" th:object="${set}">
                     <!--print set title-->
-                    <tr>
+                    <tr class="set-row">
                         <td class="set-name" colspan="8" th:text="*{name}">[set title]</td>
                     </tr>
                     <!--loop through tracks-->
