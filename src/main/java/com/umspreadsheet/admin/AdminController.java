@@ -177,7 +177,7 @@ public class AdminController
 
         WormBlogPost savedPost = wormBlogService.save(post);
 
-        return "/admin/adminHome";
+        return "redirect:/wormblog";
     }
 
     private String getCurrentUsername()
