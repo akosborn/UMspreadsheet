@@ -15,34 +15,6 @@
     <div class="container">
         <h1 id="header-title" class="text-center">Song Search Results</h1>
 
-        <div class="col-md-9 shows-div">
-            <div class="show-div" th:each="track,iterStat : ${trackResults}" th:object="${track}">
-                <div class="show-header">
-
-                    <a class="show-url" th:href="@{/shows/show(showId=*{show.id})}">
-                        <h5 th:text="*{#dates.format(show.date, 'yyyy/MM/dd') + ' ' + show.city + ', ' + show.state}">[date, city, st]</h5>
-                    </a>
-                    <a th:href="@{/songs/song(songId=*{id})}">
-                        <h4 th:text="*{song}">
-                            [song title]
-                        </h4>
-                        <!--<h4 class="show-title" th:text="*{#dates.format(date, 'yyyy/MM/dd') + ' ' + city + ', ' + state}">
-                            [date, city, st]
-                        </h4>-->
-                    </a>
-                    <h4 class="show-rating-and-medal pull-right">
-                        <i th:if="*{averageRating gt 6.99 and averageRating lt 8}" class="fa fa-trophy" style="color: #CD7F32;" aria-hidden="true"></i>
-                        <i th:if="*{averageRating gt 7.99 and averageRating lt 9}" class="fa fa-trophy" style="color: #C0C0C0;" aria-hidden="true"></i>
-                        <i th:if="*{averageRating gt 8.99 and averageRating lt 9.5}" class="fa fa-trophy" style="color: #FFD700;" aria-hidden="true"></i>
-                        <i th:if="*{averageRating gt 9.49}" class="fa fa-diamond" style="color: #B9F2FF;" aria-hidden="true"></i>
-                        <span th:if="*{averageRating != null}" th:text="*{#numbers.formatDecimal(averageRating, 1, 2)}">[0.00]</span>
-                        <span th:if="*{averageRating == null}">No Rating</span>
-                    </h4>
-                </div>
-                
-            </div>
-        </div>
-
         <div class="col-md-3 right-div" id="song-filter">
             <h2>Song Filter</h2>
 
@@ -182,6 +154,36 @@
 
             <br>
             <br>
+        </div>
+
+        <div class="col-md-9 shows-div">
+            <div class="show-div" th:each="track,iterStat : ${trackResults}" th:object="${track}">
+                <div class="show-header">
+
+                    <a class="show-url" th:href="@{/shows/show(showId=*{show.id})}">
+                        <h5 th:text="*{#dates.format(show.date, 'yyyy/MM/dd') + ' ' + show.city + ', ' + show.state}">[date, city, st]</h5>
+                    </a>
+                    <a th:href="@{/songs/song(songId=*{id})}">
+                        <h4 th:text="*{song}">
+                            [song title]
+                        </h4>
+                        <!--<h4 class="show-title" th:text="*{#dates.format(date, 'yyyy/MM/dd') + ' ' + city + ', ' + state}">
+                            [date, city, st]
+                        </h4>-->
+                    </a>
+                    <h4 class="show-rating-and-medal pull-right" style="margin-left: 20px;">
+                        <i th:if="*{averageRating gt 5.99 and averageRating lt 7}" class="fa fa-trophy" style="color: #CD7F32;" aria-hidden="true"></i>
+                        <i th:if="*{averageRating gt 6.99 and averageRating lt 8}" class="fa fa-trophy" style="color: #C0C0C0;" aria-hidden="true"></i>
+                        <i th:if="*{averageRating gt 7.99 and averageRating lt 9}" class="fa fa-trophy" style="color: #FFD700;" aria-hidden="true"></i>
+                        <i th:if="*{averageRating gt 8.99}" class="fa fa-diamond" style="color: #B9F2FF;" aria-hidden="true"></i>
+                        <i th:if="*{averageRating lt 6}" class="fa fa-diamond" style="visibility: hidden;" aria-hidden="true"></i>
+                        <span th:if="*{averageRating != null}" th:text="*{#numbers.formatDecimal(averageRating, 1, 2)}">[0.00]</span>
+                        <span th:if="*{averageRating == null}">No Rating</span>
+                    </h4>
+                    <p th:if="*{#lists.size(reviews) > 0}" th:text="*{#lists.size(reviews) + ' Ratings'}" class="pull-right" style="display: inline-block; text-align: center">0 Ratings</p>
+                </div>
+
+            </div>
         </div>
 
     </div>

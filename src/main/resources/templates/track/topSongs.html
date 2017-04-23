@@ -15,34 +15,6 @@
     <div class="container">
         <h1 id="header-title" class="text-center">Top Rated Songs</h1>
 
-        <div class="col-md-9 shows-div">
-            <div class="show-div" th:each="track,iterStat : ${topFortyTracks}" th:object="${track}" th:classappend="${iterStat.first}? 'top-show'">
-                <div class="show-header" th:style="${iterStat.first}? 'border-bottom: none;'">
-
-                    <a class="show-url" th:href="@{/shows/show(showId=*{show.id})}">
-                        <h5 th:text="*{#dates.format(show.date, 'yyyy/MM/dd') + ' ' + show.city + ', ' + show.state}">[date, city, st]</h5>
-                    </a>
-                    <a th:href="@{/songs/song(songId=*{id})}">
-                        <h4 th:text="*{song}">
-                            [song title]
-                        </h4>
-                        <!--<h4 class="show-title" th:text="*{#dates.format(date, 'yyyy/MM/dd') + ' ' + city + ', ' + state}">
-                            [date, city, st]
-                        </h4>-->
-                    </a>
-                    <h4 class="show-rating-and-medal pull-right">
-                        <i th:if="*{averageRating gt 6.99 and averageRating lt 8}" class="fa fa-trophy" style="color: #CD7F32;" aria-hidden="true"></i>
-                        <i th:if="*{averageRating gt 7.99 and averageRating lt 9}" class="fa fa-trophy" style="color: #C0C0C0;" aria-hidden="true"></i>
-                        <i th:if="*{averageRating gt 8.99 and averageRating lt 9.5}" class="fa fa-trophy" style="color: #FFD700;" aria-hidden="true"></i>
-                        <i th:if="*{averageRating gt 9.49}" class="fa fa-diamond" style="color: #B9F2FF;" aria-hidden="true"></i>
-                        <span th:if="*{averageRating != null}" th:text="*{#numbers.formatDecimal(averageRating, 1, 2)}">[0.00]</span>
-                        <span th:if="*{averageRating == null}">No Rating</span>
-                    </h4>
-                </div>
-
-            </div>
-        </div>
-
         <div class="col-md-3 right-div" id="song-filter">
             <h2>Song Filter</h2>
 
@@ -146,8 +118,8 @@
                     <div class="col-sm-9 col-lg-7">
                         <select class="form-control" id="rating" name="rating">
                             <option value="">--</option>
-                            <option value="diamond">Diamond (above 9.49)</option>
-                            <option value="gold">Gold (9.00 to 9.49)</option>
+                            <option value="diamond">Diamond (above 8.99)</option>
+                            <option value="gold">Gold (9.00 to 8.99)</option>
                             <option value="silver">Silver (8.00 to 8.99)</option>
                             <option value="bronze">Bronze (7.00 to 7.99)</option>
                             <option value="unranked">None (under 7.00)</option>
@@ -184,9 +156,9 @@
             <br>
             <br>
 
-            <h2>Recent Reviews</h2>
+            <h2 class="hidden-xs hidden-sm">Latest Ratings</h2>
             <br>
-            <table id="reviews-table" style="width: 100%">
+            <table class="hidden-xs hidden-sm" id="reviews-table" style="width: 100%">
                 <th:block th:each="review,iterStat : ${recentReviews}">
                     <tr>
                         <td>
@@ -210,6 +182,33 @@
                     </tr>
                 </th:block>
             </table>
+        </div>
+
+        <div class="col-md-9 shows-div">
+            <div class="show-div" th:each="track,iterStat : ${topFortyTracks}" th:object="${track}" th:classappend="${iterStat.first}? 'top-show'">
+                <div class="show-header" th:style="${iterStat.first}? 'border-bottom: none;'">
+
+                    <a class="show-url" th:href="@{/shows/show(showId=*{show.id})}">
+                        <h5 th:text="*{#dates.format(show.date, 'yyyy/MM/dd') + ' ' + show.city + ', ' + show.state}">[date, city, st]</h5>
+                    </a>
+                    <a th:href="@{/songs/song(songId=*{id})}">
+                        <h4 th:text="*{song}">
+                            [song title]
+                        </h4>
+                    </a>
+                    <h4 class="show-rating-and-medal pull-right" style="margin-left: 20px;">
+                        <i th:if="*{averageRating gt 5.99 and averageRating lt 7}" class="fa fa-trophy" style="color: #CD7F32;" aria-hidden="true"></i>
+                        <i th:if="*{averageRating gt 6.99 and averageRating lt 8}" class="fa fa-trophy" style="color: #C0C0C0;" aria-hidden="true"></i>
+                        <i th:if="*{averageRating gt 7.99 and averageRating lt 9}" class="fa fa-trophy" style="color: #FFD700;" aria-hidden="true"></i>
+                        <i th:if="*{averageRating gt 8.99}" class="fa fa-diamond" style="color: #B9F2FF;" aria-hidden="true"></i>
+                        <i th:if="*{averageRating lt 6}" class="fa fa-diamond" style="visibility: hidden;" aria-hidden="true"></i>
+                        <span th:if="*{averageRating != null}" th:text="*{#numbers.formatDecimal(averageRating, 1, 2)}">[0.00]</span>
+                        <span th:if="*{averageRating == null}">No Rating</span>
+                    </h4>
+                    <p th:if="*{#lists.size(reviews)}" th:text="*{#lists.size(reviews) + ' Ratings'}" class="pull-right" style="display: inline-block; text-align: center">0 Ratings</p>
+                </div>
+
+            </div>
         </div>
 
     </div>
