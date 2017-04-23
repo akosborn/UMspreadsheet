@@ -13,7 +13,11 @@ import com.umspreadsheet.show.ShowService;
 import com.umspreadsheet.track.Track;
 import com.umspreadsheet.track.TrackService;
 import com.umspreadsheet.user.SimpleUserService;
+import com.umspreadsheet.wormblog.WormBlogPost;
+import com.umspreadsheet.wormblog.WormBlogService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.lang.invoke.MethodType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,16 +38,19 @@ public class AdminController
     private TrackReviewService trackReviewService;
     private SimpleUserService userService;
     private SetService setService;
+    private WormBlogService wormBlogService;
 
     @Autowired
     public AdminController(ShowService showService, TrackService trackService,
-                          TrackReviewService trackReviewService, SimpleUserService userService, SetService setService)
+                          TrackReviewService trackReviewService, SimpleUserService userService,
+                           SetService setService, WormBlogService wormBlogService)
     {
         this.showService = showService;
         this.trackService = trackService;
         this.trackReviewService = trackReviewService;
         this.userService = userService;
         this.setService = setService;
+        this.wormBlogService = wormBlogService;
     }
 
     @RequestMapping("")
@@ -152,5 +160,39 @@ public class AdminController
         model.addAttribute("track", track);
 
         return "/admin/editShow";
+    }
+
+    @RequestMapping(value = "/publish-post")
+    public String newPostPage(Model model)
+    {
+        model.addAttribute("post", new WormBlogPost());
+
+        return "/wormblog/newPost";
+    }
+
+    @RequestMapping(value = "/publish-post", method = RequestMethod.POST)
+    public String newPostPage(WormBlogPost post, Model model)
+    {
+        post.setAuthor(userService.findByUsername(getCurrentUsername()));
+
+        WormBlogPost savedPost = wormBlogService.save(post);
+
+        return "/admin/adminHome";
+    }
+
+    private String getCurrentUsername()
+    {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username;
+
+        if (principal instanceof UserDetails)
+        {
+            username = ((UserDetails) principal).getUsername();
+        } else
+        {
+            username = principal.toString();
+        }
+
+        return username;
     }
 }

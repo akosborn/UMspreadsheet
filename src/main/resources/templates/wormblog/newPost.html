@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorator="layouts/site"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <title>UMSpreadsheet</title>
+
+    <link rel="stylesheet" th:href="@{/css/topSongs.css}"/>
+    <link rel="stylesheet" th:href="@{/css/wormblog/wormblog.css}"/>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div class="container">
+        <h1 id="header-title" class="text-center">Post to WormBlog</h1>
+
+        <form th:method="post" th:action="@{/admin/publish-post}" class="col-md-10 form-horizontal" th:object="${post}" style="text-align: center;">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Title</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" th:field="*{title}" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Slug</label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" th:field="*{slug}" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Teaser</label>
+                <div class="col-md-10">
+                    <textarea class="form-control" rows="3" th:field="*{teaser}">teaser</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Body</label>
+                <div class="col-md-10">
+                    <textarea class="form-control" rows="5" th:field="*{body}">body</textarea>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-default" style="margin-left: auto;">Submit</button>
+        </form>
+
+    </div>
+</div>
+
+<th:block layout:fragment="script">
+
+</th:block>
+
+</body>
