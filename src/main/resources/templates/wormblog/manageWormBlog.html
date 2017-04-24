@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorator="layouts/site"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <title>UMspreadsheet</title>
+
+    <link rel="stylesheet" th:href="@{/css/wormblog/wormblog.css}"/>
+</head>
+
+<body>
+
+    <div layout:fragment="content">
+        <div class="container">
+            <h1 id="header-title" class="text-center">Manage WormBlog</h1>
+
+            <div class="container">
+                <table class="table" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <td>Date</td>
+                            <td>Title</td>
+                            <td>Author</td>
+                            <td>Delete</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="post : ${posts}" th:object="${post}">
+                            <td th:text="*{#dates.format(postedOn, 'yyyy-MM-dd')}">[date]</td>
+                            <td th:text="*{title}">[title]</td>
+                            <td th:text="*{author.username}">[author]</td>
+                            <td>
+                                <form th:action="@{/admin/manage-wormblog}" th:method="delete">
+                                    <input type="hidden" name="id" th:value="${post.id}" />
+                                    <button type="submit" class="icon-button" onclick="return confirm('Are you sure?');">
+                                        <i class="fa fa-trash" aria-hidden="true" style="color: #B33A3A"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <th:block layout:fragment="script">
+
+    </th:block>
+
+</body>

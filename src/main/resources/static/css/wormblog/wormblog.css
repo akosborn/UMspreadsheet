@@ -44,6 +44,12 @@ MAIN CONTENT COLUMN
     max-width: 100%;
 }
 
+.icon-button
+{
+    background-color: transparent;
+    border: none;
+}
+
 /**********************
 SIDEBAR COLUMN
 **********************/

@@ -23,4 +23,9 @@ public class WormBlogService
     {
         return wormBlogRepository.findAllByOrderByPostedOnDesc();
     }
+
+    public void delete(Long id)
+    {
+        wormBlogRepository.delete(id);
+    }
 }

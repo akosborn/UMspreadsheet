@@ -188,6 +188,23 @@ public class AdminController
         return "redirect:/wormblog";
     }
 
+    @RequestMapping("/manage-wormblog")
+    public String manageWormBlog(Model model)
+    {
+        model.addAttribute("posts", wormBlogService.findAll());
+
+        return "/wormblog/manageWormBlog";
+    }
+
+    // Deletes a WormBlog post
+    @RequestMapping(value = "/manage-wormblog", method = RequestMethod.DELETE)
+    public String deleteWormBlogPost(@RequestParam("id") Long id)
+    {
+        wormBlogService.delete(id);
+
+        return "redirect:/admin";
+    }
+
     private String getCurrentUsername()
     {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
