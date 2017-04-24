@@ -1,9 +1,14 @@
 package com.umspreadsheet.wormblog;
 
+import com.umspreadsheet.helper.ControllerHelper;
 import com.umspreadsheet.user.User;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.SafeHtml;
 
 import javax.persistence.*;
 import java.util.Date;
+
 
 @Entity
 @Table(name = "wormblog_posts")
@@ -14,13 +19,16 @@ public class WormBlogPost
     @Id
     @GeneratedValue
     private Long id;
+
+    @SafeHtml
+    @NotEmpty
+    @Length(max = 200)
     private String title;
 
+    @SafeHtml
+    @NotEmpty
     @Column(columnDefinition = "TEXT")
     private String body;
-
-    @Column(columnDefinition = "TEXT")
-    private String teaser;
 
     private String slug;
 
@@ -47,6 +55,7 @@ public class WormBlogPost
 
     public void setTitle(String title)
     {
+        slug = ControllerHelper.toSlug(title) + "-" + ControllerHelper.dateToString(postedOn);
         this.title = title;
     }
 
@@ -58,16 +67,6 @@ public class WormBlogPost
     public void setBody(String body)
     {
         this.body = body;
-    }
-
-    public String getTeaser()
-    {
-        return teaser;
-    }
-
-    public void setTeaser(String teaser)
-    {
-        this.teaser = teaser;
     }
 
     public String getSlug()

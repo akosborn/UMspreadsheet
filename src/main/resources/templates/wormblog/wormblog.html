@@ -23,9 +23,6 @@
                         <p th:text="*{author.username}">[author]</p>
                         <p th:text="'on ' + *{#dates.format(postedOn, 'yyyy/MM/dd')}" style="display: inline-block;">[date]</p>
                     </div>
-
-                    <br/>
-
                     <div class="preview-body-div">
                         <p th:utext="*{body}">UMSpreadsheet was created to serve as a community-based resource for umphreaks.
                             This resource allows participants to give a rating to every song over Umphrey's entire career in an

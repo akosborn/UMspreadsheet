@@ -11,7 +11,7 @@
     <script>
         tinymce.init({
             selector: "textarea",  // change this value according to your HTML
-            plugins: "image, media",
+            plugins: "image, media, preview",
         });
     </script>
 
@@ -24,27 +24,27 @@
     <div class="container">
         <h1 id="header-title" class="text-center">Post to WormBlog</h1>
 
-        <form th:method="post" th:action="@{/admin/publish-post}" class="col-md-10 form-horizontal" th:object="${post}" style="text-align: center;">
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Title</label>
-                <div class="col-md-10">
-                    <input type="text" class="form-control" th:field="*{title}" />
+        <form th:method="post" th:action="@{/admin/publish-post}" th:object="${post}">
+
+            <div class="row">
+                <div class="alert alert-danger col-md-6" th:if="${#fields.hasErrors('*')}">
+                    <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+                </div>
+            </div>
+
+            <input type="hidden" th:field="*{slug}"/>
+
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="title">Title</label>
+                    <input id="title" type="text" class="form-control" th:field="*{title}"/>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-2 control-label">Slug</label>
-                <div class="col-md-10">
-                    <input placeholder="This will be the url path for the post. Ex: umspreadsheet.com/wormblog/this-post-slug"
-                           type="text" class="form-control" th:field="*{slug}" />
-                </div>
+                <label for="body">Body</label>
+                <textarea id="body" class="tinymce" rows="5" th:field="*{body}">body</textarea>
             </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Body</label>
-                <div class="col-md-10">
-                    <textarea class="form-control tinymce" rows="5" th:field="*{body}">body</textarea>
-                </div>
-            </div>
-            <button type="submit" class="btn btn-default" style="margin-left: auto;">Submit</button>
+            <button type="submit" class="btn btn-default">Submit</button>
         </form>
 
     </div>

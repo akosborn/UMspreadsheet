@@ -20,11 +20,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.validation.Valid;
 import java.lang.invoke.MethodType;
 import java.util.ArrayList;
 import java.util.List;
@@ -171,8 +174,13 @@ public class AdminController
     }
 
     @RequestMapping(value = "/publish-post", method = RequestMethod.POST)
-    public String newPostPage(WormBlogPost post, Model model)
+    public String newPostPage(@Valid @ModelAttribute("post") WormBlogPost post, BindingResult bindingResult, Model
+            model)
     {
+        if (bindingResult.hasErrors())
+        {
+            return "/wormblog/newPost";
+        }
         post.setAuthor(userService.findByUsername(getCurrentUsername()));
 
         WormBlogPost savedPost = wormBlogService.save(post);

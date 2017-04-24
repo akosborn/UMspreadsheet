@@ -153,6 +153,11 @@
 			<artifactId>bootstrap-touchspin</artifactId>
 			<version>3.1.2</version>
 		</dependency>
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.10.2</version>
+		</dependency>
 	</dependencies>
 
 	<build>
