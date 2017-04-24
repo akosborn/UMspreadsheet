@@ -189,7 +189,7 @@
                 <div class="show-header" th:style="${iterStat.first}? 'border-bottom: none;'">
 
                     <a class="show-url" th:href="@{/shows/show(showId=*{show.id})}">
-                        <h5 th:text="*{#dates.format(show.date, 'yyyy/MM/dd') + ' ' + show.city + ', ' + show.state}">[date, city, st]</h5>
+                        <h5 th:text="*{#dates.format(show.date, 'yyyy/MM/dd') + ' ' + show.city + ', ' + show.state}" style="margin-bottom: 2px;">[date, city, st]</h5>
                     </a>
                     <a th:href="@{/songs/song(songId=*{id})}">
                         <h4 th:text="*{song}">
@@ -208,6 +208,13 @@
                     <p th:if="*{#lists.size(reviews)}" th:text="*{#lists.size(reviews) + ' Ratings'}" class="pull-right" style="display: inline-block; text-align: center">0 Ratings</p>
                 </div>
 
+            </div>
+            <div class="text-center">
+                <ul class="pagination">
+                    <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+                        <a th:href="@{/songs(page=${i + 1})}" th:text="${i + 1}">1</a>
+                    </li>
+                </ul>
             </div>
         </div>
 

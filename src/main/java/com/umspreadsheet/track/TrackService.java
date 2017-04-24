@@ -2,6 +2,8 @@ package com.umspreadsheet.track;
 
 import com.umspreadsheet.show.Show;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -28,9 +30,9 @@ public class TrackService
         return trackRepository.findOne(id);
     }
 
-    public List<Track> getTopFortySongs()
+    public Page<Track> getByAverageRating(PageRequest pageRequest)
     {
-        return trackRepository.findTop40ByAverageRatingIsNotNullOrderByAverageRatingDesc();
+        return trackRepository.findByAverageRatingIsNotNullOrderByAverageRatingDesc(pageRequest);
     }
 
     public List<Track> criteriaTest(Specification<Track> specifications)

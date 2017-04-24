@@ -5,6 +5,8 @@ import com.umspreadsheet.helper.ControllerHelper;
 import com.umspreadsheet.review.TrackReviewService;
 import com.umspreadsheet.user.SimpleUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,9 +31,17 @@ public class TrackController
 
     // Top-rated songs page
     @RequestMapping("/songs")
-    public String topSongsPage(Model model)
+    public String topSongsPage(@RequestParam(value = "page", required = false) Integer pageNumber,
+                               Model model)
     {
-        model.addAttribute("topFortyTracks", trackService.getTopFortySongs());
+        // Default page to display is the first
+        if (pageNumber == null)
+            pageNumber = 0;
+
+        Page<Track> page = trackService.getByAverageRating(new PageRequest(pageNumber, 15));
+
+        model.addAttribute("totalPages", (int)page.getTotalElements()/15);
+        model.addAttribute("topFortyTracks", page.getContent());
         model.addAttribute("recentReviews", trackReviewService.getTenMostRecentReviews());
 
         return "/track/topSongs";

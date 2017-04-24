@@ -1,6 +1,8 @@
 package com.umspreadsheet.track;
 
 import com.umspreadsheet.show.Show;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
@@ -12,7 +14,7 @@ public interface TrackRepository extends JpaRepository<Track, Long>, JpaSpecific
 {
     List<Track> findTop3ByOrderByAverageRatingDesc();
 
-    List<Track> findTop40ByAverageRatingIsNotNullOrderByAverageRatingDesc();
+    Page<Track> findByAverageRatingIsNotNullOrderByAverageRatingDesc(Pageable pageable);
 
     List<Track> findByShow(Show show);
 }
