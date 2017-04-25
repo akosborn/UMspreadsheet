@@ -7,6 +7,7 @@ import com.umspreadsheet.model.ShowReview;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 // 'Show' is a keyword in MySQL, so another name must be used
 @Entity
@@ -129,6 +130,8 @@ public class Show
     {
         this.notes = notes;
     }
+
+
 
     @Override
     public String toString()

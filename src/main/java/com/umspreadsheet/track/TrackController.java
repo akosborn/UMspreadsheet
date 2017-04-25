@@ -1,6 +1,7 @@
 package com.umspreadsheet.track;
 
 import com.umspreadsheet.criteria.SearchCriteria;
+import com.umspreadsheet.exception.DataNotFoundException;
 import com.umspreadsheet.helper.ControllerHelper;
 import com.umspreadsheet.review.TrackReviewService;
 import com.umspreadsheet.user.SimpleUserService;
@@ -39,6 +40,11 @@ public class TrackController
             pageNumber = 0;
 
         Page<Track> page = trackService.getByAverageRating(new PageRequest(pageNumber, 15));
+        Integer totalPages = (int) (page.getTotalElements()/15);
+
+        // If user requests page that doesn't exist, throw DataNotFoundException
+        if (pageNumber > totalPages)
+            throw new DataNotFoundException("Page not found.");
 
         model.addAttribute("totalPages", (int)page.getTotalElements()/15);
         model.addAttribute("topFortyTracks", page.getContent());

@@ -209,7 +209,7 @@
                 </div>
 
             </div>
-            <div class="text-center">
+            <div class="container text-center">
                 <ul class="pagination">
                     <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
                         <a th:href="@{/songs(page=${i + 1})}" th:text="${i + 1}">1</a>
