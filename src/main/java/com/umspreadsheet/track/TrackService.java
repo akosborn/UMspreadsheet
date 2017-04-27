@@ -35,9 +35,9 @@ public class TrackService
         return trackRepository.findByAverageRatingIsNotNullOrderByAverageRatingDesc(pageRequest);
     }
 
-    public List<Track> criteriaTest(Specification<Track> specifications)
+    public Page<Track> criteriaTest(Specification<Track> specifications, PageRequest pageRequest)
     {
-        return trackRepository.findAll(specifications);
+        return trackRepository.findAll(specifications, pageRequest);
     }
 
     public Track save(Track track)

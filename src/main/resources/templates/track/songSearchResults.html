@@ -167,9 +167,6 @@
                         <h4 th:text="*{song}">
                             [song title]
                         </h4>
-                        <!--<h4 class="show-title" th:text="*{#dates.format(date, 'yyyy/MM/dd') + ' ' + city + ', ' + state}">
-                            [date, city, st]
-                        </h4>-->
                     </a>
                     <h4 class="show-rating-and-medal pull-right" style="margin-left: 20px;">
                         <i th:if="*{averageRating gt 5.99 and averageRating lt 7}" class="fa fa-trophy" style="color: #CD7F32;" aria-hidden="true"></i>
@@ -184,12 +181,39 @@
                 </div>
 
             </div>
+            <div class="container text-center">
+                <ul class="pagination">
+                    <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+                        <th:block th:with="parameters=('getQueryParameters()')">
+                            <a class="pagination-href" th:href="@{${i}}" th:text="${i + 1}">1</a>
+                        </th:block>
+                    </li>
+                </ul>
+            </div>
         </div>
 
     </div>
 </div>
 
 <th:block layout:fragment="script">
+
+    <script type="text/javascript">
+        document.onload = getQueryParameters();
+
+        function getQueryParameters()
+        {
+            var parameters = document.location.search.split("&page")[0];
+            var anchors = document.getElementsByClassName("pagination-href");
+            var anchorsLength = anchors.length;
+
+            for (var i = 0; i < anchorsLength; i++)
+            {
+                var pageNumber = anchors[i].getAttribute('href');
+                var baseURL = window.location.href.split("?")[0];
+                anchors[i].setAttribute('href', baseURL + parameters + '&page=' + pageNumber);
+            }
+        }
+    </script>
 
     <script type="text/javascript">
 

@@ -216,6 +216,14 @@
                     </li>
                 </ul>
             </div>
+
+            <div class="container text-center">
+                <ul class="pagination">
+                    <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+                        <a th:href="@{${''}}" th:text="${i + 1}">1</a>
+                    </li>
+                </ul>
+            </div>
         </div>
 
     </div>

@@ -54,7 +54,8 @@ public class TrackController
     }
 
     @RequestMapping(value = "/songs/search")
-    public String submitSongFilter(@RequestParam(value = "year", required = false) String year,
+    public String submitSongFilter(@RequestParam(value = "page", required = false) Integer pageNumber,
+                                   @RequestParam(value = "year", required = false) String year,
                                    @RequestParam(value = "month", required = false) String month,
                                    @RequestParam(value = "day", required = false) String day,
                                    @RequestParam(value = "rating", required = false) String rating,
@@ -62,6 +63,10 @@ public class TrackController
                                    @RequestParam(value = "song", required = false) String song,
                                    Model model)
     {
+        // Default page to display is the first
+        if (pageNumber == null)
+            pageNumber = 0;
+
         TrackSpecificationsBuilder builder = new TrackSpecificationsBuilder();
 
         if (year != null)
@@ -80,17 +85,12 @@ public class TrackController
             builder.with("song", ":", song);
 
         Specification<Track> specification = builder.build();
-        model.addAttribute("trackResults", trackService.criteriaTest(specification));
+        Page<Track> page = trackService.criteriaTest(specification, new PageRequest(pageNumber, 15 ));
+        Integer totalPages =(int) (page.getTotalElements()/15);
+
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("trackResults", page.getContent());
 
         return "/track/songSearchResults";
     }
-
-    /*@RequestMapping(value = "/track", method = RequestMethod.PUT)
-    public String updateTrackReview(TrackReview trackReview, RedirectAttributes redirectAttributes)
-    {
-        redirectAttributes.addAttribute("showId", trackReviewService.save(trackReview).getTrack().getShow().getId());
-        redirectAttributes.addFlashAttribute("edited", "true");
-
-        return "redirect:/user/review";
-    }*/
 }
