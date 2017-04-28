@@ -40,14 +40,15 @@ public class TrackController
             pageNumber = 0;
 
         Page<Track> page = trackService.getByAverageRating(new PageRequest(pageNumber, 15));
-        Integer totalPages = (int) (page.getTotalElements()/15);
+        Integer totalPages = page.getTotalPages();
 
         // If user requests page that doesn't exist, throw DataNotFoundException
         if (pageNumber > totalPages)
             throw new DataNotFoundException("Page not found.");
 
-        model.addAttribute("totalPages", (int)page.getTotalElements()/15);
         model.addAttribute("topFortyTracks", page.getContent());
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("currentPage", pageNumber);
         model.addAttribute("recentReviews", trackReviewService.getTenMostRecentReviews());
 
         return "/track/topSongs";
@@ -86,7 +87,7 @@ public class TrackController
 
         Specification<Track> specification = builder.build();
         Page<Track> page = trackService.criteriaTest(specification, new PageRequest(pageNumber, 15 ));
-        Integer totalPages =(int) (page.getTotalElements()/15);
+        Integer totalPages = page.getTotalPages();
 
         model.addAttribute("totalPages", totalPages);
         model.addAttribute("currentPage", pageNumber);
