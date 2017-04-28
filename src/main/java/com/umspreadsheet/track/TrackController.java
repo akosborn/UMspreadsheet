@@ -89,6 +89,7 @@ public class TrackController
         Integer totalPages =(int) (page.getTotalElements()/15);
 
         model.addAttribute("totalPages", totalPages);
+        model.addAttribute("currentPage", pageNumber);
         model.addAttribute("trackResults", page.getContent());
 
         return "/track/songSearchResults";

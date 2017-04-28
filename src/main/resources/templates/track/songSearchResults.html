@@ -183,11 +183,30 @@
             </div>
             <div class="container text-center">
                 <ul class="pagination">
-                    <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
-                        <th:block th:with="parameters=('getQueryParameters()')">
-                            <a class="pagination-href" th:href="@{${i}}" th:text="${i + 1}">1</a>
-                        </th:block>
-                    </li>
+                    <th:block th:if="${totalPages > 6 && currentPage > 3}">
+                        <li>
+                            <a class="pagination-href" th:href="0">1</a>
+                        </li>
+                        <li class="disabled">
+                            <a>...</a>
+                        </li>
+                        <li th:each="i : ${#numbers.sequence(currentPage - 3, currentPage + 3)}"
+                            th:classappend="${i == currentPage} ? 'active'">
+                            <a class="pagination-href" th:href="@{${i}}" th:text="${i + 1}"></a>
+                        </li>
+                        <li class="disabled">
+                            <a>...</a>
+                        </li>
+                        <li>
+                            <a class="pagination-href" th:href="@{${totalPages}}" th:text="${totalPages + 1}"></a>
+                        </li>
+                    </th:block>
+
+                    <!--<th:block th:if="${totalpages < 7}">
+                        <li th:classappend="${i == pageNumber} ? 'active'" th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+                            <a class="pagination-href" th:href="@{${i}}" th:text="${i + 1}"></a>
+                        </li>
+                    </th:block>-->
                 </ul>
             </div>
         </div>
