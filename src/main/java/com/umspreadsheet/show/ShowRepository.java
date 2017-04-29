@@ -1,5 +1,7 @@
 package com.umspreadsheet.show;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -29,7 +31,7 @@ public interface ShowRepository extends JpaRepository<Show, Long>, JpaSpecificat
 
     List<Show> findTop3ByOrderByAverageRatingDesc();
 
-    List<Show> findTop20ByAverageRatingIsNotNullOrderByAverageRatingDesc();
+    Page<Show> findByAverageRatingIsNotNullOrderByAverageRatingDesc(Pageable pageable);
 
     List<Show> findTop2ByOrderByDateDesc();
 

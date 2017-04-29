@@ -1,6 +1,8 @@
 package com.umspreadsheet.show;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -53,9 +55,9 @@ public class ShowService
         return showRepository.findTop3ByOrderByAverageRatingDesc();
     }
 
-    public List<Show> getTopTwentyShows()
+    public Page<Show> getByAverageRating(PageRequest pageRequest)
     {
-        return showRepository.findTop20ByAverageRatingIsNotNullOrderByAverageRatingDesc();
+        return showRepository.findByAverageRatingIsNotNullOrderByAverageRatingDesc(pageRequest);
     }
 
     public List<Show> getLastTwoShows()
@@ -78,9 +80,9 @@ public class ShowService
         return showRepository.findAllIds();
     }
 
-    public List<Show> getShowsByFilter(Specification<Show> specification)
+    public Page<Show> getShowsByFilter(Specification<Show> specification, PageRequest pageRequest)
     {
-        return showRepository.findAll(specification);
+        return showRepository.findAll(specification, pageRequest);
     }
 
     public Show save(Show show)

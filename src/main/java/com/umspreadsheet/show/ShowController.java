@@ -3,8 +3,6 @@ package com.umspreadsheet.show;
 import com.umspreadsheet.criteria.SearchCriteria;
 import com.umspreadsheet.helper.ControllerHelper;
 import com.umspreadsheet.exception.DataNotFoundException;
-import com.umspreadsheet.model.Role;
-import com.umspreadsheet.review.TrackReviewDTO;
 import com.umspreadsheet.set.Set;
 import com.umspreadsheet.set.SetDTO;
 import com.umspreadsheet.review.TrackReview;
@@ -13,13 +11,11 @@ import com.umspreadsheet.review.TrackReviewService;
 import com.umspreadsheet.track.*;
 import com.umspreadsheet.user.SimpleUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +29,7 @@ import java.util.*;
 @Controller
 public class ShowController
 {
+    public static final int PAGE_SIZE = 10;
     private ShowService showService;
     private TrackService trackService;
     private TrackReviewService trackReviewService;
@@ -56,9 +53,24 @@ public class ShowController
 
     // Top-rated shows page
     @RequestMapping("/shows")
-    public String topShowsPage(Model model)
+    public String topShowsPage(@RequestParam(value = "page", required = false) Integer pageNumber, Model model)
     {
-        model.addAttribute("topTwentyShows", setNumberOfReviews(showService.getTopTwentyShows()));
+        // Default page to display is the first
+        if (pageNumber == null)
+            pageNumber = 0;
+        else
+            pageNumber -= 1;
+
+        Page<Show> page = showService.getByAverageRating(new PageRequest(pageNumber, PAGE_SIZE));
+        Integer totalPages = page.getTotalPages();
+
+        // If user requests page that doesn't exist, throw DataNotFoundException
+        if (pageNumber > totalPages)
+            throw new DataNotFoundException("Page not found.");
+
+        model.addAttribute("topTwentyShows", setNumberOfReviews(page.getContent()));
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("currentPage", pageNumber + 1);
 
         return "/show/topShows";
     }
@@ -171,12 +183,19 @@ public class ShowController
     }
 
     @RequestMapping(value = "/shows/search")
-    public String submitShowFilter(@RequestParam(value = "year", required = false) String year,
+    public String submitShowFilter(@RequestParam(value = "page", required = false) Integer pageNumber,
+                                   @RequestParam(value = "year", required = false) String year,
                                    @RequestParam(value = "month", required = false) String month,
                                    @RequestParam(value = "day", required = false) String day,
                                    @RequestParam(value = "rating", required = false) String rating,
                                    Model model)
     {
+        // Default page to display is the first
+        if (pageNumber == null)
+            pageNumber = 0;
+        else
+            pageNumber -= 1;
+
         ShowSpecificationsBuilder builder = new ShowSpecificationsBuilder();
 
         if (year != null)
@@ -192,9 +211,13 @@ public class ShowController
         }
 
         Specification<Show> specification = builder.build();
-        List<Show> shows = showService.getShowsByFilter(specification);
+        Page<Show> page = showService.getShowsByFilter(specification, new PageRequest(pageNumber, PAGE_SIZE));
+        Integer totalPages = page.getTotalPages();
+        List<Show> shows = page.getContent();
         setNumberOfReviews(shows);
 
+        model.addAttribute("totalPages", totalPages);
+        model.addAttribute("currentPage", pageNumber + 1);
         model.addAttribute("showResults", shows);
 
         return "/show/showSearchResults";

@@ -163,12 +163,50 @@
                 </h6>
                 <br/>
             </div>
+
+            <div class="container text-center">
+                <ul class="pagination">
+                    <li th:if="${currentPage > 2}">
+                        <a class="pagination-href" th:href="${1}">&lt;&lt;</a>
+                    </li>
+                    <li th:if="${currentPage > 1}">
+                        <a class="pagination-href" th:href="${currentPage - 1}">&lt;</a>
+                    </li>
+                    <li>
+                        <a class="disabled" th:text="${'Page ' + currentPage + ' of ' + totalPages}">Page 3 of 112</a>
+                    </li>
+                    <li th:if="${currentPage <= (totalPages - 1)}">
+                        <a class="pagination-href" th:href="${currentPage + 1}">&gt;</a>
+                    </li>
+                    <li th:if="${currentPage <= (totalPages - 2)}">
+                        <a class="pagination-href" th:href="${totalPages}">&gt;&gt;</a>
+                    </li>
+                </ul>
+            </div>
         </div>
 
     </div>
 </div>
 
 <th:block layout:fragment="script">
+
+    <script type="text/javascript">
+        document.onload = getQueryParameters();
+
+        function getQueryParameters()
+        {
+            var parameters = document.location.search.split("&page")[0];
+            var anchors = document.getElementsByClassName("pagination-href");
+            var anchorsLength = anchors.length;
+
+            for (var i = 0; i < anchorsLength; i++)
+            {
+                var pageNumber = anchors[i].getAttribute('href');
+                var baseURL = window.location.href.split("?")[0];
+                anchors[i].setAttribute('href', baseURL + parameters + '&page=' + pageNumber);
+            }
+        }
+    </script>
 
     <script type="text/javascript">
 
