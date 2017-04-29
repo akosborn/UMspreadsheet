@@ -7,9 +7,9 @@ import javax.persistence.ManyToMany;
 import java.util.Collection;
 
 @Entity
-public class Privelege
+public class Privilege
 {
-    public Privelege(){}
+    public Privilege(){}
 
     @Id
     @GeneratedValue

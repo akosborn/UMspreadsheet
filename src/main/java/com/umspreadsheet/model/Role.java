@@ -30,33 +30,4 @@ public class Role
             inverseJoinColumns = @JoinColumn(
                     name = "privilege_id", referencedColumnName = "id"))
     private Collection<Privilege> privileges;
-
-    public Long getId()
-    {
-        return id;
-    }
-
-    public void setId(Long id)
-    {
-        this.id = id;
-    }
-
-    public String getName()
-    {
-        return name;
-    }
-
-    public void setName(String name)
-    {
-        this.name = name;
-    }
-
-    public static Role defaultRole()
-    {
-        Role role = new Role();
-        role.setId(new Long("1"));
-        role.setName("ROLE_USER");
-
-        return role;
-    }
 }
