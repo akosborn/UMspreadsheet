@@ -212,29 +212,21 @@
 
             <div class="container text-center">
                 <ul class="pagination">
-                    <th:block th:if="${totalPages > 6 && currentPage > 3}">
-                        <li>
-                            <a class="pagination-href" th:href="0">1</a>
-                        </li>
-                        <li class="disabled">
-                            <a>...</a>
-                        </li>
-                        <li th:each="i : ${#numbers.sequence(currentPage - 3, currentPage + 3)}"
-                            th:classappend="${i == currentPage} ? 'active'">
-                            <a class="pagination-href" th:href="@{${i}}" th:text="${i + 1}"></a>
-                        </li>
-                        <li class="disabled">
-                            <a>...</a>
-                        </li>
-                        <li>
-                            <a class="pagination-href" th:href="@{${totalPages}}" th:text="${totalPages + 1}"></a>
-                        </li>
-                    </th:block>
-                    <th:block th:if="${totalpages < 7}">
-                        <li th:classappend="${i == currentPage} ? 'active'" th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
-                            <a class="pagination-href" th:href="@{${i}}" th:text="${i + 1}"></a>
-                        </li>
-                    </th:block>
+                    <li th:if="${currentPage > 2}">
+                        <a class="pagination-href" th:href="${1}">&lt;&lt;</a>
+                    </li>
+                    <li th:if="${currentPage > 1}">
+                        <a class="pagination-href" th:href="${currentPage - 1}">&lt;</a>
+                    </li>
+                    <li>
+                        <a class="disabled" th:text="${'Page ' + currentPage + ' of ' + totalPages}">Page 3 of 112</a>
+                    </li>
+                    <li th:if="${currentPage <= (totalPages - 1)}">
+                        <a class="pagination-href" th:href="${currentPage + 1}">&gt;</a>
+                    </li>
+                    <li th:if="${currentPage <= (totalPages - 2)}">
+                        <a class="pagination-href" th:href="${totalPages}">&gt;&gt;</a>
+                    </li>
                 </ul>
             </div>
 

@@ -38,6 +38,8 @@ public class TrackController
         // Default page to display is the first
         if (pageNumber == null)
             pageNumber = 0;
+        else
+            pageNumber -= 1;
 
         Page<Track> page = trackService.getByAverageRating(new PageRequest(pageNumber, 15));
         Integer totalPages = page.getTotalPages();
@@ -48,7 +50,7 @@ public class TrackController
 
         model.addAttribute("topFortyTracks", page.getContent());
         model.addAttribute("totalPages", totalPages);
-        model.addAttribute("currentPage", pageNumber);
+        model.addAttribute("currentPage", pageNumber + 1);
         model.addAttribute("recentReviews", trackReviewService.getTenMostRecentReviews());
 
         return "/track/topSongs";
@@ -67,6 +69,8 @@ public class TrackController
         // Default page to display is the first
         if (pageNumber == null)
             pageNumber = 0;
+        else
+            pageNumber -= 1;
 
         TrackSpecificationsBuilder builder = new TrackSpecificationsBuilder();
 
@@ -90,7 +94,7 @@ public class TrackController
         Integer totalPages = page.getTotalPages();
 
         model.addAttribute("totalPages", totalPages);
-        model.addAttribute("currentPage", pageNumber);
+        model.addAttribute("currentPage", pageNumber + 1);
         model.addAttribute("trackResults", page.getContent());
 
         return "/track/songSearchResults";
