@@ -192,10 +192,10 @@
                     <li>
                         <a class="disabled" th:text="${'Page ' + currentPage + ' of ' + totalPages}">Page 3 of 112</a>
                     </li>
-                    <li th:if="${currentPage < (totalPages - 1)}">
+                    <li th:if="${currentPage <= (totalPages - 1)}">
                         <a class="pagination-href" th:href="${currentPage + 1}">&gt;</a>
                     </li>
-                    <li th:if="${currentPage < (totalPages - 2)}">
+                    <li th:if="${currentPage <= (totalPages - 2)}">
                         <a class="pagination-href" th:href="${totalPages}">&gt;&gt;</a>
                     </li>
                 </ul>
