@@ -83,8 +83,8 @@ public class SignUpController
         }
         else
         {
-            SignInUtils.signin(new SimpleUserDetails(user));
-            providerSignInUtils.doPostSignUp(user.getUserId(), webRequest);
+//            SignInUtils.signin(new SimpleUserDetails(user));
+//            providerSignInUtils.doPostSignUp(user.getUserId(), webRequest);
 
             return "redirect:/";
         }

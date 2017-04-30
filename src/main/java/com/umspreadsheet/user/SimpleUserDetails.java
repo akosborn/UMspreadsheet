@@ -62,6 +62,6 @@ public class SimpleUserDetails implements UserDetails
     @Override
     public boolean isEnabled()
     {
-        return user.isNotSuspended() | user.isNotSuspended();
+        return user.isEnabled();
     }
 }
