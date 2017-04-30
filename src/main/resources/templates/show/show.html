@@ -29,7 +29,7 @@
                     <span th:if="*{averageRating == null}">No Rating</span>
                 </h2>
                 <h3 th:text="${show.venue}" style="margin-top: 3px;">[venue]</h3>
-                <p sec:authorize="hasRole('ROLE_ADMIN')">
+                <p sec:authorize="hasRole('ROLE_MANAGE_SHOWS_PRIVILEGE')">
                     <a th:href="@{/admin/edit-show(showId=${show.id})}">
                         Edit show
                     </a>

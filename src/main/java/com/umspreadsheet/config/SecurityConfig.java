@@ -71,7 +71,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                     .authorizeRequests()
                         .antMatchers("/", "/signin/**", "/signup/**", "/resources/**", "/disconnect/facebook",
                                 "/shows/**", "/songs/**", "/wormblog/**", "/about/**").permitAll()
-                    .antMatchers("/admin/**").hasRole("WRITE_PRIVILEGE")
+                    .antMatchers("/admin/**").hasRole("MOD_PRIVILEGE")
                     .antMatchers("/**").authenticated()
                 .and()
                     .rememberMe();

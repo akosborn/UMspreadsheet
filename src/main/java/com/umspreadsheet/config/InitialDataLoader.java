@@ -42,25 +42,59 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         if (alreadySetup)
             return;
 
-        // If privileges don't exist, create them, "ROLE" prefix is required by Spring unless changed
-        Privilege readPrivilege = createPrivilegeIfNotFound("ROLE_READ_PRIVILEGE");
-        Privilege writePrivilege = createPrivilegeIfNotFound("ROLE_WRITE_PRIVILEGE");
+        // Create admin privileges. "ROLE" prefix is required by Spring unless changed
+        Privilege adminPrivilege = createPrivilegeIfNotFound("ROLE_ADMIN_PRIVILEGE");
+        Privilege manageShowsPrivilege = createPrivilegeIfNotFound("ROLE_MANAGE_SHOWS_PRIVILEGE");
+        Privilege manageUsersPrivilege = createPrivilegeIfNotFound("ROLE_MANAGE_USERS_PRIVILEGE");
+        Privilege sendEmailPrivilege = createPrivilegeIfNotFound("ROLE_SEND_EMAIL_PRIVILEGE");
+        Privilege postToWormBlogPrivilege = createPrivilegeIfNotFound("ROLE_POST_TO_WORMBLOG_PRIVILEGE");
 
-        // Add appropriate privileges to adminPrivileges list
-        List<Privilege> adminPrivileges = Arrays.asList(readPrivilege, writePrivilege);
+        // Create mod privileges
+        Privilege modPrivilege = createPrivilegeIfNotFound("ROLE_MOD_PRIVILEGE");
+
+        // Create user privilege
+        Privilege userPrivilege = createPrivilegeIfNotFound("ROLE_USER_PRIVILEGE");
+
+        // Add appropriate privileges to lists
+        List<Privilege> adminPrivileges = Arrays.asList(adminPrivilege, modPrivilege, manageShowsPrivilege,
+                manageUsersPrivilege, sendEmailPrivilege, postToWormBlogPrivilege);
+        List<Privilege> modPrivileges = Arrays.asList(modPrivilege, manageShowsPrivilege, postToWormBlogPrivilege);
+        List<Privilege> userPrivileges = Arrays.asList(userPrivilege);
+
         // If roles don't exist, create them
         createRoleIfNotFound("ROLE_ADMIN", adminPrivileges);
-        createRoleIfNotFound("ROLE_USER", Collections.singletonList(readPrivilege));
+        createRoleIfNotFound("ROLE_MOD", modPrivileges);
+        createRoleIfNotFound("ROLE_USER", userPrivileges);
 
-        // Find adminRole in database
+        User user;
+        // Find adminRole in database and assign it to user "andrew"
         Role adminRole = roleService.findByName("ROLE_ADMIN");
-        // Create a test user and assign it admin privileges
-        User user = new User();
-        user.setEmail("test@umspreadsheet.com");
+        user = new User();
+        user.setEmail("admin@umspreadsheet.com");
         user.setPassword("password");
-        user.setUsername("test");
+        user.setUsername("admin");
         user.setNotBanned(true);
         user.setRoles(Collections.singletonList(adminRole));
+        userService.save(user);
+
+        // Find Role in database and assign it to user "andrew"
+        Role modRole = roleService.findByName("ROLE_MOD");
+        user = new User();
+        user.setEmail("mod@umspreadsheet.com");
+        user.setPassword("password");
+        user.setUsername("mod");
+        user.setNotBanned(true);
+        user.setRoles(Collections.singletonList(modRole));
+        userService.save(user);
+
+        // Find Role in database and assign it to user "andrew"
+        Role userRole = roleService.findByName("ROLE_USER");
+        user = new User();
+        user.setEmail("user@umspreadsheet.com");
+        user.setPassword("password");
+        user.setUsername("user");
+        user.setNotBanned(true);
+        user.setRoles(Collections.singletonList(userRole));
         userService.save(user);
 
         alreadySetup = true;

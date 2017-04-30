@@ -44,7 +44,7 @@
                             </div>
                             <div class="row">
                                 <div class="modal-body col-sm-8 col-sm-offset-2">
-                                    <form sec:authorize="hasRole('ROLE_ADMIN')" th:action="@{/admin/add-set}" id="addSetForm"
+                                    <form th:action="@{/admin/add-set}" id="addSetForm"
                                           name="addSetForm" th:object="${set}" method="post">
                                         <input type="hidden" th:field="*{showId}"/>
                                         <div class="form-group">
