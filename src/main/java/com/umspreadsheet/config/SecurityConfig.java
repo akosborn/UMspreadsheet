@@ -24,11 +24,13 @@ import javax.sql.DataSource;
 public class SecurityConfig extends WebSecurityConfigurerAdapter
 {
     private UserDetailsService userDetailsService;
+    private AuthenticationFailureHandler authFailureHandler;
 
     @Autowired
-    public SecurityConfig(UserDetailsService userDetailsService)
+    public SecurityConfig(UserDetailsService userDetailsService, AuthenticationFailureHandler authFailureHandler)
     {
         this.userDetailsService = userDetailsService;
+        this.authFailureHandler = authFailureHandler;
     }
 
     @Bean
@@ -62,7 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                     .loginPage("/signin")
                     .loginProcessingUrl("/signin/authenticate")
                     .defaultSuccessUrl("/", true)
-                    .failureUrl("/signin?error=bad_credentials")
+                    .failureHandler(authFailureHandler)
                 .and()
                     .logout()
                         .logoutUrl("/signout")

@@ -13,7 +13,7 @@
 <body>
     <div layout:fragment="content">
 
-        <div class="container">
+        <th:block class="container">
 
             <form name="f" th:action="@{/signin/authenticate}" method="post" class="form-signin">
                 <h2 class="form-signin-heading">Login to UMSpreadsheet</h2>
@@ -24,9 +24,16 @@
                     </p>
                 </div>
 
-                <div th:if="${param.error}" class="alert alert-danger">
-                    Either invalid username and password or you have yet to confirm your email address.
-                </div>
+                <th:block th:if="${param.error}">
+                    <div th:if="${param.error[0]  == 'disabled'}" class="alert alert-danger">
+                        Your email has not been verified.
+                    </div>
+
+                    <div th:if="${param.error[0] == 'bad_credentials'}" class="alert alert-danger">
+                        Invalid username or password.
+                    </div>
+                </th:block>
+
                 <div th:if="${param.logout}" class="alert alert-success">
                     You have been logged out.
                 </div>
