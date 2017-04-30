@@ -7,4 +7,6 @@ public interface UserService extends UserDetailsService
     User save(User user);
 
     User findByUserId(String userId);
+
+    void createVerificationToken(User user, String token);
 }

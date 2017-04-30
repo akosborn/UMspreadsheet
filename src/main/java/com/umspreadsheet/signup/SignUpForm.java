@@ -7,7 +7,7 @@ import org.springframework.social.connect.UserProfile;
 
 import javax.validation.constraints.Pattern;
 
-public class SignupForm
+public class SignUpForm
 {
     @NotEmpty
     @Length(min = 3, max = 25)
@@ -29,13 +29,13 @@ public class SignupForm
     @Length(max = 254)
     private String email;
 
-    public static SignupForm fromProviderUser(UserProfile userProfile)
+    public static SignUpForm fromProviderUser(UserProfile userProfile)
     {
-        SignupForm signupForm = new SignupForm();
-        signupForm.userId = userProfile.getUsername();
-        signupForm.email = userProfile.getEmail();
+        SignUpForm signUpForm = new SignUpForm();
+        signUpForm.userId = userProfile.getUsername();
+        signUpForm.email = userProfile.getEmail();
 
-        return signupForm;
+        return signUpForm;
     }
 
     public String getUsername()

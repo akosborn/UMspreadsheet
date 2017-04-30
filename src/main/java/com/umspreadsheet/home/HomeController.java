@@ -28,8 +28,6 @@ public class HomeController
     @RequestMapping("/")
     public String home(Model model)
     {
-        System.out.println(SecurityContextHolder.getContext().getAuthentication());
-
         model.addAttribute("topThreeSongs", trackService.getTopThreeSongs());
         model.addAttribute("topThreeShows", showService.getTopThreeShows());
         model.addAttribute("lastThreeShows", setNumberOfReviews(showService.getLastThreeShows()));

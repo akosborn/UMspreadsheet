@@ -3,7 +3,9 @@ package com.umspreadsheet.user;
 import com.umspreadsheet.privilege.Privilege;
 import com.umspreadsheet.role.Role;
 import com.umspreadsheet.role.RoleService;
-import com.umspreadsheet.signup.SignupForm;
+import com.umspreadsheet.signup.SignUpForm;
+import com.umspreadsheet.signup.VerificationToken;
+import com.umspreadsheet.signup.VerificationTokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,12 +21,18 @@ public class SimpleUserService implements UserService
 {
     private UserRepository userRepository;
     private RoleService roleService;
+    private VerificationTokenService verificationTokenService;
+
+    private static final String TOKEN_INVALID = "invalidToken";
+    private static final String TOKEN_EXPIRED = "expiredToken";
+    private static final String TOKEN_VALID = "validToken";
 
     @Autowired
-    public SimpleUserService(UserRepository userRepository, RoleService roleService)
+    public SimpleUserService(UserRepository userRepository, RoleService roleService, VerificationTokenService verificationTokenService)
     {
         this.userRepository = userRepository;
         this.roleService = roleService;
+        this.verificationTokenService = verificationTokenService;
     }
 
     public User findByEmail(String email)
@@ -37,17 +45,17 @@ public class SimpleUserService implements UserService
         return userRepository.save(user);
     }
 
-    public User save(SignupForm signupForm)
+    public User save(SignUpForm signUpForm)
     {
         User user = new User();
-        user.setUsername(signupForm.getUsername());
-        user.setEmail(signupForm.getEmail());
+        user.setUsername(signUpForm.getUsername());
+        user.setEmail(signUpForm.getEmail());
 
         // if the user signed up via social
-        if (!signupForm.getUserId().equals(""))
-            user.setUserId(signupForm.getUserId());
+        if (!signUpForm.getUserId().equals(""))
+            user.setUserId(signUpForm.getUserId());
 
-        user.setPassword(signupForm.getPassword());
+        user.setPassword(signUpForm.getPassword());
         // Assign ROLE_USER role to the new user
         user.setRoles(Collections.singletonList(roleService.findByName("ROLE_USER")));
 
@@ -64,15 +72,30 @@ public class SimpleUserService implements UserService
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
     {
-        User user = findByUsername(username);
-        if (user == null)
-        {
-            throw new UsernameNotFoundException(username);
-        }
+        boolean accountNonExpired = true;
+        boolean credentialsNonExpired = true;
+        boolean accountNonLocked = true;
 
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), 
-                user.isNotBanned() | user.isNotSuspended(), true, true, 
-                user.isNotSuspended() | user.isNotBanned(), getAuthorities(user.getRoles()));
+        try
+        {
+            User user = findByUsername(username);
+            if (user == null)
+            {
+                throw new UsernameNotFoundException("No user found with username: " + username);
+            }
+
+            return new org.springframework.security.core.userdetails.User(
+                    user.getUsername(),
+                    user.getPassword(),
+                    user.isEnabled(),
+                    accountNonExpired,
+                    credentialsNonExpired,
+                    accountNonLocked,
+                    getAuthorities(user.getRoles()));
+        } catch (Exception ex)
+        {
+            throw new RuntimeException(ex);
+        }
     }
 
     private Collection<? extends GrantedAuthority> getAuthorities(Collection<Role> roles)
@@ -107,9 +130,26 @@ public class SimpleUserService implements UserService
         return privileges;
     }
 
+    public User getUser(String verificationToken)
+    {
+        return verificationTokenService.findByToken(verificationToken).getUser();
+    }
+
+    public VerificationToken getVerificationToken(String VerificationToken)
+    {
+        return verificationTokenService.findByToken(VerificationToken);
+    }
+
     public User findByUserId(String userId)
     {
         return userRepository.findByUserId(userId);
+    }
+
+    @Override
+    public void createVerificationToken(User user, String token)
+    {
+        VerificationToken verificationToken = new VerificationToken(token, user);
+        verificationTokenService.save(verificationToken);
     }
 
     public User findByUsername(String username)

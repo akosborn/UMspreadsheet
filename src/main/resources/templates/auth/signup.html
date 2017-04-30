@@ -25,7 +25,7 @@
                 [email taken]
             </div>
 
-            <form name="signupForm" th:action="@{/signup}" method="post" th:object="${signupForm}" class="form-signin">
+            <form name="signUpForm" th:action="@{/signup}" method="post" th:object="${signUpForm}" class="form-signin">
                 <h2 class="form-signin-heading">Join UMSpreadsheet</h2>
                 <input th:if="*{email != null} and ${!#fields.hasErrors('username')} and ${!#fields.hasErrors('email')} and ${!#fields.hasErrors('password')} and ${emailTaken == null}"
                        type="hidden" th:field="*{email}" />

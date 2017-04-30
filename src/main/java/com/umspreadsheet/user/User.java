@@ -15,7 +15,11 @@ import java.util.Set;
 @Entity
 public class User
 {
-    public User(){}
+    public User()
+    {
+        super();
+        this.isEnabled = false;
+    }
 
     @Id
     @GeneratedValue
@@ -24,6 +28,8 @@ public class User
     @Column(unique = true, nullable = false)
     @NotNull
     private String username;
+
+    private boolean isEnabled;
 
     /**
      * A social user's social username (ie. @Twitter)
@@ -175,6 +181,16 @@ public class User
     public void setUserId(String userId)
     {
         this.userId = userId;
+    }
+
+    public boolean isEnabled()
+    {
+        return isEnabled;
+    }
+
+    public void setEnabled(boolean enabled)
+    {
+        isEnabled = enabled;
     }
 
     @Override
