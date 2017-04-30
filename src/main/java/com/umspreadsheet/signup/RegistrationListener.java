@@ -17,7 +17,6 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
     private UserService userService;
     private MessageSource messageSource;
     private JavaMailSender mailSender;
-    final private static String noReplyAddress = "no-reply@umspreadsheet.com";
 
     @Autowired
     public RegistrationListener(UserService userService, MessageSource messageSource, JavaMailSender mailSender)
@@ -46,7 +45,6 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
         String ignoreEmailMessage = messageSource.getMessage("email.ignore", null, event.getLocale());
 
         SimpleMailMessage email = new SimpleMailMessage();
-        email.setFrom(noReplyAddress);
         email.setTo(recipientAddress);
         email.setSubject(subject);
         email.setText(user.getUsername() + ", \n\n" + message + " " + "http://localhost:8080" + confirmationURL +

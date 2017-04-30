@@ -18,14 +18,14 @@
             <form name="f" th:action="@{/signin/authenticate}" method="post" class="form-signin">
                 <h2 class="form-signin-heading">Login to UMSpreadsheet</h2>
 
-                <div th:if="${messages}" class="alert alert-success" role="alert">
-                    <p th:each="message : ${messages}" th:text="${message}">
+                <div th:if="${successMessages}" class="alert alert-success" role="alert">
+                    <p th:each="message : ${successMessages}" th:text="${message}">
                         A message here.
                     </p>
                 </div>
 
                 <div th:if="${param.error}" class="alert alert-danger">
-                    Invalid username and password.
+                    Either invalid username and password or you have yet to confirm your email address.
                 </div>
                 <div th:if="${param.logout}" class="alert alert-success">
                     You have been logged out.

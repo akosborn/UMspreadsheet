@@ -16,11 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Locale;
+import java.util.*;
 
 @Controller
 public class SignUpController
@@ -60,7 +59,7 @@ public class SignUpController
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public String signUp(@Valid SignUpForm signUpForm, BindingResult formBinding,
-                         WebRequest webRequest, Model model)
+                         WebRequest webRequest, Model model, RedirectAttributes redirectAttributes)
     {
         if (formBinding.hasErrors())
         {
@@ -68,6 +67,12 @@ public class SignUpController
         }
 
         User user = registerNewUser(signUpForm, formBinding, model);
+
+        if (user == null)
+        {
+            return "/auth/signup";
+        }
+
         try
         {
             String appURL = webRequest.getContextPath();
@@ -77,20 +82,14 @@ public class SignUpController
             return "/auth/signup";
         }
 
-        if (user == null)
-        {
-            return "/auth/signup";
-        }
-        else
-        {
-//            SignInUtils.signin(new SimpleUserDetails(user));
-//            providerSignInUtils.doPostSignUp(user.getUserId(), webRequest);
 
-            String message = messageSource.getMessage("signup.checkEmail", null, webRequest.getLocale());
-            model.addAttribute("messages", Collections.singletonList(message));
+//      SignInUtils.signin(new SimpleUserDetails(user));
+//      providerSignInUtils.doPostSignUp(user.getUserId(), webRequest);
 
-            return "/auth/signin";
-        }
+        String message = messageSource.getMessage("signup.checkEmail", null, webRequest.getLocale());
+        redirectAttributes.addFlashAttribute("successMessages", Collections.singleton(message));
+
+        return "redirect:/signin";
     }
 
     @RequestMapping(value = "/signup-confirm")
@@ -102,7 +101,7 @@ public class SignUpController
         if (verificationToken == null)
         {
             String message = messageSource.getMessage("message.invalidToken", null, locale);
-            model.addAttribute("message", message);
+            model.addAttribute("dangerMessages", Collections.singleton(message));
 
             return "redirect:/signup";
         }
@@ -111,8 +110,8 @@ public class SignUpController
         Calendar calendar = Calendar.getInstance();
         if ((verificationToken.getExpirationDate().getTime() - calendar.getTime().getTime()) <= 0)
         {
-            String messageValue = messageSource.getMessage("message.expiredToken", null, locale);
-            model.addAttribute("message", messageValue);
+            String message = messageSource.getMessage("message.expiredToken", null, locale);
+            model.addAttribute("dangerMessages", Collections.singletonList(message));
 
             return "redirect:/signup";
         }
@@ -121,23 +120,30 @@ public class SignUpController
         user.setEnabled(true);
         simpleUserService.save(user);
 
-        model.addAttribute("messages", messageSource.getMessage("signup.verificationSuccess", null, webRequest
-                .getLocale()));
+        String message = messageSource.getMessage("signup.verificationSuccess", null, webRequest
+                .getLocale());
+        model.addAttribute("successMessages", Collections.singleton(message));
 
         return "/auth/signin";
     }
 
     private User registerNewUser(SignUpForm signUpForm, BindingResult formBinding, Model model)
     {
+        List<String> messages = new ArrayList<>();
+
         // Check for duplicate email
         if (simpleUserService.findByEmail(signUpForm.getEmail()) != null)
         {
-            model.addAttribute("emailTaken", "Email \"" + signUpForm.getEmail() + "\" is already in use.");
+            String message = "Email \"" + signUpForm.getEmail() + "\" is already in use.";
+            messages.add(message);
 
             if (simpleUserService.findByUsername(signUpForm.getUsername()) != null)
             {
-                model.addAttribute("usernameTaken", "Username \"" + signUpForm.getUsername() + "\" is taken.");
+                message = "Username \"" + signUpForm.getUsername() + "\" is taken.";
+                messages.add(message);
             }
+
+            model.addAttribute("dangerMessages", messages);
 
             return null;
         }
@@ -145,12 +151,16 @@ public class SignUpController
         // Check for duplicate username
         if (simpleUserService.findByUsername(signUpForm.getUsername()) != null)
         {
-            model.addAttribute("usernameTaken", "Username \"" + signUpForm.getUsername() + "\" is taken.");
+            String message = "Username \"" + signUpForm.getUsername() + "\" is in use.";
+            messages.add(message);
 
             if (simpleUserService.findByEmail(signUpForm.getEmail()) != null)
             {
-                model.addAttribute("emailTaken", "Email \"" + signUpForm.getEmail() + "\" is already in use.");
+                message = "Email \"" + signUpForm.getEmail() + "\" is in use.";
+                messages.add(message);
             }
+
+            model.addAttribute("dangerMessages", messages);
 
             return null;
         }
