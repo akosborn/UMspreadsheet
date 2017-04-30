@@ -18,6 +18,12 @@
             <form name="f" th:action="@{/signin/authenticate}" method="post" class="form-signin">
                 <h2 class="form-signin-heading">Login to UMSpreadsheet</h2>
 
+                <div th:if="${messages}" class="alert alert-success" role="alert">
+                    <p th:each="message : ${messages}" th:text="${message}">
+                        A message here.
+                    </p>
+                </div>
+
                 <div th:if="${param.error}" class="alert alert-danger">
                     Invalid username and password.
                 </div>

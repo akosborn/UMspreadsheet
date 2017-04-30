@@ -1,7 +1,6 @@
 package com.umspreadsheet.signup;
 
-import com.umspreadsheet.config.SignInUtils;
-import com.umspreadsheet.user.SimpleUserDetails;
+
 import com.umspreadsheet.user.SimpleUserService;
 import com.umspreadsheet.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +19,7 @@ import org.springframework.web.context.request.WebRequest;
 
 import javax.validation.Valid;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Locale;
 
 @Controller
@@ -86,7 +86,10 @@ public class SignUpController
 //            SignInUtils.signin(new SimpleUserDetails(user));
 //            providerSignInUtils.doPostSignUp(user.getUserId(), webRequest);
 
-            return "redirect:/";
+            String message = messageSource.getMessage("signup.checkEmail", null, webRequest.getLocale());
+            model.addAttribute("messages", Collections.singletonList(message));
+
+            return "/auth/signin";
         }
     }
 
@@ -118,7 +121,10 @@ public class SignUpController
         user.setEnabled(true);
         simpleUserService.save(user);
 
-        return "redirect:/signin";
+        model.addAttribute("messages", messageSource.getMessage("signup.verificationSuccess", null, webRequest
+                .getLocale()));
+
+        return "/auth/signin";
     }
 
     private User registerNewUser(SignUpForm signUpForm, BindingResult formBinding, Model model)
