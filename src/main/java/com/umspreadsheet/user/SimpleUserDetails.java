@@ -1,13 +1,11 @@
 package com.umspreadsheet.user;
 
-import com.umspreadsheet.model.Role;
+import com.umspreadsheet.role.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class SimpleUserDetails implements UserDetails
 {
@@ -21,8 +19,8 @@ public class SimpleUserDetails implements UserDetails
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities()
     {
-        Collection<GrantedAuthority> authorities = new HashSet<>();
-        Set<Role> roles = user.getRoles();
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        Collection<Role> roles = user.getRoles();
         for (Role role : roles)
         {
             authorities.add(new SimpleGrantedAuthority(role.getName()));
@@ -52,7 +50,7 @@ public class SimpleUserDetails implements UserDetails
     @Override
     public boolean isAccountNonLocked()
     {
-        return true;
+        return user.isNotSuspended() | user.isNotSuspended();
     }
 
     @Override
@@ -64,6 +62,6 @@ public class SimpleUserDetails implements UserDetails
     @Override
     public boolean isEnabled()
     {
-        return true;
+        return user.isNotSuspended() | user.isNotSuspended();
     }
 }

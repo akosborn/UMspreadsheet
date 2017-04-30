@@ -1,7 +1,7 @@
 package com.umspreadsheet.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.umspreadsheet.model.Role;
+import com.umspreadsheet.role.Role;
 import com.umspreadsheet.model.ShowReview;
 import com.umspreadsheet.review.TrackReview;
 import org.springframework.data.annotation.CreatedDate;
@@ -13,11 +13,9 @@ import java.util.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "users")
 public class User
 {
-    // Needed for JPA
-    public User() {}
+    public User(){}
 
     @Id
     @GeneratedValue
@@ -43,12 +41,12 @@ public class User
     private String password;
 
     // gives new users ROLE_USER privilege
-    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
-            joinColumns = {@JoinColumn(name = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id")})
-    private java.util.Set<Role> roles = new HashSet<>(Collections.singletonList(Role.defaultRole()));
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
+    private Collection<Role> roles;
 
     @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
@@ -99,12 +97,12 @@ public class User
         this.password = passwordEncoder.encode(password);
     }
 
-    public Set<Role> getRoles()
+    public Collection<Role> getRoles()
     {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles)
+    public void setRoles(Collection<Role> roles)
     {
         this.roles = roles;
     }

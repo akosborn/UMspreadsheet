@@ -1,7 +1,7 @@
 package com.umspreadsheet.user;
 
 
-import com.umspreadsheet.model.Role;
+import com.umspreadsheet.role.Role;
 import com.umspreadsheet.model.ShowReview;
 import com.umspreadsheet.review.TrackReview;
 

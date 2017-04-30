@@ -29,15 +29,12 @@
                     <span th:if="*{averageRating == null}">No Rating</span>
                 </h2>
                 <h3 th:text="${show.venue}" style="margin-top: 3px;">[venue]</h3>
-                <p sec:authorize="hasRole('ROLE_ADMIN')">
+                <p sec:authorize="hasRole('ROLE_MANAGE_SHOWS_PRIVILEGE')">
                     <a th:href="@{/admin/edit-show(showId=${show.id})}">
                         Edit show
                     </a>
                 </p>
             </div>
-
-            <!--<h2 th:text="${#dates.format(show.date, 'yyyy/MM/dd') + ' ' + show.city + ', '  + show.state}"></h2>
-            <h3 th:text="${show.venue}"></h3>-->
 
             <table sec:authorize="isAuthenticated()" class="table show-set-table">
                 <thead>

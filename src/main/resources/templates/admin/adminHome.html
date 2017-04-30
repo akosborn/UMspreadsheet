@@ -41,20 +41,20 @@
                             <div class="dark-div">
                                 <h3>WormBlog</h3>
                                 <hr>
-                                <p><a th:href="@{/admin/publish-post}">Add post</a></p>
+                                <p><a th:href="@{/admin/publish-post}">Submit post</a></p>
                                 <p><a th:href="@{/admin/manage-wormblog}">Manage posts</a></p>
                             </div>
                         </div>
 
-                        <div class="col-md-3 col-sm-6 box">
+                        <div sec:authorize="hasRole('ROLE_MANAGE_USERS_PRIVILEGE')" class="col-md-3 col-sm-6 box">
                             <div class="dark-div">
                                 <h3>Users</h3>
                                 <hr>
-                                <p>Edit privileges</p>
+                                <p>Manage privileges</p>
                             </div>
                         </div>
 
-                        <div class="col-md-3 col-sm-6 box">
+                        <div sec:authorize="hasRole('ROLE_SEND_EMAIL_PRIVILEGE')" class="col-md-3 col-sm-6 box">
                             <div class="dark-div">
                                 <h3>Communication</h3>
                                 <hr>
