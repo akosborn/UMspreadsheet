@@ -20,7 +20,7 @@ public class TrackController
 
     @Autowired
     public TrackController(TrackService trackService,
-                            TrackReviewService trackReviewService, SimpleUserService userService)
+                           TrackReviewService trackReviewService, SimpleUserService userService)
     {
         this.trackService = trackService;
         this.trackReviewService = trackReviewService;

@@ -1,8 +1,6 @@
 package com.umspreadsheet.admin;
 
 import com.umspreadsheet.exception.DataNotFoundException;
-import com.umspreadsheet.review.TrackReview;
-import com.umspreadsheet.review.TrackReviewForm;
 import com.umspreadsheet.set.Set;
 import com.umspreadsheet.set.SetDTO;
 import com.umspreadsheet.review.TrackReviewService;
@@ -28,9 +26,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.lang.invoke.MethodType;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
@@ -45,7 +40,7 @@ public class AdminController
 
     @Autowired
     public AdminController(ShowService showService, TrackService trackService,
-                          TrackReviewService trackReviewService, SimpleUserService userService,
+                           TrackReviewService trackReviewService, SimpleUserService userService,
                            SetService setService, WormBlogService wormBlogService)
     {
         this.showService = showService;

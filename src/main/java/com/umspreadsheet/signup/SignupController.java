@@ -5,12 +5,8 @@ import com.umspreadsheet.user.SimpleUserDetails;
 import com.umspreadsheet.user.SimpleUserService;
 import com.umspreadsheet.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.social.connect.Connection;
-import org.springframework.social.connect.UserProfile;
 import org.springframework.social.connect.web.ProviderSignInUtils;
-import org.springframework.social.facebook.api.Facebook;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -63,7 +59,7 @@ public class SignupController
             return "/auth/signup";
         }
 
-        User user = createUser(signupForm, formBinding, model);
+        User user = registerNewUser(signupForm, formBinding, model);
 
         if (user == null)
         {
@@ -78,7 +74,7 @@ public class SignupController
         }
     }
 
-    private User createUser(SignupForm signupForm, BindingResult formBinding, Model model)
+    private User registerNewUser(SignupForm signupForm, BindingResult formBinding, Model model)
     {
         // Check for duplicate email
         if (simpleUserService.findByEmail(signupForm.getEmail()) != null)

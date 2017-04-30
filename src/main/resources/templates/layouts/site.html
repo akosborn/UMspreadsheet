@@ -98,7 +98,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin}">
+                                    <a sec:authorize="hasAuthority('ROLE_READ_PRIVILEGE')" th:href="@{/admin}">
                                         <span class="fa fa-cogs">&nbsp;&nbsp;&nbsp;&nbsp;</span>Admin
                                     </a>
                                 </li>

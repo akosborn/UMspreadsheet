@@ -5,6 +5,7 @@ import com.umspreadsheet.show.Show;
 import com.umspreadsheet.show.ShowService;
 import com.umspreadsheet.track.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,8 +19,7 @@ public class HomeController
     private ShowService showService;
 
     @Autowired
-    public HomeController(TrackService trackService,
-                          ShowService showService)
+    public HomeController(TrackService trackService, ShowService showService)
     {
         this.trackService = trackService;
         this.showService = showService;
@@ -28,6 +28,8 @@ public class HomeController
     @RequestMapping("/")
     public String home(Model model)
     {
+        System.out.println(SecurityContextHolder.getContext().getAuthentication());
+
         model.addAttribute("topThreeSongs", trackService.getTopThreeSongs());
         model.addAttribute("topThreeShows", showService.getTopThreeShows());
         model.addAttribute("lastThreeShows", setNumberOfReviews(showService.getLastThreeShows()));
