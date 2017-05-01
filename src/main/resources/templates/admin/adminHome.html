@@ -21,8 +21,8 @@
                 <div id="profile-picture" class="dark-div">
                     <img th:src="@{/images/avatar.svg}" style="height: 100px; width: auto; margin-bottom: 20px;"/>
                     <p sec:authentication="name">[username]</p>
-                    <p th:text="'Last login: ' + '' ">[last login]</p>
-                    <p th:text="'Joined: ' + ''">[join date]</p>
+                    <p th:text="${'Last login: ' + ''}">[last login]</p>
+                    <p th:text="${'Joined: ' + ''}">[join date]</p>
                 </div>
             </div>
 
@@ -50,7 +50,7 @@
                             <div class="dark-div">
                                 <h3>Users</h3>
                                 <hr>
-                                <p><a th:href="@{/admin/manage-users}">Manage privileges</a></p>
+                                <p><a th:href="@{/admin/manage-users}">Manage users</a></p>
                             </div>
                         </div>
 
