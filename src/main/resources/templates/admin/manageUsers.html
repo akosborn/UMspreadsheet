@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorator="layouts/site"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <title>UMspreadsheet</title>
+
+    <link rel="stylesheet" th:href="@{/css/wormblog/wormblog.css}"/>
+</head>
+
+<body>
+
+    <div layout:fragment="content">
+        <div class="container">
+            <h1 id="header-title" class="text-center">Manage Users</h1>
+
+            <div class="container">
+                <table class="table" style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <td>Joined</td>
+                            <td>Username</td>
+                            <td>Email</td>
+                            <td style="text-align: center">Verified</td>
+                            <td style="text-align: center">Suspend</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="user : ${users}" th:object="${user}">
+                            <td th:text="*{joinedOn}">[timestamp]</td>
+                            <td th:text="*{username}">[username]</td>
+                            <td th:text="*{email}">[email]</td>
+                            <td style="text-align: center">
+                                <i th:if="*{isEnabled}" class="fa fa-check" aria-hidden="true" style="color: green"></i>
+                            </td>
+                            <td style="text-align: center">
+                                <form th:if="${user.isNotSuspended && user.isNotBanned}" th:action="@{/admin/manage-users}"
+                                      th:method="put">
+                                    <input type="hidden" name="username" th:value="${user.username}" />
+                                    <button type="submit" class="icon-button"
+                                            onclick="return confirm('Suspend this user indefinitely?');">
+                                        <i class="fa fa-pause" aria-hidden="true" style="color: #B33A3A"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <th:block layout:fragment="script">
+
+    </th:block>
+
+</body>

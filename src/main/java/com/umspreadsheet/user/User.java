@@ -72,22 +72,22 @@ public class User
     @Column(columnDefinition = "TINYINT(1)")
     private boolean isNotBanned = true;
 
-    public boolean isNotSuspended()
+    public boolean getIsNotSuspended()
     {
         return isNotSuspended;
     }
 
-    public void setNotSuspended(boolean notSuspended)
+    public void setIsNotSuspended(boolean notSuspended)
     {
         isNotSuspended = notSuspended;
     }
 
-    public boolean isNotBanned()
+    public boolean getIsNotBanned()
     {
         return isNotBanned;
     }
 
-    public void setNotBanned(boolean notBanned)
+    public void setIsNotBanned(boolean notBanned)
     {
         isNotBanned = notBanned;
     }
@@ -183,12 +183,12 @@ public class User
         this.userId = userId;
     }
 
-    public boolean isEnabled()
+    public boolean getIsEnabled()
     {
         return isEnabled;
     }
 
-    public void setEnabled(boolean enabled)
+    public void setIsEnabled(boolean enabled)
     {
         isEnabled = enabled;
     }

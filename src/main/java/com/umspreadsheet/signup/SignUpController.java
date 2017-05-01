@@ -117,7 +117,7 @@ public class SignUpController
         }
 
         // Enable user and update
-        user.setEnabled(true);
+        user.setIsEnabled(true);
         simpleUserService.save(user);
 
         String message = messageSource.getMessage("signup.verificationSuccess", null, webRequest

@@ -87,10 +87,10 @@ public class SimpleUserService implements UserService
             return new org.springframework.security.core.userdetails.User(
                     user.getUsername(),
                     user.getPassword(),
-                    user.isEnabled(),
+                    user.getIsEnabled(),
                     accountNonExpired,
                     credentialsNonExpired,
-                    accountNonLocked,
+                    user.getIsNotSuspended() || user.getIsNotBanned(),
                     getAuthorities(user.getRoles()));
         } catch (Exception ex)
         {
@@ -155,5 +155,10 @@ public class SimpleUserService implements UserService
     public User findByUsername(String username)
     {
         return userRepository.findByUsername(username);
+    }
+
+    public Iterable<User> findAll()
+    {
+        return userRepository.findAll();
     }
 }

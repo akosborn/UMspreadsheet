@@ -66,16 +66,17 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         createRoleIfNotFound("ROLE_MOD", modPrivileges);
         createRoleIfNotFound("ROLE_USER", userPrivileges);
 
-//        User user;
-//        // Find adminRole in database and assign it to user "andrew"
-//        Role adminRole = roleService.findByName("ROLE_ADMIN");
-//        user = new User();
-//        user.setEmail("admin@umspreadsheet.com");
-//        user.setPassword("password");
-//        user.setUsername("admin");
-//        user.setNotBanned(true);
-//        user.setRoles(Collections.singletonList(adminRole));
-//        userService.save(user);
+        User user;
+        // Find adminRole in database and assign it to user "andrew"
+        Role adminRole = roleService.findByName("ROLE_ADMIN");
+        user = new User();
+        user.setEmail("admin@umspreadsheet.com");
+        user.setUsername("admin");
+        user.setPassword("password");
+        user.setIsNotBanned(true);
+        user.setIsEnabled(true);
+        user.setRoles(Collections.singletonList(adminRole));
+        userService.save(user);
 //
 //        // Find Role in database and assign it to user "andrew"
 //        Role modRole = roleService.findByName("ROLE_MOD");

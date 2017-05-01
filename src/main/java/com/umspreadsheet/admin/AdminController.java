@@ -11,9 +11,11 @@ import com.umspreadsheet.show.ShowService;
 import com.umspreadsheet.track.Track;
 import com.umspreadsheet.track.TrackService;
 import com.umspreadsheet.user.SimpleUserService;
+import com.umspreadsheet.user.User;
 import com.umspreadsheet.wormblog.WormBlogPost;
 import com.umspreadsheet.wormblog.WormBlogService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -26,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.lang.invoke.MethodType;
 
 @Controller
 @RequestMapping("/admin")
@@ -198,6 +201,28 @@ public class AdminController
         wormBlogService.delete(id);
 
         return "redirect:/admin";
+    }
+
+    // Returns page for managing users
+    @RequestMapping(value = "/manage-users")
+    public String manageUsers(Model model)
+    {
+        model.addAttribute("users", userService.findAll());
+
+        return "/admin/manageUsers";
+    }
+
+    // Deletes a WormBlog post
+    @RequestMapping(value = "/manage-users", method = RequestMethod.PUT)
+    public String suspendUser(User user, Model model)
+    {
+        User retrievedUser = userService.findByUsername(user.getUsername());
+
+        // Suspend and update the user
+        retrievedUser.setIsNotSuspended(false);
+        userService.save(retrievedUser);
+
+        return "redirect:/admin/manage-users";
     }
 
     private String getCurrentUsername()
