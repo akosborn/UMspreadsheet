@@ -21,8 +21,7 @@
                 <div id="profile-picture" class="dark-div">
                     <img th:src="@{/images/avatar.svg}" style="height: 100px; width: auto; margin-bottom: 20px;"/>
                     <p sec:authentication="name">[username]</p>
-                    <p th:text="${'Last login: ' + ''}">[last login]</p>
-                    <p th:text="${'Joined: ' + ''}">[join date]</p>
+                    <p th:text="${'Joined: ' + #dates.format(currentUser.joinedOn, 'yyyy-MM-dd')}">[join date]</p>
                 </div>
             </div>
 

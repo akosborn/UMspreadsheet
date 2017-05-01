@@ -15,7 +15,7 @@ import com.umspreadsheet.user.User;
 import com.umspreadsheet.wormblog.WormBlogPost;
 import com.umspreadsheet.wormblog.WormBlogService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.lang.invoke.MethodType;
 
 @Controller
 @RequestMapping("/admin")
@@ -57,6 +56,11 @@ public class AdminController
     @RequestMapping("")
     public String adminHome(Model model)
     {
+        String username = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+                .getUsername();
+        User user = userService.findByUsername(username);
+        model.addAttribute("currentUser", user);
+
         return "/admin/adminHome";
     }
 
