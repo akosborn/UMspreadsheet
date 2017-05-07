@@ -1,6 +1,7 @@
 package com.umspreadsheet.admin;
 
 import com.umspreadsheet.exception.DataNotFoundException;
+import com.umspreadsheet.role.Role;
 import com.umspreadsheet.set.Set;
 import com.umspreadsheet.set.SetDTO;
 import com.umspreadsheet.review.TrackReviewService;
@@ -28,6 +29,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
@@ -225,6 +229,22 @@ public class AdminController
         // Suspend and update the user
         retrievedUser.setIsNotSuspended(false);
         userService.save(retrievedUser);
+
+        return "redirect:/admin/manage-users";
+    }
+
+    @RequestMapping(value = "/manage-users/roles")
+    public String manageUsersRoles(@RequestParam("username") String username, Model model)
+    {
+        model.addAttribute("user", userService.findByUsername(username));
+
+        return "/admin/manageUser";
+    }
+
+    @RequestMapping(value = "/manage-users/roles", method = RequestMethod.PUT)
+    public String changeUserRole(User userForm)
+    {
+        User user = userService.findByUsername(userForm.getUsername());
 
         return "redirect:/admin/manage-users";
     }

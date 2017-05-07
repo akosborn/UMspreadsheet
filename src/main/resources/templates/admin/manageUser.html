@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorator="layouts/site"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <title>UMspreadsheet</title>
+
+    <link rel="stylesheet" th:href="@{/css/wormblog/wormblog.css}"/>
+</head>
+
+<body>
+
+    <div layout:fragment="content">
+        <div class="container" th:object="${user}">
+            <h1 th:text="${'Manage ' + user.username + '''s Roles'}" id="header-title" class="text-center">Manage User</h1>
+
+            <div class="container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <td>Role</td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <th:block th:each="role : *{roles}">
+                            <tr style="background-color: #313131;">
+                                <td th:text="${role.name}" colspan="2" style="color: #F2C73A;"></td>
+                            </tr>
+                            <tr th:each="privilege : ${role.privileges}">
+                                <td th:text="${privilege.name}"></td>
+                                <td>
+                                    <form th:action="@{/admin/manage-users/roles}" th:object="${user}" th:method="put">
+                                        <input type="hidden" th:field="*{username}"/>
+                                        <button type="submit" class="icon-button">
+                                            <i class="fa fa-minus" aria-hidden="true"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        </th:block>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <th:block layout:fragment="script">
+
+    </th:block>
+
+</body>

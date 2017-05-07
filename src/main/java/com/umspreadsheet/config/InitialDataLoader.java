@@ -77,18 +77,20 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         user.setIsEnabled(true);
         user.setRoles(Collections.singletonList(adminRole));
         userService.save(user);
-//
-//        // Find Role in database and assign it to user "andrew"
-//        Role modRole = roleService.findByName("ROLE_MOD");
-//        user = new User();
-//        user.setEmail("mod@umspreadsheet.com");
-//        user.setPassword("password");
-//        user.setUsername("mod");
-//        user.setNotBanned(true);
-//        user.setRoles(Collections.singletonList(modRole));
-//        userService.save(user);
-//
-//        // Find Role in database and assign it to user "andrew"
+
+        // Find Role in database and assign it to user "andrew"
+        Role modRole = roleService.findByName("ROLE_MOD");
+        user = new User();
+        user.setEmail("mod@umspreadsheet.com");
+        user.setPassword("password");
+        user.setUsername("mod");
+        user.setIsNotBanned(true);
+        user.setIsNotSuspended(true);
+        user.setIsEnabled(true);
+        user.setRoles(Collections.singletonList(modRole));
+        userService.save(user);
+
+        // Find Role in database and assign it to user "andrew"
 //        Role userRole = roleService.findByName("ROLE_USER");
 //        user = new User();
 //        user.setEmail("user@umspreadsheet.com");

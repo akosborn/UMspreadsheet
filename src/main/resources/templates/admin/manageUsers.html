@@ -25,27 +25,35 @@
                             <td>Email</td>
                             <td style="text-align: center">Verified</td>
                             <td style="text-align: center">Suspend</td>
+                            <td style="text-align: center">Edit</td>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="user : ${users}" th:object="${user}">
-                            <td th:text="*{joinedOn}">[timestamp]</td>
-                            <td th:text="*{username}">[username]</td>
-                            <td th:text="*{email}">[email]</td>
-                            <td style="text-align: center">
-                                <i th:if="*{isEnabled}" class="fa fa-check" aria-hidden="true" style="color: green"></i>
-                            </td>
-                            <td style="text-align: center">
-                                <form th:if="${user.isNotSuspended && user.isNotBanned}" th:action="@{/admin/manage-users}"
-                                      th:method="put">
-                                    <input type="hidden" name="username" th:value="${user.username}" />
-                                    <button type="submit" class="icon-button"
-                                            onclick="return confirm('Suspend this user indefinitely?');">
-                                        <i class="fa fa-pause" aria-hidden="true" style="color: #B33A3A"></i>
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
+                        <th:block th:each="user : ${users}" th:object="${user}">
+                            <tr>
+                                <td th:text="*{joinedOn}">[timestamp]</td>
+                                <td th:text="*{username}">[username]</td>
+                                <td th:text="*{email}">[email]</td>
+                                <td style="text-align: center">
+                                    <i th:if="*{isEnabled}" class="fa fa-check" aria-hidden="true" style="color: green"></i>
+                                </td>
+                                <td style="text-align: center">
+                                    <form th:if="${user.isNotSuspended && user.isNotBanned}" th:action="@{/admin/manage-users}"
+                                          th:method="put">
+                                        <input type="hidden" name="username" th:value="${user.username}" />
+                                        <button type="submit" class="icon-button"
+                                                onclick="return confirm('Suspend this user indefinitely?');">
+                                            <i class="fa fa-pause" aria-hidden="true" style="color: #B33A3A"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <a th:href="@{/admin/manage-users/roles(username=${user.username})}">
+                                        <i class="fa fa-pencil" aria-hidden="true" style="color: yellow;"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </th:block>
                     </tbody>
                 </table>
             </div>
