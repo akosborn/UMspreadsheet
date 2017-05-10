@@ -72,6 +72,18 @@ public class User
     @Column(columnDefinition = "TINYINT(1)")
     private boolean isNotBanned = true;
 
+    @Transient
+    private String transientRole;
+
+    public String getTransientRole()
+    {
+        return transientRole;
+    }
+
+    public void setTransientRole(String transientRole) {
+        this.transientRole = transientRole;
+    }
+
     public boolean getIsNotSuspended()
     {
         return isNotSuspended;

@@ -12,6 +12,8 @@ public class ExceptionControllerAdvice
     {
         model.addAttribute("exception", exception);
 
+        exception.printStackTrace();
+
         return "globalError";
     }
 }

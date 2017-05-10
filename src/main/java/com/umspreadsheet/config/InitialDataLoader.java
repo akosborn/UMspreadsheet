@@ -12,10 +12,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 // http://www.baeldung.com/role-and-privilege-for-spring-security-registration
 @Component
@@ -75,7 +72,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         user.setPassword("password");
         user.setIsNotBanned(true);
         user.setIsEnabled(true);
-        user.setRoles(Collections.singletonList(adminRole));
+        user.setRoles(new ArrayList<>(Arrays.asList(adminRole)));
         userService.save(user);
 
         // Find Role in database and assign it to user "andrew"
@@ -87,7 +84,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         user.setIsNotBanned(true);
         user.setIsNotSuspended(true);
         user.setIsEnabled(true);
-        user.setRoles(Collections.singletonList(modRole));
+        user.setRoles(new ArrayList<>(Arrays.asList(modRole)));
         userService.save(user);
 
         // Find Role in database and assign it to user "andrew"
@@ -97,7 +94,7 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
 //        user.setPassword("password");
 //        user.setUsername("user");
 //        user.setNotBanned(true);
-//        user.setRoles(Collections.singletonList(userRole));
+//        user.setRoles(new ArrayList<>(Arrays.asList(userRole)));
 //        userService.save(user);
 
         alreadySetup = true;

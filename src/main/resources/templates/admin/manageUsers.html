@@ -25,7 +25,7 @@
                             <td>Email</td>
                             <td style="text-align: center">Verified</td>
                             <td style="text-align: center">Suspend</td>
-                            <td style="text-align: center">Edit</td>
+                            <td style="text-align: center">Role</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -48,9 +48,14 @@
                                     </form>
                                 </td>
                                 <td>
-                                    <a th:href="@{/admin/manage-users/roles(username=${user.username})}">
-                                        <i class="fa fa-pencil" aria-hidden="true" style="color: yellow;"></i>
-                                    </a>
+                                    <form th:action="@{/admin/manage-users/roles}" th:method="put">
+                                        <input type="hidden" name="username" th:value="*{username}"/>
+                                        <select class="form-control" name="transientRole" onchange="this.form.submit()">
+                                            <option th:selected="*{roles[0].name == 'ROLE_USER'}" value="ROLE_USER">User</option>
+                                            <option th:selected="*{roles[0].name == 'ROLE_MOD'}" value="ROLE_MOD">Mod</option>
+                                            <option th:selected="*{roles[0].name == 'ROLE_ADMIN'}" value="ROLE_ADMIN">Admin</option>
+                                        </select>
+                                    </form>
                                 </td>
                             </tr>
                         </th:block>
