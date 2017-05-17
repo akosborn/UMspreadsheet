@@ -1,0 +1,47 @@
+AFTER UPDATE ON track
+FOR EACH ROW
+BEGIN
+	UPDATE shows s
+	SET s.average_rating = (
+		SELECT AVG(track.average_rating)
+        FROM track
+        WHERE track.show_id = s.id
+        GROUP BY track.show_id)
+    WHERE s.id = NEW.show_id;
+END */;;
+
+AFTER INSERT ON track_review
+FOR EACH ROW
+BEGIN
+	UPDATE track t
+	SET t.average_rating = (
+		SELECT AVG(track_review.score)
+        FROM track_review
+        WHERE track_review.track_id = t.id
+        GROUP BY track_review.track_id)
+    WHERE t.id = NEW.track_id;
+END */;;
+
+AFTER UPDATE ON track_review
+FOR EACH ROW
+BEGIN
+	UPDATE track t
+	SET t.average_rating = (
+		SELECT AVG(track_review.score)
+        FROM track_review
+        WHERE track_review.track_id = t.id
+        GROUP BY track_review.track_id)
+    WHERE t.id = NEW.track_id;
+END */;;
+
+AFTER DELETE ON `track_review` 
+FOR EACH ROW
+BEGIN
+	UPDATE track t
+    SET t.average_rating = (
+		SELECT AVG(track_review.score)
+        FROM track_review
+        WHERE track_review.track_id = t.id
+        GROUP BY track_review.track_id)
+	WHERE t.id = OLD.track_id;
+END */;;
