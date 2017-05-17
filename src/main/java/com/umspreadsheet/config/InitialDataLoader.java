@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 
 // http://www.baeldung.com/role-and-privilege-for-spring-security-registration
-@Component
+//@Component
 public class InitialDataLoader implements ApplicationListener<ContextRefreshedEvent>
 {
     private boolean alreadySetup = false;
