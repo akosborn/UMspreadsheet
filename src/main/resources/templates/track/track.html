@@ -28,7 +28,7 @@
                     <span th:if="*{averageRating != null}" th:text="*{#numbers.formatDecimal(averageRating, 1, 2)}">[0.00]</span>
                     <span th:if="*{averageRating == null}">No Rating</span>
                 </h2>
-                <h3 th:text="*{#dates.format(show.date, 'yyyy/MM/dd') + ' ' + show.city + ', '  + show.state}" style="margin-top: 3px;">[venue]</h3>
+                <h4 th:text="*{#dates.format(show.date, 'yyyy/MM/dd') + ' ' + show.city + ', '  + show.state}" style="margin-top: 3px;">[venue]</h4>
             </div>
 
         </div>
