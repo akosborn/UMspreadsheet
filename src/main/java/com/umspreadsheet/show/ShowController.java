@@ -182,6 +182,20 @@ public class ShowController
         return "redirect:/shows/show";
     }
 
+    // Submit or update a comment
+    @RequestMapping(value = "/shows/show/comment", method = RequestMethod.POST)
+    public String saveComment(TrackReviewForm trackReviewForm, RedirectAttributes redirectAttributes)
+    {
+        TrackReview retrievedReview = trackReviewService.findById(trackReviewForm.getId());
+        retrievedReview.setComment(trackReviewForm.getComment());
+
+        TrackReview savedReview = trackReviewService.save(retrievedReview);
+
+        redirectAttributes.addAttribute("showId", savedReview.getTrack().getShow().getId());
+
+        return "redirect:/shows/show";
+    }
+
     @RequestMapping(value = "/shows/search")
     public String submitShowFilter(@RequestParam(value = "page", required = false) Integer pageNumber,
                                    @RequestParam(value = "year", required = false) String year,

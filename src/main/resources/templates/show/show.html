@@ -91,10 +91,41 @@
                                 </form>
                             </td>
                             <td class="hidden-xs hidden-sm" style="text-align: center;">
-                                <a>
+                                <a th:if="*{trackReviewForm.id != null}" href="javscript:" data-toggle="modal" th:data-target="'#trackId' + *{id} + 'CommentModal'">
                                     <i class="fa fa-comment-o" aria-hidden="true"></i>
                                 </a>
                             </td>
+
+                            <div th:id="'trackId' + *{id} + 'CommentModal'" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+                                    <!-- Modal content-->
+                                    <div class="modal-content" style="background-color: #313131">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 th:text="'Comment on ' + *{song}" class="modal-title">Modal Header</h4>
+                                        </div>
+                                        <div class="row">
+                                            <div class="modal-body col-sm-8 col-sm-offset-2">
+                                                <form th:id="'editCommentForm' + *{id}" th:action="@{/shows/show/comment}" th:method="post"
+                                                      th:object="${track.trackReviewForm}">
+                                                    <input id="id" type="hidden" name="id" th:value="*{id}"/>
+                                                    <div class="form-group">
+                                                        <div class="col-sm-12">
+                                                            <textarea class="form-control" id="comment"
+                                                                      name="comment" rows="10" th:text="*{comment}">
+                                                            </textarea>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer" style="text-align: center;">
+                                            <button type="submit" class="btn btn-default" th:form="'editCommentForm' + *{trackReviewForm.id}">Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <td class="hidden-xs">
                                 <form th:if="${track.trackReviewForm.id != null}" th:action="@{/shows/show}" th:method="delete">
                                     <input type="hidden" name="reviewId" th:value="${track.trackReviewForm.id}" />
@@ -164,6 +195,33 @@
                 </th:block>
                 </tbody>
             </table>
+
+            <div id="add-comment-modal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content" style="background-color: #313131">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 th:text="'Add set'" class="modal-title">Modal Header</h4>
+                        </div>
+                        <div class="row">
+                            <div class="modal-body col-sm-8 col-sm-offset-2">
+                                <form th:action="@{/admin/add-set}" id="addSetForm"
+                                      name="addSetForm" th:object="${set}" method="post">
+                                    <input type="hidden" th:field="*{showId}"/>
+                                    <div class="form-group">
+                                        <label class="control-label" for="set">Set</label>
+                                        <input placeholder="Set 1" type="text" class="form-control" id="set" th:field="*{name}"/>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="modal-footer" style="text-align: center;">
+                            <button type="submit" class="btn btn-default" form="addSetForm">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <table id="user-reviews" class="table show-set-table">
                 <thead>
