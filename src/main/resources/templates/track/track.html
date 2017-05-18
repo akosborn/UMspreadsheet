@@ -10,6 +10,7 @@
     <title>UMSpreadsheet</title>
 
     <link rel="stylesheet" th:href="@{/css/show.css}" />
+    <link rel="stylesheet" th:href="@{/css/track/track.css}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.7.2/css/bootstrap-slider.min.css" />
 
 </head>
@@ -20,7 +21,7 @@
 
             <div id="most-recent-show-header" th:object="${track}">
                 <h2 id="show-title" th:text="*{song}"></h2>
-                <h2 id="show-rating-and-medal" class="pull-right">
+                <h2 class="pull-right show-rating-and-medal">
                     <i th:if="*{averageRating gt 6.99 and averageRating lt 8}" class="fa fa-trophy" style="color: #CD7F32;" aria-hidden="true"></i>
                     <i th:if="*{averageRating gt 7.99 and averageRating lt 9}" class="fa fa-trophy" style="color: #C0C0C0;" aria-hidden="true"></i>
                     <i th:if="*{averageRating gt 8.99 and averageRating lt 9.5}" class="fa fa-trophy" style="color: #FFD700;" aria-hidden="true"></i>
@@ -29,6 +30,32 @@
                     <span th:if="*{averageRating == null}">No Rating</span>
                 </h2>
                 <h4 th:text="*{#dates.format(show.date, 'yyyy/MM/dd') + ' ' + show.city + ', '  + show.state}" style="margin-top: 3px;">[venue]</h4>
+            </div>
+
+            <br/>
+
+            <div th:each="review : ${reviews}" th:object="${review}" class="comment-div" style="margin-bottom: 20px;">
+                <div class="comment-body-div">
+                    <h3 class="show-rating-and-medal" style="color: #F2C73A; margin-bottom: 5px;">
+                        <i th:if="*{score gt 6.99 and score lt 8}" class="fa fa-trophy" style="color: #CD7F32;" aria-hidden="true"></i>
+                        <i th:if="*{score gt 7.99 and score lt 9}" class="fa fa-trophy" style="color: #C0C0C0;" aria-hidden="true"></i>
+                        <i th:if="*{score gt 8.99 and score lt 9.5}" class="fa fa-trophy" style="color: #FFD700;" aria-hidden="true"></i>
+                        <i th:if="*{score gt 9.49}" class="fa fa-diamond" style="color: #B9F2FF;" aria-hidden="true"></i>
+                        <span th:if="*{score != null}" th:text="*{#numbers.formatDecimal(score, 1, 2)}">[0.00]</span>
+                        <span th:if="*{score == null}">No Rating</span>
+                    </h3>
+
+                    <p th:text="*{comment}">UMSpreadsheet was created to serve as a community-based resource for umphreaks.
+                        This resource allows participants to give a rating to every song over Umphrey's entire career in an
+                        effort to create a rather unique view of the music we love.  The goal is to help people find and listen
+                        to music that they may not have discovered on their own, plain and simple.</p>
+                </div>
+                <div class="comment-footer-div">
+                    <p style="font-size: 10px;">
+                        <a th:href="@{/user/ + *{user.username}}"><span th:text="*{user.username}">[user]</span></a>
+                        <span th:text="'posted ' + *{#dates.format(reviewedOn, 'MMM dd yyyy HH:mm') + ' CST'}"></span>
+                    </p>
+                </div>
             </div>
 
         </div>

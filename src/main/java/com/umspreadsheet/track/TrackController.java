@@ -107,6 +107,7 @@ public class TrackController
     {
         Track retrievedTrack = trackService.findById(id);
         model.addAttribute("track", retrievedTrack);
+        model.addAttribute("reviews", trackReviewService.findByTrack(retrievedTrack));
 
         return "/track/track";
     }

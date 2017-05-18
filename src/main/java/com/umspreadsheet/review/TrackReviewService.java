@@ -48,4 +48,9 @@ public class TrackReviewService
     {
         return trackReviewRepository.findAllByShow(showId);
     }
+
+    public List<TrackReview> findByTrack(Track track)
+    {
+        return trackReviewRepository.findByTrackOrderByReviewedOnDesc(track);
+    }
 }

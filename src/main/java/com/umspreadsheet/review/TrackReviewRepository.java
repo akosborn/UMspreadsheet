@@ -1,6 +1,7 @@
 package com.umspreadsheet.review;
 
 import com.umspreadsheet.show.Show;
+import com.umspreadsheet.track.Track;
 import com.umspreadsheet.user.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -20,4 +21,6 @@ public interface TrackReviewRepository extends CrudRepository<TrackReview, Long>
     List<TrackReview> findAllByShow(@Param("id") Long id);
 
     List<TrackReview> findTop10ByOrderByReviewedOnDesc();
+
+    List<TrackReview> findByTrackOrderByReviewedOnDesc(Track track);
 }

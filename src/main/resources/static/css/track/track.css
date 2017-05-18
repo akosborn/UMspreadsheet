@@ -1,0 +1,38 @@
+.comment-div
+{
+    background: #272D38;
+    padding: 10px;
+}
+
+.comment-div iframe, .comment-div img
+{
+    max-width: 100%;
+}
+
+.comment-header-div
+{
+    border-bottom: solid thick darkgray;
+}
+
+.comment-header-div h3
+{
+    color: #F2C73A;
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.comment-header-div p
+{
+    display: inline-block;
+}
+
+.comment-body-div
+{
+
+}
+
+.show-rating-and-medal
+{
+    margin-top: 0;
+    margin-bottom: 0;
+}
