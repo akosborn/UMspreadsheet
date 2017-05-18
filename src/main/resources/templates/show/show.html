@@ -196,7 +196,7 @@
                 </tbody>
             </table>
 
-            <div id="add-comment-modal" class="modal fade" role="dialog">
+            <div sec:authorize="isAuthenticated()" id="add-comment-modal" class="modal fade" role="dialog">
                 <div class="modal-dialog">
                     <!-- Modal content-->
                     <div class="modal-content" style="background-color: #313131">
