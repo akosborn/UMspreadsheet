@@ -52,7 +52,7 @@
                 </div>
                 <div class="comment-footer-div">
                     <p style="font-size: 10px;">
-                        <a th:href="@{/user/ + *{user.username}}"><span th:text="*{user.username}">[user]</span></a>
+                        <a th:href="@{'/user/' + *{user.username}}"><span th:text="*{user.username}">[user]</span></a>
                         <span th:text="'posted ' + *{#dates.format(reviewedOn, 'MMM dd yyyy HH:mm') + ' CST'}"></span>
                     </p>
                 </div>
