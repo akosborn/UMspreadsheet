@@ -19,11 +19,12 @@ import java.util.*;
 
 public class ATUParser
 {
-    public static void parse(ShowService showService, SetService setService, TrackService trackService) throws ParseException
+    public static void parse(ShowService showService, SetService setService, TrackService trackService,
+                             int maxYear, int minYear) throws ParseException
     {
         try
         {
-            for (int i = 2013; i > 1997; i--)
+            for (int i = maxYear; i >= minYear; i--)
             {
                 Document document = Jsoup.connect("http://allthings.umphreys.com/setlists/" + i + ".html").get();
 
