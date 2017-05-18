@@ -1,6 +1,7 @@
 package com.umspreadsheet.track;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.umspreadsheet.helper.ControllerHelper;
 import com.umspreadsheet.review.TrackReviewForm;
 import com.umspreadsheet.set.Set;
 import com.umspreadsheet.review.TrackReview;
@@ -52,6 +53,9 @@ public class Track
 
     @Transient
     private Long setId;
+
+    @Transient
+    private String slug;
 
     @Transient
     private TrackReviewForm trackReviewForm;
@@ -240,6 +244,11 @@ public class Track
     public void setJam(String jam)
     {
         this.jam = jam;
+    }
+
+    public String getSlug()
+    {
+        return ControllerHelper.toSlug(song) + "-" + ControllerHelper.dateToString(show.getDate());
     }
 
     @Override

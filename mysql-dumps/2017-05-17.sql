@@ -237,7 +237,8 @@ BEGIN
 		WHERE s.id = NEW.show_id;
 	ELSE
 		UPDATE shows s
-			SET s.average_rating = null;
+			SET s.average_rating = null
+            WHERE s.id = NEW.show_id;
 	END IF;
 END */;;
 DELIMITER ;
@@ -265,7 +266,7 @@ CREATE TABLE `track_review` (
   KEY `FKpu91vftyilv80w4a0txyff5w4` (`user_id`),
   CONSTRAINT `FK7dqviea2x4ak2kfu61w0ej81r` FOREIGN KEY (`track_id`) REFERENCES `track` (`id`),
   CONSTRAINT `FKpu91vftyilv80w4a0txyff5w4` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -475,4 +476,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-05-17 21:23:29
+-- Dump completed on 2017-05-18  1:02:05

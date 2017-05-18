@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorator="layouts/site"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>UMSpreadsheet</title>
+
+    <link rel="stylesheet" th:href="@{/css/show.css}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.7.2/css/bootstrap-slider.min.css" />
+
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <div id="#home-container" class="container">
+
+            <div id="most-recent-show-header" th:object="${track}">
+                <h2 id="show-title" th:text="*{song}"></h2>
+                <h2 id="show-rating-and-medal" class="pull-right">
+                    <i th:if="*{averageRating gt 6.99 and averageRating lt 8}" class="fa fa-trophy" style="color: #CD7F32;" aria-hidden="true"></i>
+                    <i th:if="*{averageRating gt 7.99 and averageRating lt 9}" class="fa fa-trophy" style="color: #C0C0C0;" aria-hidden="true"></i>
+                    <i th:if="*{averageRating gt 8.99 and averageRating lt 9.5}" class="fa fa-trophy" style="color: #FFD700;" aria-hidden="true"></i>
+                    <i th:if="*{averageRating gt 9.49}" class="fa fa-diamond" style="color: #B9F2FF;" aria-hidden="true"></i>
+                    <span th:if="*{averageRating != null}" th:text="*{#numbers.formatDecimal(averageRating, 1, 2)}">[0.00]</span>
+                    <span th:if="*{averageRating == null}">No Rating</span>
+                </h2>
+                <h3 th:text="*{#dates.format(show.date, 'yyyy/MM/dd') + ' ' + show.city + ', '  + show.state}" style="margin-top: 3px;">[venue]</h3>
+            </div>
+
+        </div>
+    </div>
+
+    <th:block layout:fragment="script">
+    </th:block>
+</body>
+</html>

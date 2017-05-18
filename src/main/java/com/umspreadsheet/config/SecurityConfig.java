@@ -72,7 +72,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                 .and()
                     .authorizeRequests()
                         .antMatchers("/", "/signin/**", "/signup/**", "/resources/**", "/disconnect/facebook",
-                                "/shows/**", "/songs/**", "/wormblog/**", "/about/**", "/signup-confirm").permitAll()
+                                "/shows/**", "/songs/**", "/wormblog/**", "/about/**", "/signup-confirm", "/song/*/*").permitAll()
                     .antMatchers("/admin").hasRole("MOD_PRIVILEGE")
                     .antMatchers("/admin/manage-users/**").hasRole("MANAGE_USERS_PRIVILEGE")
                     .antMatchers("/**").authenticated()

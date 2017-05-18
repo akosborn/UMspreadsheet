@@ -163,7 +163,7 @@
                     <a class="show-url" th:href="@{/shows/show(showId=*{show.id})}">
                         <h5 th:text="*{#dates.format(show.date, 'yyyy/MM/dd') + ' ' + show.city + ', ' + show.state}">[date, city, st]</h5>
                     </a>
-                    <a th:href="@{/songs/song(songId=*{id})}">
+                    <a th:href="@{'/song/' + *{id} + '/' + *{slug}}">
                         <h4 th:text="*{song}">
                             [song title]
                         </h4>

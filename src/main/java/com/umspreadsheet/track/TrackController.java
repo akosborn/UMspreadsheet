@@ -11,7 +11,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -98,5 +100,14 @@ public class TrackController
         model.addAttribute("trackResults", page.getContent());
 
         return "/track/songSearchResults";
+    }
+
+    @RequestMapping(value = "/song/{id}/{slug}", method = RequestMethod.GET)
+    public String songPage(@PathVariable Long id, Model model)
+    {
+        Track retrievedTrack = trackService.findById(id);
+        model.addAttribute("track", retrievedTrack);
+
+        return "/track/track";
     }
 }
