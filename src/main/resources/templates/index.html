@@ -162,7 +162,6 @@
                                 <span th:if="*{averageRating == null}">No Rating</span>
                             </h4>
                         </div>
-                        <br/>
                         <div class="setlist-div">
                             <h6 th:each="set : *{sets}" th:object="${set}">
                                 <strong th:text="${set.name + ':'}" style="color: #F2C73A;"></strong>
