@@ -227,7 +227,7 @@ UNLOCK TABLES;
 DELIMITER ;;
 /*!50003 CREATE*/ /*!50017 DEFINER=`root`@`localhost`*/ /*!50003 TRIGGER `umspreadsheet-dev`.`track_AFTER_UPDATE` AFTER UPDATE ON `track` FOR EACH ROW
 BEGIN
-	IF ((SELECT COUNT(*) FROM track_review reviews JOIN track tracks ON reviews.track_id = tracks.id WHERE show_id = NEW.show_id) > 2) THEN
+	IF ((SELECT COUNT(*) FROM track t WHERE show_id = NEW.show_id) = (SELECT COUNT(DISTINCT tracks.id) FROM track tracks JOIN track_review reviews ON tracks.id = track_id WHERE show_id = NEW.show_id)) THEN
 		UPDATE shows s
 		SET s.average_rating = (
 			SELECT AVG(track.average_rating)
@@ -266,7 +266,7 @@ CREATE TABLE `track_review` (
   KEY `FKpu91vftyilv80w4a0txyff5w4` (`user_id`),
   CONSTRAINT `FK7dqviea2x4ak2kfu61w0ej81r` FOREIGN KEY (`track_id`) REFERENCES `track` (`id`),
   CONSTRAINT `FKpu91vftyilv80w4a0txyff5w4` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -476,4 +476,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-05-18  1:02:05
+-- Dump completed on 2017-05-18 17:20:32
