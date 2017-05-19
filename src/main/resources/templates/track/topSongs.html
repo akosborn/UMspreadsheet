@@ -152,36 +152,6 @@
                     </div>
                 </div>
             </form>
-
-            <br>
-            <br>
-
-            <h2 class="hidden-xs hidden-sm">Latest Ratings</h2>
-            <br>
-            <table class="hidden-xs hidden-sm" id="reviews-table" style="width: 100%">
-                <th:block th:each="review,iterStat : ${recentReviews}">
-                    <tr>
-                        <td>
-                            <a th:href="@{/user/{user}(user=${review.user.username})}">
-                                <span th:text="${review.user.username}"></span>
-                            </a>
-                        </td>
-                        <td style="text-align: right">
-                            <a th:href="@{'/songs/' + ${review.track.id} + '/' + ${review.track.slug}}">
-                                <span th:text="${review.track.song}"></span>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr th:style="${!iterStat.last}? 'border-bottom: solid darkgray'">
-                        <td></td>
-                        <td style="text-align: right">
-                            <a th:href="@{'/shows/' + ${review.track.show.id} + '/' + *{review.track.show.slug}}">
-                                <span th:text="${review.track.show.date}"></span>
-                            </a>
-                        </td>
-                    </tr>
-                </th:block>
-            </table>
         </div>
 
         <div class="col-md-9 shows-div">

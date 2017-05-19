@@ -150,7 +150,7 @@
                         <span th:if="*{averageRating != null}" th:text="*{#numbers.formatDecimal(averageRating, 1, 2)}">[0.00]</span>
                         <span th:if="*{averageRating == null}">No Rating</span>
                     </h4>
-                    <p class="pull-right" th:text="${show.numberOfReviews} + (${show.numberOfReviews} == 1? ' Review': ' Reviews')"></p>
+                    <p class="pull-right" th:text="${show.numberOfReviews} + (${show.numberOfReviews} == 1? ' Rating': ' Ratings')"></p>
                 </div>
                 <h6 th:each="set : *{sets}" th:object="${set}">
                     <strong th:text="${set.name + ': '}" style="color: #F2C73A;"></strong>
