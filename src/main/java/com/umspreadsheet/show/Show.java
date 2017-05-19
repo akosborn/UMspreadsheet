@@ -1,6 +1,7 @@
 package com.umspreadsheet.show;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.umspreadsheet.helper.ControllerHelper;
 import com.umspreadsheet.set.Set;
 import com.umspreadsheet.model.ShowReview;
 
@@ -40,6 +41,9 @@ public class Show
 
     @Column(columnDefinition = "TEXT")
     private String notes;
+
+    @Transient
+    private String slug;
 
     public Long getId()
     {
@@ -131,7 +135,10 @@ public class Show
         this.notes = notes;
     }
 
-
+    public String getSlug()
+    {
+        return ControllerHelper.toSlug(city) + "-" + ControllerHelper.toSlug(state) + "-" + ControllerHelper.dateToString(date);
+    }
 
     @Override
     public String toString()

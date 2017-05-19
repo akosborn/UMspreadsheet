@@ -84,7 +84,7 @@
             for (i = 0; i < topThreeShows.length; i++)
             {
                 data.addRow([topThreeShows[i].date + ' ' + topThreeShows[i].city + ', ' + topThreeShows[i].state,
-                     window.location.href + '/shows/show?showId=' + [topThreeShows[i].id],
+                     window.location.href + '/shows/' + [topThreeShows[i].id] + '/' + [topThreeShows[i].slug],
                     topThreeShows[i].averageRating,
                     'opacity: 1; color: silver']);
             }
@@ -148,7 +148,7 @@
                     <h2>Latest Shows</h2>
                     <div id="th-most-recent-show" th:each="show : ${lastThreeShows}" th:object="${show}">
                         <div id="most-recent-show-header">
-                            <a th:href="@{/shows/show(showId=*{id})}">
+                            <a th:href="@{'/shows/' + *{id} + '/' + *{slug}}">
                                 <h4 id="show-title" th:text="*{#dates.format(date, 'yyyy/MM/dd') + ' ' + city + ', ' + state}">
                                     2017-02-03 Detroit, MI
                                 </h4>
@@ -171,7 +171,7 @@
                             </h6>
                         </div>
 
-                        <a th:href="@{/shows/show/reviews(showId=*{id})}">
+                        <a th:href="@{/shows/reviews(showId=*{id})}">
                             <h5 th:text="${show.numberOfReviews} + (${show.numberOfReviews} == 1? ' Rating': ' Ratings')"
                                 style="text-align: center; font-weight: bold">
                             </h5>

@@ -160,7 +160,7 @@
                 <div class="show-div" th:each="track,iterStat : ${trackResults}" th:object="${track}">
                     <div class="show-header">
 
-                        <a class="show-url" th:href="@{/shows/show(showId=*{show.id})}">
+                        <a class="show-url" th:href="@{'/shows/' + *{show.id} + '/' + *{show.slug}}">
                             <h5 th:text="*{#dates.format(show.date, 'yyyy/MM/dd') + ' ' + show.city + ', ' + show.state}">[date, city, st]</h5>
                         </a>
                         <a th:href="@{'/song/' + *{id} + '/' + *{slug}}">

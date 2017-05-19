@@ -13,11 +13,13 @@ import com.umspreadsheet.user.SimpleUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -45,12 +47,6 @@ public class ShowController
         this.userService = userService;
     }
 
-    @RequestMapping("/shows/find")
-    public String findShowFilter()
-    {
-        return "redirect:/shows#show-filter";
-    }
-
     // Top-rated shows page
     @RequestMapping("/shows")
     public String topShowsPage(@RequestParam(value = "page", required = false) Integer pageNumber, Model model)
@@ -76,24 +72,24 @@ public class ShowController
     }
 
     // Returns a specified show's page
-    @RequestMapping(value = "/shows/show", params = "showId", method = RequestMethod.GET)
-    public String showPage(@RequestParam(value = "showId") Long showId, Model model) throws
+    @RequestMapping(value = "/shows/{id}/{slug}", method = RequestMethod.GET)
+    public String showPage(@PathVariable Long id, Model model) throws
             DataNotFoundException
     {
         String username = getCurrentUsername();
-        Show show = showService.findById(showId);
+        Show show = showService.findById(id);
 
         if (show == null)
-            throw new DataNotFoundException("Show with id=" + showId + " not found.");
+            throw new DataNotFoundException("Show with id=" + id + " not found.");
 
-        model.addAttribute("show", showService.findById(showId));
+        model.addAttribute("show", showService.findById(id));
 
         SetDTO setDTO = new SetDTO();
-        setDTO.setShowId(showId);
+        setDTO.setShowId(id);
         model.addAttribute("set", setDTO);
 
         Track track = new Track();
-        track.setShowId(showId);
+        track.setShowId(id);
         model.addAttribute("track", track);
 
         List<TrackReview> trackReviews = trackReviewService.findByUserAndShow(show, userService.findByUsername
@@ -121,42 +117,48 @@ public class ShowController
         }
 
         model.addAttribute("trackReviewForms", trackReviewForms);
-        model.addAttribute("allReviews", trackReviewService.getAllByShow(showId));
+        model.addAttribute("allReviews", trackReviewService.getAllByShow(id));
 
         return "/show/show";
     }
 
     // Delete a review
-    @RequestMapping(value = "/shows/show", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/shows/review", method = RequestMethod.DELETE)
     public String deleteTrackReview(@RequestParam("reviewId") Long reviewId,
                                     @RequestParam("showId") Long showId, RedirectAttributes redirectAttributes)
     {
         trackReviewService.delete(reviewId);
 
-        redirectAttributes.addAttribute("showId", showId);
+        Show show = showService.findById(showId);
+        String slug = show.getSlug();
+
         redirectAttributes.addFlashAttribute("reviewDeleted", "true");
 
-        return "redirect:/shows/show";
+        return "redirect:/shows/" + showId + "/" + slug;
     }
 
-    @RequestMapping("/shows/show/reviews")
+    @RequestMapping("/shows/reviews")
     public String jumpToShowReviews(@RequestParam("showId") Long showId, RedirectAttributes redirectAttributes)
     {
         redirectAttributes.addAttribute("showId", showId);
+        String slug = showService.findById(showId).getSlug();
 
-        return "redirect:/shows/show#user-reviews";
+        return "redirect:/shows/" + showId + "/" + slug + "#user-reviews";
     }
 
     @RequestMapping("/shows/random")
     public String randomShow(RedirectAttributes redirectAttributes)
     {
         redirectAttributes.addAttribute("showId", getRandomShow());
+        Long randomShowId = getRandomShow();
+        Show randomShow = showService.findById(randomShowId);
+        String slug = randomShow.getSlug();
 
-        return "redirect:/shows/show";
+        return "redirect:/shows/" + randomShowId + "/" + slug;
     }
 
     // Submit a new review
-    @RequestMapping(value = "/shows/show", method = RequestMethod.POST)
+    @RequestMapping(value = "/shows/review", method = RequestMethod.POST)
     public String saveTrackReview(TrackReviewForm trackReviewForm, RedirectAttributes redirectAttributes)
     {
         TrackReview trackReview = new TrackReview();
@@ -170,14 +172,16 @@ public class ShowController
 
         TrackReview savedTrackReview = trackReviewService.save(trackReview);
 
-        redirectAttributes.addAttribute("showId", savedTrackReview.getTrack().getShow().getId());
+        Long showId = savedTrackReview.getTrack().getShow().getId();
+        String slug = savedTrackReview.getTrack().getShow().getSlug();
+
         redirectAttributes.addFlashAttribute("submitted", "true");
 
-        return "redirect:/shows/show";
+        return "redirect:/shows/" + showId + "/" + slug;
     }
 
     // Submit or update a comment
-    @RequestMapping(value = "/shows/show/comment", method = RequestMethod.POST)
+    @RequestMapping(value = "/shows/comment", method = RequestMethod.POST)
     public String saveComment(TrackReviewForm trackReviewForm, RedirectAttributes redirectAttributes)
     {
         TrackReview retrievedReview = trackReviewService.findById(trackReviewForm.getId());
@@ -185,9 +189,10 @@ public class ShowController
 
         TrackReview savedReview = trackReviewService.save(retrievedReview);
 
-        redirectAttributes.addAttribute("showId", savedReview.getTrack().getShow().getId());
+        Long showId = savedReview.getTrack().getShow().getId();
+        String showSlug = savedReview.getTrack().getSlug();
 
-        return "redirect:/shows/show";
+        return "redirect:/shows/" + showId + "/" + showSlug;
     }
 
     @RequestMapping(value = "/shows/search")
@@ -219,7 +224,14 @@ public class ShowController
         }
 
         Specification<Show> specification = builder.build();
-        Page<Show> page = showService.getShowsByFilter(specification, new PageRequest(pageNumber, PAGE_SIZE));
+        Page<Show> page;
+
+        // Sort the shows by date from newest to oldest if the page is visited via nav bar; otherwise, sort by average rating descending
+        if (year == null && month == null && day == null & rating == null)
+            page = showService.getShowsByFilter(specification, new PageRequest(pageNumber, PAGE_SIZE, Sort.Direction.DESC, "date"));
+        else
+            page = showService.getShowsByFilter(specification, new PageRequest(pageNumber, PAGE_SIZE, Sort.Direction.DESC, "averageRating"));
+
         Integer totalPages = page.getTotalPages();
         List<Show> shows = page.getContent();
         setNumberOfReviews(shows);
@@ -265,9 +277,10 @@ public class ShowController
         return shows;
     }
 
-    private BigInteger getRandomShow()
+    private Long getRandomShow()
     {
         List<BigInteger> idList = showService.findAllShowIds();
-        return idList.get(new Random().nextInt(idList.size()));
+
+        return idList.get(new Random().nextInt(idList.size())).longValue();
     }
 }

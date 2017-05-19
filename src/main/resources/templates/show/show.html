@@ -77,7 +77,7 @@
                             <td th:text="${#numbers.formatDecimal(track.averageRating, 0, 'COMMA', 2, 'POINT')}" class="hidden-xs">[avg rating]</td>
                             <td>
                                 <form th:id="'track' + ${track.id} + 'Form'" th:object="${track.trackReviewForm}"
-                                      th:action="@{/shows/show}" method="post">
+                                      th:action="@{/shows/review}" method="post">
                                     <input type="hidden" th:if="${track.trackReviewForm.id != null}"
                                            th:value="*{id}" th:name="id" th:id="id" />
                                     <input type="hidden" th:value="*{trackId}" th:name="trackId"
@@ -106,7 +106,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="modal-body col-sm-8 col-sm-offset-2">
-                                                <form th:id="'editCommentForm' + *{id}" th:action="@{/shows/show/comment}" th:method="post"
+                                                <form th:id="'editCommentForm' + *{id}" th:action="@{/shows/comment}" th:method="post"
                                                       th:object="${track.trackReviewForm}">
                                                     <input id="id" type="hidden" name="id" th:value="*{id}"/>
                                                     <div class="form-group">
@@ -127,7 +127,7 @@
                             </div>
 
                             <td class="hidden-xs">
-                                <form th:if="${track.trackReviewForm.id != null}" th:action="@{/shows/show}" th:method="delete">
+                                <form th:if="${track.trackReviewForm.id != null}" th:action="@{/shows/review}" th:method="delete">
                                     <input type="hidden" name="reviewId" th:value="${track.trackReviewForm.id}" />
                                     <input type="hidden" name="showId" th:value="${show.id}" />
                                     <button type="submit" class="icon-button">

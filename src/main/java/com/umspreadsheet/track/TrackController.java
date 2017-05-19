@@ -109,7 +109,7 @@ public class TrackController
         return "/track/songSearchResults";
     }
 
-    @RequestMapping(value = "/song/{id}/{slug}", method = RequestMethod.GET)
+    @RequestMapping(value = "/songs/{id}/{slug}", method = RequestMethod.GET)
     public String songPage(@PathVariable Long id, Model model)
     {
         Track retrievedTrack = trackService.findById(id);

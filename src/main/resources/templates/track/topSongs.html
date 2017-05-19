@@ -167,7 +167,7 @@
                             </a>
                         </td>
                         <td style="text-align: right">
-                            <a th:href="@{/songs/song(songId=${review.track.id})}">
+                            <a th:href="@{'/songs/' + ${review.track.id} + '/' + ${review.track.slug}}">
                                 <span th:text="${review.track.song}"></span>
                             </a>
                         </td>
@@ -175,7 +175,7 @@
                     <tr th:style="${!iterStat.last}? 'border-bottom: solid darkgray'">
                         <td></td>
                         <td style="text-align: right">
-                            <a th:href="@{/shows/show(showId=${review.track.show.id})}">
+                            <a th:href="@{'/shows/' + ${review.track.show.id} + '/' + *{review.track.show.slug}}">
                                 <span th:text="${review.track.show.date}"></span>
                             </a>
                         </td>
@@ -188,7 +188,7 @@
             <div class="show-div" th:each="track,iterStat : ${topFortyTracks}" th:object="${track}" th:classappend="${iterStat.first}? 'top-show'">
                 <div class="show-header" th:style="${iterStat.first}? 'border-bottom: none;'">
 
-                    <a class="show-url" th:href="@{/shows/show(showId=*{show.id})}">
+                    <a class="show-url" th:href="@{'/shows/' + *{show.id} + '/' + *{show.slug}}">
                         <h5 th:text="*{#dates.format(show.date, 'yyyy/MM/dd') + ' ' + show.city + ', ' + show.state}" style="margin-bottom: 2px;">[date, city, st]</h5>
                     </a>
                     <a th:href="@{'/song/' + *{id} + '/' + *{slug}}">
