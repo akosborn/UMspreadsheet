@@ -75,6 +75,10 @@ public class User
     @Transient
     private String transientRole;
 
+    private String location;
+    private String favoriteSongs;
+    private String twitterHandle;
+
     public String getTransientRole()
     {
         return transientRole;
@@ -203,6 +207,36 @@ public class User
     public void setIsEnabled(boolean enabled)
     {
         isEnabled = enabled;
+    }
+
+    public String getLocation()
+    {
+        return location;
+    }
+
+    public void setLocation(String location)
+    {
+        this.location = location;
+    }
+
+    public String getFavoriteSongs()
+    {
+        return favoriteSongs;
+    }
+
+    public void setFavoriteSongs(String favoriteSongs)
+    {
+        this.favoriteSongs = favoriteSongs;
+    }
+
+    public String getTwitterHandle()
+    {
+        return twitterHandle;
+    }
+
+    public void setTwitterHandle(String twitterHandle)
+    {
+        this.twitterHandle = twitterHandle;
     }
 
     @Override
