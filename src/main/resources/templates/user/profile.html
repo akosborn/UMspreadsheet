@@ -22,10 +22,10 @@
                 <img th:src="@{/images/default-profile-pic.png}" style="height: 100%;"/>
             </div>
             <div id="bio" class="profile-div dark-div col-md-10">
-                <p>Location: </p>
-                <p>Favorite songs: </p>
+                <p th:if="${user.twitterHandle}">Twitter: <a th:href="@{'http://www.twitter.com/' + ${user.twitterHandle}}" th:text="${'@' + user.twitterHandle}"></a></p>
+                <p>Location: <span th:text="${user.location}"></span></p>
+                <p>Favorite songs: <span th:text="${user.favoriteSongs}"></span></p>
                 <p>Member since: <span th:text="${#dates.format(user.joinedOn, 'dd MMM yyyy')}"></span></p>
-                <a href="http://www.twitter.com/twitter"><p>@username</p></a>
             </div>
         </div>
 
