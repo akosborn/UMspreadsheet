@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorator="layouts/site"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <title>UMspreadsheet</title>
+
+    <link rel="stylesheet" th:href="@{/css/user/profile.css}"/>
+
+</head>
+<body>
+
+<div layout:fragment="content">
+    <div class="container">
+        <h1 id="header-title">UMspreadsheetUser</h1>
+
+        <div class="row">
+            <div class="profile-div dark-div col-md-2" style="text-align: center;">
+                <img th:src="@{/images/default-profile-pic.png}" style="height: 100%;"/>
+            </div>
+            <div id="bio" class="profile-div dark-div col-md-10">
+                <p>Location: </p>
+                <p>Favorite songs: </p>
+                <p>Member since: </p>
+                <a href="http://www.twitter.com/twitter"><p>@username</p></a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="dark-div">
+                <h3>Latest Ratings</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <td>Date</td>
+                            <td>Song</td>
+                            <td>Show</td>
+                            <td>Rating</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>19 May 2017</td>
+                            <td>Dump City</td>
+                            <td>2017/04/29 St. Augustine, FL</td>
+                            <td>8.75</td>
+                        </tr>
+                        <tr>
+                            <td>19 May 2017</td>
+                            <td>Dump City</td>
+                            <td>2017/04/29 St. Augustine, FL</td>
+                            <td>8.75</td>
+                        </tr>
+                        <tr>
+                            <td>19 May 2017</td>
+                            <td>Dump City</td>
+                            <td>2017/04/29 St. Augustine, FL</td>
+                            <td>8.75</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
