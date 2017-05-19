@@ -8,6 +8,7 @@ import com.umspreadsheet.user.SimpleUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -92,7 +93,13 @@ public class TrackController
             builder.with("song", ":", song);
 
         Specification<Track> specification = builder.build();
-        Page<Track> page = trackService.criteriaTest(specification, new PageRequest(pageNumber, 15 ));
+        Page<Track> page;
+
+        // Sort the tracks by date from newest to oldest if the page is visited via nav bar; otherwise, sort by average rating descending
+        if (year == null && month == null && day == null && rating == null && rating == null && type == null && song == null)
+            page = trackService.criteriaTest(specification, new PageRequest(pageNumber, 15, Sort.Direction.DESC, "show.date"));
+        else
+            page = trackService.criteriaTest(specification, new PageRequest(pageNumber, 15, Sort.Direction.DESC, "averageRating"));
         Integer totalPages = page.getTotalPages();
 
         model.addAttribute("totalPages", totalPages);

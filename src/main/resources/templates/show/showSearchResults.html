@@ -200,7 +200,11 @@
             {
                 var pageNumber = anchors[i].getAttribute('href');
                 var baseURL = window.location.href.split("?")[0];
-                anchors[i].setAttribute('href', baseURL + parameters + '&page=' + pageNumber);
+                console.log(parameters);
+                if (parameters && !parameters.includes('page='))
+                    anchors[i].setAttribute('href', baseURL + parameters + '&page=' + pageNumber);
+                else
+                    anchors[i].setAttribute('href', baseURL + '?page=' + pageNumber);
             }
         }
     </script>

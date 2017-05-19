@@ -75,12 +75,6 @@ public class ShowController
         return "/show/topShows";
     }
 
-    @RequestMapping("/songs/find")
-    public String findSongFilter()
-    {
-        return "redirect:/songs#song-filter";
-    }
-
     // Returns a specified show's page
     @RequestMapping(value = "/shows/show", params = "showId", method = RequestMethod.GET)
     public String showPage(@RequestParam(value = "showId") Long showId, Model model) throws

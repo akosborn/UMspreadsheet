@@ -11,199 +11,199 @@
 </head>
 <body>
 
-<div layout:fragment="content">
-    <div class="container">
-        <h1 id="header-title" class="text-center">Song Search Results</h1>
+    <div layout:fragment="content">
+        <div class="container">
+            <h1 id="header-title" class="text-center">Song Search Results</h1>
 
-        <div class="col-md-3 right-div" id="song-filter">
-            <h2>Song Filter</h2>
+            <div class="col-md-3 right-div" id="song-filter">
+                <h2>Song Filter</h2>
 
-            <br>
+                <br>
 
-            <form id="song-filter-form" class="form-horizontal" method="get" th:action="@{/songs/search}"
-                  onsubmit="removeEmptyFormFields()">
+                <form id="song-filter-form" class="form-horizontal" method="get" th:action="@{/songs/search}"
+                      onsubmit="removeEmptyFormFields()">
 
-                <div class="form-group">
-                    <label for="year" class="control-label col-sm-3">Year:</label>
-                    <div class="col-sm-9 col-lg-7">
-                        <select class="form-control" id="year" name="year">
-                            <option value="">--</option>
-                            <option value="2017">2017</option>
-                            <option value="2016">2016</option>
-                            <option value="2015">2015</option>
-                            <option value="2014">2014</option>
-                            <option value="2013">2013</option>
-                            <option value="2012">2012</option>
-                            <option value="2011">2011</option>
-                            <option value="2010">2010</option>
-                            <option value="2009">2009</option>
-                            <option value="2008">2008</option>
-                            <option value="2007">2007</option>
-                            <option value="2006">2006</option>
-                            <option value="2005">2005</option>
-                            <option value="2004">2004</option>
-                            <option value="2003">2003</option>
-                            <option value="2002">2002</option>
-                            <option value="2001">2001</option>
-                            <option value="2000">2000</option>
-                            <option value="1999">1999</option>
-                            <option value="1998">1998</option>
-                        </select>
+                    <div class="form-group">
+                        <label for="year" class="control-label col-sm-3">Year:</label>
+                        <div class="col-sm-9 col-lg-7">
+                            <select class="form-control" id="year" name="year">
+                                <option value="">--</option>
+                                <option value="2017">2017</option>
+                                <option value="2016">2016</option>
+                                <option value="2015">2015</option>
+                                <option value="2014">2014</option>
+                                <option value="2013">2013</option>
+                                <option value="2012">2012</option>
+                                <option value="2011">2011</option>
+                                <option value="2010">2010</option>
+                                <option value="2009">2009</option>
+                                <option value="2008">2008</option>
+                                <option value="2007">2007</option>
+                                <option value="2006">2006</option>
+                                <option value="2005">2005</option>
+                                <option value="2004">2004</option>
+                                <option value="2003">2003</option>
+                                <option value="2002">2002</option>
+                                <option value="2001">2001</option>
+                                <option value="2000">2000</option>
+                                <option value="1999">1999</option>
+                                <option value="1998">1998</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label for="month" class="control-label col-sm-3">Month:</label>
-                    <div class="col-sm-9 col-lg-7">
-                        <select class="form-control" id="month" name="month">
-                            <option value="">--</option>
-                            <option value="1">January</option>
-                            <option value="2">February</option>
-                            <option value="3">March</option>
-                            <option value='4'>April</option>
-                            <option value='5'>May</option>
-                            <option value='6'>June</option>
-                            <option value='7'>July</option>
-                            <option value='8'>August</option>
-                            <option value='9'>September</option>
-                            <option value='10'>October</option>
-                            <option value='11'>November</option>
-                            <option value='12'>December</option>
-                        </select>
+                    <div class="form-group">
+                        <label for="month" class="control-label col-sm-3">Month:</label>
+                        <div class="col-sm-9 col-lg-7">
+                            <select class="form-control" id="month" name="month">
+                                <option value="">--</option>
+                                <option value="1">January</option>
+                                <option value="2">February</option>
+                                <option value="3">March</option>
+                                <option value='4'>April</option>
+                                <option value='5'>May</option>
+                                <option value='6'>June</option>
+                                <option value='7'>July</option>
+                                <option value='8'>August</option>
+                                <option value='9'>September</option>
+                                <option value='10'>October</option>
+                                <option value='11'>November</option>
+                                <option value='12'>December</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label for="day" class="control-label col-sm-3">Day:</label>
-                    <div class="col-sm-9 col-lg-7">
-                        <select class="form-control" id="day" name="day">
-                            <option value="">--</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                            <option value="6">6</option>
-                            <option value="7">7</option>
-                            <option value="8">8</option>
-                            <option value="9">9</option>
-                            <option value="10">10</option>
-                            <option value="11">11</option>
-                            <option value="12">12</option>
-                            <option value="13">13</option>
-                            <option value="14">14</option>
-                            <option value="15">15</option>
-                            <option value="16">16</option>
-                            <option value="17">17</option>
-                            <option value="18">18</option>
-                            <option value="19">19</option>
-                            <option value="20">20</option>
-                            <option value="21">21</option>
-                            <option value="22">22</option>
-                            <option value="23">23</option>
-                            <option value="24">24</option>
-                            <option value="25">25</option>
-                            <option value="26">26</option>
-                            <option value="27">27</option>
-                            <option value="28">28</option>
-                            <option value="29">29</option>
-                            <option value="30">30</option>
-                            <option value="31">31</option>
-                        </select>
+                    <div class="form-group">
+                        <label for="day" class="control-label col-sm-3">Day:</label>
+                        <div class="col-sm-9 col-lg-7">
+                            <select class="form-control" id="day" name="day">
+                                <option value="">--</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="16">16</option>
+                                <option value="17">17</option>
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                                <option value="21">21</option>
+                                <option value="22">22</option>
+                                <option value="23">23</option>
+                                <option value="24">24</option>
+                                <option value="25">25</option>
+                                <option value="26">26</option>
+                                <option value="27">27</option>
+                                <option value="28">28</option>
+                                <option value="29">29</option>
+                                <option value="30">30</option>
+                                <option value="31">31</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label for="rating" class="control-label col-sm-3">Rating:</label>
-                    <div class="col-sm-9 col-lg-7">
-                        <select class="form-control" id="rating" name="rating">
-                            <option value="">--</option>
-                            <option value="diamond">Diamond (above 8.99)</option>
-                            <option value="gold">Gold (8.00 to 8.99)</option>
-                            <option value="silver">Silver (7.00 to 7.99)</option>
-                            <option value="bronze">Bronze (6.00 to 6.99)</option>
-                            <option value="unranked">None (under 6.00)</option>
-                        </select>
+                    <div class="form-group">
+                        <label for="rating" class="control-label col-sm-3">Rating:</label>
+                        <div class="col-sm-9 col-lg-7">
+                            <select class="form-control" id="rating" name="rating">
+                                <option value="">--</option>
+                                <option value="diamond">Diamond (above 8.99)</option>
+                                <option value="gold">Gold (8.00 to 8.99)</option>
+                                <option value="silver">Silver (7.00 to 7.99)</option>
+                                <option value="bronze">Bronze (6.00 to 6.99)</option>
+                                <option value="unranked">None (under 6.00)</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label for="type" class="control-label col-sm-3">Type:</label>
-                    <div class="col-sm-9 col-lg-7">
-                        <select class="form-control" id="type" name="type">
-                            <option value="">--</option>
-                            <option value="jo">Jazz Odyssey</option>
-                            <option value="js">Jimmy Stewart</option>
-                        </select>
+                    <div class="form-group">
+                        <label for="type" class="control-label col-sm-3">Type:</label>
+                        <div class="col-sm-9 col-lg-7">
+                            <select class="form-control" id="type" name="type">
+                                <option value="">--</option>
+                                <option value="jo">Jazz Odyssey</option>
+                                <option value="js">Jimmy Stewart</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <label for="song" class="control-label col-sm-3">Song:</label>
-                    <div class="col-sm-9 col-lg-7">
-                        <input type="text" class="form-control" id="song" name="song" placeholder="Bob" />
+                    <div class="form-group">
+                        <label for="song" class="control-label col-sm-3">Song:</label>
+                        <div class="col-sm-9 col-lg-7">
+                            <input type="text" class="form-control" id="song" name="song" placeholder="Bob" />
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group">
-                    <div class="col-sm-offset-3 col-sm-6">
-                        <button type="submit" class="btn btn-default gray-btn">Search</button>
+                    <div class="form-group">
+                        <div class="col-sm-offset-3 col-sm-6">
+                            <button type="submit" class="btn btn-default gray-btn">Search</button>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
 
-            <br>
-            <br>
-        </div>
+                <br>
+                <br>
+            </div>
 
-        <div class="col-md-9 shows-div">
-            <div class="show-div" th:each="track,iterStat : ${trackResults}" th:object="${track}">
-                <div class="show-header">
+            <div class="col-md-9 shows-div">
+                <div class="show-div" th:each="track,iterStat : ${trackResults}" th:object="${track}">
+                    <div class="show-header">
 
-                    <a class="show-url" th:href="@{/shows/show(showId=*{show.id})}">
-                        <h5 th:text="*{#dates.format(show.date, 'yyyy/MM/dd') + ' ' + show.city + ', ' + show.state}">[date, city, st]</h5>
-                    </a>
-                    <a th:href="@{'/song/' + *{id} + '/' + *{slug}}">
-                        <h4 th:text="*{song}">
-                            [song title]
+                        <a class="show-url" th:href="@{/shows/show(showId=*{show.id})}">
+                            <h5 th:text="*{#dates.format(show.date, 'yyyy/MM/dd') + ' ' + show.city + ', ' + show.state}">[date, city, st]</h5>
+                        </a>
+                        <a th:href="@{'/song/' + *{id} + '/' + *{slug}}">
+                            <h4 th:text="*{song}">
+                                [song title]
+                            </h4>
+                        </a>
+                        <h4 class="show-rating-and-medal pull-right" style="margin-left: 20px;">
+                            <i th:if="*{averageRating gt 5.99 and averageRating lt 7}" class="fa fa-trophy" style="color: #CD7F32;" aria-hidden="true"></i>
+                            <i th:if="*{averageRating gt 6.99 and averageRating lt 8}" class="fa fa-trophy" style="color: #C0C0C0;" aria-hidden="true"></i>
+                            <i th:if="*{averageRating gt 7.99 and averageRating lt 9}" class="fa fa-trophy" style="color: #FFD700;" aria-hidden="true"></i>
+                            <i th:if="*{averageRating gt 8.99}" class="fa fa-diamond" style="color: #B9F2FF;" aria-hidden="true"></i>
+                            <i th:if="*{averageRating lt 6}" class="fa fa-diamond" style="visibility: hidden;" aria-hidden="true"></i>
+                            <span th:if="*{averageRating != null}" th:text="*{#numbers.formatDecimal(averageRating, 1, 2)}">[0.00]</span>
+                            <span th:if="*{averageRating == null}">No Rating</span>
                         </h4>
-                    </a>
-                    <h4 class="show-rating-and-medal pull-right" style="margin-left: 20px;">
-                        <i th:if="*{averageRating gt 5.99 and averageRating lt 7}" class="fa fa-trophy" style="color: #CD7F32;" aria-hidden="true"></i>
-                        <i th:if="*{averageRating gt 6.99 and averageRating lt 8}" class="fa fa-trophy" style="color: #C0C0C0;" aria-hidden="true"></i>
-                        <i th:if="*{averageRating gt 7.99 and averageRating lt 9}" class="fa fa-trophy" style="color: #FFD700;" aria-hidden="true"></i>
-                        <i th:if="*{averageRating gt 8.99}" class="fa fa-diamond" style="color: #B9F2FF;" aria-hidden="true"></i>
-                        <i th:if="*{averageRating lt 6}" class="fa fa-diamond" style="visibility: hidden;" aria-hidden="true"></i>
-                        <span th:if="*{averageRating != null}" th:text="*{#numbers.formatDecimal(averageRating, 1, 2)}">[0.00]</span>
-                        <span th:if="*{averageRating == null}">No Rating</span>
-                    </h4>
-                    <p th:if="*{#lists.size(reviews) > 0}" th:text="*{#lists.size(reviews) + ' Ratings'}" class="pull-right" style="display: inline-block; text-align: center">0 Ratings</p>
+                        <p th:if="*{#lists.size(reviews) > 0}" th:text="*{#lists.size(reviews) + ' Ratings'}" class="pull-right" style="display: inline-block; text-align: center">0 Ratings</p>
+                    </div>
+
                 </div>
+                <div class="container text-center">
+                    <ul class="pagination">
+                        <li th:if="${currentPage > 2}">
+                            <a class="pagination-href" th:href="${1}">&lt;&lt;</a>
+                        </li>
+                        <li th:if="${currentPage > 1}">
+                            <a class="pagination-href" th:href="${currentPage - 1}">&lt;</a>
+                        </li>
+                        <li>
+                            <a class="disabled" th:text="${'Page ' + currentPage + ' of ' + totalPages}">Page 3 of 112</a>
+                        </li>
+                        <li th:if="${currentPage <= (totalPages - 1)}">
+                            <a class="pagination-href" th:href="${currentPage + 1}">&gt;</a>
+                        </li>
+                        <li th:if="${currentPage <= (totalPages - 2)}">
+                            <a class="pagination-href" th:href="${totalPages}">&gt;&gt;</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
 
-            </div>
-            <div class="container text-center">
-                <ul class="pagination">
-                    <li th:if="${currentPage > 2}">
-                        <a class="pagination-href" th:href="${1}">&lt;&lt;</a>
-                    </li>
-                    <li th:if="${currentPage > 1}">
-                        <a class="pagination-href" th:href="${currentPage - 1}">&lt;</a>
-                    </li>
-                    <li>
-                        <a class="disabled" th:text="${'Page ' + currentPage + ' of ' + totalPages}">Page 3 of 112</a>
-                    </li>
-                    <li th:if="${currentPage <= (totalPages - 1)}">
-                        <a class="pagination-href" th:href="${currentPage + 1}">&gt;</a>
-                    </li>
-                    <li th:if="${currentPage <= (totalPages - 2)}">
-                        <a class="pagination-href" th:href="${totalPages}">&gt;&gt;</a>
-                    </li>
-                </ul>
-            </div>
         </div>
-
     </div>
-</div>
 
 <th:block layout:fragment="script">
 
@@ -220,7 +220,10 @@
             {
                 var pageNumber = anchors[i].getAttribute('href');
                 var baseURL = window.location.href.split("?")[0];
-                anchors[i].setAttribute('href', baseURL + parameters + '&page=' + pageNumber);
+                if (parameters && !parameters.includes('page='))
+                    anchors[i].setAttribute('href', baseURL + parameters + '&page=' + pageNumber);
+                else
+                    anchors[i].setAttribute('href', baseURL + '?page=' + pageNumber);
             }
         }
     </script>
