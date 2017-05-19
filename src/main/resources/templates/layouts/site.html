@@ -92,7 +92,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a th:href="@{/profile}">
+                                    <a th:href="@{'/user/' + ${#authentication.getName()}}">
                                         <span class="glyphicon glyphicon-user">&nbsp;</span>Profile
                                     </a>
                                 </li>

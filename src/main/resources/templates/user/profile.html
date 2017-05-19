@@ -15,7 +15,7 @@
 
 <div layout:fragment="content">
     <div class="container">
-        <h1 id="header-title">UMspreadsheetUser</h1>
+        <h1 id="header-title" th:text="${user.username}">[username]</h1>
 
         <div class="row">
             <div class="profile-div dark-div col-md-2" style="text-align: center;">
@@ -24,7 +24,7 @@
             <div id="bio" class="profile-div dark-div col-md-10">
                 <p>Location: </p>
                 <p>Favorite songs: </p>
-                <p>Member since: </p>
+                <p>Member since: <span th:text="${#dates.format(user.joinedOn, 'dd MMM yyyy')}"></span></p>
                 <a href="http://www.twitter.com/twitter"><p>@username</p></a>
             </div>
         </div>
@@ -42,24 +42,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>19 May 2017</td>
-                            <td>Dump City</td>
-                            <td>2017/04/29 St. Augustine, FL</td>
-                            <td>8.75</td>
-                        </tr>
-                        <tr>
-                            <td>19 May 2017</td>
-                            <td>Dump City</td>
-                            <td>2017/04/29 St. Augustine, FL</td>
-                            <td>8.75</td>
-                        </tr>
-                        <tr>
-                            <td>19 May 2017</td>
-                            <td>Dump City</td>
-                            <td>2017/04/29 St. Augustine, FL</td>
-                            <td>8.75</td>
-                        </tr>
+                        <th:block th:each="review, iterStat : ${user.trackReviews}" th:if="${iterStat.index < 8}">
+                            <tr>
+                                <td th:text="${#dates.format(review.reviewedOn, 'dd MMM yyyy')}"></td>
+                                <td th:text="${review.track.song}"></td>
+                                <td th:text="${#dates.format(review.track.show.date, 'yyyy/MM/dd') + ' ' + review.track.show.city + ', ' + review.track.show.state}"></td>
+                                <td th:text="${review.score}"></td>
+                            </tr>
+                        </th:block>
                     </tbody>
                 </table>
             </div>
