@@ -16,6 +16,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.math.BigInteger;
+import java.util.List;
+import java.util.Random;
 
 @Controller
 public class TrackController
@@ -117,5 +122,22 @@ public class TrackController
         model.addAttribute("reviews", trackReviewService.findByTrack(retrievedTrack));
 
         return "/track/track";
+    }
+
+    @RequestMapping("/songs/random")
+    public String randomShow()
+    {
+        Long randomTrackId = getRandomTrack();
+        Track randomTrack = trackService.findById(randomTrackId);
+        String slug = randomTrack.getSlug();
+
+        return "redirect:/songs/" + randomTrackId + "/" + slug;
+    }
+
+    private Long getRandomTrack()
+    {
+        List<BigInteger> idList = trackService.findAllIds();
+
+        return idList.get(new Random().nextInt(idList.size())).longValue();
     }
 }

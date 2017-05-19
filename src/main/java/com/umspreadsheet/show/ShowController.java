@@ -147,9 +147,8 @@ public class ShowController
     }
 
     @RequestMapping("/shows/random")
-    public String randomShow(RedirectAttributes redirectAttributes)
+    public String randomShow()
     {
-        redirectAttributes.addAttribute("showId", getRandomShow());
         Long randomShowId = getRandomShow();
         Show randomShow = showService.findById(randomShowId);
         String slug = randomShow.getSlug();

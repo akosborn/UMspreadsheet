@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.util.List;
 
 @Service
@@ -49,5 +50,10 @@ public class TrackService
     public List<Track> getByShow(Show show)
     {
         return trackRepository.findByShow(show);
+    }
+
+    public List<BigInteger> findAllIds()
+    {
+        return trackRepository.findAllIds();
     }
 }
