@@ -26,6 +26,48 @@
                 <p>Location: <span th:text="${user.location}"></span></p>
                 <p>Favorite songs: <span th:text="${user.favoriteSongs}"></span></p>
                 <p>Member since: <span th:text="${#dates.format(user.joinedOn, 'dd MMM yyyy')}"></span></p>
+                <p th:if="${#authentication.getName() == user.username}">
+                    <a href="javascript:" data-toggle="modal" data-target="#edit-profile-modal">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                </p>
+
+                <div id="edit-profile-modal" th:if="${#authentication.getName() == user.username}" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <div class="modal-content" style="background-color: #313131">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4>Update profile</h4>
+                            </div>
+                            <div class="row">
+                                <div class="modal-body col-sm-8 col-sm-offset-2">
+                                    <form th:action="@{/user/profile}" id="edit-profile-form"
+                                          name="edit-profile-form" th:object="${user}" method="post">
+                                        <input type="hidden" th:field="*{username}"/>
+                                        <div class="form-group">
+                                            <label class="control-label" for="twitterHandle">Twitter handle</label>
+                                            <input th:placeholder="${#authentication.getName()}" type="text" class="form-control" id="twitterHandle"
+                                                   th:field="*{twitterHandle}"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label" for="twitterHandle">Location</label>
+                                            <input placeholder="Omaha, NE" type="text" class="form-control" id="location"
+                                                   th:field="*{location}"/>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label" for="favoriteSongs">Favorite songs</label>
+                                            <input placeholder="Bob, Forks" type="text" class="form-control" id="favoriteSongs"
+                                                   th:field="*{favoriteSongs}"/>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer" style="text-align: center;">
+                                <button type="submit" class="btn btn-default" form="edit-profile-form">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
