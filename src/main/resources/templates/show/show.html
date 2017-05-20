@@ -247,7 +247,9 @@
                     <tr th:each="review : ${reviews}" th:object="${review}">
                         <td><a th:href="@{'/user/' + *{user.username}}" th:text="*{user.username}">[user]</a></td>
                         <td th:text="${#dates.format(review.reviewedOn, 'dd MMM yyyy')}"></td>
-                        <td th:text="*{track.song}">[song]</td>
+                        <td>
+                            <a th:href="@{'/songs/' + ${review.track.id} + '/' + ${review.track.slug}}" th:text="${review.track.song}">[song]</a>
+                        </td>
                         <td th:text="*{score}">[rating]</td>
                         <td style="max-width: 650px;">
                             <span th:if="*{comment}" th:text="*{comment}">[comments]</span>
