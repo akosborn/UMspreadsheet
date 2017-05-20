@@ -108,7 +108,7 @@ public class TrackController
         Page<Track> page;
 
         // Sort the tracks by date from newest to oldest if the page is visited via nav bar; otherwise, sort by average rating descending
-        if (year == null && month == null && day == null && rating == null && rating == null && type == null && song == null)
+        if (year == null && month == null && day == null && rating == null && jam == null && type == null && song == null)
             page = trackService.criteriaTest(specification, new PageRequest(pageNumber, 15, Sort.Direction.DESC, "show.date"));
         else
             page = trackService.criteriaTest(specification, new PageRequest(pageNumber, 15, Sort.Direction.DESC, "averageRating"));
