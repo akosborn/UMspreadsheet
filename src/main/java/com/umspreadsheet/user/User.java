@@ -89,6 +89,8 @@ public class User
     @Length(max = 15)
     private String twitterHandle;
 
+    private String avatarUrl;
+
     public String getTransientRole()
     {
         return transientRole;
@@ -247,6 +249,16 @@ public class User
     public void setTwitterHandle(String twitterHandle)
     {
         this.twitterHandle = twitterHandle;
+    }
+
+    public String getAvatarUrl()
+    {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl)
+    {
+        this.avatarUrl = avatarUrl;
     }
 
     @Override

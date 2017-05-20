@@ -1,23 +1,38 @@
 package com.umspreadsheet.user;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.Transformation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.MessageSource;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.thymeleaf.util.ObjectUtils;
 
+import javax.inject.Singleton;
 import javax.validation.Valid;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.security.Principal;
+import java.util.Map;
 
 
 @Controller
 public class UserController
 {
     private SimpleUserService userService;
+
+    @Value("${CLOUDINARY_URL}")
+    String cloudinaryCredentials;
 
     @Autowired
     public UserController(SimpleUserService userService)
@@ -68,5 +83,48 @@ public class UserController
         User savedUser = userService.save(retrievedUser);
 
         return "redirect:/user/" + username;
+    }
+
+    @RequestMapping(value = "/user/{username}/avatar", method = RequestMethod.POST)
+    public String uploadAvatar(@RequestParam("file")MultipartFile multipartFile,
+                               @PathVariable String username,
+                               RedirectAttributes redirectAttributes)
+    {
+        Cloudinary cloudinary = new Cloudinary(cloudinaryCredentials);
+
+        User retrievedUser = userService.findByUsername(username);
+
+        try
+        {
+            Map uploadResult = cloudinary.uploader().upload(convertToFile(multipartFile), com.cloudinary.utils.ObjectUtils.asMap(
+                    "transformation", new Transformation().crop("limit").width(130).height(130)
+            ));
+
+            // Delete old avatar if there is one
+            if (retrievedUser.getAvatarUrl() != null)
+                cloudinary.uploader().destroy(retrievedUser.getAvatarUrl(), com.cloudinary.utils.ObjectUtils.emptyMap());
+
+            retrievedUser.setAvatarUrl(uploadResult.get("public_id").toString());
+
+            User savedUser = userService.save(retrievedUser);
+        } catch (IOException e)
+        {
+            e.printStackTrace();
+
+            redirectAttributes.addFlashAttribute("uploadFailed", "Avatar upload failed.");
+        }
+
+        return "redirect:/user/" + username;
+    }
+
+    public File convertToFile(MultipartFile file) throws IOException
+    {
+        File convFile = new File(file.getOriginalFilename());
+//        convFile.createNewFile();
+        FileOutputStream fos = new FileOutputStream(convFile);
+        fos.write(file.getBytes());
+        fos.close();
+
+        return convFile;
     }
 }
