@@ -80,6 +80,14 @@ SHOW HEADER
     display: inline;
 }
 
+@media (max-width: 767px)
+{
+    #most-recent-show-header
+    {
+        text-align: center;
+    }
+}
+
 .fa-trophy,
 .fa-diamond
 {
@@ -90,6 +98,14 @@ SHOW HEADER
 {
     margin-top: 0;
     margin-bottom: 0;
+}
+
+@media (min-width: 768px)
+{
+    #show-rating-and-medal
+    {
+        float: right;
+    }
 }
 
 [id*="track"] span
