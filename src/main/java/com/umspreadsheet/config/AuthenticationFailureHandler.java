@@ -1,6 +1,7 @@
 package com.umspreadsheet.config;
 
 import org.springframework.security.authentication.DisabledException;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.stereotype.Component;
@@ -19,6 +20,8 @@ public class AuthenticationFailureHandler extends SimpleUrlAuthenticationFailure
     {
         if (exception instanceof DisabledException)
             setDefaultFailureUrl("/signin?error=disabled");
+        else if (exception instanceof LockedException)
+            setDefaultFailureUrl("/signin?error=locked");
         else
             setDefaultFailureUrl("/signin?error=bad_credentials");
 

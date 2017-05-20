@@ -72,9 +72,8 @@ public class SimpleUserService implements UserService
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
     {
-        boolean accountNonExpired = true;
-        boolean credentialsNonExpired = true;
-        boolean accountNonLocked = true;
+        final boolean accountNonExpired = true;
+        final boolean credentialsNonExpired = true;
 
         try
         {
@@ -90,7 +89,7 @@ public class SimpleUserService implements UserService
                     user.getIsEnabled(),
                     accountNonExpired,
                     credentialsNonExpired,
-                    user.getIsNotSuspended() || user.getIsNotBanned(),
+                    user.getIsNotSuspended() && user.getIsNotBanned(),
                     getAuthorities(user.getRoles()));
         } catch (Exception ex)
         {

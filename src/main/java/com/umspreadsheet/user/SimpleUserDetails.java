@@ -50,7 +50,7 @@ public class SimpleUserDetails implements UserDetails
     @Override
     public boolean isAccountNonLocked()
     {
-        return user.getIsNotSuspended() | user.getIsNotBanned();
+        return user.getIsNotSuspended() && user.getIsNotBanned();
     }
 
     @Override

@@ -14,6 +14,7 @@ import com.umspreadsheet.track.Track;
 import com.umspreadsheet.track.TrackService;
 import com.umspreadsheet.user.SimpleUserService;
 import com.umspreadsheet.user.User;
+import com.umspreadsheet.utils.SessionUtils;
 import com.umspreadsheet.wormblog.WormBlogPost;
 import com.umspreadsheet.wormblog.WormBlogService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,11 +44,13 @@ public class AdminController
     private SetService setService;
     private WormBlogService wormBlogService;
     private RoleService roleService;
+    private SessionUtils sessionUtils;
 
     @Autowired
     public AdminController(ShowService showService, TrackService trackService,
                            TrackReviewService trackReviewService, SimpleUserService userService,
-                           SetService setService, WormBlogService wormBlogService, RoleService roleService)
+                           SetService setService, WormBlogService wormBlogService, RoleService roleService,
+                           SessionUtils sessionUtils)
     {
         this.showService = showService;
         this.trackService = trackService;
@@ -56,6 +59,7 @@ public class AdminController
         this.setService = setService;
         this.wormBlogService = wormBlogService;
         this.roleService = roleService;
+        this.sessionUtils = sessionUtils;
     }
 
     @RequestMapping("")
@@ -223,13 +227,19 @@ public class AdminController
 
     // Deletes a WormBlog post
     @RequestMapping(value = "/manage-users", method = RequestMethod.PUT)
-    public String suspendUser(User user, Model model)
+    public String toggleUserSuspended(User user)
     {
         User retrievedUser = userService.findByUsername(user.getUsername());
 
-        // Suspend and update the user
-        retrievedUser.setIsNotSuspended(false);
+        // Check if user is to be suspended or relieved of suspension
+        if (retrievedUser.getIsNotSuspended())
+            retrievedUser.setIsNotSuspended(false);
+        else
+            retrievedUser.setIsNotSuspended(true);
+
         userService.save(retrievedUser);
+
+        sessionUtils.expireUserSessions(retrievedUser.getUsername());
 
         return "redirect:/admin/manage-users";
     }
@@ -242,6 +252,9 @@ public class AdminController
         user.setRoles(new ArrayList<>(Arrays.asList(role)));
 
         userService.save(user);
+
+        // Log the user out after its roles have been updated
+        sessionUtils.expireUserSessions(userForm.getUsername());
 
         return "redirect:/admin/manage-users";
     }

@@ -38,12 +38,15 @@
                                     <i th:if="*{isEnabled}" class="fa fa-check" aria-hidden="true" style="color: green"></i>
                                 </td>
                                 <td style="text-align: center">
-                                    <form th:if="${user.isNotSuspended && user.isNotBanned}" th:action="@{/admin/manage-users}"
+                                    <form th:action="@{/admin/manage-users}"
                                           th:method="put">
                                         <input type="hidden" name="username" th:value="${user.username}" />
                                         <button type="submit" class="icon-button"
-                                                onclick="return confirm('Suspend this user indefinitely?');">
-                                            <i class="fa fa-pause" aria-hidden="true" style="color: #B33A3A"></i>
+                                                onclick="return confirm('Are you sure?');">
+                                            <i th:if="${user.isNotSuspended && user.isNotBanned}" class="fa fa-pause"
+                                               aria-hidden="true" style="color: #B33A3A"></i>
+                                            <i th:if="${!(user.isNotSuspended && user.isNotBanned)}" class="fa fa-play"
+                                               aria-hidden="true" style="color: green"></i>
                                         </button>
                                     </form>
                                 </td>

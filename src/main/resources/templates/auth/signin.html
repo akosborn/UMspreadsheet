@@ -16,7 +16,7 @@
         <th:block class="container">
 
             <form name="f" th:action="@{/signin/authenticate}" method="post" class="form-signin">
-                <h2 class="form-signin-heading">Login to UMSpreadsheet</h2>
+                <h2 class="form-signin-heading">Login to UMspreadsheet</h2>
 
                 <div th:if="${successMessages}" class="alert alert-success" role="alert">
                     <p th:each="message : ${successMessages}" th:text="${message}">
@@ -31,6 +31,10 @@
 
                     <div th:if="${param.error[0] == 'bad_credentials'}" class="alert alert-danger">
                         Invalid username or password.
+                    </div>
+
+                    <div th:if="${param.error[0] == 'locked'}" class="alert alert-danger">
+                        Account has been suspended.
                     </div>
                 </th:block>
 
