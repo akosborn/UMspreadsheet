@@ -95,11 +95,16 @@
                             <th:block th:each="review, iterStat : ${user.trackReviews}" th:if="${iterStat.index < 8}">
                                 <tr>
                                     <td th:text="${#dates.format(review.reviewedOn, 'dd MMM yyyy')}"></td>
-                                    <td th:text="${review.track.song}"></td>
-                                    <td th:text="${#dates.format(review.track.show.date, 'yyyy/MM/dd') + ' ' + review.track.show.city + ', ' + review.track.show.state}"></td>
-                                    <td th:text="${review.score}"></td>
                                     <td>
-                                        <span th:if="${review.comments}" th:text="${#strings.abbreviate(review.comments, 50)}"></span>
+                                        <a th:text="${review.track.song}" th:href="@{'/songs/' + ${review.track.id} + '/' + ${review.track.slug}}"></a>
+                                    </td>
+                                    <td>
+                                        <a th:text="${#dates.format(review.track.show.date, 'yyyy/MM/dd') + ' ' + review.track.show.city + ', ' + review.track.show.state}"
+                                           th:href="@{'/shows/' + ${review.track.show.id} + '/' + ${review.track.show.slug}}"></a>
+                                    </td>
+                                    <td th:text="${review.score}"></td>
+                                    <td style="max-width: 650px;">
+                                        <span th:if="${review.comment}" th:text="${review.comment}"></span>
                                     </td>
                                 </tr>
                             </th:block>

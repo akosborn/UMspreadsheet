@@ -46,7 +46,7 @@
                         <th class="hidden-xs hidden-sm" style="width: 275px">JAM</th>
                         <th class="hidden-xs" style="width: 175px;">COMMUNITY RATING</th>
                         <th data-priority="2" style="min-width: 242px;">MY RATING</th>
-                        <th class="hidden-xs hidden-sm">COMMENTS</th>
+                        <th class="hidden-xs hidden-sm"></th>
                         <th class="hidden-xs text-center"></th>
                     </tr>
                 </thead>
@@ -60,9 +60,11 @@
                         <!--loop through tracks-->
                         <tr th:each="track, i : *{tracks}" th:object="${track}">
                             <td>
-                                <span th:text="*{song}">[song name]</span>
-                                <span th:if="${track.segue}"> > </span>
-                                <span th:if="${track.fluidSegue}">&nbsp;->&nbsp;</span>
+                                <a th:href="@{'/songs/' + ${track.id} + '/' + ${track.slug}}">
+                                    <span th:text="*{song}">[song name]</span>
+                                    <span th:if="${track.segue}"> > </span>
+                                    <span th:if="${track.fluidSegue}">&nbsp;->&nbsp;</span>
+                                </a>
                             </td>
 
                             <td th:if="*{length > 60 && ((length % 60) > 9)}" th:text="*{length / 60} + ':' + *{length % 60}"
@@ -93,7 +95,9 @@
                             </td>
                             <td class="hidden-xs hidden-sm" style="text-align: center;">
                                 <a th:if="*{trackReviewForm.id != null}" href="javscript:" data-toggle="modal" th:data-target="'#trackId' + *{id} + 'CommentModal'">
-                                    <i class="fa fa-comment-o" aria-hidden="true"></i>
+                                    <i th:if="*{trackReviewForm.comment == null}" class="fa fa-comment-o" aria-hidden="true"></i>
+                                    <i th:if="*{trackReviewForm.comment != null}" class="fa fa-comment-o" aria-hidden="true"
+                                       style="color: yellow;"></i>
                                 </a>
                             </td>
 
@@ -164,9 +168,11 @@
                     <!--loop through tracks-->
                     <tr th:each="track, i : *{tracks}" th:object="${track}">
                         <td>
-                            <span th:text="*{song}">[song name]</span>
-                            <span th:if="${track.segue and !i.last}"> > </span>
-                            <span th:if="${track.fluidSegue}">&nbsp;->&nbsp;</span>
+                            <a th:href="@{'/songs/' + ${track.id} + '/' + ${track.slug}}">
+                                <span th:text="*{song}">[song name]</span>
+                                <span th:if="${track.segue and !i.last}"> > </span>
+                                <span th:if="${track.fluidSegue}">&nbsp;->&nbsp;</span>
+                            </a>
                         </td>
 
                         <td th:if="*{length > 60 && ((length % 60) > 9)}" th:text="*{length / 60} + ':' + *{length % 60}" class="hidden-xs hidden-sm text-right">[length]</td>
@@ -230,19 +236,21 @@
             <table id="user-reviews" class="table show-set-table">
                 <thead>
                     <tr>
-                        <th>User</th>
-                        <th>Song</th>
-                        <th>Rating</th>
-                        <th>Comments</th>
+                        <th data-priority="1">User</th>
+                        <th data-priority="2">Date</th>
+                        <th data-priority="3">Song</th>
+                        <th data-priority="4">Rating</th>
+                        <th style="max-width: 650px;" data-priority="5">Comments</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:each="review : ${reviews}" th:object="${review}">
                         <td><a th:href="@{'/user/' + *{user.username}}" th:text="*{user.username}">[user]</a></td>
+                        <td th:text="${#dates.format(review.reviewedOn, 'dd MMM yyyy')}"></td>
                         <td th:text="*{track.song}">[song]</td>
                         <td th:text="*{score}">[rating]</td>
-                        <td>
-                            <span th:if="*{comment}" th:text="*{#strings.abbreviate(comment, 100)}">[comments]</span>
+                        <td style="max-width: 650px;">
+                            <span th:if="*{comment}" th:text="*{comment}">[comments]</span>
                         </td>
                     </tr>
                 </tbody>
