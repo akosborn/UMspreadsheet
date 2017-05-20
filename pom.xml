@@ -104,6 +104,12 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.cloudinary/cloudinary-http44 -->
+		<dependency>
+			<groupId>com.cloudinary</groupId>
+			<artifactId>cloudinary-http44</artifactId>
+			<version>1.12.0</version>
+		</dependency>
 
 		<!-- WEBJARS -->
 		<!-- https://mvnrepository.com/artifact/org.webjars/bootstrap -->
