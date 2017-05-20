@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.umspreadsheet.role.Role;
 import com.umspreadsheet.model.ShowReview;
 import com.umspreadsheet.review.TrackReview;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.SafeHtml;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -75,8 +77,16 @@ public class User
     @Transient
     private String transientRole;
 
+    @SafeHtml
+    @Length(max = 100)
     private String location;
+
+    @SafeHtml
+    @Length(max = 100)
     private String favoriteSongs;
+
+    @SafeHtml
+    @Length(max = 15)
     private String twitterHandle;
 
     public String getTransientRole()
