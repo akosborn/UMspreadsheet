@@ -1,0 +1,38 @@
+spring:
+  application:
+    name: umspreadsheet
+  datasource:
+    url: jdbc:mysql://localhost/*********?autoReconnect=true&useSSL=false
+    username: *********
+    password: O*********
+  jpa:
+    hibernate:
+      ddl-auto: update
+    Show-sql: false
+  thymeleaf:
+    cache: false
+  social:
+      facebook:
+        app-id: *********
+        app-secret: *********
+      twitter:
+        app-id: *********
+        app-secret: *********
+      google:
+        app-id: *********
+        app-secret: *********
+  mail:
+    host: smtp.gmail.com
+    username: *********
+    password: *********
+    port: 587
+    properties:
+        mail:
+            smtp:
+                starttls:
+                    enable: true
+    test-connection: true
+
+debug: false
+
+CLOUDINARY_URL: *********
