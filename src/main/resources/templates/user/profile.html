@@ -88,6 +88,7 @@
                                 <td>Song</td>
                                 <td>Show</td>
                                 <td>Rating</td>
+                                <td>Comments</td>
                             </tr>
                         </thead>
                         <tbody>
@@ -97,6 +98,9 @@
                                     <td th:text="${review.track.song}"></td>
                                     <td th:text="${#dates.format(review.track.show.date, 'yyyy/MM/dd') + ' ' + review.track.show.city + ', ' + review.track.show.state}"></td>
                                     <td th:text="${review.score}"></td>
+                                    <td>
+                                        <span th:if="${review.comments}" th:text="${#strings.abbreviate(review.comments, 50)}"></span>
+                                    </td>
                                 </tr>
                             </th:block>
                         </tbody>

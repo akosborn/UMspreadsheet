@@ -223,19 +223,26 @@
                 </div>
             </div>
 
+            <br/>
+
+            <h2>Latest Ratings</h2>
             <table id="user-reviews" class="table show-set-table">
                 <thead>
                     <tr>
-                        <th>USER</th>
-                        <th>SONG</th>
-                        <th>RATING</th>
+                        <th>User</th>
+                        <th>Song</th>
+                        <th>Rating</th>
+                        <th>Comments</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:each="review : ${reviews}" th:object="${review}">
-                        <td th:text="*{user.username}">[user]</td>
+                        <td><a th:href="@{'/user/' + *{user.username}}" th:text="*{user.username}">[user]</a></td>
                         <td th:text="*{track.song}">[song]</td>
                         <td th:text="*{score}">[rating]</td>
+                        <td>
+                            <span th:if="*{comment}" th:text="*{#strings.abbreviate(comment, 100)}">[comments]</span>
+                        </td>
                     </tr>
                 </tbody>
             </table>
