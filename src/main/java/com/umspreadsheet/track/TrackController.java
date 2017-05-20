@@ -71,6 +71,7 @@ public class TrackController
                                    @RequestParam(value = "day", required = false) String day,
                                    @RequestParam(value = "rating", required = false) String rating,
                                    @RequestParam(value = "type", required = false) String type,
+                                   @RequestParam(value = "jam", required = false) String jam,
                                    @RequestParam(value = "song", required = false) String song,
                                    Model model)
     {
@@ -93,6 +94,12 @@ public class TrackController
         {
             ControllerHelper.addRatingConstraints(rating, builder);
         }
+
+        if (type != null)
+            builder.with("type", ":", type);
+
+        if (jam != null)
+            builder.with("jam", ":", jam);
 
         if (song != null)
             builder.with("song", ":", song);

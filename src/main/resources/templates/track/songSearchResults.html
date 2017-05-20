@@ -132,8 +132,32 @@
                         <div class="col-sm-9 col-lg-7">
                             <select class="form-control" id="type" name="type">
                                 <option value="">--</option>
-                                <option value="jo">Jazz Odyssey</option>
-                                <option value="js">Jimmy Stewart</option>
+                                <option value="JS">Jimmy Stewart</option>
+                                <option value="LS">Lyrical Stew</option>
+                                <option value="C">Cover</option>
+                                <option value="M">Mashup</option>
+                                <option value="N">New song</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="jam" class="control-label col-sm-3">Jam:</label>
+                        <div class="col-sm-9 col-lg-7">
+                            <select class="form-control" id="jam" name="jam">
+                                <option value="">--</option>
+                                <option value="Bliss">Bliss</option>
+                                <option value="Dance">Dance</option>
+                                <option value="Dark">Dark</option>
+                                <option value="Emotional">Emotional</option>
+                                <option value="Funk">Funk</option>
+                                <option value="Industrial">Industrial</option>
+                                <option value="Jazz">Jazz</option>
+                                <option value="Metal">Metal</option>
+                                <option value="Prog">Prog</option>
+                                <option value="Reggae">Reggae</option>
+                                <option value="Rock">Rock</option>
+                                <option value="Soaring">Soaring</option>
                             </select>
                         </div>
                     </div>
@@ -163,7 +187,7 @@
                         <a class="show-url" th:href="@{'/shows/' + *{show.id} + '/' + *{show.slug}}">
                             <h5 th:text="*{#dates.format(show.date, 'yyyy/MM/dd') + ' ' + show.city + ', ' + show.state}">[date, city, st]</h5>
                         </a>
-                        <a th:href="@{'/song/' + *{id} + '/' + *{slug}}">
+                        <a th:href="@{'/songs/' + *{id} + '/' + *{slug}}">
                             <h4 th:text="*{song}">
                                 [song title]
                             </h4>
@@ -237,6 +261,7 @@
                 document.getElementById("day"),
                 document.getElementById("rating"),
                 document.getElementById("type"),
+                document.getElementById("jam"),
                 document.getElementById("song")];
 
             for (var field of fieldList)
