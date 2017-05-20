@@ -27,15 +27,13 @@ public class TrackController
 {
     private TrackService trackService;
     private TrackReviewService trackReviewService;
-    private SimpleUserService userService;
 
     @Autowired
     public TrackController(TrackService trackService,
-                           TrackReviewService trackReviewService, SimpleUserService userService)
+                           TrackReviewService trackReviewService)
     {
         this.trackService = trackService;
         this.trackReviewService = trackReviewService;
-        this.userService = userService;
     }
 
     // Top-rated songs page
