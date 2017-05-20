@@ -117,7 +117,7 @@ public class ShowController
         }
 
         model.addAttribute("trackReviewForms", trackReviewForms);
-        model.addAttribute("allReviews", trackReviewService.getAllByShow(id));
+        model.addAttribute("reviews", trackReviewService.getAllByShow(show));
 
         return "/show/show";
     }

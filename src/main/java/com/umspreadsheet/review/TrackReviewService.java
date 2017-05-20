@@ -44,9 +44,9 @@ public class TrackReviewService
         return trackReviewRepository.findTop10ByOrderByReviewedOnDesc();
     }
 
-    public List<TrackReview> getAllByShow(Long showId)
+    public List<TrackReview> getAllByShow(Show show)
     {
-        return trackReviewRepository.findAllByShow(showId);
+        return trackReviewRepository.findTop20ByTrackShowOrderByReviewedOnDesc(show);
     }
 
     public List<TrackReview> findByTrack(Track track)

@@ -17,8 +17,7 @@ public interface TrackReviewRepository extends CrudRepository<TrackReview, Long>
             "review.user = (:user)")
     List<TrackReview> findAllByUserAndShow(@Param("show")Show show, @Param("user")User user);
 
-    @Query("select review from TrackReview review join review.track track where track.show.id = (:id) order by track.show.date desc")
-    List<TrackReview> findAllByShow(@Param("id") Long id);
+    List<TrackReview> findTop20ByTrackShowOrderByReviewedOnDesc(Show show);
 
     List<TrackReview> findTop10ByOrderByReviewedOnDesc();
 

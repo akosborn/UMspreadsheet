@@ -232,7 +232,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="review : ${allReviews}" th:object="${review}">
+                    <tr th:each="review : ${reviews}" th:object="${review}">
                         <td th:text="*{user.username}">[user]</td>
                         <td th:text="*{track.song}">[song]</td>
                         <td th:text="*{score}">[rating]</td>
