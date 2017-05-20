@@ -117,10 +117,9 @@ public class UserController
         return "redirect:/user/" + username;
     }
 
-    public File convertToFile(MultipartFile file) throws IOException
+    private File convertToFile(MultipartFile file) throws IOException
     {
         File convFile = new File(file.getOriginalFilename());
-//        convFile.createNewFile();
         FileOutputStream fos = new FileOutputStream(convFile);
         fos.write(file.getBytes());
         fos.close();
