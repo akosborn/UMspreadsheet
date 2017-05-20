@@ -44,7 +44,7 @@ form .icon-button
 .slider-handle
 {
     background-image: none !important;
-    background-color: #2E3542 !important;
+    /*background-color: #F2C73A !important;*/
 }
 
 [id*="SliderLabel"]
