@@ -1,6 +1,7 @@
 package com.umspreadsheet.auth;
 
 import com.umspreadsheet.signin.UserSecurityService;
+import com.umspreadsheet.user.PasswordDTO;
 import com.umspreadsheet.user.SimpleUserService;
 import com.umspreadsheet.user.User;
 import com.umspreadsheet.user.UserService;
@@ -12,12 +13,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -81,17 +84,25 @@ public class AuthController
     }
 
     @RequestMapping("/update-password")
-    public String updatePassword()
+    public String updatePassword(Model model)
     {
+        model.addAttribute("passwordDTO", new PasswordDTO());
+
         return "/auth/updatePassword";
     }
 
     @RequestMapping(value = "save-password", method = RequestMethod.POST)
-    public String savePassword(String password, RedirectAttributes redirectAttributes)
+    public String savePassword(@Valid PasswordDTO password, BindingResult bindingResult,
+                               RedirectAttributes redirectAttributes)
     {
+        if (bindingResult.hasErrors())
+        {
+            return "/auth/updatePassword";
+        }
+
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        user.setPassword(password);
+        user.setPassword(password.getNewPassword());
         userService.save(user);
 
         redirectAttributes.addFlashAttribute("reset", true);

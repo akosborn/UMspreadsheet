@@ -11,13 +11,13 @@ public class SignUpForm
 {
     @NotEmpty
     @Length(min = 3, max = 25)
-    @Pattern(regexp = ".*\\w") // only numbers, letters, and underscores
+    @Pattern(regexp = "([\\w-]+)") // only numbers, letters, and underscores
     private String username;
     private String userId;
 
     @NotEmpty
     @Length(min = 8, max = 128)
-    @Pattern(regexp = ".*\\w") // only numbers, letters, and underscores
+    @Pattern(regexp = "([\\w-]+)") // only numbers, letters, and underscores
     private String password;
 
     @NotEmpty
