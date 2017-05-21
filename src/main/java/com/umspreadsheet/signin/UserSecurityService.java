@@ -1,11 +1,14 @@
 package com.umspreadsheet.signin;
 
+import com.umspreadsheet.user.SimpleUserDetails;
 import com.umspreadsheet.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -39,8 +42,8 @@ public class UserSecurityService
             return "expired";
         }
 
-        final User user = passwordResetToken.getUser();
-        final Authentication auth = new UsernamePasswordAuthenticationToken(user, user.getPassword(),
+        final UserDetails userDetails = new SimpleUserDetails(passwordResetToken.getUser());
+        final Authentication auth = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(),
                 Arrays.asList(new SimpleGrantedAuthority("CHANGE_PASSWORD_PRIVILEGE")));
         SecurityContextHolder.getContext().setAuthentication(auth);
 

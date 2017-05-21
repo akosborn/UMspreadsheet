@@ -6,6 +6,7 @@ import com.umspreadsheet.user.PasswordDTO;
 import com.umspreadsheet.user.SimpleUserService;
 import com.umspreadsheet.user.User;
 import com.umspreadsheet.user.UserService;
+import com.umspreadsheet.utils.SessionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.mail.MailSender;
@@ -33,16 +34,19 @@ public class AuthController
     private MessageSource messageSource;
     private UserSecurityService userSecurityService;
     private PasswordResetTokenService passwordResetTokenService;
+    private SessionUtils sessionUtils;
 
     @Autowired
     public AuthController(SimpleUserService userService, MailSender mailSender, MessageSource messageSource,
-                          UserSecurityService userSecurityService, PasswordResetTokenService passwordResetTokenService)
+                          UserSecurityService userSecurityService, PasswordResetTokenService passwordResetTokenService,
+                          SessionUtils sessionUtils)
     {
         this.userService = userService;
         this.mailSender = mailSender;
         this.messageSource = messageSource;
         this.userSecurityService = userSecurityService;
         this.passwordResetTokenService = passwordResetTokenService;
+        this.sessionUtils = sessionUtils;
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -126,7 +130,7 @@ public class AuthController
             return "/auth/updatePassword";
         }
 
-        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.findByUsername(sessionUtils.getCurrentUsername());
 
         user.setPassword(password.getNewPassword());
         userService.save(user);
