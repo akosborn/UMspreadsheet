@@ -1,5 +1,6 @@
 package com.umspreadsheet.signin;
 
+import com.umspreadsheet.user.User;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,5 +21,15 @@ public class PasswordResetTokenService
     public PasswordResetToken findByToken(String token)
     {
         return repository.findByToken(token);
+    }
+
+    public PasswordResetToken findByUser(User user)
+    {
+        return repository.findByUser(user);
+    }
+
+    public void deleteByUser(User user)
+    {
+        repository.deleteByUser(user);
     }
 }

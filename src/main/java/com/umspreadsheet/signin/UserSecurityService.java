@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Objects;
 
 @Service
 public class UserSecurityService
@@ -25,9 +26,9 @@ public class UserSecurityService
     public String validatePasswordResetToken(Long id, String token)
     {
         final PasswordResetToken passwordResetToken = repository.findByToken(token);
-        if ((passwordResetToken == null) || (passwordResetToken.getUser().getId() != id))
+        if ((passwordResetToken == null) || (!Objects.equals(passwordResetToken.getUser().getId(), id)))
         {
-            return "invalidToken";
+            return "invalid";
         }
 
         final Calendar cal = Calendar.getInstance();
@@ -39,7 +40,7 @@ public class UserSecurityService
         }
 
         final User user = passwordResetToken.getUser();
-        final Authentication auth = new UsernamePasswordAuthenticationToken(user, null,
+        final Authentication auth = new UsernamePasswordAuthenticationToken(user, user.getPassword(),
                 Arrays.asList(new SimpleGrantedAuthority("CHANGE_PASSWORD_PRIVILEGE")));
         SecurityContextHolder.getContext().setAuthentication(auth);
 

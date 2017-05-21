@@ -1,5 +1,6 @@
 package com.umspreadsheet.auth;
 
+import com.umspreadsheet.signin.PasswordResetTokenService;
 import com.umspreadsheet.signin.UserSecurityService;
 import com.umspreadsheet.user.PasswordDTO;
 import com.umspreadsheet.user.SimpleUserService;
@@ -31,15 +32,17 @@ public class AuthController
     private MailSender mailSender;
     private MessageSource messageSource;
     private UserSecurityService userSecurityService;
+    private PasswordResetTokenService passwordResetTokenService;
 
     @Autowired
     public AuthController(SimpleUserService userService, MailSender mailSender, MessageSource messageSource,
-                          UserSecurityService userSecurityService)
+                          UserSecurityService userSecurityService, PasswordResetTokenService passwordResetTokenService)
     {
         this.userService = userService;
         this.mailSender = mailSender;
         this.messageSource = messageSource;
         this.userSecurityService = userSecurityService;
+        this.passwordResetTokenService = passwordResetTokenService;
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -57,27 +60,50 @@ public class AuthController
     }
 
     @RequestMapping(value = "/reset-password", method = RequestMethod.POST)
-    public String resetPassword(@RequestParam("email") String email, HttpServletRequest request)
+    public String resetPassword(@RequestParam("email") String email, HttpServletRequest request,
+                                RedirectAttributes redirectAttributes)
     {
         User user = userService.findByEmail(email);
-        if (user == null)
-            throw new UsernameNotFoundException("Email " + email + " not found.");
+
+        try
+        {
+            if (user == null)
+            {
+                throw new UsernameNotFoundException("Email \'" + email + "\' not found.");
+            }
+        }catch (UsernameNotFoundException ex)
+        {
+            redirectAttributes.addFlashAttribute("invalidEmail", true);
+            ex.printStackTrace();
+
+            return "redirect:/signin/reset-password";
+        }
+
+        // Delete old password reset token before assigning a new one
+        if (passwordResetTokenService.findByUser(user) != null)
+            passwordResetTokenService.deleteByUser(user);
 
         String token = UUID.randomUUID().toString();
         userService.createPasswordResetTokenForUser(user, token);
         mailSender.send(constructResetTokenEmail(getAppUrl(request), request.getLocale(), token, user));
 
-        return "redirect:/signin";
+        return "redirect:/signin/reset-password";
     }
 
     @RequestMapping("/change-password")
-    public String changePassword(Model model, @RequestParam("id") Long id,
-                                 @RequestParam("token") String token)
+    public String changePassword(Model model,
+                                 @RequestParam("id") Long id,
+                                 @RequestParam("token") String token, RedirectAttributes redirectAttributes)
     {
         String result = userSecurityService.validatePasswordResetToken(id, token);
         if (result != null)
         {
-            return "redirect:/signin";
+            if (result.equals("invalidToken"))
+                redirectAttributes.addFlashAttribute("invalid", true);
+            else if (result.equals("expired"))
+                redirectAttributes.addFlashAttribute("expired", true);
+
+            return "redirect:/signin/reset-password";
         }
 
         return "redirect:/update-password";
@@ -104,6 +130,9 @@ public class AuthController
 
         user.setPassword(password.getNewPassword());
         userService.save(user);
+
+        // Delete the token
+        passwordResetTokenService.deleteByUser(user);
 
         redirectAttributes.addFlashAttribute("reset", true);
 
