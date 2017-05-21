@@ -12,4 +12,10 @@ public class SigninController
     {
         return "/auth/signin";
     }
+
+    @RequestMapping(value = "/signin/reset-password", method = RequestMethod.GET)
+    public String resetPassword()
+    {
+        return "/auth/forgotPassword";
+    }
 }

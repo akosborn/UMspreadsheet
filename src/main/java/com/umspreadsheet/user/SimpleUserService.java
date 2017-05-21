@@ -3,6 +3,8 @@ package com.umspreadsheet.user;
 import com.umspreadsheet.privilege.Privilege;
 import com.umspreadsheet.role.Role;
 import com.umspreadsheet.role.RoleService;
+import com.umspreadsheet.signin.PasswordResetToken;
+import com.umspreadsheet.signin.PasswordResetTokenService;
 import com.umspreadsheet.signup.SignUpForm;
 import com.umspreadsheet.signup.VerificationToken;
 import com.umspreadsheet.signup.VerificationTokenService;
@@ -22,17 +24,21 @@ public class SimpleUserService implements UserService
     private UserRepository userRepository;
     private RoleService roleService;
     private VerificationTokenService verificationTokenService;
+    private PasswordResetTokenService passwordResetTokenService;
 
     private static final String TOKEN_INVALID = "invalidToken";
     private static final String TOKEN_EXPIRED = "expiredToken";
     private static final String TOKEN_VALID = "validToken";
 
     @Autowired
-    public SimpleUserService(UserRepository userRepository, RoleService roleService, VerificationTokenService verificationTokenService)
+    public SimpleUserService(UserRepository userRepository, RoleService roleService,
+                             VerificationTokenService verificationTokenService,
+                             PasswordResetTokenService passwordResetTokenService)
     {
         this.userRepository = userRepository;
         this.roleService = roleService;
         this.verificationTokenService = verificationTokenService;
+        this.passwordResetTokenService = passwordResetTokenService;
     }
 
     public User findByEmail(String email)
@@ -159,5 +165,11 @@ public class SimpleUserService implements UserService
     public Iterable<User> findAll()
     {
         return userRepository.findAll();
+    }
+
+    public void createPasswordResetTokenForUser(User user, String token)
+    {
+        PasswordResetToken passwordResetToken = new PasswordResetToken(token, user);
+        passwordResetTokenService.save(passwordResetToken);
     }
 }
