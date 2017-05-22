@@ -20,39 +20,9 @@ public class ShowService
         this.showRepository = showRepository;
     }
 
-    // Find all shows by year,  but don't load setlist entity
-    /*public List<Show> getAllShowsByYearWithoutTracks(int year) throws ParseException
+    public List<Show> getTopFiveShows()
     {
-        Calendar cal = Calendar.getInstance();
-        cal.set(Calendar.YEAR, year);
-        cal.set(Calendar.DAY_OF_YEAR, 1);
-        Date firstDay = cal.getTime();
-
-        cal.set(Calendar.MONTH, 11); // 11 = december
-        cal.set(Calendar.DAY_OF_MONTH, 31); // new years eve
-        Date lastDay = cal.getTime();
-
-        return (List<Show>) showRepository.findByDateBetween(firstDay, lastDay);
-    }
-
-    public Show getShowByIdWithTracks(Long id)
-    {
-        return showRepository.findByIdAndFetchTracksEagerly(id);
-    }
-
-    public Show getShowByIdWithoutTracks(Long id)
-    {
-        return showRepository.findOne(id);
-    }
-
-    public List<Show> getAllShowsHavingReviews()
-    {
-        return showRepository.findAllWithReviews();
-    }*/
-
-    public List<Show> getTopThreeShows()
-    {
-        return showRepository.findTop3ByOrderByAverageRatingDesc();
+        return showRepository.findTop5ByOrderByAverageRatingDesc();
     }
 
     public Page<Show> getByAverageRating(PageRequest pageRequest)

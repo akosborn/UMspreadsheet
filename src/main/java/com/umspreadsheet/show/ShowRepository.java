@@ -29,7 +29,7 @@ public interface ShowRepository extends JpaRepository<Show, Long>, JpaSpecificat
     public List<Show> findAllWithReviews();
     */
 
-    List<Show> findTop3ByOrderByAverageRatingDesc();
+    List<Show> findTop5ByOrderByAverageRatingDesc();
 
     Page<Show> findByAverageRatingIsNotNullOrderByAverageRatingDesc(Pageable pageable);
 

@@ -74,7 +74,7 @@
         // draws it.
         function drawChart() {
 
-            var topThreeShows = [[${topThreeShows}]];
+            var topFiveShows = [[${topFiveShows}]];
 
             // Create the data table.
             var data = new google.visualization.DataTable();
@@ -82,11 +82,11 @@
             data.addColumn('string', 'link');
             data.addColumn('number', 'Rating');
             data.addColumn({type: 'string', role: 'style'});
-            for (i = 0; i < topThreeShows.length; i++)
+            for (i = 0; i < topFiveShows.length; i++)
             {
-                data.addRow([topThreeShows[i].date + ' ' + topThreeShows[i].city + ', ' + topThreeShows[i].state,
-                     window.location.href + '/shows/' + [topThreeShows[i].id] + '/' + [topThreeShows[i].slug],
-                    topThreeShows[i].averageRating,
+                data.addRow([topFiveShows[i].date + ' ' + topFiveShows[i].city + ', ' + topFiveShows[i].state,
+                     window.location.href + '/shows/' + [topFiveShows[i].id] + '/' + [topFiveShows[i].slug],
+                    topFiveShows[i].averageRating,
                     'opacity: 1; color: silver']);
             }
 
@@ -183,13 +183,13 @@
                 <div id="chart-data-div" class="col-md-6">
                     <h2>Top Rated</h2>
                     <div class="row">
-                        <div id="top_show_chart_div" style="height: 200px; text-align: center;">
+                        <div id="top_show_chart_div" style="height: 240px; text-align: center;">
 
                         </div>
                     </div>
                     <br/>
                     <div class="row">
-                        <div id="top_song_chart_div" style="height: 200px; text-align: center;">
+                        <div id="top_song_chart_div" style="height: 240px; text-align: center;">
                             <svg>
 
                             </svg>
@@ -201,15 +201,15 @@
 
                     console.log("Show div: " + document.getElementById("top_show_chart_div").offsetWidth);
 
-                    var topThreeShows = [[${topThreeShows}]];
-                    var maxRating = d3.max(topThreeShows, function (d) { return d.averageRating; });
+                    var topFiveShows = [[${topFiveShows}]];
+                    var maxRating = d3.max(topFiveShows, function (d) { return d.averageRating; });
 
-                    var width = parseInt(d3.select("#top_show_chart_div").style("width")) - 30;
+                    var width = parseInt(d3.select("#top_show_chart_div").style("width")) * 0.5;
                     var height = parseInt(d3.select("#top_show_chart_div").style("height"));
 
                     var xScale = d3.scaleLinear()
-                        .domain([0, maxRating])
-                        .range([0, width]);
+                        .domain([0, 10])
+                        .range([0, width - 10]);
 
 //                    var colorScale = d3.scaleLinear()
 //                        .domain([0, maxRating])
@@ -225,13 +225,21 @@
                         .append("g");
 
                     var bars = graph.selectAll("rect")
-                        .data(topThreeShows)
+                        .data(topFiveShows)
                         .enter()
                             .append("rect")
-                            .attr("width", function (d) { return xScale(d.averageRating) })
-                            .attr("height", 15)
+                            .attr("width", 0)
+                            .attr("height", 20)
                             .attr("fill", "grey")
-                            .attr("y", function (d, i) { return (i * 35) + "%" });
+                            .attr("y", function (d, i) { return (i * 20) + "%" });
+
+                    bars
+                        .data(topFiveShows)
+                        .transition()
+                            .delay(function (d, i) { return (i * 100) })
+                            .duration(1000)
+                            .attr("width", function (d) { return xScale(d.averageRating) });
+
 
                     graph.append("g")
                         .attr("id", "xAxis")
@@ -243,24 +251,22 @@
                     function resize()
                     {
                         // Find new dimensions
-                        width = parseInt(d3.select("#top_show_chart_div").style("width")) - 30;
+                        width = parseInt(d3.select("#top_show_chart_div").style("width")) * 0.5;
                         height = parseInt(d3.select("#top_show_chart_div").style("height"));
 
                         d3.select("#top-show-graph")
                             .attr("width", width);
 
-                        console.log(width + "x" + height);
-
                         xScale = d3.scaleLinear()
-                            .domain([0, maxRating])
-                            .range([0, width]);
+                            .domain([0, 10])
+                            .range([0, width - 10]);
 
                         xAxis.scale(xScale);
 
                         graph.call(xAxis);
 
                         graph.selectAll("rect")
-                            .data(topThreeShows)
+                            .data(topFiveShows)
                             .attr("width", function (d) { return xScale(d.averageRating) });
                     }
 

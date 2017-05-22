@@ -19,7 +19,7 @@ public interface TrackRepository extends JpaRepository<Track, Long>, JpaSpecific
 {
     String FIND_ALL_IDS = "SELECT id FROM track";
 
-    List<Track> findTop3ByOrderByAverageRatingDesc();
+    List<Track> findTop5ByOrderByAverageRatingDesc();
 
     Page<Track> findByAverageRatingIsNotNullOrderByAverageRatingDesc(Pageable pageable);
 
