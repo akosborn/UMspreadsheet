@@ -182,12 +182,91 @@
                 </div>
                 <div id="chart-data-div" class="col-md-6">
                     <h2>Top Rated</h2>
-                    <div id="top_show_chart_div"></div>
+                    <div class="row">
+                        <div id="top_show_chart_div" style="height: 200px; text-align: center;">
+
+                        </div>
+                    </div>
                     <br/>
                     <div class="row">
-                        <div id="top_song_chart_div"></div>
+                        <div id="top_song_chart_div" style="height: 200px; text-align: center;">
+                            <svg>
+
+                            </svg>
+                        </div>
                     </div>
                 </div>
+
+                <script th:inline="javascript">
+
+                    console.log("Show div: " + document.getElementById("top_show_chart_div").offsetWidth);
+
+                    var topThreeShows = [[${topThreeShows}]];
+                    var maxRating = d3.max(topThreeShows, function (d) { return d.averageRating; });
+
+                    var width = parseInt(d3.select("#top_show_chart_div").style("width")) - 30;
+                    var height = parseInt(d3.select("#top_show_chart_div").style("height"));
+
+                    var xScale = d3.scaleLinear()
+                        .domain([0, maxRating])
+                        .range([0, width]);
+
+//                    var colorScale = d3.scaleLinear()
+//                        .domain([0, maxRating])
+//                        .range(["white", "grey"]);
+
+                    var xAxis = d3.axisBottom(xScale);
+
+                    var graph = d3.select("#top_show_chart_div")
+                        .append("svg")
+                        .attr("id", "top-show-graph")
+                        .attr("width", width)
+                        .attr("height", height)
+                        .append("g");
+
+                    var bars = graph.selectAll("rect")
+                        .data(topThreeShows)
+                        .enter()
+                            .append("rect")
+                            .attr("width", function (d) { return xScale(d.averageRating) })
+                            .attr("height", 15)
+                            .attr("fill", "grey")
+                            .attr("y", function (d, i) { return (i * 35) + "%" });
+
+                    graph.append("g")
+                        .attr("id", "xAxis")
+                        .attr("transform", "translate(0, " + (height - 20) + ")")
+                        .call(xAxis);
+
+
+                    
+                    function resize()
+                    {
+                        // Find new dimensions
+                        width = parseInt(d3.select("#top_show_chart_div").style("width")) - 30;
+                        height = parseInt(d3.select("#top_show_chart_div").style("height"));
+
+                        d3.select("#top-show-graph")
+                            .attr("width", width);
+
+                        console.log(width + "x" + height);
+
+                        xScale = d3.scaleLinear()
+                            .domain([0, maxRating])
+                            .range([0, width]);
+
+                        xAxis.scale(xScale);
+
+                        graph.call(xAxis);
+
+                        graph.selectAll("rect")
+                            .data(topThreeShows)
+                            .attr("width", function (d) { return xScale(d.averageRating) });
+                    }
+
+                    d3.select(window).on("resize", resize);
+
+                </script>
             </div>
         </div>
 
