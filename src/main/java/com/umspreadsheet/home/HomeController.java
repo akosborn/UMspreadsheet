@@ -28,7 +28,7 @@ public class HomeController
     public String home(Model model)
     {
         model.addAttribute("topFiveSongs", trackService.getTopFiveSongs());
-        model.addAttribute("topFiveShows", showService.getTopFiveShows());
+        model.addAttribute("lastTwentyShows", showService.findLastTwentyShows());
         model.addAttribute("lastThreeShows", setNumberOfReviews(showService.getLastThreeShows()));
         model.addAttribute("lastTwoShows", showService.getLastTwoShows());
 

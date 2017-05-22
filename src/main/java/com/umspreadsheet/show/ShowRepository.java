@@ -37,6 +37,8 @@ public interface ShowRepository extends JpaRepository<Show, Long>, JpaSpecificat
 
     List<Show> findTop3ByOrderByDateDesc();
 
+    List<Show> findTop20ByOrderByDateDesc();
+
     Show findById(Long id);
 
     @Query(value = FIND_ALL_IDS, nativeQuery = true)
