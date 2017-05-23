@@ -183,168 +183,378 @@
                 </div>
                 <div id="chart-data-div" class="col-md-6">
                     <div class="row" style="margin: 0">
-                        <div id="top_show_chart_div" style="height: 240px; text-align: center;">
-                            <h2>Top Shows</h2>
+                        <h2>Top Shows</h2>
+                        <div id="top_show_chart_div" style="height: 180px; text-align: center;">
                         </div>
                     </div>
                     <br/>
-                    <br/>
-                    <br/>
                     <div class="row" style="margin: 0;">
-                        <div id="top_song_chart_div" style="height: 240px; text-align: center;">
-                            <h2>Top 10 Songs</h2>
+                        <h2>Top Songs</h2>
+                        <div id="top_song_chart_div" style="height: 180px; text-align: center;">
                         </div>
                     </div>
                 </div>
 
                 <script th:inline="javascript">
 
-                    var topTwentyShows = [[${topTwentyShows}]];
-                    var lastTwentyShowsSize = topTwentyShows.length;
-                    var maxRating = d3.max(topTwentyShows, function (d) { return d.averageRating; });
+                    var showsGraph = new ShowGraph();
+                    var songsGraph = new SongGraph();
 
                     var roundToOnePlace = d3.format(".1f");
                     var roundToTwoPlaces = d3.format(".2f");
                     var dateFormat = d3.timeFormat("%b %e, %y");
 
-                    var width = parseInt(d3.select("#top_show_chart_div").style("width"));
-                    var height = parseInt(d3.select("#top_show_chart_div").style("height"));
-
-                    var barWidth = (width / 2) / lastTwentyShowsSize;
-
-                    var yScale = d3.scaleLinear()
-                        .domain([0, maxRating])
-                        .range([0, height]);
-
-//                    var colorScale = d3.scaleLinear()
-//                        .domain([0, maxRating])
-//                        .range(["white", "grey"]);
-
-                    var yAxis = d3.axisLeft(yScale);
-
-                    var graph = d3.select("#top_show_chart_div")
-                        .append("svg")
-                        .attr("id", "top-show-graph")
-                        .attr("width", width)
-                        .attr("height", height)
-                        .append("g");
-
-                    var toolTip = d3.tip()
-                        .attr("class", 'd3-tip')
-                        .offset([-10, 0])
-                        .html(function (d)
-                        {
-                            var text = "<p>" + roundToTwoPlaces(d.averageRating) + "</p><p style='color:#0080FF'>" + mySqlToJsDate(d) + " <span style='color: white'>" + d.city + ", " + d.state
-                                + "</span></p><p>" + d.venue + "</p>";
-
-                            return text;
-                        });
-
-                    function mySqlToJsDate(d)
+                    window.onload = function ()
                     {
-                        var dateParts = d.date.split("-");
-
-                        return dateFormat(new Date(dateParts[0], dateParts[1] - 1, dateParts[2].substr(0, 2)));
-                    }
-
-                    graph.call(toolTip);
-
-                    var bars = graph.selectAll("rect")
-                        .data(topTwentyShows)
-                        .enter()
-                            .append("rect")
-                            .attr("class", "bar")
-                            .attr("width", barWidth)
-                            .attr("height", 0)
-                            .attr("fill", function (d) {
-                                var color = "orangered";
-                                var averageRating = d.averageRating;
-
-                                if (averageRating >= 9)
-                                    color = "#B9F2FF";
-                                if (averageRating >= 8 && averageRating < 9 )
-                                    color = "#FFD700";
-                                if (averageRating >= 7 && averageRating < 8)
-                                    color = "#C0C0C0";
-                                if (averageRating >= 6 && averageRating < 7)
-                                    color = "#CD7F32";
-
-                                return color;
-                            })
-                            .attr("y", height)
-                            .attr("x", function (d, i) { return (2 * barWidth * i) })
-                            .on("mouseover", toolTip.show)
-                            .on("mouseout", toolTip.hide)
-                            .on("click", function (d) {
-                                var url = window.location + "shows/" + d.id + "/" + d.slug;
-                                window.location = url;
-                            });
-
-                    bars
-                        .data(topTwentyShows)
-                        .transition()
-                            .delay(function (d, i) { return (i * 50) })
-                            .duration(1000)
-                            .attr("y", function (d) { return height - (yScale(d.averageRating)) })
-                            .attr("height", function (d) { return yScale(d.averageRating) });
-
-                    var labels = graph.selectAll("text")
-                        .data(topTwentyShows)
-                        .enter()
-                        .append("text")
-                        .text(function (d) { return roundToOnePlace(d.averageRating) })
-                        .attr("fill", "black")
-                        .style("font-size", "0px")
-                        .attr("y", height)
-                        .attr("x", function (d, i) { return (2 * barWidth * i) });
-
-                    labels
-                        .data(topTwentyShows)
-                        .transition()
-                            .delay(function (d, i) { return (i * 50) })
-                            .duration(1000)
-                            .style("font-size", "11px")
-                            .attr("y", function (d) { return height - (yScale(d.averageRating) - 10) })
-                            .attr("x", function (d, i) { return (2 * barWidth * i) });
-
-
-                    //                    graph.append("g")
-//                        .attr("id", "yAxis")
-//                        .call(yAxis);
-
-
-                    
-                    function resize()
-                    {
-                        // Find new dimensions
-                        width = parseInt(d3.select("#top_show_chart_div").style("width"));
-                        height = parseInt(d3.select("#top_show_chart_div").style("height"));
-
-                        barWidth = (width / 2) / lastTwentyShowsSize;
-
-                        d3.select("#top-show-graph")
-                            .attr("width", width);
-
-                        yScale = d3.scaleLinear()
-                            .domain([0, maxRating])
-                            .range([0, height]);
-
-                        yAxis.scale(yScale);
-
-                        bars
-                            .data(topTwentyShows)
-                            .attr("x", function (d, i) { return (2 * barWidth * i) })
-                            .attr("height", function (d) { return yScale(d.averageRating) });
-
-                        labels
-                            .data(topTwentyShows)
-                            .attr("y", function (d) { return height - (yScale(d.averageRating) - 10) })
-                            .attr("x", function (d, i) { return (2 * barWidth * i) });
-                    }
+                        showsGraph.create();
+                        songsGraph.create();
+                    };
 
                     d3.select(window).on("resize", resize);
 
+                    function resize()
+                    {
+                        showsGraph.resize();
+                        songsGraph.resize();
+                    }
+
+                    function ShowGraph()
+                    {
+                        var topTwentyShows,
+                            topTwentyShowsSize,
+                            maxRating,
+                            minRating,
+                            width,
+                            height,
+                            barWidth,
+                            yScale,
+                            yAxis,
+                            graph,
+                            toolTip,
+                            bars,
+                            labels;
+
+                        this.create = function ()
+                        {
+                            topTwentyShows = [[${topTwentyShows}]];
+                            topTwentyShowsSize = topTwentyShows.length;
+                            maxRating = d3.max(topTwentyShows, function (d) { return d.averageRating; });
+                            minRating = d3.min(topTwentyShows, function (d) { return d.averageRating; });
+
+                            width = parseInt(d3.select("#top_show_chart_div").style("width"));
+                            height = parseInt(d3.select("#top_show_chart_div").style("height"));
+
+                            console.log('Show chart div: ' + width + 'x' + height);
+
+                            barWidth = (width / 2) / topTwentyShowsSize;
+
+                            yScale = d3.scaleLinear()
+                                .domain([minRating * 0.90, maxRating])
+                                .range([0, height]);
+
+                            yAxis = d3.axisLeft(yScale);
+
+                            graph = d3.select("#top_show_chart_div")
+                                .append("svg")
+                                .attr("id", "top-show-graph")
+                                .attr("width", width)
+                                .attr("height", height);
+
+                            toolTip = d3.tip()
+                                .attr("class", 'd3-tip')
+                                .offset([-10, 0])
+                                .html(function (d) {
+                                    var text = "<p>" + roundToTwoPlaces(d.averageRating) + "</p><p style='color:#0080FF'>" + mySqlToJsDate(d) + " <span style='color: white'>" + d.city + ", " + d.state
+                                        + "</span></p><p>" + d.venue + "</p>";
+
+                                    return text;
+                                });
+
+                            function mySqlToJsDate(d)
+                            {
+                                var dateParts = d.date.split("-");
+                                 return dateFormat(new Date(dateParts[0], dateParts[1] - 1, dateParts[2].substr(0, 2)));
+                            }
+
+                            graph.call(toolTip);
+
+                            bars = graph.selectAll("rect")
+                                .data(topTwentyShows)
+                                .enter()
+                                .append("rect")
+                                .attr("class", "bar")
+                                .attr("width", barWidth)
+                                .attr("height", 0)
+                                .attr("fill", function (d) {
+                                    var color = "orangered";
+                                    var averageRating = d.averageRating;
+
+                                    if (averageRating >= 9)
+                                        color = "#B9F2FF";
+                                    if (averageRating >= 8 && averageRating < 9)
+                                        color = "#FFD700";
+                                    if (averageRating >= 7 && averageRating < 8)
+                                        color = "#C0C0C0";
+                                    if (averageRating >= 6 && averageRating < 7)
+                                        color = "#CD7F32";
+
+                                    return color;
+                                })
+                                .attr("y", height)
+                                .attr("x", function (d, i) {
+                                    return (2 * barWidth * i)
+                                })
+                                .on("mouseover", toolTip.show)
+                                .on("mouseout", toolTip.hide)
+                                .on("click", function (d) {
+                                    var url = window.location + "shows/" + d.id + "/" + d.slug;
+                                    window.location = url;
+                                });
+
+                               bars
+                                   .data(topTwentyShows)
+                                   .transition()
+                                   .delay(function (d, i) {
+                                       return (i * 50)
+                                   })
+                                   .duration(1000)
+                                   .attr("y", function (d) {
+                                       return height - (yScale(d.averageRating))
+                                   })
+                                   .attr("height", function (d) {
+                                       return yScale(d.averageRating)
+                                   });
+
+                               labels = graph.selectAll("text")
+                                   .data(topTwentyShows)
+                                   .enter()
+                                   .append("text")
+                                   .text(function (d) {
+                                       return roundToOnePlace(d.averageRating)
+                                   })
+                                   .attr("fill", "black")
+                                   .style("font-size", "0px")
+                                   .attr("y", height)
+                                   .attr("x", function (d, i) {
+                                       return (2 * barWidth * i)
+                                   });
+
+                               labels
+                                   .data(topTwentyShows)
+                                   .transition()
+                                   .delay(function (d, i) {
+                                       return (i * 50)
+                                   })
+                                   .duration(1000)
+                                   .style("font-size", "11px")
+                                   .attr("y", function (d) {
+                                       return height - (yScale(d.averageRating) - 10)
+                                   })
+                                   .attr("x", function (d, i) {
+                                       return (2 * barWidth * i)
+                                   });
+                           };
+
+                        this.resize = function ()
+                        {
+                            console.log("resizeShows() called");
+
+                            // Find new dimensions
+                            width = parseInt(d3.select("#top_show_chart_div").style("width"));
+                            height = parseInt(d3.select("#top_show_chart_div").style("height"));
+
+                            console.log('New show chart div: ' + width + 'x' + height);
+
+                            barWidth = (width / 2) / topTwentyShowsSize;
+
+                            graph
+                                .attr("width", width);
+
+                            yScale = d3.scaleLinear()
+                                .domain([minRating * 0.90, maxRating])
+                                .range([0, height]);
+
+                            yAxis.scale(yScale);
+
+                            bars
+                                .data(topTwentyShows)
+                                .attr("width", barWidth)
+                                .attr("x", function (d, i) {
+                                    return (2 * barWidth * i)
+                                })
+                                .attr("height", function (d) {
+                                    return yScale(d.averageRating)
+                                });
+
+                            labels
+                                .data(topTwentyShows)
+                                .attr("y", function (d) {
+                                    return height - (yScale(d.averageRating) - 10)
+                                })
+                                .attr("x", function (d, i) {
+                                    return (2 * barWidth * i)
+                                });
+                        }
+                    }
+
+                    function SongGraph()
+                    {
+                        var topTwentySongs,
+                            topTwentySongsSize,
+                            maxRating,
+                            minRating,
+                            width,
+                            height,
+                            barWidth,
+                            yScale,
+                            yAxis,
+                            graph,
+                            toolTip,
+                            bars,
+                            labels;
+
+                        this.create = function createSongGraph()
+                        {
+                            topTwentySongs = [[${topTwentySongs}]];
+                            topTwentySongsSize = topTwentySongs.length;
+                            maxRating = d3.max(topTwentySongs, function (d) { return d.averageRating; });
+                            minRating = d3.min(topTwentySongs, function (d) { return d.averageRating; });
+                            console.log(minRating);
+
+                            width = parseInt(d3.select("#top_song_chart_div").style("width"));
+                            height = parseInt(d3.select("#top_song_chart_div").style("height"));
+
+                            console.log('Song chart div: ' + width + 'x' + height);
+
+                            barWidth = (width / 2) / topTwentySongsSize;
+
+                            yScale = d3.scaleLinear()
+                                .domain([minRating * 0.90, maxRating])
+                                .range([0, height]);
+
+                            yAxis = d3.axisLeft(yScale);
+
+                            graph = d3.select("#top_song_chart_div")
+                                .append("svg")
+                                .attr("id", "top-song-graph")
+                                .attr("width", width)
+                                .attr("height", height);
+
+                            toolTip = d3.tip()
+                                .attr("class", 'd3-tip')
+                                .offset([-10, 0])
+                                .html(function (d)
+                                {
+                                    var text = "<p>" + roundToTwoPlaces(d.averageRating) + "</p><p>" + d.song + "</p><p style='color:#0080FF'>" + mySqlToJsDate(d) + " <span style='color: white'>" + d.show.city + ", " + d.show.state
+                                        + "</span></p><p>" + d.show.venue + "</p>";
+
+                                    return text;
+                                });
+
+                            function mySqlToJsDate(d)
+                            {
+                                var dateParts = d.show.date.split("-");
+
+                                return dateFormat(new Date(dateParts[0], dateParts[1] - 1, dateParts[2].substr(0, 2)));
+                            }
+
+                            graph.call(toolTip);
+
+                            bars = graph.selectAll("rect")
+                                .data(topTwentySongs)
+                                .enter()
+                                .append("rect")
+                                .attr("class", "bar")
+                                .attr("width", barWidth)
+                                .attr("height", 0)
+                                .attr("fill", function (d) {
+                                    var color = "orangered";
+                                    var averageRating = d.averageRating;
+
+                                    if (averageRating >= 9)
+                                        color = "#B9F2FF";
+                                    if (averageRating >= 8 && averageRating < 9 )
+                                        color = "#FFD700";
+                                    if (averageRating >= 7 && averageRating < 8)
+                                        color = "#C0C0C0";
+                                    if (averageRating >= 6 && averageRating < 7)
+                                        color = "#CD7F32";
+
+                                    return color;
+                                })
+                                .attr("y", height)
+                                .attr("x", function (d, i) { return (2 * barWidth * i) })
+                                .on("mouseover", toolTip.show)
+                                .on("mouseout", toolTip.hide)
+                                .on("click", function (d) {
+                                    var url = window.location + "songs/" + d.id + "/" + d.slug;
+                                    window.location = url;
+                                });
+
+                            bars
+                                .data(topTwentySongs)
+                                .transition()
+                                .delay(function (d, i) { return (i * 50) })
+                                .duration(1000)
+                                .attr("y", function (d) { return height - (yScale(d.averageRating)) })
+                                .attr("height", function (d) { return yScale(d.averageRating) });
+
+                            labels = graph.selectAll("text")
+                                .data(topTwentySongs)
+                                .enter()
+                                .append("text")
+                                .text(function (d) { return roundToOnePlace(d.averageRating) })
+                                .attr("fill", "black")
+                                .style("font-size", "0px")
+                                .attr("y", height)
+                                .attr("x", function (d, i) { return (2 * barWidth * i) });
+
+                            labels
+                                .data(topTwentySongs)
+                                .transition()
+                                .delay(function (d, i) { return (i * 50) })
+                                .duration(1000)
+                                .style("font-size", "11px")
+                                .attr("y", function (d) { return height - (yScale(d.averageRating) - 10) })
+                                .attr("x", function (d, i) { return (2 * barWidth * i) });
+                        };
+
+                        this.resize = function ()
+                        {
+                            console.log("resizeSongs() called");
+
+                            // Find new dimensions
+                            width = parseInt(d3.select("#top_song_chart_div").style("width"));
+                            height = parseInt(d3.select("#top_song_chart_div").style("height"));
+
+                            console.log('New song chart div: ' + width + 'x' + height);
+
+                            barWidth = (width / 2) / topTwentySongsSize;
+
+                            graph
+                                .attr("width", width);
+
+                            yScale = d3.scaleLinear()
+                                .domain([minRating * 0.90, maxRating])
+                                .range([0, height]);
+
+                            yAxis.scale(yScale);
+
+                            bars
+                                .data(topTwentySongs)
+                                .attr("width", barWidth)
+                                .attr("x", function (d, i) { return (2 * barWidth * i) })
+                                .attr("height", function (d) { return yScale(d.averageRating) });
+
+                            labels
+                                .data(topTwentySongs)
+                                .attr("y", function (d) { return height - (yScale(d.averageRating) - 10) })
+                                .attr("x", function (d, i) { return (2 * barWidth * i) });
+                        }
+                    }
+
                 </script>
+
             </div>
         </div>
 

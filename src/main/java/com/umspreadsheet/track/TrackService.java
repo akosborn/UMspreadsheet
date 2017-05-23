@@ -26,6 +26,11 @@ public class TrackService
         return trackRepository.findTop5ByOrderByAverageRatingDesc();
     }
 
+    public List<Track> findTopTwenty()
+    {
+        return trackRepository.findTop20ByOrderByAverageRatingDesc();
+    }
+
     public Track findById(Long id)
     {
         return trackRepository.findOne(id);
