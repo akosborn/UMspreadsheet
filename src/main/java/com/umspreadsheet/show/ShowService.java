@@ -30,6 +30,11 @@ public class ShowService
         return showRepository.findTop20ByOrderByDateDesc();
     }
 
+    public List<Show> findTopTwentyShows()
+    {
+        return showRepository.findTop20ByOrderByAverageRatingDesc();
+    }
+
     public Page<Show> getByAverageRating(PageRequest pageRequest)
     {
         return showRepository.findByAverageRatingIsNotNullOrderByAverageRatingDesc(pageRequest);

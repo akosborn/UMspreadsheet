@@ -184,7 +184,7 @@
                 <div id="chart-data-div" class="col-md-6">
                     <div class="row" style="margin: 0">
                         <div id="top_show_chart_div" style="height: 240px; text-align: center;">
-                            <h2>Last 20 Shows</h2>
+                            <h2>Top Shows</h2>
                         </div>
                     </div>
                     <br/>
@@ -199,21 +199,21 @@
 
                 <script th:inline="javascript">
 
-                    var lastTwentyShows = [[${lastTwentyShows}]];
-                    var lastTwentyShowsSize = lastTwentyShows.length;
-                    var maxRating = d3.max(lastTwentyShows, function (d) { return d.averageRating; });
+                    var topTwentyShows = [[${topTwentyShows}]];
+                    var lastTwentyShowsSize = topTwentyShows.length;
+                    var maxRating = d3.max(topTwentyShows, function (d) { return d.averageRating; });
 
-                    var decimalFormat = d3.format(".1f");
+                    var roundToOnePlace = d3.format(".1f");
+                    var roundToTwoPlaces = d3.format(".2f");
                     var dateFormat = d3.timeFormat("%b %e, %y");
 
                     var width = parseInt(d3.select("#top_show_chart_div").style("width"));
                     var height = parseInt(d3.select("#top_show_chart_div").style("height"));
 
                     var barWidth = (width / 2) / lastTwentyShowsSize;
-                    console.log("barWidth: " + barWidth);
 
                     var yScale = d3.scaleLinear()
-                        .domain([0, 10])
+                        .domain([0, maxRating])
                         .range([0, height]);
 
 //                    var colorScale = d3.scaleLinear()
@@ -234,7 +234,8 @@
                         .offset([-10, 0])
                         .html(function (d)
                         {
-                            var text = "<span style='color:red'>" + mySqlToJsDate(d) + " " + d.city + ", " + d.state + "</span>";
+                            var text = "<p>" + roundToTwoPlaces(d.averageRating) + "</p><p style='color:#0080FF'>" + mySqlToJsDate(d) + " <span style='color: white'>" + d.city + ", " + d.state
+                                + "</span></p><p>" + d.venue + "</p>";
 
                             return text;
                         });
@@ -249,14 +250,14 @@
                     graph.call(toolTip);
 
                     var bars = graph.selectAll("rect")
-                        .data(lastTwentyShows)
+                        .data(topTwentyShows)
                         .enter()
                             .append("rect")
                             .attr("class", "bar")
                             .attr("width", barWidth)
                             .attr("height", 0)
                             .attr("fill", function (d) {
-                                var color = "grey";
+                                var color = "orangered";
                                 var averageRating = d.averageRating;
 
                                 if (averageRating >= 9)
@@ -273,10 +274,14 @@
                             .attr("y", height)
                             .attr("x", function (d, i) { return (2 * barWidth * i) })
                             .on("mouseover", toolTip.show)
-                            .on("mouseout", toolTip.hide);
+                            .on("mouseout", toolTip.hide)
+                            .on("click", function (d) {
+                                var url = window.location + "shows/" + d.id + "/" + d.slug;
+                                window.location = url;
+                            });
 
                     bars
-                        .data(lastTwentyShows)
+                        .data(topTwentyShows)
                         .transition()
                             .delay(function (d, i) { return (i * 50) })
                             .duration(1000)
@@ -284,17 +289,17 @@
                             .attr("height", function (d) { return yScale(d.averageRating) });
 
                     var labels = graph.selectAll("text")
-                        .data(lastTwentyShows)
+                        .data(topTwentyShows)
                         .enter()
                         .append("text")
-                        .text(function (d) { return decimalFormat(d.averageRating) })
+                        .text(function (d) { return roundToOnePlace(d.averageRating) })
                         .attr("fill", "black")
                         .style("font-size", "0px")
                         .attr("y", height)
                         .attr("x", function (d, i) { return (2 * barWidth * i) });
 
                     labels
-                        .data(lastTwentyShows)
+                        .data(topTwentyShows)
                         .transition()
                             .delay(function (d, i) { return (i * 50) })
                             .duration(1000)
@@ -315,20 +320,26 @@
                         width = parseInt(d3.select("#top_show_chart_div").style("width"));
                         height = parseInt(d3.select("#top_show_chart_div").style("height"));
 
+                        barWidth = (width / 2) / lastTwentyShowsSize;
+
                         d3.select("#top-show-graph")
                             .attr("width", width);
 
                         yScale = d3.scaleLinear()
-                            .domain([0, 10])
+                            .domain([0, maxRating])
                             .range([0, height]);
 
                         yAxis.scale(yScale);
 
-                        graph.call(yAxis);
+                        bars
+                            .data(topTwentyShows)
+                            .attr("x", function (d, i) { return (2 * barWidth * i) })
+                            .attr("height", function (d) { return yScale(d.averageRating) });
 
-                        graph.selectAll("rect")
-                            .data(lastTwentyShows)
-                            .attr("width", function (d) { return yScale(d.averageRating) });
+                        labels
+                            .data(topTwentyShows)
+                            .attr("y", function (d) { return height - (yScale(d.averageRating) - 10) })
+                            .attr("x", function (d, i) { return (2 * barWidth * i) });
                     }
 
                     d3.select(window).on("resize", resize);

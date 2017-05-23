@@ -43,4 +43,6 @@ public interface ShowRepository extends JpaRepository<Show, Long>, JpaSpecificat
 
     @Query(value = FIND_ALL_IDS, nativeQuery = true)
     List<BigInteger> findAllIds();
+
+    List<Show> findTop20ByOrderByAverageRatingDesc();
 }

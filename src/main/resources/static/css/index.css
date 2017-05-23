@@ -118,6 +118,7 @@ D3 VISUALIZATIONS
     background: rgba(0, 0, 0, 0.8);
     color: #fff;
     border-radius: 2px;
+    text-align: center;
 }
 
 /* Creates a small triangle extender for the tooltip */
@@ -144,5 +145,5 @@ D3 VISUALIZATIONS
 
 .bar:hover
 {
-    fill: orangered;
+    fill: #0080FF;
 }
