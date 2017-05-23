@@ -18,10 +18,8 @@ import org.thymeleaf.util.ObjectUtils;
 
 import javax.inject.Singleton;
 import javax.validation.Valid;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
 import java.security.Principal;
 import java.util.Map;
 
@@ -119,7 +117,8 @@ public class UserController
 
     private File convertToFile(MultipartFile file) throws IOException
     {
-        File convFile = new File(file.getOriginalFilename());
+        String[] tokens = file.getOriginalFilename().split("\\.(?=[^\\.]+$)");
+        File convFile = File.createTempFile("temp", "." + tokens[1]);
         FileOutputStream fos = new FileOutputStream(convFile);
         fos.write(file.getBytes());
         fos.close();
