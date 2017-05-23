@@ -36,7 +36,7 @@
 
             <div th:each="review : ${reviews}" th:object="${review}" class="comment-div" style="margin-bottom: 20px;">
                 <div class="comment-body-div">
-                    <h3 class="show-rating-and-medal" style="color: #F2C73A; margin-bottom: 5px;">
+                    <h3 class="show-rating-and-medal" style="color: #C5B358; margin-bottom: 5px;">
                         <i th:if="*{score gt 6.99 and score lt 8}" class="fa fa-trophy" style="color: #CD7F32;" aria-hidden="true"></i>
                         <i th:if="*{score gt 7.99 and score lt 9}" class="fa fa-trophy" style="color: #C0C0C0;" aria-hidden="true"></i>
                         <i th:if="*{score gt 8.99 and score lt 9.5}" class="fa fa-trophy" style="color: #FFD700;" aria-hidden="true"></i>

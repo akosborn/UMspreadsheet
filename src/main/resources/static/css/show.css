@@ -44,7 +44,7 @@ form .icon-button
 .slider-handle
 {
     background-image: none !important;
-    /*background-color: #F2C73A !important;*/
+    /*background-color: #C5B358 !important;*/
 }
 
 [id*="SliderLabel"]
@@ -71,7 +71,7 @@ SHOW HEADER
 
 #most-recent-show-header h2
 {
-    color: #F2C73A;
+    color: #C5B358;
 }
 
 #most-recent-show-header h2,
@@ -118,7 +118,7 @@ SHOW SET NAME
 ******************************************/
 .set-name
 {
-    color: #F2C73A;
+    color: #C5B358;
 }
 
 /******************************************
