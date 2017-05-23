@@ -176,7 +176,7 @@ public class ShowController
 
         redirectAttributes.addFlashAttribute("submitted", "true");
 
-        return "redirect:/shows/" + showId + "/" + slug + "#track" + savedTrackReview.getTrack().getId() + "Form";
+        return "redirect:/shows/" + showId + "/" + slug;
     }
 
     // Submit or update a comment

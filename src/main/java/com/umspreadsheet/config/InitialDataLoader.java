@@ -67,8 +67,8 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         // Find adminRole in database and assign it to user "andrew"
         Role adminRole = roleService.findByName("ROLE_ADMIN");
         user = new User();
-        user.setEmail("admin@umspreadsheet.com");
-        user.setUsername("admin");
+        user.setEmail("andrewosborn93@gmail.com");
+        user.setUsername("andrew4bama");
         user.setPassword("password");
         user.setIsNotBanned(true);
         user.setIsEnabled(true);
