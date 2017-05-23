@@ -11,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.Locale;
 import java.util.UUID;
@@ -123,7 +126,7 @@ public class AuthController
 
     @RequestMapping(value = "save-password", method = RequestMethod.POST)
     public String savePassword(@Valid PasswordDTO password, BindingResult bindingResult,
-                               RedirectAttributes redirectAttributes)
+                               RedirectAttributes redirectAttributes, HttpServletRequest request)
     {
         if (bindingResult.hasErrors())
         {
@@ -137,6 +140,8 @@ public class AuthController
 
         // Delete the token
         passwordResetTokenService.deleteByUser(user);
+
+        new SecurityContextLogoutHandler().logout(request, null, null);
 
         redirectAttributes.addFlashAttribute("reset", true);
 
