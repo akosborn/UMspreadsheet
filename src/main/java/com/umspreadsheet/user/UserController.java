@@ -88,6 +88,13 @@ public class UserController
                                @PathVariable String username,
                                RedirectAttributes redirectAttributes)
     {
+        if (multipartFile.isEmpty())
+        {
+            redirectAttributes.addFlashAttribute("uploadFailed", "Select a valid file.");
+
+            return "redirect:/user/" + username;
+        }
+
         Cloudinary cloudinary = new Cloudinary(cloudinaryCredentials);
 
         User retrievedUser = userService.findByUsername(username);

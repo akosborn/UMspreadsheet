@@ -20,10 +20,10 @@
             <div id="most-recent-show-header" th:object="${show}">
                 <h2 id="show-title" th:text="${#dates.format(show.date, 'yyyy/MM/dd') + ' ' + show.city + ', '  + show.state}"></h2>
                 <h2 id="show-rating-and-medal" class="pull-right">
-                    <i th:if="*{averageRating gt 6.99 and averageRating lt 8}" class="fa fa-trophy" style="color: #CD7F32;" aria-hidden="true"></i>
-                    <i th:if="*{averageRating gt 7.99 and averageRating lt 9}" class="fa fa-trophy" style="color: #C0C0C0;" aria-hidden="true"></i>
-                    <i th:if="*{averageRating gt 8.99 and averageRating lt 9.5}" class="fa fa-trophy" style="color: #FFD700;" aria-hidden="true"></i>
-                    <i th:if="*{averageRating gt 9.49}" class="fa fa-diamond" style="color: #B9F2FF;" aria-hidden="true"></i>
+                    <i th:if="*{averageRating ge 6 and averageRating lt 7}" class="fa fa-trophy" style="color: #CD7F32;" aria-hidden="true"></i>
+                    <i th:if="*{averageRating ge 7 and averageRating lt 8}" class="fa fa-trophy" style="color: #C0C0C0;" aria-hidden="true"></i>
+                    <i th:if="*{averageRating ge 8 and averageRating lt 9}" class="fa fa-trophy" style="color: #FFD700;" aria-hidden="true"></i>
+                    <i th:if="*{averageRating ge 9}" class="fa fa-diamond" style="color: #B9F2FF;" aria-hidden="true"></i>
                     <span th:if="*{averageRating != null}" th:text="*{#numbers.formatDecimal(averageRating, 1, 2)}">[0.00]</span>
                     <span th:if="*{averageRating == null}">No Rating</span>
                 </h2>
