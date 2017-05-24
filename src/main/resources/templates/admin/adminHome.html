@@ -15,20 +15,12 @@
 
     <div layout:fragment="content">
         <div class="container">
-            <h2>Admin</h2>
-
-            <div class="row">
-                <div id="profile-picture" class="dark-div">
-                    <img th:src="@{/images/avatar.svg}" style="height: 100px; width: auto; margin-bottom: 20px;"/>
-                    <p sec:authentication="name">[username]</p>
-                    <p th:text="${'Joined: ' + #dates.format(currentUser.joinedOn, 'yyyy-MM-dd')}">[join date]</p>
-                </div>
-            </div>
+            <h1 id="header-title">Admin</h1>
 
             <div class="row">
                 <div class="col-sm-12">
                     <div class="col-sm-12">
-                        <div class="col-md-3 col-sm-6 box">
+                        <div class="col-md-4 col-sm-6 box">
                             <div class="dark-div">
                                 <h3>Shows</h3>
                                 <hr>
@@ -36,7 +28,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-3 col-sm-6 box">
+                        <div class="col-md-4 col-sm-6 box">
                             <div class="dark-div">
                                 <h3>WormBlog</h3>
                                 <hr>
@@ -45,21 +37,15 @@
                             </div>
                         </div>
 
-                        <div sec:authorize="hasRole('ROLE_MANAGE_USERS_PRIVILEGE')" class="col-md-3 col-sm-6 box">
+                        <div sec:authorize="hasRole('ROLE_MANAGE_USERS_PRIVILEGE')" class="col-md-4 col-sm-6 box">
                             <div class="dark-div">
                                 <h3>Users</h3>
                                 <hr>
                                 <p><a th:href="@{/admin/manage-users}">Manage users</a></p>
+                                <p th:text="${'Total users: ' + totalUsers}"></p>
                             </div>
                         </div>
 
-                        <div sec:authorize="hasRole('ROLE_SEND_EMAIL_PRIVILEGE')" class="col-md-3 col-sm-6 box">
-                            <div class="dark-div">
-                                <h3>Communication</h3>
-                                <hr>
-                                <p>Send email</p>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>

@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
+import java.text.ParseException;
 import java.util.*;
 
 @Controller
@@ -69,6 +70,9 @@ public class AdminController
                 .getUsername();
         User user = userService.findByUsername(username);
         model.addAttribute("currentUser", user);
+
+        Long totalUsers = userService.countUsers();
+        model.addAttribute("totalUsers", totalUsers);
 
         return "/admin/adminHome";
     }

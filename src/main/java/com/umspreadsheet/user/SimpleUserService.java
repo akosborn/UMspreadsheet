@@ -172,4 +172,9 @@ public class SimpleUserService implements UserService
         PasswordResetToken passwordResetToken = new PasswordResetToken(token, user);
         passwordResetTokenService.save(passwordResetToken);
     }
+
+    public Long countUsers()
+    {
+        return userRepository.count();
+    }
 }
