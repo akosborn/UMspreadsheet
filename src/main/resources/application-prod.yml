@@ -7,7 +7,7 @@ spring:
     password: smellthemitten1348
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     Show-sql: false
   thymeleaf:
     cache: true
