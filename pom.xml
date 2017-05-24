@@ -5,11 +5,11 @@
 
 	<groupId>com.umspreadsheet</groupId>
 	<artifactId>umspreadsheet</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<version>1.0.0-RELEASE</version>
+	<packaging>war</packaging>
 
-	<name>umspreadsheet</name>
-	<description>Demo project for Spring Boot</description>
+	<name>UMspreadsheet</name>
+	<description>Rate Umphrey's McGee shows</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -183,6 +183,13 @@
 			<artifactId>jsoup</artifactId>
 			<version>1.10.2</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
+
 	</dependencies>
 
 	<build>
