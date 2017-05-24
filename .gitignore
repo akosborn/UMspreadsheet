@@ -26,3 +26,4 @@ nbdist/
 ### Config ###
 application-linux-dev.yaml
 application-windows-dev.yaml
+application.yaml
