@@ -29,4 +29,6 @@ public interface TrackRepository extends JpaRepository<Track, Long>, JpaSpecific
     List<BigInteger> findAllIds();
 
     List<Track> findTop20ByOrderByAverageRatingDesc();
+
+    List<Track> findByShow_Id(Long id);
 }

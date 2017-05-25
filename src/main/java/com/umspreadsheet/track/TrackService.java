@@ -60,4 +60,9 @@ public class TrackService
     {
         return trackRepository.findAllIds();
     }
+
+    public List findByShowId(Long showId)
+    {
+        return trackRepository.findByShow_Id(showId);
+    }
 }

@@ -4,7 +4,6 @@ import com.umspreadsheet.criteria.SearchCriteria;
 import com.umspreadsheet.exception.DataNotFoundException;
 import com.umspreadsheet.helper.ControllerHelper;
 import com.umspreadsheet.review.TrackReviewService;
-import com.umspreadsheet.user.SimpleUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,11 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
 import java.util.List;
@@ -144,5 +139,16 @@ public class TrackController
         List<BigInteger> idList = trackService.findAllIds();
 
         return idList.get(new Random().nextInt(idList.size())).longValue();
+    }
+
+
+    /*
+    * Angular endpoints
+    */
+
+    @RequestMapping(value = "/api/tracks")
+    public @ResponseBody List findTracksForSingleShow()
+    {
+        return trackService.findByShowId(Long.valueOf(400));
     }
 }
