@@ -205,26 +205,26 @@ public class Track
         return segueCode;
     }
 
-    public void setSegueCode(int segueCode)
-    {
-        if (segueCode == 1)
-        {
-            setSegue(true);
-            setFluidSegue(false);
-        }
-        else if (segueCode == 2)
-        {
-            setFluidSegue(true);
-            setSegue(false);
-        }
-        else if (segueCode == 0)
-        {
-            setFluidSegue(false);
-            setSegue(false);
-        }
-
-        this.segueCode = segueCode;
-    }
+//    public void setSegueCode(int segueCode)
+//    {
+//        if (segueCode == 1)
+//        {
+//            setSegue(true);
+//            setFluidSegue(false);
+//        }
+//        else if (segueCode == 2)
+//        {
+//            setFluidSegue(true);
+//            setSegue(false);
+//        }
+//        else if (segueCode == 0)
+//        {
+//            setFluidSegue(false);
+//            setSegue(false);
+//        }
+//
+//        this.segueCode = segueCode;
+//    }
 
     public String getType()
     {

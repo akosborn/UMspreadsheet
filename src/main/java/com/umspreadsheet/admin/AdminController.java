@@ -278,4 +278,14 @@ public class AdminController
 
         return username;
     }
+
+    /*
+    * Angular
+    */
+
+    @RequestMapping(value = "/edit-show-angular")
+    public String angularEditShowPage()
+    {
+        return "/admin/editShowAngular";
+    }
 }

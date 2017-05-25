@@ -17,6 +17,7 @@ import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 import javax.inject.Inject;
@@ -77,13 +78,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                     .authorizeRequests()
                         .antMatchers("/", "/signin/**", "/signup/**", "/resources/**", "/disconnect/facebook",
                                 "/shows/**", "/songs/**", "/wormblog/**", "/about/**", "/signup-confirm", "/song/*/*",
-                                "/user/*", "/reset-password", "/change-password", "/api/**").permitAll()
-                    .antMatchers("/admin").hasRole("MOD_PRIVILEGE")
+                                "/user/*", "/reset-password", "/change-password").permitAll()
+                    .antMatchers("/admin", "/admin/edit-show-angular", "/api/**").hasRole("MOD_PRIVILEGE")
                     .antMatchers("/admin/manage-users/**").hasRole("MANAGE_USERS_PRIVILEGE")
                     .antMatchers("/update-password", "/save-password").hasAuthority("CHANGE_PASSWORD_PRIVILEGE")
                     .antMatchers("/**").authenticated()
                 .and()
-                    .rememberMe();
+                    .rememberMe()
+                .and()
+                    .csrf()
+                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+
 
                 http.sessionManagement()
                         .maximumSessions(2)

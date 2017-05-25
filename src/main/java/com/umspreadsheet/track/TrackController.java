@@ -147,8 +147,32 @@ public class TrackController
     */
 
     @RequestMapping(value = "/api/tracks")
-    public @ResponseBody List findTracksForSingleShow()
+    public @ResponseBody List findTracks()
     {
-        return trackService.findByShowId(Long.valueOf(400));
+        List<Track> tracks = trackService.findByShowId(Long.valueOf(400));
+
+        return tracks;
+    }
+
+    @RequestMapping(value = "/api/tracks/{id}", method = RequestMethod.POST)
+    public @ResponseBody Track addTrack(@RequestBody Track track)
+    {
+        track.setId((long) 15000);
+
+        return trackService.save(track);
+    }
+
+    @RequestMapping(value = "/api/tracks/{id}", method = RequestMethod.PUT)
+    public @ResponseBody Track updateTrack(@RequestBody Track track, @PathVariable Long id)
+    {
+        System.out.println(track.getSegue());
+
+        return trackService.save(track);
+    }
+
+    @RequestMapping(value = "/api/tracks/{id}", method = RequestMethod.DELETE)
+    public void deleteTrack(@PathVariable Long id)
+    {
+        trackService.delete(id);
     }
 }

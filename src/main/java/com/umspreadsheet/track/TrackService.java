@@ -65,4 +65,9 @@ public class TrackService
     {
         return trackRepository.findByShow_Id(showId);
     }
+
+    public void delete(Long id)
+    {
+        trackRepository.delete(id);
+    }
 }

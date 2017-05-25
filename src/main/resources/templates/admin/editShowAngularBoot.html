@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorator="layouts/site"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:ng="http://angularjs.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>UMSpreadsheet</title>
+
+    <link rel="stylesheet" th:href="@{/css/admin/editShow.css}" />
+    <style type="text/css">
+        [ng\:cloak], [ng-cloak], .ng-cloak
+        {
+            display: none !important;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div layout:fragment="content" ng-app="UMspreadsheet">
+        <div class="container">
+
+            <h1 id="header-title">Angular Test for Show Editing</h1>
+
+            <div ng-controller="edit-show" ng-cloak class="ng-cloak">
+                <p></p>
+            </div>
+
+        </div>
+    </div>
+
+    <th:block layout:fragment="script">
+        <script th:src="@{/webjars/angularjs/1.6.4/angular.min.js}"></script>
+        <script th:src="@{/webjars/angular-route/1.6.4/angular-route.min.js}"></script>
+    </th:block>
+</body>
+</html>
