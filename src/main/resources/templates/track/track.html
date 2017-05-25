@@ -39,7 +39,7 @@
                     <h3 class="show-rating-and-medal" style="color: #C5B358; margin-bottom: 5px;">
                         <i th:if="*{track.averageRating ge 6 and track.averageRating lt 7}" class="fa fa-trophy" style="color: #CD7F32;" aria-hidden="true"></i>
                         <i th:if="*{track.averageRating ge 7 and track.averageRating lt 8}" class="fa fa-trophy" style="color: #C0C0C0;" aria-hidden="true"></i>
-                        <i th:if="*{averageRating ge 8 and track.averageRating lt 9}" class="fa fa-trophy" style="color: #FFD700;" aria-hidden="true"></i>
+                        <i th:if="*{track.averageRating ge 8 and track.averageRating lt 9}" class="fa fa-trophy" style="color: #FFD700;" aria-hidden="true"></i>
                         <i th:if="*{track.averageRating ge 9}" class="fa fa-diamond" style="color: #B9F2FF;" aria-hidden="true"></i>
                         <span th:if="*{score != null}" th:text="*{#numbers.formatDecimal(score, 1, 2)}">[0.00]</span>
                         <span th:if="*{score == null}">No Rating</span>
