@@ -4,6 +4,8 @@ import com.umspreadsheet.criteria.SearchCriteria;
 import com.umspreadsheet.exception.DataNotFoundException;
 import com.umspreadsheet.helper.ControllerHelper;
 import com.umspreadsheet.review.TrackReviewService;
+import com.umspreadsheet.show.Show;
+import com.umspreadsheet.show.ShowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -22,13 +25,15 @@ public class TrackController
 {
     private TrackService trackService;
     private TrackReviewService trackReviewService;
+    private ShowService showService;
 
     @Autowired
     public TrackController(TrackService trackService,
-                           TrackReviewService trackReviewService)
+                           TrackReviewService trackReviewService, ShowService showService)
     {
         this.trackService = trackService;
         this.trackReviewService = trackReviewService;
+        this.showService = showService;
     }
 
     // Top-rated songs page
@@ -147,26 +152,48 @@ public class TrackController
     */
 
     @RequestMapping(value = "/api/tracks")
-    public @ResponseBody List findTracks()
+    public @ResponseBody List findAllTracks()
     {
-        List<Track> tracks = trackService.findByShowId(Long.valueOf(400));
+        List<Track> tracks = trackService.findByShowId((long) 304);
 
         return tracks;
+    }
+
+    @RequestMapping(value = "/api/tracks/{id}")
+    public @ResponseBody Track findATrack(@PathVariable Long id)
+    {
+        Track track = trackService.findById((long) 304);
+
+        return track;
+    }
+
+    @RequestMapping(value = "/api/shows/{id}")
+    public @ResponseBody Show findShow(@PathVariable Long id)
+    {
+        Show show = showService.findById(id);
+
+        return show;
+    }
+
+    @RequestMapping(value = "/api/shows")
+    public @ResponseBody List findShow()
+    {
+        List<Show> shows = new ArrayList<>();
+        shows.add(showService.findById((long) 400));
+        shows.add(showService.findById((long) 401));
+
+        return shows;
     }
 
     @RequestMapping(value = "/api/tracks/{id}", method = RequestMethod.POST)
     public @ResponseBody Track addTrack(@RequestBody Track track)
     {
-        track.setId((long) 15000);
-
-        return trackService.save(track);
+        return new Track();
     }
 
     @RequestMapping(value = "/api/tracks/{id}", method = RequestMethod.PUT)
     public @ResponseBody Track updateTrack(@RequestBody Track track, @PathVariable Long id)
     {
-        System.out.println(track.getSegue());
-
         return trackService.save(track);
     }
 

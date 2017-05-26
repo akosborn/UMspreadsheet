@@ -139,8 +139,7 @@ public class AdminController
 
         // Update variables that may have changed
         oldTrack.setSong(track.getSong());
-        oldTrack.setSegue(track.getSegue());
-        oldTrack.setFluidSegue(track.getFluidSegue());
+        oldTrack.setTransition(track.getTransition());
         oldTrack.setJam(track.getJam());
         oldTrack.setLength(track.getLength());
         oldTrack.setNotes(track.getNotes());

@@ -1,5 +1,6 @@
 package com.umspreadsheet.set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.umspreadsheet.show.Show;
 import com.umspreadsheet.track.Track;
 
@@ -22,6 +23,7 @@ public class Set
     private Double averageRating;
 
     @ManyToOne
+    @JsonIgnore
     private Show show;
 
     public Long getId()

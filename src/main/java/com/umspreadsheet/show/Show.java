@@ -34,7 +34,6 @@ public class Show
     @OneToMany(mappedBy = "show", fetch = FetchType.LAZY)
     private List<ShowReview> showReviews;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "show", fetch = FetchType.LAZY)
     private List<Set> sets;
     private Double averageRating;

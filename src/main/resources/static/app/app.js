@@ -1,6 +1,5 @@
-(function(angular)
-{
-    angular.module("myApp.controllers", []);
-    angular.module("myApp.services", []);
-    angular.module("myApp", ["ngResource", "myApp.controllers", "myApp.services"]);
+(function (angular) {
+    angular.module("UMspreadsheet.controllers", []);
+    angular.module("UMspreadsheet.services", []);
+    angular.module("UMspreadsheet", ["ngResource", "UMspreadsheet.controllers", "UMspreadsheet.services"]);
 }(angular));

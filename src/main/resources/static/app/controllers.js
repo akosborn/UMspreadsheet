@@ -1,30 +1,15 @@
-(function(angular) {
-    var AppController = function($scope, Track) {
-        Track.query(function(response) {
-            $scope.tracks = response ? response : [];
-        });
+(function (angular) {
+    var ShowController = function ($scope, Show) {
 
-        $scope.addTrack = function(song) {
-            new Track({
-                song: song,
-                segue: false
-            }).$save(function(track) {
-                $scope.tracks.push(track);
-            });
-            $scope.newTrack = "";
-        };
+        Show.get({id: 401}, function (response) {
+            $scope.show = response ? response : {};
+        })
 
-        $scope.updateTrack = function(track) {
-            track.$update();
-        };
-
-        $scope.deleteTrack = function(track) {
-            track.$remove(function() {
-                $scope.tracks.splice($scope.tracks.indexOf(track), 1);
-            });
-        };
+        // Show.query(function (response) {
+        //     $scope.shows = response ? response : [];
+        // });
     };
 
-    AppController.$inject = ['$scope', 'Track'];
-    angular.module("myApp.controllers").controller("AppController", AppController);
+    ShowController.$inject = ['$scope', 'Show'];
+    angular.module("UMspreadsheet.controllers").controller("ShowController", ShowController);
 }(angular));

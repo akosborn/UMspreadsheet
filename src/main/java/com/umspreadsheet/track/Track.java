@@ -2,6 +2,7 @@ package com.umspreadsheet.track;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.umspreadsheet.helper.ControllerHelper;
+import com.umspreadsheet.model.Transition;
 import com.umspreadsheet.review.TrackReviewForm;
 import com.umspreadsheet.set.Set;
 import com.umspreadsheet.review.TrackReview;
@@ -21,6 +22,7 @@ public class Track
     private Long id;
 
     @ManyToOne
+    @JsonIgnore
     private Show show;
 
     @ManyToOne
@@ -31,18 +33,14 @@ public class Track
     private String song;
     private Long length;
 
-    @Column(columnDefinition = "TINYINT(1)")
-    private Boolean segue;
+    @Enumerated(value = EnumType.STRING)
+    private Transition transition;
 
-    @Column(columnDefinition = "TINYINT(1)")
-    private Boolean fluidSegue;
     private Double averageRating;
+
     private String notes;
     private String type;
     private String jam;
-
-    @Transient
-    private int segueCode;
 
     @JsonIgnore
     @OneToMany(mappedBy = "track")
@@ -150,26 +148,6 @@ public class Track
         this.length = length;
     }
 
-    public Boolean getSegue()
-    {
-        return segue;
-    }
-
-    public void setSegue(Boolean segue)
-    {
-        this.segue = segue;
-    }
-
-    public Boolean getFluidSegue()
-    {
-        return fluidSegue;
-    }
-
-    public void setFluidSegue(Boolean fluidSegue)
-    {
-        this.fluidSegue = fluidSegue;
-    }
-
     public Double getAverageRating()
     {
         return averageRating;
@@ -200,32 +178,6 @@ public class Track
         this.reviews = reviews;
     }
 
-    public int getSegueCode()
-    {
-        return segueCode;
-    }
-
-//    public void setSegueCode(int segueCode)
-//    {
-//        if (segueCode == 1)
-//        {
-//            setSegue(true);
-//            setFluidSegue(false);
-//        }
-//        else if (segueCode == 2)
-//        {
-//            setFluidSegue(true);
-//            setSegue(false);
-//        }
-//        else if (segueCode == 0)
-//        {
-//            setFluidSegue(false);
-//            setSegue(false);
-//        }
-//
-//        this.segueCode = segueCode;
-//    }
-
     public String getType()
     {
         return type;
@@ -251,20 +203,13 @@ public class Track
         return ControllerHelper.toSlug(song) + "-" + ControllerHelper.dateToString(show.getDate());
     }
 
-    @Override
-    public String toString()
+    public Transition getTransition()
     {
-        return "Track{" +
-                "id=" + id +
-                ", show=" + show +
-                ", set=" + set +
-                ", showTrackNumber=" + showTrackNumber +
-                ", song='" + song + '\'' +
-                ", length=" + length +
-                ", segue=" + segue +
-                ", averageRating=" + averageRating +
-                ", notes='" + notes + '\'' +
-                ", reviews=" + reviews +
-                '}';
+        return transition;
+    }
+
+    public void setTransition(Transition transition)
+    {
+        this.transition = transition;
     }
 }

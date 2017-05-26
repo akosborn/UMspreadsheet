@@ -1,5 +1,6 @@
 package com.umspreadsheet.parse;
 
+import com.umspreadsheet.model.Transition;
 import com.umspreadsheet.set.Set;
 import com.umspreadsheet.set.SetService;
 import com.umspreadsheet.show.Show;
@@ -84,13 +85,12 @@ public class ATUParser
                             if (songAnchor.nextSibling().nodeName().equals("sup"))
                                 track.setNotes(songAnchor.nextSibling().attr("title"));
 
-                            track.setSegue(false);
-                            track.setFluidSegue(false);
+                            track.setTransition(Transition.NONE);
 
                             if (transition.contains("&gt;"))
-                                track.setSegue(true);
+                                track.setTransition(Transition.ROUTINE);
                             else if (transition.contains("-&gt;"))
-                                track.setFluidSegue(true);
+                                track.setTransition(Transition.IMPROV);
 
                             tracks.add(track);
                         }
