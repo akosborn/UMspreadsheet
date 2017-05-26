@@ -162,7 +162,7 @@ public class TrackController
     @RequestMapping(value = "/api/tracks/{id}")
     public @ResponseBody Track findATrack(@PathVariable Long id)
     {
-        Track track = trackService.findById((long) 304);
+        Track track = trackService.findById(id);
 
         return track;
     }

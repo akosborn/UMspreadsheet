@@ -1,7 +1,7 @@
 (function (angular) {
     var ShowFactory =  function ($resource) {
         var data = $resource('/api/shows/:id', {
-            id: "@id"
+            id: '@id'
         }, {
             update: {
                 method: 'PUT'
@@ -13,6 +13,22 @@
 
     ShowFactory.$inject = ['$resource'];
     angular.module('UMspreadsheet.services').factory("Show", ShowFactory);
+
+
+    var TrackFactory = function ($resource) {
+        var data = $resource('/api/tracks/:id', {
+            id: '@id'
+        }, {
+            update: {
+                method: 'PUT'
+            }
+        });
+
+        return data;
+    };
+
+    TrackFactory.$inject = ['$resource'];
+    angular.module('UMspreadsheet.services').factory("Track", TrackFactory);
 
 //     trackFactory.$inject = ["$resource"];
 //     serviceModule.factory("Track", trackFactory);

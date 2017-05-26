@@ -12,4 +12,15 @@
 
     ShowController.$inject = ['$scope', 'Show'];
     angular.module("UMspreadsheet.controllers").controller("ShowController", ShowController);
+
+
+    var TrackController = function ($scope, Track) {
+
+        Track.get({id: 6864}, function (response) {
+            $scope.track = response ? response : [];
+        })
+    };
+
+    TrackController.$inject = ['$scope', 'Track'];
+    angular.module("UMspreadsheet.controllers").controller("TrackController", TrackController);
 }(angular));
