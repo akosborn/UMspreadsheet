@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" th:href="@{/css/admin/editShow.css}" />
     <link rel="stylesheet" th:href="@{/css/bootstrap-duration-picker.css}"/>
+    <link rel="stylesheet" th:href="@{/css/timingfield.css}"/>
 
     <style type="text/css">
         [ng\:cloak], [ng-cloak],
@@ -24,48 +25,99 @@
 
 <body>
     <div layout:fragment="content" data-ng-app="UMspreadsheet">
-        <div class="container">
-            <h1 id="header-title">Spring Boot Angular Tutorial</h1>
+        <div class="container ng-cloak" data-ng-controller="ShowController" ng-cloak>
+            <h1 id="header-title">{{show.date | date:'yyyy/MM/dd' + ' ' + show.city + ', ' + show.state}}</h1>
+            <h1 id="header-title" style="margin-top: 1px;">{{show.venue}}</h1>
 
-            <!--<div data-ng-controller="home" ng-cloak class="ng-cloak">-->
-                <!--<p>The ID is {{track.id}}</p>-->
-                <!--<p>The content is {{track.song}}</p>-->
-            <!--</div>-->
-            <!--<hr/>-->
-            <div data-ng-controller="ShowController" ng-cloak class="ng-cloak">
-                <p>The show ID is {{show.id}}</p>
-                <p>The show city is {{show.city}}</p>
+            <div>
 
                 <div data-ng-repeat="set in show.sets" class="col-xs-12"  style="background-color: #272D38;">
                     <p>{{set.name}}</p>
 
-                    <form data-ng-repeat="track in set.tracks" data-ng-attr-id="{{'track-' + track.id}}" class="form"
+                    <form data-ng-repeat="track in set.tracks" data-ng-attr-id="{{'track-' + track.id}}" class="form row"
                           data-ng-controller="TrackController" role="form" data-ng-submit="addTrack(newTrack)">
 
                         <div class="col-sm-5 col-md-3 form-group">
-                            <label data-ng-attr-for="{{'song-' + track.id }}">Song name:</label>
-                            <input data-ng-attr-id="{{'song-' + track.id }}" class="form-control" type="text" data-ng-model="track.song">
-                        </div>
-                        <div class="col-sm-4 col-md-2 form-group">
-                            <label data-ng-attr-for="{{'duration-' + track.id }}">Duration:</label>
-                            <input data-ng-attr-id="{{'duration-' + track.id }}" class="form-control duration" type="text">
+                            <label data-ng-attr-for="{{'song-' + track.id }}">Song name</label>
+                            <input data-ng-attr-id="{{'song-' + track.id }}" class="form-control" type="text"
+                                   data-ng-model="track.song" data-ng-change="updateTrack(track)">
                         </div>
 
-                        <div class="radio">
-                            <label>
-                                <input type="radio" value="NONE" name="transition"
-                                       data-ng-model="track.transition" data-ng-change="updateTrack(track)" />None<br/>
-                            </label>
-                            <label>
-                                <input type="radio" value="ROUTINE" name="transition"
-                                       data-ng-model="track.transition" data-ng-change="updateTrack(track)" />&gt;<br/>
-                            </label>
-                            <label>
-                                <input type="radio" value="IMPROV" name="transition"
-                                       data-ng-model="track.transition" data-ng-change="updateTrack(track)" />&rarr;<br/>
-                            </label>
+                        <div class="form-group col-md-2">
+                            <label style="padding-left: 3px">Duration</label>
+                            <input after-tracks-render type="text" class="form-control">
                         </div>
 
+                        <!--<div class="form-group col-sm-3">-->
+                            <!--<label data-ng-attr-for="{{'duration-' + track.id}}">Duration:</label>-->
+                            <!--<input after-tracks-render type="text" class="form-control" data-ng-attr-id="{{'duration-' + track.id}}">-->
+                        <!--</div>-->
+
+                        <!--<div class="col-xs-6 col-sm-3 col-md-2 form-group">-->
+                            <!--<label data-ng-attr-for="{{'min-' + track.id }}">Duration:</label>-->
+                            <!--<div class="input-group">-->
+                                <!--<input data-ng-attr-id="{{'min-' + track.id }}" class="form-control minute-input" type="text"-->
+                                       <!--data-ng-attr-aria-describedby="{{'min-addon-' + track.id }}">-->
+                                <!--<span data-ng-attr-id="{{'min-addon-' + track.id }}" class="input-group-addon">m</span>-->
+                            <!--</div>-->
+                        <!--</div>-->
+
+                        <!--<div class="col-xs-6 col-sm-3 col-md-2 form-group">-->
+                            <!--<label data-ng-attr-for="{{'sec-' + track.id }}">&nbsp;</label>-->
+                            <!--<div class="input-group">-->
+                                <!--<input data-ng-attr-id="{{'sec-' + track.id }}" class="form-control second-input" type="text"-->
+                                       <!--data-ng-attr-aria-describedby="{{'sec-addon-' + track.id }}">-->
+                                <!--<span data-ng-attr-id="{{'sec-addon-' + track.id }}" class="input-group-addon">s</span>-->
+                            <!--</div>-->
+                        <!--</div>-->
+
+                        <div class="col-md-2" style="margin-bottom: 15px; padding-top: 30px; height: 59px; display: flex; align-content: center; align-items: center;">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" value="NONE" name="transition"
+                                           data-ng-model="track.transition" data-ng-change="updateTrack(track)" />None<br/>
+                                </label>
+                                <label>
+                                    <input type="radio" value="ROUTINE" name="transition"
+                                           data-ng-model="track.transition" data-ng-change="updateTrack(track)" />&gt;<br/>
+                                </label>
+                                <label>
+                                    <input type="radio" value="IMPROV" name="transition"
+                                           data-ng-model="track.transition" data-ng-change="updateTrack(track)" />&rarr;<br/>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-2">
+                            <label for="type" class="control-label">Type</label>
+                            <select id="type" class="form-control" data-ng-model="track.type" data-ng-change="updateTrack(track)">
+                                <option value="NONE">None</option>
+                                <option value="JIMMYSTEWART">Jimmy Stewart</option>
+                                <option value="LYRICALSTEW">Lyrical Stew</option>
+                                <option value="COVER">Cover</option>
+                                <option value="MASHUP">Mashup</option>
+                                <option value="NEWSONG">New song</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-1">
+                            <label class="control-label" for="jam">Jam</label>
+                            <select class="form-control" id="jam" data-ng-model="track.jam" data-ng-change="updateTrack(track)">
+                                <option value="NONE">None</option>
+                                <option value="BLISS">Bliss</option>
+                                <option value="DANCE">Dance</option>
+                                <option value="DARK">Dark</option>
+                                <option value="EMOTIONAL">Emotional</option>
+                                <option value="FUNK">Funk</option>
+                                <option value="INDUSTRIAL">Industrial</option>
+                                <option value="JAZZ">Jazz</option>
+                                <option value="METAL">Metal</option>
+                                <option value="PROG">Prog</option>
+                                <option value="REGGAE">Reggae</option>
+                                <option value="ROCK">Rock</option>
+                                <option value="SOARING">Soaring</option>
+                            </select>
+                        </div>
                         <!--<div style="height: 81.6px; width: 40px; display: inline-block;">-->
                         <!--<label class="checkbox-inline"><input type="checkbox">&gt;</label>-->
                         <!--<label class="checkbox-inline" style="margin-left: 0;"><input type="checkbox">-></label>-->
@@ -83,54 +135,18 @@
                 </div>
 
             </div>
-
-            <!--<hr/>-->
-
-            <!--<div data-ng-controller="TrackController" ng-cloak class="ng-cloak" data-ng-model="track">-->
-                <!--<p>The track ID is {{track.id}}</p>-->
-                <!--<p>The track name is {{track.song}}</p>-->
-            <!--</div>-->
         </div>
-
-
-
-
-
-        <!--<div class="container" data-ng-controller="ShowController">-->
-
-            <!--<h1 id="header-title">{{show.date + ' ' + show.city + ', ' + show.state}}</h1>-->
-
-            <!--<div class="alert alert-info" role="alert" data-ng-hide="show">-->
-                <!--There are no items yet.-->
-            <!--</div>-->
-
-            <!---->
-        <!--</div>-->
     </div>
 
 
     <th:block layout:fragment="script">
 
         <script type="text/javascript" th:inline="javascript">
-            var showId = 401;
+            var showId = [[${showId}]];
         </script>
 
-        <script>
-            $(function () {
-                $('.duration').durationPicker({
-                    showDays: false,
-                    showHours: false,
-                    showSeconds: true
-//                    onChanged: function (newVal) {
-////                        var elementId = this.id;
-////                        var trackNumber = elementId.split('-')[1];
-//
-//                    }
-                });
-
-                $('#bdp-hours-label').parent().addClass('hidden');
-            })
-        </script>
+        <script th:src="@{/js/bootstrap-duration-picker.js}"></script>
+        <script th:src="@{/js/timingfield.js}"></script>
 
         <script th:src="@{/webjars/angularjs/1.6.4/angular.min.js}"></script>
         <script th:src="@{/webjars/angular-route/1.6.4/angular-route.min.js}"></script>
@@ -141,7 +157,6 @@
         <script th:src="@{/app/services.js}"></script>
         <script th:src="@{/app/controllers.js}"></script>
 
-        <script th:src="@{/js/bootstrap-duration-picker.js}"></script>
     </th:block>
 </body>
 </html>

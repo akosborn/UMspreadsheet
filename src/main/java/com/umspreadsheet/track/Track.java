@@ -2,7 +2,9 @@ package com.umspreadsheet.track;
 
 import com.fasterxml.jackson.annotation.*;
 import com.umspreadsheet.helper.ControllerHelper;
+import com.umspreadsheet.model.Jam;
 import com.umspreadsheet.model.Transition;
+import com.umspreadsheet.model.Type;
 import com.umspreadsheet.review.TrackReviewForm;
 import com.umspreadsheet.set.Set;
 import com.umspreadsheet.review.TrackReview;
@@ -39,8 +41,12 @@ public class Track
     private Double averageRating;
 
     private String notes;
-    private String type;
-    private String jam;
+
+    @Enumerated(value = EnumType.STRING)
+    private Type type;
+
+    @Enumerated(value = EnumType.STRING)
+    private Jam jam;
 
     @JsonIgnore
     @OneToMany(mappedBy = "track")
@@ -178,22 +184,22 @@ public class Track
         this.reviews = reviews;
     }
 
-    public String getType()
+    public Type getType()
     {
         return type;
     }
 
-    public void setType(String type)
+    public void setType(Type type)
     {
         this.type = type;
     }
 
-    public String getJam()
+    public Jam getJam()
     {
         return jam;
     }
 
-    public void setJam(String jam)
+    public void setJam(Jam jam)
     {
         this.jam = jam;
     }

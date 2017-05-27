@@ -6,10 +6,6 @@
         Show.get({id: showId}, function (response) {
             $scope.show = response ? response : {};
         })
-
-        // Show.query(function (response) {
-        //     $scope.shows = response ? response : [];
-        // });
     };
 
     ShowController.$inject = ['$scope', '$window', 'Show'];
@@ -23,9 +19,7 @@
         // })
 
         $scope.updateTrack = function (track) {
-            console.log(track);
             Track.update({id: track.id}, track);
-            console.log(track);
         }
     };
 

@@ -163,20 +163,9 @@ public class AdminController
         if (show == null)
             throw new DataNotFoundException("Show with id=" + showId + " not found.");
 
-        // Find the requested show using the showID request parameter
-        model.addAttribute("show", showService.findById(showId));
+        model.addAttribute("showId", show.getId());
 
-        // Create and add SetDTO to be used in setAddForm
-        SetDTO setDTO = new SetDTO();
-        setDTO.setShowId(showId);
-        model.addAttribute("set", setDTO);
-
-        // Create and add Track to be used in trackAddForm
-        Track track = new Track();
-        track.setShowId(showId);
-        model.addAttribute("track", track);
-
-        return "/admin/editShow";
+        return "/admin/editShowAngular";
     }
 
     @RequestMapping(value = "/publish-post")
@@ -283,8 +272,10 @@ public class AdminController
     */
 
     @RequestMapping(value = "/edit-show-angular")
-    public String angularEditShowPage()
+    public String angularEditShowPage(Model model)
     {
+        model.addAttribute("showId", 401);
+
         return "/admin/editShowAngular";
     }
 }

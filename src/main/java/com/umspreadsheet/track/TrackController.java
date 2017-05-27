@@ -194,8 +194,6 @@ public class TrackController
     @RequestMapping(value = "/api/tracks/{id}", method = RequestMethod.PUT)
     public @ResponseBody Track updateTrack(@RequestBody Track track, @PathVariable Long id)
     {
-        System.out.println(track);
-
         return trackService.save(track);
     }
 
