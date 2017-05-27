@@ -16,15 +16,15 @@
 
 
     var TrackFactory = function ($resource) {
-        var data = $resource('/api/tracks/:id', {
-            id: '@id'
-        }, {
-            update: {
+        return $resource('/api/tracks/:id', null,
+            {
+            'update': {
                 method: 'PUT'
+            },
+            remove: {
+                method: 'DELETE'
             }
         });
-
-        return data;
     };
 
     TrackFactory.$inject = ['$resource'];

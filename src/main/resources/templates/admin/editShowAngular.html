@@ -32,17 +32,64 @@
                 <!--<p>The content is {{track.song}}</p>-->
             <!--</div>-->
             <!--<hr/>-->
-            <div data-ng-controller="ShowController" ng-cloak class="ng-cloak" data-ng-model="show">
+            <div data-ng-controller="ShowController" ng-cloak class="ng-cloak">
                 <p>The show ID is {{show.id}}</p>
                 <p>The show city is {{show.city}}</p>
+
+                <div data-ng-repeat="set in show.sets" class="col-xs-12"  style="background-color: #272D38;">
+                    <p>{{set.name}}</p>
+
+                    <form data-ng-repeat="track in set.tracks" data-ng-attr-id="{{'track-' + track.id}}" class="form"
+                          data-ng-controller="TrackController" role="form" data-ng-submit="addTrack(newTrack)">
+
+                        <div class="col-sm-5 col-md-3 form-group">
+                            <label data-ng-attr-for="{{'song-' + track.id }}">Song name:</label>
+                            <input data-ng-attr-id="{{'song-' + track.id }}" class="form-control" type="text" data-ng-model="track.song">
+                        </div>
+                        <div class="col-sm-4 col-md-2 form-group">
+                            <label data-ng-attr-for="{{'duration-' + track.id }}">Duration:</label>
+                            <input data-ng-attr-id="{{'duration-' + track.id }}" class="form-control duration" type="text">
+                        </div>
+
+                        <div class="radio">
+                            <label>
+                                <input type="radio" value="NONE" name="transition"
+                                       data-ng-model="track.transition" data-ng-change="updateTrack(track)" />None<br/>
+                            </label>
+                            <label>
+                                <input type="radio" value="ROUTINE" name="transition"
+                                       data-ng-model="track.transition" data-ng-change="updateTrack(track)" />&gt;<br/>
+                            </label>
+                            <label>
+                                <input type="radio" value="IMPROV" name="transition"
+                                       data-ng-model="track.transition" data-ng-change="updateTrack(track)" />&rarr;<br/>
+                            </label>
+                        </div>
+
+                        <!--<div style="height: 81.6px; width: 40px; display: inline-block;">-->
+                        <!--<label class="checkbox-inline"><input type="checkbox">&gt;</label>-->
+                        <!--<label class="checkbox-inline" style="margin-left: 0;"><input type="checkbox">-></label>-->
+                        <!--</div>-->
+
+                        <!--<div class="input-group col-md-6">-->
+                        <!--<input type="text" class="form-control" data-ng-model="newTrack" placeholder="Enter the song name..." />-->
+                        <!--<span class="input-group-btn">-->
+                        <!--<button class="btn btn-default" type="submit" data-ng-disabled="!newTrack" title="Add">-->
+                        <!--<span class="glyphicon glyphicon-plus"></span>-->
+                        <!--</button>-->
+                        <!--</span>-->
+                        <!--</div>-->
+                    </form>
+                </div>
+
             </div>
 
-            <hr/>
+            <!--<hr/>-->
 
-            <div data-ng-controller="TrackController" ng-cloak class="ng-cloak" data-ng-model="track">
-                <p>The track ID is {{track.id}}</p>
-                <p>The track name is {{track.song}}</p>
-            </div>
+            <!--<div data-ng-controller="TrackController" ng-cloak class="ng-cloak" data-ng-model="track">-->
+                <!--<p>The track ID is {{track.id}}</p>-->
+                <!--<p>The track name is {{track.song}}</p>-->
+            <!--</div>-->
         </div>
 
 
@@ -57,56 +104,16 @@
                 <!--There are no items yet.-->
             <!--</div>-->
 
-            <!--<div data-ng-repeat="set in show.sets" class="col-xs-12"  style="background-color: #272D38;">-->
-                <!--<p>{{set.name}}</p>-->
-
-                <!--<form data-ng-repeat="track in set.tracks" data-ng-attr-id="{{'track-' + track.id}}" class="form"-->
-                      <!--data-ng-controller="TrackController" role="form" data-ng-submit="addTrack(newTrack)">-->
-
-                    <!--<div class="col-sm-5 col-md-3 form-group">-->
-                        <!--<label data-ng-attr-for="{{'song-' + track.id }}">Song name:</label>-->
-                        <!--<input data-ng-attr-id="{{'song-' + track.id }}" class="form-control" type="text" data-ng-model="track.song">-->
-                    <!--</div>-->
-                    <!--<div class="col-sm-4 col-md-2 form-group">-->
-                        <!--<label data-ng-attr-for="{{'duration-' + track.id }}">Duration:</label>-->
-                        <!--<input data-ng-attr-id="{{'duration-' + track.id }}" class="form-control duration" type="text">-->
-                    <!--</div>-->
-
-                    <!--<div class="radio">-->
-                        <!--<label>-->
-                            <!--<input type="radio" value="NONE" name="transition"-->
-                                   <!--data-ng-model="track.transition" ng-change="updateTrack(track)" />None<br/>-->
-                        <!--</label>-->
-                        <!--<label>-->
-                            <!--<input type="radio" value="ROUTINE" name="transition"-->
-                                   <!--data-ng-model="track.transition" data-ng-change="updateTrack(track)" />&gt;<br/>-->
-                        <!--</label>-->
-                        <!--<label>-->
-                            <!--<input type="radio" value="IMPROV" name="transition"-->
-                                   <!--data-ng-model="track.transition" data-ng-change="updateTrack(track)" />&rarr;<br/>-->
-                        <!--</label>-->
-                    <!--</div>-->
-
-                    <!--&lt;!&ndash;<div style="height: 81.6px; width: 40px; display: inline-block;">&ndash;&gt;-->
-                        <!--&lt;!&ndash;<label class="checkbox-inline"><input type="checkbox">&gt;</label>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<label class="checkbox-inline" style="margin-left: 0;"><input type="checkbox">-></label>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-
-                    <!--&lt;!&ndash;<div class="input-group col-md-6">&ndash;&gt;-->
-                        <!--&lt;!&ndash;<input type="text" class="form-control" data-ng-model="newTrack" placeholder="Enter the song name..." />&ndash;&gt;-->
-                        <!--&lt;!&ndash;<span class="input-group-btn">&ndash;&gt;-->
-                            <!--&lt;!&ndash;<button class="btn btn-default" type="submit" data-ng-disabled="!newTrack" title="Add">&ndash;&gt;-->
-                                <!--&lt;!&ndash;<span class="glyphicon glyphicon-plus"></span>&ndash;&gt;-->
-                            <!--&lt;!&ndash;</button>&ndash;&gt;-->
-                        <!--&lt;!&ndash;</span>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                <!--</form>-->
-            <!--</div>-->
+            <!---->
         <!--</div>-->
     </div>
 
 
     <th:block layout:fragment="script">
+
+        <script type="text/javascript" th:inline="javascript">
+            var showId = 401;
+        </script>
 
         <script>
             $(function () {

@@ -1,6 +1,5 @@
 package com.umspreadsheet.show;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.umspreadsheet.helper.ControllerHelper;
 import com.umspreadsheet.set.Set;
 import com.umspreadsheet.model.ShowReview;
@@ -8,7 +7,6 @@ import com.umspreadsheet.model.ShowReview;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 // 'Show' is a keyword in MySQL, so another name must be used
 @Entity

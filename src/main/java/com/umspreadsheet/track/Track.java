@@ -1,6 +1,6 @@
 package com.umspreadsheet.track;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.*;
 import com.umspreadsheet.helper.ControllerHelper;
 import com.umspreadsheet.model.Transition;
 import com.umspreadsheet.review.TrackReviewForm;
@@ -22,11 +22,11 @@ public class Track
     private Long id;
 
     @ManyToOne
-    @JsonIgnore
+    @JsonIgnoreProperties("sets")
     private Show show;
 
     @ManyToOne
-    @JsonIgnore
+    @JsonIgnoreProperties("tracks")
     private Set set;
     private Integer showTrackNumber;
 
@@ -198,9 +198,14 @@ public class Track
         this.jam = jam;
     }
 
+    public void setSlug(String slug)
+    {
+        this.slug = slug;
+    }
+
     public String getSlug()
     {
-        return ControllerHelper.toSlug(song) + "-" + ControllerHelper.dateToString(show.getDate());
+        return ControllerHelper.toSlug(song);
     }
 
     public Transition getTransition()
