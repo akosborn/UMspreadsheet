@@ -62,8 +62,8 @@
                             <td>
                                 <a th:href="@{'/songs/' + ${track.id} + '/' + ${track.slug}}">
                                     <span th:text="*{song}">[song name]</span>
-                                    <span th:if="${track.segue}"> > </span>
-                                    <span th:if="${track.fluidSegue}">&nbsp;->&nbsp;</span>
+                                    <span th:if="${track.transition == 'ROUTINE'}"> > </span>
+                                    <span th:if="${track.transition == 'IMPROV'}">&nbsp;->&nbsp;</span>
                                 </a>
                             </td>
 
@@ -170,8 +170,8 @@
                         <td>
                             <a th:href="@{'/songs/' + ${track.id} + '/' + ${track.slug}}">
                                 <span th:text="*{song}">[song name]</span>
-                                <span th:if="${track.segue and !i.last}"> > </span>
-                                <span th:if="${track.fluidSegue}">&nbsp;->&nbsp;</span>
+                                <span th:if="${track.transition == 'ROUTINE' and !i.last}"> > </span>
+                                <span th:if="${track.transition == 'IMPROV'}">&nbsp;->&nbsp;</span>
                             </a>
                         </td>
 

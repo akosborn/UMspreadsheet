@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigInteger;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -45,4 +46,8 @@ public interface ShowRepository extends JpaRepository<Show, Long>, JpaSpecificat
     List<BigInteger> findAllIds();
 
     List<Show> findTop20ByOrderByAverageRatingDesc();
+
+    Show findTop1ByDateBeforeOrderByDateDesc(Date date);
+
+    Show findTop1ByDateAfterOrderByDateAsc(Date date);
 }

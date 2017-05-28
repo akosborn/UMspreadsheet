@@ -163,7 +163,12 @@ public class AdminController
         if (show == null)
             throw new DataNotFoundException("Show with id=" + showId + " not found.");
 
+        Show previousShow = showService.findPrevious(show.getDate());
+        Show nextShow = showService.findNext(show.getDate());
+
         model.addAttribute("showId", show.getId());
+        model.addAttribute("previousShow", previousShow);
+        model.addAttribute("nextShow", nextShow);
 
         return "/admin/editShowAngular";
     }

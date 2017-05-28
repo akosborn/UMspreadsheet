@@ -32,6 +32,8 @@ public class HomeController
         model.addAttribute("lastThreeShows", setNumberOfReviews(showService.getLastThreeShows()));
         model.addAttribute("lastTwoShows", showService.getLastTwoShows());
 
+        Show show = showService.findById((long) 401);
+
         return "index";
     }
 

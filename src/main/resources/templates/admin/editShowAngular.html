@@ -26,8 +26,12 @@
 <body>
     <div layout:fragment="content" data-ng-app="UMspreadsheet">
         <div class="container ng-cloak" data-ng-controller="ShowController" ng-cloak>
-            <h1 id="header-title">{{show.date | date:'yyyy/MM/dd' + ' ' + show.city + ', ' + show.state}}</h1>
-            <h1 id="header-title" style="margin-top: 1px;">{{show.venue}}</h1>
+
+            <p th:if="${previousShow}" class="pull-left" style="margin-bottom: 0"><a th:href="@{/admin/edit-show(showId=${previousShow.id})}">Previous</a></p>
+            <p th:if="${nextShow}" class="pull-right" style="margin-bottom: 0"><a th:href="@{/admin/edit-show(showId=${nextShow.id})}">Next</a></p>
+
+            <h1 id="header-title">{{ (show.date | date:'yyyy/MM/dd') + ' ' + show.city + ', ' + show.state }}</h1>
+            <h1 id="header-title" style="margin-top: 1px;">{{ show.venue }}</h1>
 
             <div>
 

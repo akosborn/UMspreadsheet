@@ -7,6 +7,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -68,5 +69,15 @@ public class ShowService
     public Show save(Show show)
     {
         return showRepository.save(show);
+    }
+
+    public Show findPrevious(Date date)
+    {
+        return showRepository.findTop1ByDateBeforeOrderByDateDesc(date);
+    }
+
+    public Show findNext(Date date)
+    {
+        return showRepository.findTop1ByDateAfterOrderByDateAsc(date);
     }
 }

@@ -157,7 +157,7 @@
                 <h6 th:each="set : *{sets}" th:object="${set}">
                     <strong th:text="${set.name} + ':'" style="color: #C5B358;"></strong>
                     <th:block th:each="track,iterStat : *{tracks}" >
-                        <span th:text="${track.song}"></span><span th:if="${track.segue and !iterStat.last}"> > </span><span th:if="${!track.segue and !track.fluidSegue and !iterStat.last}">,&nbsp;</span><span th:if="${track.fluidSegue}">&nbsp;->&nbsp;</span>
+                        <span th:text="${track.song}"></span><span th:if="${track.transition == 'ROUTINE' and !iterStat.last}"> > </span><span th:if="${track.transition == 'NONE' and !iterStat.last}">,&nbsp;</span><span th:if="${track.transition == 'IMPROV'}">&nbsp;->&nbsp;</span>
                     </th:block>
                 </h6>
             </div>

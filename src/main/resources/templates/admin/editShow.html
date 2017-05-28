@@ -84,8 +84,8 @@
                     <tr th:each="track, i : *{tracks}" th:object="${track}">
                         <td>
                             <span th:text="*{song}">[song name]</span>
-                            <span th:if="${track.segue}"> > </span>
-                            <span th:if="${track.fluidSegue}">&nbsp;->&nbsp;</span>
+                            <span th:if="${track.transition == 'ROUTINE'}"> > </span>
+                            <span th:if="${track.transition == 'IMPROV'}">&nbsp;->&nbsp;</span>
                         </td>
 
                         <td th:if="*{length > 60 && ((length % 60) > 9)}" th:text="*{length / 60} + ':' + *{length % 60}">[length]</td>
