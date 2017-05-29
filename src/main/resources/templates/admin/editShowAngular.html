@@ -36,9 +36,14 @@
             <div>
 
                 <div data-ng-repeat="set in show.sets" class="col-xs-12"  style="background-color: #272D38;">
-                    <p>{{set.name}}</p>
+                    <form data-ng-controller="SetController" class="form row" role="form">
+                        <div class="col-sm-5 col-md-3 form-group">
+                            <label style="color: #C5B358">{{set.name}}</label>
+                            <input type="text" data-ng-model="set.name" class="form-control" data-ng-change="updateSet(set)">
+                        </div>
+                    </form>
 
-                    <form data-ng-repeat="track in set.tracks" data-ng-attr-id="{{'track-' + track.id}}" class="form row"
+                    <form data-ng-repeat="track in set.tracks | orderBy: '+setPosition'" data-ng-attr-id="{{'track-' + track.id}}" class="form row"
                           data-ng-controller="TrackController" role="form" data-ng-submit="addTrack(newTrack)">
 
                         <div class="col-sm-5 col-md-3 form-group">
@@ -51,29 +56,6 @@
                             <label style="padding-left: 3px">Duration</label>
                             <input after-tracks-render type="text" class="form-control">
                         </div>
-
-                        <!--<div class="form-group col-sm-3">-->
-                            <!--<label data-ng-attr-for="{{'duration-' + track.id}}">Duration:</label>-->
-                            <!--<input after-tracks-render type="text" class="form-control" data-ng-attr-id="{{'duration-' + track.id}}">-->
-                        <!--</div>-->
-
-                        <!--<div class="col-xs-6 col-sm-3 col-md-2 form-group">-->
-                            <!--<label data-ng-attr-for="{{'min-' + track.id }}">Duration:</label>-->
-                            <!--<div class="input-group">-->
-                                <!--<input data-ng-attr-id="{{'min-' + track.id }}" class="form-control minute-input" type="text"-->
-                                       <!--data-ng-attr-aria-describedby="{{'min-addon-' + track.id }}">-->
-                                <!--<span data-ng-attr-id="{{'min-addon-' + track.id }}" class="input-group-addon">m</span>-->
-                            <!--</div>-->
-                        <!--</div>-->
-
-                        <!--<div class="col-xs-6 col-sm-3 col-md-2 form-group">-->
-                            <!--<label data-ng-attr-for="{{'sec-' + track.id }}">&nbsp;</label>-->
-                            <!--<div class="input-group">-->
-                                <!--<input data-ng-attr-id="{{'sec-' + track.id }}" class="form-control second-input" type="text"-->
-                                       <!--data-ng-attr-aria-describedby="{{'sec-addon-' + track.id }}">-->
-                                <!--<span data-ng-attr-id="{{'sec-addon-' + track.id }}" class="input-group-addon">s</span>-->
-                            <!--</div>-->
-                        <!--</div>-->
 
                         <div class="col-md-2" style="margin-bottom: 15px; padding-top: 30px; height: 59px; display: flex; align-content: center; align-items: center;">
                             <div class="radio">
@@ -92,7 +74,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group col-md-2">
+                        <div class="form-group col-md-1">
                             <label for="type" class="control-label">Type</label>
                             <select id="type" class="form-control" data-ng-model="track.type" data-ng-change="updateTrack(track)">
                                 <option value="NONE">None</option>
@@ -122,20 +104,33 @@
                                 <option value="SOARING">Soaring</option>
                             </select>
                         </div>
-                        <!--<div style="height: 81.6px; width: 40px; display: inline-block;">-->
-                        <!--<label class="checkbox-inline"><input type="checkbox">&gt;</label>-->
-                        <!--<label class="checkbox-inline" style="margin-left: 0;"><input type="checkbox">-></label>-->
-                        <!--</div>-->
 
-                        <!--<div class="input-group col-md-6">-->
-                        <!--<input type="text" class="form-control" data-ng-model="newTrack" placeholder="Enter the song name..." />-->
-                        <!--<span class="input-group-btn">-->
-                        <!--<button class="btn btn-default" type="submit" data-ng-disabled="!newTrack" title="Add">-->
-                        <!--<span class="glyphicon glyphicon-plus"></span>-->
-                        <!--</button>-->
-                        <!--</span>-->
-                        <!--</div>-->
+                        <div class="form-group col-sm-2 col-md-2">
+                            <label># in set</label>
+                            <input class="form-control" type="number" data-ng-model="track.setPosition"
+                                   data-ng-change="updateTrack(track)" data-ng-value="track.setPosition == null ? $index + 1 : track.setPosition">
+                        </div>
+
+                        <div style="height: 58.8px; padding-top: 24px" class="col-xs-3 col-sm-1">
+                            <button class="pull-right btn btn-danger" type="button" title="Delete"
+                                    data-ng-click="deleteTrack(track)">
+                                <span style="margin-right: 0" class="fa fa-trash"></span>
+                            </button>
+                        </div>
                     </form>
+
+                    <form data-ng-controller="TrackController" role="form" class="form row"
+                          data-ng-submit="addTrack(show, set, newTrack)">
+                        <div class="input-group col-md-6 col-md-offset-3">
+                            <input type="text" class="form-control" data-ng-model="newTrack.song" placeholder="Enter the song name..." />
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="submit" data-ng-disabled="!newTrack" title="Add">
+                                    <span class="glyphicon glyphicon-plus"></span>
+                                </button>
+                            </span>
+                        </div>
+                    </form>
+
                 </div>
 
             </div>

@@ -20,9 +20,37 @@
 
         $scope.updateTrack = function (track) {
             Track.update({id: track.id}, track);
-        }
+        };
+
+        $scope.addTrack = function (show, set, track) {
+            new Track({
+                song: track.song,
+                show: show,
+                set: set
+            }).$save(function (track) {
+                $scope.set.tracks.push(track);
+            });
+            $scope.newTrack = "";
+        };
+
+        $scope.deleteTrack = function (track) {
+            Track.remove({id: track.id}, track, function () {
+                $scope.set.tracks.splice($scope.set.tracks.indexOf(track), 1)
+            })
+        };
     };
 
     TrackController.$inject = ['$scope', 'Track'];
     angular.module("UMspreadsheet.controllers").controller("TrackController", TrackController);
+
+    var SetController = function ($scope, Set) {
+
+        $scope.updateSet = function (set) {
+            Set.update({id: set.id}, set);
+        }
+
+    };
+
+    SetController.$inject = ['$scope', 'Set'];
+    angular.module("UMspreadsheet.controllers").controller("SetController", SetController);
 }(angular));

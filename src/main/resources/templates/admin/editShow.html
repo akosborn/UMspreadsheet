@@ -118,7 +118,7 @@
                                                 <input type="hidden" name="showId" th:value="${show.id}"/>
                                                 <input type="hidden" name="id" th:value="*{id}"/>
                                                 <input type="hidden" name="averageRating" th:value="*{averageRating}"/>
-                                                <input type="hidden" name="showTrackNumber" th:value="${#lists.size(set.tracks) + 1}"/>
+                                                <input type="hidden" name="setPosition" th:value="${#lists.size(set.tracks) + 1}"/>
                                                 <input th:id="'length' + *{id}" type="hidden" name="length" th:value="*{length}"/>
                                                 <div class="form-group">
                                                     <div class="col-sm-12">
@@ -221,7 +221,7 @@
                                         <form th:id="'addSongForm' + ${set.id}" th:action="@{/admin/add-track}" method="post" th:object="${track}">
                                             <input type="hidden" name="showId" th:field="*{showId}" th:value="${show.id}"/>
                                             <input type="hidden" name="setId" th:value="${set.id}"/>
-                                            <input type="hidden" name="showTrackNumber" th:value="${#lists.size(set.tracks) + 1}"/>
+                                            <input type="hidden" name="setPosition" th:value="${#lists.size(set.tracks) + 1}"/>
                                             <input th:id="'length' + ${set.id}" type="hidden" name="length" value="0"/>
                                             <div class="form-group">
                                                 <div class="col-sm-12">

@@ -9,8 +9,11 @@ import com.umspreadsheet.review.TrackReviewForm;
 import com.umspreadsheet.set.Set;
 import com.umspreadsheet.review.TrackReview;
 import com.umspreadsheet.show.Show;
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
 import java.util.List;
 
 @Entity
@@ -28,11 +31,13 @@ public class Track
     private Show show;
 
     @ManyToOne
-    @JsonIgnoreProperties("tracks")
+    @JsonIgnoreProperties({"tracks"})
     private Set set;
-    private Integer showTrackNumber;
+
+    private Integer setPosition;
 
     private String song;
+
     private Long length;
 
     @Enumerated(value = EnumType.STRING)
@@ -56,9 +61,6 @@ public class Track
     private Long showId;
 
     @Transient
-    private Long setId;
-
-    @Transient
     private String slug;
 
     @Transient
@@ -72,16 +74,6 @@ public class Track
     public void setTrackReviewForm(TrackReviewForm trackReviewForm)
     {
         this.trackReviewForm = trackReviewForm;
-    }
-
-    public Long getSetId()
-    {
-        return setId;
-    }
-
-    public void setSetId(Long setId)
-    {
-        this.setId = setId;
     }
 
     public Long getShowId()
@@ -124,14 +116,14 @@ public class Track
         this.set = set;
     }
 
-    public Integer getShowTrackNumber()
+    public Integer getSetPosition()
     {
-        return showTrackNumber;
+        return setPosition;
     }
 
-    public void setShowTrackNumber(Integer showTrackNumber)
+    public void setSetPosition(Integer setPosition)
     {
-        this.showTrackNumber = showTrackNumber;
+        this.setPosition = setPosition;
     }
 
     public String getSong()

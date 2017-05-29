@@ -121,7 +121,7 @@ public class AdminController
     public String addTrack(Track track, RedirectAttributes redirectAttributes)
     {
         track.setShow(showService.findById(track.getShowId()));
-        track.setSet(setService.findById(track.getSetId()));
+        //track.setSet(setService.findById(track.getSetId()));
 
         Track savedTrack = trackService.save(track);
 
