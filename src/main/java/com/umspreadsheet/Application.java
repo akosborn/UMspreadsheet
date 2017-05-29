@@ -10,33 +10,13 @@ import org.springframework.boot.web.servlet.ErrorPage;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
+
 /*
 * Configuration for dev environment
 * */
-@EnableConfigurationProperties
-@SpringBootApplication(exclude = SocialWebAutoConfiguration.class)
-public class Application
-{
-	@Bean
-	public EmbeddedServletContainerCustomizer containerCustomizer()
-	{
-		return ( container ->
-		{
-			ErrorPage custom404Page = new ErrorPage(HttpStatus.NOT_FOUND,"/404");
-			container.addErrorPages(custom404Page);
-		});
-	}
-
-	public static void main(String[] args)
-	{
-		SpringApplication.run(Application.class, args);
-	}
-}
-
-// Configuration for war
 //@EnableConfigurationProperties
 //@SpringBootApplication(exclude = SocialWebAutoConfiguration.class)
-//public class Application extends SpringBootServletInitializer
+//public class Application
 //{
 //	@Bean
 //	public EmbeddedServletContainerCustomizer containerCustomizer()
@@ -48,14 +28,35 @@ public class Application
 //		});
 //	}
 //
-//	@Override
-//	protected SpringApplicationBuilder configure(SpringApplicationBuilder application)
-//	{
-//		return application.sources(Application.class);
-//	}
-//
 //	public static void main(String[] args)
 //	{
 //		SpringApplication.run(Application.class, args);
 //	}
 //}
+
+//Configuration for war
+@EnableConfigurationProperties
+@SpringBootApplication(exclude = SocialWebAutoConfiguration.class)
+public class Application extends SpringBootServletInitializer
+{
+	@Bean
+	public EmbeddedServletContainerCustomizer containerCustomizer()
+	{
+		return ( container ->
+		{
+			ErrorPage custom404Page = new ErrorPage(HttpStatus.NOT_FOUND,"/404");
+			container.addErrorPages(custom404Page);
+		});
+	}
+
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder application)
+	{
+		return application.sources(Application.class);
+	}
+
+	public static void main(String[] args)
+	{
+		SpringApplication.run(Application.class, args);
+	}
+}

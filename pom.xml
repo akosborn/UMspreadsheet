@@ -5,7 +5,7 @@
 
 	<groupId>com.umspreadsheet</groupId>
 	<artifactId>umspreadsheet</artifactId>
-	<version>1.1.0-RELEASE</version>
+	<version>1.1.1-RELEASE</version>
 	<packaging>war</packaging>
 	<!--<packaging>war</packaging>-->
 
@@ -204,11 +204,11 @@
             <version>1.6.4</version>
         </dependency>
 
-		<!--<dependency>-->
-			<!--<groupId>org.springframework.boot</groupId>-->
-			<!--<artifactId>spring-boot-starter-tomcat</artifactId>-->
-			<!--<scope>provided</scope>-->
-		<!--</dependency>-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
 
 	</dependencies>
 
