@@ -22,6 +22,11 @@
             Track.update({id: track.id}, track);
         };
 
+        $scope.updateSetPosition = function (track, setPosition) {
+            track.setPosition = setPosition;
+            Track.update({id: track.id}, track);
+        };
+
         $scope.addTrack = function (show, set, track) {
             new Track({
                 song: track.song,

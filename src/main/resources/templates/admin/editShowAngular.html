@@ -108,7 +108,8 @@
                         <div class="form-group col-sm-2 col-md-2">
                             <label># in set</label>
                             <input class="form-control" type="number" data-ng-model="track.setPosition"
-                                   data-ng-change="updateTrack(track)" data-ng-value="track.setPosition == null ? $index + 1 : track.setPosition">
+                                   data-ng-change="updateTrack(track)"
+                                   data-ng-init="track.setPosition == null ? updateSetPosition(track, $index + 1) : null ">
                         </div>
 
                         <div style="height: 58.8px; padding-top: 24px" class="col-xs-3 col-sm-1">
