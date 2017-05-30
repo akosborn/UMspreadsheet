@@ -16,8 +16,10 @@ public class Set
     @Id
     @GeneratedValue
     private Long id;
+
     private String name;
 
+    //@JsonIgnoreProperties("set")
     @OneToMany(mappedBy = "set")
     private List<Track> tracks;
     private Double averageRating;
@@ -75,4 +77,6 @@ public class Set
     {
         this.averageRating = averageRating;
     }
+
+
 }

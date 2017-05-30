@@ -64,6 +64,12 @@ public class AdminAPIController
         return shows;
     }
 
+    @RequestMapping(value = "/api/shows/{id}", method = RequestMethod.PUT)
+    public @ResponseBody Show updateShow(@RequestBody Show show, @PathVariable Long id)
+    {
+        return showService.save(show);
+    }
+
     @RequestMapping(value = "/api/tracks", method = RequestMethod.POST)
     public @ResponseBody Track addTrack(@RequestBody Track track)
     {
@@ -83,8 +89,6 @@ public class AdminAPIController
     {
         trackService.delete(id);
     }
-
-
 
 
     @RequestMapping(value = "/api/sets/{id}", method = RequestMethod.GET)

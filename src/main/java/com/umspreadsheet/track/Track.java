@@ -9,8 +9,6 @@ import com.umspreadsheet.review.TrackReviewForm;
 import com.umspreadsheet.set.Set;
 import com.umspreadsheet.review.TrackReview;
 import com.umspreadsheet.show.Show;
-import org.hibernate.annotations.*;
-import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
@@ -57,8 +55,8 @@ public class Track
     @OneToMany(mappedBy = "track")
     private List<TrackReview> reviews;
 
-    @Transient
-    private Long showId;
+//    @Transient
+//    private Long showId;
 
     @Transient
     private String slug;
@@ -76,15 +74,15 @@ public class Track
         this.trackReviewForm = trackReviewForm;
     }
 
-    public Long getShowId()
-    {
-        return showId;
-    }
-
-    public void setShowId(Long showId)
-    {
-        this.showId = showId;
-    }
+//    public Long getShowId()
+//    {
+//        return showId;
+//    }
+//
+//    public void setShowId(Long showId)
+//    {
+//        this.showId = showId;
+//    }
 
     public Long getId()
     {

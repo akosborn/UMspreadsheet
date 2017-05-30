@@ -120,12 +120,12 @@ public class AdminController
     @RequestMapping(value = "/add-track", method = RequestMethod.POST)
     public String addTrack(Track track, RedirectAttributes redirectAttributes)
     {
-        track.setShow(showService.findById(track.getShowId()));
+        track.setShow(showService.findById(track.getShow().getId()));
         //track.setSet(setService.findById(track.getSetId()));
 
         Track savedTrack = trackService.save(track);
 
-        redirectAttributes.addAttribute("showId", track.getShowId());
+        redirectAttributes.addAttribute("showId", track.getShow().getId());
 
         return "redirect:/admin/edit-show";
     }
@@ -148,7 +148,7 @@ public class AdminController
         // Update track and assign to updatedTrack
         Track updatedTrack = trackService.save(oldTrack);
 
-        redirectAttributes.addAttribute("showId", track.getShowId());
+        redirectAttributes.addAttribute("showId", track.getShow().getId());
 
         return "redirect:/admin/edit-show";
     }

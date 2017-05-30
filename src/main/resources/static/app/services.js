@@ -1,14 +1,11 @@
 (function (angular) {
     var ShowFactory =  function ($resource) {
-        var data = $resource('/api/shows/:id', {
-            id: '@id'
-        }, {
-            update: {
-                method: 'PUT'
-            }
-        });
-
-        return data;
+        return $resource('/api/shows/:id', null,
+            {
+                'update': {
+                    method: 'PUT'
+                }
+            });
     };
 
     ShowFactory.$inject = ['$resource'];

@@ -89,7 +89,7 @@ public class ShowController
         model.addAttribute("set", setDTO);
 
         Track track = new Track();
-        track.setShowId(id);
+        track.setShow(showService.findById(id));
         model.addAttribute("track", track);
 
         List<TrackReview> trackReviews = trackReviewService.findByUserAndShow(show, userService.findByUsername
