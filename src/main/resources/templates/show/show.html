@@ -30,6 +30,11 @@
                     <span th:if="*{averageRating == null}">No Rating</span>
                 </h2>
                 <h3 class="hidden-xs hidden-sm" th:text="${show.venue}" style="margin-top: 3px;">[venue]</h3>
+                <p th:if="${show.nugsId != null}">
+                    <a th:href="@{https://play.nugs.net/#/catalog/recording/} + ${show.nugsId}" data-ng-model="show.nugsId">
+                        nugs.net
+                    </a>
+                </p>
                 <p sec:authorize="hasRole('ROLE_MANAGE_SHOWS_PRIVILEGE')">
                     <a th:href="@{/admin/edit-show(showId=${show.id})}">
                         Edit show

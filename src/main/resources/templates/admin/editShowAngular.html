@@ -32,6 +32,16 @@
 
             <h1 id="header-title">{{ (show.date | date:'yyyy/MM/dd') + ' ' + show.city + ', ' + show.state }}</h1>
             <h1 id="header-title" style="margin-top: 1px;">{{ show.venue }}</h1>
+            <p data-ng-if="show.nugsId != null">
+                <a data-ng-href="https://play.nugs.net/#/catalog/recording/{{show.nugsId}}" data-ng-model="show.nugsId">
+                    nugs.net URL
+                </a>
+            </p>
+            <div class="col-md-4 row" style="margin-bottom: 15px;=">
+                <input type="text" class="form-control" data-ng-model="show.nugsId" data-ng-change="updateShow(show)"
+                       placeholder="Paste the full nugs.net url here..."
+                       data-ng-value="show.nugsId != null? 'https://play.nugs.net/#/catalog/recording/' + show.nugsId : null"/>
+            </div>
 
             <div>
 
@@ -123,7 +133,7 @@
                     <form data-ng-controller="TrackController" role="form" class="form row"
                           data-ng-submit="addTrack(show, set, newTrack)">
                         <div class="input-group col-md-6 col-md-offset-3">
-                            <input type="text" class="form-control" data-ng-model="newTrack.song" placeholder="Enter the song name..." />
+                            <input type="text" class="form-control" data-ng-model="newTrack" placeholder="Enter the song name..." />
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="submit" data-ng-disabled="!newTrack" title="Add">
                                     <span class="glyphicon glyphicon-plus"></span>

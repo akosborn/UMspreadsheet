@@ -1,5 +1,6 @@
 package com.umspreadsheet.show;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.umspreadsheet.helper.ControllerHelper;
 import com.umspreadsheet.set.Set;
 import com.umspreadsheet.model.ShowReview;
@@ -32,12 +33,14 @@ public class Show
     @OneToMany(mappedBy = "show", fetch = FetchType.LAZY)
     private List<ShowReview> showReviews;
 
-    @OneToMany(mappedBy = "show", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "show")
     private List<Set> sets;
     private Double averageRating;
 
     @Column(columnDefinition = "TEXT")
     private String notes;
+
+    private String nugsId;
 
     @Transient
     private String slug;
@@ -130,6 +133,16 @@ public class Show
     public void setNotes(String notes)
     {
         this.notes = notes;
+    }
+
+    public String getNugsId()
+    {
+        return nugsId;
+    }
+
+    public void setNugsId(String nugsId)
+    {
+        this.nugsId = nugsId;
     }
 
     public String getSlug()

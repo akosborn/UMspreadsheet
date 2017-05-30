@@ -5,7 +5,17 @@
 
         Show.get({id: showId}, function (response) {
             $scope.show = response ? response : {};
-        })
+        });
+
+        $scope.updateShow = function (show) {
+            // parse full url for nugsId
+            if (show.nugsId.indexOf("/")) {
+                var splitURL = show.nugsId.split("/");
+                show.nugsId = splitURL[splitURL.length - 1];
+            }
+
+            Show.update({id: show.id}, show);
+        }
     };
 
     ShowController.$inject = ['$scope', '$window', 'Show'];
@@ -19,17 +29,20 @@
         // })
 
         $scope.updateTrack = function (track) {
+            console.log(track);
             Track.update({id: track.id}, track);
         };
 
         $scope.updateSetPosition = function (track, setPosition) {
+            console.log('updateSetPosition()');
+            console.log(track);
             track.setPosition = setPosition;
             Track.update({id: track.id}, track);
         };
 
-        $scope.addTrack = function (show, set, track) {
+        $scope.addTrack = function (show, set, song) {
             new Track({
-                song: track.song,
+                song: song,
                 show: show,
                 set: set
             }).$save(function (track) {
