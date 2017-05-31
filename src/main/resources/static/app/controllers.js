@@ -50,6 +50,7 @@
         };
 
         $scope.deleteTrack = function (track) {
+            if (confirm('Delete ' + track.song + '?'))
             Track.remove({id: track.id}, track, function () {
                 $scope.set.tracks.splice($scope.set.tracks.indexOf(track), 1)
             })
@@ -76,7 +77,6 @@
         };
 
         $scope.updatePosition = function (set, position) {
-            console.log('updatePosition()');
             set.position = position;
             Set.update({id: set.id}, set);
         };
