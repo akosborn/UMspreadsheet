@@ -43,6 +43,7 @@
                 show: show,
                 set: set
             }).$save(function (track) {
+                $scope.set.tracks = $scope.set.tracks || [];
                 $scope.set.tracks.push(track);
             });
             $scope.newTrack = "";
@@ -81,9 +82,11 @@
         };
 
         $scope.deleteSet = function (set) {
-            Set.remove({id: set.id}, set, function () {
-                $scope.show.sets.splice($scope.show.sets.indexOf(set), 1);
-            })
+            if (confirm("Delete " + set.name + "?")) {
+                Set.remove({id: set.id}, set, function () {
+                    $scope.show.sets.splice($scope.show.sets.indexOf(set), 1);
+                });
+            }
         }
     };
 
