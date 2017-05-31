@@ -24,6 +24,29 @@ TRACKLIST TABLE
     /*background-color: #C5B358 !important;*/
 }
 
+.set-div
+{
+    margin-bottom: 15px;
+}
+
+.track-div
+{
+    margin-bottom: 6px;
+    padding-right: 3px !important;
+    padding-left: 3px !important;
+}
+
+.track-div p
+{
+    margin-bottom: 1px;
+}
+
+.track-div p:nth-child(1)
+{
+    font-size: 16px;
+    color: #C5B358;
+}
+
 
 /******************************************
 SHOW HEADER

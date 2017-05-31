@@ -3,6 +3,20 @@
     angular.module("UMspreadsheet.services", []);
     var app = angular.module("UMspreadsheet", ["ngResource", "UMspreadsheet.controllers", "UMspreadsheet.services"]);
 
+    app.filter('secondsToMinSec', function ($filter) {
+       return function (seconds) {
+           return $filter('date')(new Date(0, 0, 0).setSeconds(seconds), 'm:ss');
+       };
+    });
+
+    app.filter('capitalize', function() {
+        return function(input, $scope) {
+            if (input!=null)
+                input = input.toLowerCase();
+            return input.substring(0,1).toUpperCase() + input.substring(1);
+        }
+    });
+
     app.directive('afterTracksRender', ['Track', function (Track) {
             return {
                 link: function ($scope, element, attrs, controller) {
@@ -35,4 +49,32 @@
                 }
             }
         }]);
+
+    app.directive('equalHeights', function ($timeout) {
+            return {
+                link: function ($scope, element, attrs, controller) {
+
+                    $timeout(function () {
+                        var trackElements = element.find(".track-div");
+
+                        var tallestBox = 0;
+
+                        for (var i = 0; i < trackElements.length; i++)
+                        {
+                            var elHeight = trackElements[i].children[0].offsetHeight;
+                            if (elHeight > tallestBox)
+                            {
+                                tallestBox = elHeight;
+                            }
+                        }
+
+
+                        for (var x = 0; x < trackElements.length; x++)
+                        {
+                            trackElements[x].children[0].style.height = tallestBox + "px";
+                        }
+                    });
+                }
+            }
+        });
 }(angular));

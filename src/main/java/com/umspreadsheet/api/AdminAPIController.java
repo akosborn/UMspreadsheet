@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@RequestMapping("/api")
 public class AdminAPIController
 {
     private TrackService trackService;
@@ -28,7 +29,7 @@ public class AdminAPIController
         this.setService = setService;
     }
 
-    @RequestMapping(value = "/api/tracks")
+    @RequestMapping(value = "/tracks")
     public @ResponseBody
     List findAllTracks()
     {
@@ -37,7 +38,7 @@ public class AdminAPIController
         return tracks;
     }
 
-    @RequestMapping(value = "/api/tracks/{id}")
+    @RequestMapping(value = "/tracks/{id}")
     public @ResponseBody Track findATrack(@PathVariable Long id)
     {
         Track track = trackService.findById(id);
@@ -45,7 +46,7 @@ public class AdminAPIController
         return track;
     }
 
-    @RequestMapping(value = "/api/shows/{id}")
+    @RequestMapping(value = "/shows/{id}")
     public @ResponseBody
     Show findShow(@PathVariable Long id)
     {
@@ -54,7 +55,7 @@ public class AdminAPIController
         return show;
     }
 
-    @RequestMapping(value = "/api/shows")
+    @RequestMapping(value = "/shows")
     public @ResponseBody List findShow()
     {
         List<Show> shows = new ArrayList<>();
@@ -64,13 +65,13 @@ public class AdminAPIController
         return shows;
     }
 
-    @RequestMapping(value = "/api/shows/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/shows/{id}", method = RequestMethod.PUT)
     public @ResponseBody Show updateShow(@RequestBody Show show, @PathVariable Long id)
     {
         return showService.save(show);
     }
 
-    @RequestMapping(value = "/api/tracks", method = RequestMethod.POST)
+    @RequestMapping(value = "/tracks", method = RequestMethod.POST)
     public @ResponseBody Track addTrack(@RequestBody Track track)
     {
         Track savedTrack = trackService.save(track);
@@ -78,20 +79,20 @@ public class AdminAPIController
         return savedTrack;
     }
 
-    @RequestMapping(value = "/api/tracks/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/tracks/{id}", method = RequestMethod.PUT)
     public @ResponseBody Track updateTrack(@RequestBody Track track, @PathVariable Long id)
     {
         return trackService.save(track);
     }
 
-    @RequestMapping(value = "/api/tracks/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/tracks/{id}", method = RequestMethod.DELETE)
     public @ResponseBody void deleteTrack(@PathVariable Long id)
     {
         trackService.delete(id);
     }
 
 
-    @RequestMapping(value = "/api/sets/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/sets/{id}", method = RequestMethod.GET)
     public @ResponseBody
     Set findSet(@PathVariable Long id)
     {
@@ -100,7 +101,7 @@ public class AdminAPIController
         return set;
     }
 
-    @RequestMapping(value = "/api/sets/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/sets/{id}", method = RequestMethod.PUT)
     public @ResponseBody Set updateSet(@RequestBody Set set, @PathVariable Long id)
     {
         Set savedSet = setService.save(set);
@@ -108,7 +109,7 @@ public class AdminAPIController
         return savedSet;
     }
 
-    @RequestMapping(value = "/api/sets", method = RequestMethod.POST)
+    @RequestMapping(value = "/sets", method = RequestMethod.POST)
     public @ResponseBody Set addSet(@RequestBody Set set)
     {
         Set savedSet = setService.save(set);
@@ -116,7 +117,7 @@ public class AdminAPIController
         return set;
     }
 
-    @RequestMapping(value = "/api/sets/{id}")
+    @RequestMapping(value = "/sets/{id}")
     public @ResponseBody void deleteSet(@PathVariable Long id)
     {
         setService.delete(id);

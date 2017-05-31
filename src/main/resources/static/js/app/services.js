@@ -42,5 +42,20 @@
     SetFactory.$inject = ['$resource'];
     angular.module('UMspreadsheet.services').factory("Set", SetFactory);
 
+    var TrackReviewFactory = function ($resource) {
+        return $resource('/api/track-review/:id', null,
+            {
+            'update': {
+                method: 'PUT'
+            },
+            'remove': {
+                method: 'DELETE'
+            }
+        });
+    };
+
+    SetFactory.$inject = ['$resource'];
+    angular.module('UMspreadsheet.services').factory("TrackReview", TrackReviewFactory);
+
 
 }(angular));
