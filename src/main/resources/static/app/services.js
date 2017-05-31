@@ -33,7 +33,7 @@
             'update': {
                 method: 'PUT'
             },
-            remove: {
+            'remove': {
                 method: 'DELETE'
             }
         });

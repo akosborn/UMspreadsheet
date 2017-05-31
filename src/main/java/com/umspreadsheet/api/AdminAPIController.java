@@ -108,11 +108,17 @@ public class AdminAPIController
         return savedSet;
     }
 
-    @RequestMapping(value = "/api/sets/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/sets", method = RequestMethod.POST)
     public @ResponseBody Set addSet(@RequestBody Set set)
     {
         Set savedSet = setService.save(set);
 
         return set;
+    }
+
+    @RequestMapping(value = "/api/sets/{id}")
+    public @ResponseBody void deleteSet(@PathVariable Long id)
+    {
+        setService.delete(id);
     }
 }

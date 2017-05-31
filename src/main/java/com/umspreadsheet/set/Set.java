@@ -3,8 +3,12 @@ package com.umspreadsheet.set;
 import com.fasterxml.jackson.annotation.*;
 import com.umspreadsheet.show.Show;
 import com.umspreadsheet.track.Track;
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.List;
 
 @Entity
@@ -21,12 +25,15 @@ public class Set
 
     //@JsonIgnoreProperties("set")
     @OneToMany(mappedBy = "set")
+    @Cascade({CascadeType.DELETE})
     private List<Track> tracks;
     private Double averageRating;
 
     @ManyToOne
     @JsonIgnoreProperties("sets")
     private Show show;
+
+    private Integer position;
 
     public Long getId()
     {
@@ -78,5 +85,13 @@ public class Set
         this.averageRating = averageRating;
     }
 
+    public Integer getPosition()
+    {
+        return position;
+    }
 
+    public void setPosition(Integer position)
+    {
+        this.position = position;
+    }
 }

@@ -29,13 +29,10 @@
         // })
 
         $scope.updateTrack = function (track) {
-            console.log(track);
             Track.update({id: track.id}, track);
         };
 
         $scope.updateSetPosition = function (track, setPosition) {
-            console.log('updateSetPosition()');
-            console.log(track);
             track.setPosition = setPosition;
             Track.update({id: track.id}, track);
         };
@@ -65,8 +62,29 @@
 
         $scope.updateSet = function (set) {
             Set.update({id: set.id}, set);
-        }
+        };
 
+        $scope.addSet = function (show, set) {
+            new Set({
+                name: set,
+                show: show
+            }).$save(function (set) {
+                $scope.show.sets.push(set);
+            });
+            $scope.newSet = "";
+        };
+
+        $scope.updatePosition = function (set, position) {
+            console.log('updatePosition()');
+            set.position = position;
+            Set.update({id: set.id}, set);
+        };
+
+        $scope.deleteSet = function (set) {
+            Set.remove({id: set.id}, set, function () {
+                $scope.show.sets.splice($scope.show.sets.indexOf(set), 1);
+            })
+        }
     };
 
     SetController.$inject = ['$scope', 'Set'];

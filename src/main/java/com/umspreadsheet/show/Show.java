@@ -4,8 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.umspreadsheet.helper.ControllerHelper;
 import com.umspreadsheet.set.Set;
 import com.umspreadsheet.model.ShowReview;
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Date;
 import java.util.List;
 
@@ -34,6 +38,7 @@ public class Show
     private List<ShowReview> showReviews;
 
     @OneToMany(mappedBy = "show")
+    @Cascade(value = { CascadeType.DELETE })
     private List<Set> sets;
     private Double averageRating;
 
