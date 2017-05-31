@@ -23,4 +23,9 @@ public class SetService
     {
         return setRepository.findOne(id);
     }
+
+    public void delete(Long id)
+    {
+        setRepository.delete(id);
+    }
 }

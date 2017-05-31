@@ -37,19 +37,47 @@
                     nugs.net URL
                 </a>
             </p>
-            <div class="col-md-4 row" style="margin-bottom: 15px;=">
+
+            <div class="col-md-4" style="margin-bottom: 15px;=">
                 <input type="text" class="form-control" data-ng-model="show.nugsId" data-ng-change="updateShow(show)"
-                       placeholder="Paste the full nugs.net url here..."
+                       placeholder="nugs.net url here (https://play.nugs.net/#/catalog/recording/1210)..."
                        data-ng-value="show.nugsId != null? 'https://play.nugs.net/#/catalog/recording/' + show.nugsId : null"/>
+            </div>
+
+            <div class="col-xs-12" style="margin-bottom: 5px">
+                <form data-ng-controller="SetController" role="form" class="form" data-ng-submit="addSet(show, newSet)">
+                    <div class="input-group col-md-3">
+                        <input type="text" class="form-control" data-ng-model="newSet"
+                               placeholder="Enter new set name (i.e. 'Set 2')..." />
+                        <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit" data-ng-disabled="!newSet" title="Add">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                    </span>
+                    </div>
+                </form>
             </div>
 
             <div>
 
-                <div data-ng-repeat="set in show.sets" class="col-xs-12"  style="background-color: #272D38;">
-                    <form data-ng-controller="SetController" class="form row" role="form">
+                <div data-ng-repeat="set in show.sets | orderBy: '+position'" data-ng-controller="SetController" class="col-xs-12"  style="background-color: #272D38;">
+                    <form class="form row" role="form">
                         <div class="col-sm-5 col-md-3 form-group">
                             <label style="color: #C5B358">{{set.name}}</label>
                             <input type="text" data-ng-model="set.name" class="form-control" data-ng-change="updateSet(set)">
+                        </div>
+                        <div class="form-group col-sm-2 col-md-1">
+                            <label>#</label>
+                            <input class="form-control" type="number" data-ng-model="set.position"
+                                   data-ng-change="updateSet(set)"
+                                   data-ng-init="set.position == null ? updatePosition(set, $index + 1) : null ">
+                        </div>
+
+                        <div style="height: 58.8px; padding-top: 24px; text-align: center;" class="col-xs-3 col-sm-1">
+                            <button class="btn btn-danger" type="button" title="Delete"
+                                    data-ng-click="deleteSet(set)">
+                                <span style="margin-right: 0" class="fa fa-trash"></span>
+                            </button>
                         </div>
                     </form>
 
