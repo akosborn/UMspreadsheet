@@ -72,6 +72,22 @@ TRACKLIST TABLE
     margin-right: 8px;
 }
 
+@media (min-width: 768px)
+{
+    .trophy-header
+    {
+        float: right;
+    }
+}
+
+@media (max-width: 767px)
+{
+    .trophy-header-div, .title-header-div
+    {
+        text-align: center;
+    }
+}
+
 /******************************************
 SLIDER
 ******************************************/
