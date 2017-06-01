@@ -28,22 +28,25 @@
 
                 <p>{{set.name}}</p>
 
-                <div data-ng-repeat="track in set.tracks | orderBy: '+setPosition'" class="col-md-3 col-xl-2 track-div">
+                <div data-ng-repeat="track in set.tracks | orderBy: '+setPosition'" class="col-sm-4 col-md-3 col-xl-2 track-div">
+
                     <div class="col-md-12 dark-div text-center">
-                        <p>{{track.song}}</p>
+                        <p class="song-name">{{track.song}}</p>
                         <p data-ng-if="track.length">{{ (track.length | secondsToMinSec) }}</p>
                         <p data-ng-if="track.type">{{ track.type | capitalize }}</p>
                         <p data-ng-if="track.jam">{{ track.jam | capitalize }}</p>
                         <p>{{ track.averageRating != null ?  (track.averageRating | number: 2) : 'Not rated' }}</p>
+
+                        <form sec:authorize="isAuthenticated()" data-ng-controller="TrackReviewController">
+
+                            <input data-ng-model="track.userTrackReview.score"
+                                   data-ng-change="track.userTrackReview.id == null ? addTrackReview(track.userTrackReview) : updateTrackReview(track.userTrackReview)"
+                                   create-slider class="bs-slider" type="number" data-slider-min="0" data-slider-max="10"
+                                   data-slider-step="0.25" data-slider-value="0" data-slider-tooltip="hide" />
+
+                        </form>
+
                     </div>
-
-                    <form sec:authorize="isAuthenticated()" data-ng-controller="TrackRating">
-
-                        <span>0.00</span>
-                        <input class="bs-slider" th:name="score" type="number" data-slider-min="0" data-slider-max="10"
-                               data-slider-step="0.25" data-slider-value="0" data-slider-tooltip="hide"/>
-
-                    </form>
                 </div>
 
             </div>

@@ -1,12 +1,19 @@
 package com.umspreadsheet.api;
 
+import com.umspreadsheet.review.TrackReview;
+import com.umspreadsheet.review.TrackReviewService;
 import com.umspreadsheet.set.Set;
 import com.umspreadsheet.set.SetService;
 import com.umspreadsheet.show.Show;
 import com.umspreadsheet.show.ShowService;
 import com.umspreadsheet.track.Track;
 import com.umspreadsheet.track.TrackService;
+import com.umspreadsheet.user.SimpleUserService;
+import com.umspreadsheet.user.User;
+import com.umspreadsheet.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,13 +27,18 @@ public class AdminAPIController
     private TrackService trackService;
     private ShowService showService;
     private SetService setService;
+    private TrackReviewService trackReviewService;
+    private SimpleUserService userService;
 
     @Autowired
-    public AdminAPIController(TrackService trackService, ShowService showService, SetService setService)
+    public AdminAPIController(TrackService trackService, ShowService showService, SetService setService,
+                              TrackReviewService trackReviewService, SimpleUserService userService)
     {
         this.trackService = trackService;
         this.showService = showService;
         this.setService = setService;
+        this.trackReviewService = trackReviewService;
+        this.userService = userService;
     }
 
     @RequestMapping(value = "/tracks")
@@ -51,6 +63,36 @@ public class AdminAPIController
     Show findShow(@PathVariable Long id)
     {
         Show show = showService.findById(id);
+        String username = getCurrentUsername();
+        List<TrackReview> trackReviews = trackReviewService.findByUsernameAndShow(username, show.getId());
+
+        if (!username.equals("anonymousUser"))
+        {
+            User user = userService.findByUsername(username);
+            for (Set set : show.getSets())
+            {
+                for (Track track : set.getTracks())
+                {
+                    for (TrackReview trackReview : trackReviews)
+                    {
+                        if (track.getId() == trackReview.getTrack().getId())
+                        {
+                            track.setUserTrackReview(trackReview);
+
+                            break;
+                        }
+                    }
+
+                    if (track.getUserTrackReview() == null)
+                    {
+                        TrackReview newReview = new TrackReview();
+                        newReview.setUser(user);
+                        newReview.setTrack(track);
+                        track.setUserTrackReview(newReview);
+                    }
+                }
+            }
+        }
 
         return show;
     }
@@ -121,5 +163,50 @@ public class AdminAPIController
     public @ResponseBody void deleteSet(@PathVariable Long id)
     {
         setService.delete(id);
+    }
+
+    @RequestMapping(value = "/track-reviews/{id}")
+    public @ResponseBody
+    TrackReview findTrackReview(@PathVariable Long id)
+    {
+        return trackReviewService.findById(id);
+    }
+
+    @RequestMapping(value = "/track-reviews", method = RequestMethod.POST)
+    public @ResponseBody
+    TrackReview addTrackReview(@RequestBody TrackReview trackReview)
+    {
+        return trackReviewService.save(trackReview);
+    }
+
+    @RequestMapping(value = "/track-reviews/{id}", method = RequestMethod.DELETE)
+    public @ResponseBody
+    void deleteTrackReview(@PathVariable Long id)
+    {
+        trackReviewService.delete(id);
+    }
+
+    @RequestMapping(value = "/track-reviews/{id}", method = RequestMethod.PUT)
+    public @ResponseBody
+    TrackReview updateTrackReview(@RequestBody TrackReview trackReview, @PathVariable Long id)
+    {
+        return trackReviewService.save(trackReview);
+    }
+
+
+    private String getCurrentUsername()
+    {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username;
+
+        if (principal instanceof UserDetails)
+        {
+            username = ((UserDetails) principal).getUsername();
+        } else
+        {
+            username = principal.toString();
+        }
+
+        return username;
     }
 }

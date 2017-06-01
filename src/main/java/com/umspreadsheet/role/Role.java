@@ -1,5 +1,6 @@
 package com.umspreadsheet.role;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.umspreadsheet.privilege.Privilege;
 import com.umspreadsheet.user.User;
 
@@ -16,11 +17,13 @@ public class Role
     private Long id;
 
     @ManyToMany(mappedBy = "roles")
+    @JsonIgnoreProperties({"roles", "trackReviews"})
     private Collection<User> users;
 
     private String name;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @JsonIgnoreProperties({"roles"})
     @JoinTable(
             name = "roles_privileges",
             joinColumns = @JoinColumn(

@@ -42,16 +42,40 @@
     SetFactory.$inject = ['$resource'];
     angular.module('UMspreadsheet.services').factory("Set", SetFactory);
 
+    // var TrackReviewFactory = function ($resource) {
+    //     return $resource('/api/track-reviews/:id', null,
+    //         {
+    //         'update': {
+    //             method: 'PUT'
+    //         },
+    //         'remove': {
+    //             method: 'DELETE'
+    //         }
+    //     });
+    // };
+
     var TrackReviewFactory = function ($resource) {
-        return $resource('/api/track-review/:id', null,
+        return $resource('/api/track-reviews/:id', null,
             {
-            'update': {
-                method: 'PUT'
-            },
-            'remove': {
-                method: 'DELETE'
-            }
-        });
+                'update': {
+                    method: 'PUT'
+                },
+                'remove': {
+                    method: 'DELETE'
+                }
+            });
+
+
+            // Standard: $resource('/api/track-reviews/:id', null,
+            //     {
+            //         'update': {
+            //             method: 'PUT'
+            //         },
+            //         'remove': {
+            //             method: 'DELETE'
+            //         }
+            //     }),
+            // ByUser: $resource('/api/track-reviews-by-user-track/:id', null)
     };
 
     SetFactory.$inject = ['$resource'];

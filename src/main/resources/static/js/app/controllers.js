@@ -1,5 +1,5 @@
 (function (angular) {
-    var ShowController = function ($scope, $window, Show) {
+    var ShowController = function ($scope, $window, Show, TrackReview) {
 
         $scope.showId = $window.showId;
 
@@ -15,10 +15,11 @@
             }
 
             Show.update({id: show.id}, show);
-        }
+        };
+
     };
 
-    ShowController.$inject = ['$scope', '$window', 'Show'];
+    ShowController.$inject = ['$scope', '$window', 'Show', 'TrackReview'];
     angular.module("UMspreadsheet.controllers").controller("ShowController", ShowController);
 
 
@@ -92,4 +93,31 @@
 
     SetController.$inject = ['$scope', 'Set'];
     angular.module("UMspreadsheet.controllers").controller("SetController", SetController);
+
+    var TrackReviewController = function ($scope, TrackReview) {
+
+        // TrackReview.ByUser.get({id: $scope.track.id}, function (response) {
+        //     console.log(response);
+        // });
+
+        $scope.addTrackReview = function (trackReview) {
+            new TrackReview({
+                user: trackReview.user,
+                show: trackReview.show,
+                score: trackReview.score,
+                comment: trackReview.comment
+
+            }).$save( function (savedTrackReview) {
+                $scope.track.userTrackReview = savedTrackReview;
+            });
+        };
+
+        $scope.updateTrackReview = function (trackReview) {
+            console.log(trackReview);
+            TrackReview.update({id: trackReview.id}, trackReview)
+        };
+    };
+
+    SetController.$inject = ['$scope', 'TrackReview'];
+    angular.module("UMspreadsheet.controllers").controller("TrackReviewController", TrackReviewController);
 }(angular));

@@ -1,5 +1,6 @@
 package com.umspreadsheet.privilege;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.umspreadsheet.role.Role;
 
 import javax.persistence.*;
@@ -17,6 +18,7 @@ public class Privilege
     private String name;
 
     @ManyToMany(mappedBy = "privileges")
+    @JsonIgnoreProperties({"privileges"})
     private Collection<Role> roles;
 
     public Privilege(String name)

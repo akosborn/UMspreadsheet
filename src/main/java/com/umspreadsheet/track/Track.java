@@ -25,11 +25,11 @@ public class Track
     private Long id;
 
     @ManyToOne
-    @JsonIgnoreProperties("sets")
+    @JsonIgnoreProperties({"sets", "showReviews"})
     private Show show;
 
     @ManyToOne
-    @JsonIgnoreProperties({"tracks"})
+    @JsonIgnoreProperties({"tracks", "show"})
     private Set set;
 
     private Integer setPosition;
@@ -51,7 +51,7 @@ public class Track
     @Enumerated(value = EnumType.STRING)
     private Jam jam;
 
-    @JsonIgnore
+    @JsonIgnoreProperties("track")
     @OneToMany(mappedBy = "track")
     private List<TrackReview> reviews;
 
@@ -63,6 +63,10 @@ public class Track
 
     @Transient
     private TrackReviewForm trackReviewForm;
+
+    @Transient
+    @JsonIgnoreProperties({"track"})
+    private TrackReview userTrackReview;
 
     public TrackReviewForm getTrackReviewForm()
     {
@@ -212,5 +216,15 @@ public class Track
     public void setTransition(Transition transition)
     {
         this.transition = transition;
+    }
+
+    public TrackReview getUserTrackReview()
+    {
+        return userTrackReview;
+    }
+
+    public void setUserTrackReview(TrackReview userTrackReview)
+    {
+        this.userTrackReview = userTrackReview;
     }
 }

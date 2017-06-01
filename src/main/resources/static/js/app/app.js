@@ -77,4 +77,30 @@
                 }
             }
         });
+
+    app.directive('createSlider', function ($timeout) {
+            return {
+                link: function ($scope, element, attrs, controller) {
+
+                    var score = 0;
+                    if ($scope.track.userTrackReview.score != null)
+                    {
+                        score = $scope.track.userTrackReview.score;
+                    }
+
+                    $timeout(function () {
+
+                        var slider = element.bootstrapSlider({
+                            tooltip: 'always',
+                            value: score
+                        });
+
+                        slider.on("slideStop", function (value) {
+                            // $scope.track.userTrackReview.score = value;
+                            // $scope.apply();
+                        });
+                    });
+                }
+            }
+        });
 }(angular));

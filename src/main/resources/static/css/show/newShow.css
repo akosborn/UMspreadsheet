@@ -10,7 +10,7 @@ TRACKLIST TABLE
 
 #trackReviewSlider .slider-selection
 {
-    background: #BABABA;
+
 }
 
 .slider-track
@@ -41,12 +41,20 @@ TRACKLIST TABLE
     margin-bottom: 1px;
 }
 
-.track-div p:nth-child(1)
+.dark-div .song-name
 {
     font-size: 16px;
     color: #C5B358;
 }
 
+/******************************************
+SLIDER
+******************************************/
+.slider
+{
+    width: 80% !important;
+    margin-top: 30px;
+}
 
 /******************************************
 SHOW HEADER

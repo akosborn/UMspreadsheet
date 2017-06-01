@@ -53,4 +53,14 @@ public class TrackReviewService
     {
         return trackReviewRepository.findByTrackOrderByReviewedOnDesc(track);
     }
+
+    public TrackReview findByUsernameAndTrackId(String username, Long trackId)
+    {
+        return trackReviewRepository.findAllByUserUsernameAndTrackIdOrderByTrackSetPositionAsc(username, trackId);
+    }
+
+    public List<TrackReview> findByUsernameAndShow(String username, Long id)
+    {
+        return trackReviewRepository.findAllByUserUsernameAndTrackShowIdOrderByTrackSetPositionAsc(username, id);
+    }
 }

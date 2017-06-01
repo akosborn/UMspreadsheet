@@ -1,6 +1,7 @@
 package com.umspreadsheet.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.umspreadsheet.role.Role;
 import com.umspreadsheet.model.ShowReview;
 import com.umspreadsheet.review.TrackReview;
@@ -50,6 +51,7 @@ public class User
 
     // gives new users ROLE_USER privilege
     @ManyToMany(fetch = FetchType.EAGER)
+    @JsonIgnoreProperties({"users"})
     @JoinTable(
             name = "users_roles",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
@@ -64,6 +66,7 @@ public class User
     private List<ShowReview> showReviews;
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnoreProperties("user")
     private List<TrackReview> trackReviews;
 
     @NotNull
