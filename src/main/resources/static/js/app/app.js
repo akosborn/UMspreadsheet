@@ -61,7 +61,8 @@
 
                         for (var i = 0; i < trackElements.length; i++)
                         {
-                            var elHeight = trackElements[i].children[0].offsetHeight;
+                            var el = trackElements[i].children[0];
+                            var elHeight = el.offsetHeight;
                             if (elHeight > tallestBox)
                             {
                                 tallestBox = elHeight;
@@ -73,6 +74,8 @@
                         {
                             trackElements[x].children[0].style.height = tallestBox + "px";
                         }
+
+                        console.log('height equalization');
                     });
                 }
             }
@@ -88,7 +91,7 @@
                         score = $scope.track.userTrackReview.score;
                     }
 
-                    $timeout(function () {
+                    // $timeout(function () {
 
                         var slider = element.bootstrapSlider({
                             tooltip: 'always',
@@ -99,7 +102,9 @@
                             // $scope.track.userTrackReview.score = value;
                             // $scope.apply();
                         });
-                    });
+
+                        console.log('slider complete');
+                    // });
                 }
             }
         });

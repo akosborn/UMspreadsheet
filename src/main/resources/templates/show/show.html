@@ -20,6 +20,11 @@
 
             <h1 id="header-title">{{ (show.date | date:'yyyy/MM/dd') + ' ' + show.city + ', ' + show.state }}</h1>
             <h1 id="sub-header-title" style="margin-top: 1px;">{{ show.venue }}</h1>
+            <p sec:authorize="hasRole('ROLE_MANAGE_SHOWS_PRIVILEGE')">
+                <a data-ng-href="/admin/edit-show?showId={{show.id}}">
+                    Edit show
+                </a>
+            </p>
 
             <br/>
 
@@ -28,17 +33,22 @@
 
                 <p class="set-name">{{set.name}}</p>
 
-                <div data-ng-repeat="track in set.tracks | orderBy: '+setPosition'" class="col-sm-4 col-md-2 col-xl-2 track-div">
+                <div data-ng-repeat="track in set.tracks | orderBy: '+setPosition'" class="col-sm-4 col-md-3 track-div">
 
                     <div class="col-md-12 dark-div text-center">
-                        <p class="song-name">{{track.song}}</p>
-                        <p data-ng-if="track.length">{{ (track.length | secondsToMinSec) }}</p>
-                        <p data-ng-if="track.type">{{ track.type | capitalize }}</p>
-                        <p data-ng-if="track.jam">{{ track.jam | capitalize }}</p>
+                        <p class="song-name">{{track.song}}
+                            <sup>{{ track.type != null ? (track.type | limitTo: 2 : begin) : null }}</sup>
+                            <span data-ng-if="track.transition == 'NONE'"></span>
+                            <span data-ng-if="track.transition == 'ROUTINE'">&gt;</span>
+                            <span data-ng-if="track.transition == 'IMPROV'">&rarr;</span>
+                        </p>
                         <p>{{ track.averageRating != null ?  (track.averageRating | number: 2) : 'Not rated' }}</p>
+                        <p>{{ track.length != null ? (track.length | secondsToMinSec) : '&nbsp;' }}</p>
+                        <p>{{ track.jam != null ? (track.jam | capitalize) : '&nbsp;' }}</p>
 
                         <form sec:authorize="isAuthenticated()" data-ng-controller="TrackReviewController">
 
+                            <textarea class="form-control" rows="2" placeholder="That's just like your opinion, man..."></textarea>
                             <input data-ng-model="track.userTrackReview.score"
                                    data-ng-change="track.userTrackReview.id == null ? addTrackReview(track.userTrackReview) : updateTrackReview(track.userTrackReview)"
                                    create-slider class="bs-slider" type="number" data-slider-min="0" data-slider-max="10"

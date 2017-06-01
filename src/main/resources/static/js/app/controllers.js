@@ -34,6 +34,7 @@
         };
 
         $scope.updateSetPosition = function (track, setPosition) {
+            console.log(track);
             track.setPosition = setPosition;
             Track.update({id: track.id}, track);
         };
@@ -101,7 +102,6 @@
         // });
 
         $scope.addTrackReview = function (trackReview) {
-            console.log(trackReview);
             new TrackReview({
                 track: trackReview.track,
                 user: trackReview.user,
