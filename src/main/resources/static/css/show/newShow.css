@@ -24,6 +24,12 @@ TRACKLIST TABLE
     /*background-color: #C5B358 !important;*/
 }
 
+.set-name
+{
+    font-family: "Julius Sans One", sans-serif;
+    font-size: 17px;
+}
+
 .set-div
 {
     margin-bottom: 15px;

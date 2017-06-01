@@ -26,7 +26,7 @@
             <div data-ng-repeat="set in show.sets | orderBy: '+position'" data-ng-controller="SetController"
                  class="row set-div" equal-heights>
 
-                <p>{{set.name}}</p>
+                <p class="text-center set-name">{{set.name}}</p>
 
                 <div data-ng-repeat="track in set.tracks | orderBy: '+setPosition'" class="col-sm-4 col-md-3 col-xl-2 track-div">
 
