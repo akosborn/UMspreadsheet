@@ -44,6 +44,13 @@ body
     color: #C5B358;
 }
 
+#sub-header-title
+{
+    font-family: "Julius Sans One", sans-serif;
+    font-size: 25px;
+    margin-top: 1px;
+}
+
 @media (min-width: 768px)
 {
     #header-statement
@@ -164,6 +171,12 @@ body
         }
     }
 
+    .dark-div
+    {
+        background: #272D38;
+        padding: 10px;
+    }
+
 
 /*******************************
 SOCIAL SIGN UP BUTTON
@@ -182,4 +195,28 @@ PERCENT WRAP
 .percent-wrap
 {
     width: 15%;
+}
+
+/*****************************
+MEDAL COLORS
+*****************************/
+
+.bronze
+{
+    color: #CD7F32;
+}
+
+.silver
+{
+    color: #C0C0C0;
+}
+
+.gold
+{
+    color: #FFD700;
+}
+
+.diamond
+{
+    color: #B9F2FF;
 }

@@ -23,8 +23,8 @@ spring:
         app-secret: AfBOG29GRoCyWTUpe8v3mgA3
   mail:
     host: smtp.gmail.com
-    username: umspreadsheethelp@gmail.com
-    password: nothingtoo1348
+    username: andrewosborn93@gmail.com
+    password: rolltid3
     port: 587
     properties:
         mail:

@@ -6,6 +6,7 @@ import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -79,7 +80,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                         .antMatchers("/", "/signin/**", "/signup/**", "/resources/**", "/disconnect/facebook",
                                 "/shows/**", "/songs/**", "/wormblog/**", "/about/**", "/signup-confirm", "/song/*/*",
                                 "/user/*", "/reset-password", "/change-password").permitAll()
-                    .antMatchers("/admin", "/admin/edit-show-angular", "/api/**").hasRole("MOD_PRIVILEGE")
+                    .antMatchers(HttpMethod.GET,"/api/**").permitAll()
+                    .antMatchers(HttpMethod.DELETE, "/api/**").hasRole("MOD_PRIVILEGE")
+                    .antMatchers(HttpMethod.POST, "/api/**").hasRole("MOD_PRIVILEGE")
+                    .antMatchers(HttpMethod.PUT, "/api/**").hasRole("MOD_PRIVILEGE")
+                    .antMatchers("/admin", "/admin/edit-show-angular").hasRole("MOD_PRIVILEGE")
                     .antMatchers("/admin/manage-users/**").hasRole("MANAGE_USERS_PRIVILEGE")
                     .antMatchers("/update-password", "/save-password").hasAuthority("CHANGE_PASSWORD_PRIVILEGE")
                     .antMatchers("/**").authenticated()

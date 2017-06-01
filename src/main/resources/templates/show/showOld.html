@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorator="layouts/site"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <title>UMSpreadsheet</title>
+
+    <link rel="stylesheet" th:href="@{/css/show.css}" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.7.2/css/bootstrap-slider.min.css" />
+
+</head>
+
+<body>
+    <div layout:fragment="content">
+        <div id="#home-container" class="container">
+
+            <div id="most-recent-show-header" th:object="${show}">
+                <h2 id="show-title" th:text="${#dates.format(show.date, 'yyyy/MM/dd') + ' ' + show.city + ', '  + show.state}"></h2>
+                <h3 class="hidden-md hidden-lg hidden-xl" th:text="${show.venue}" style="margin-top: 3px; margin-bottom: 2px;">[venue]</h3>
+                <h2 id="show-rating-and-medal">
+                    <i th:if="*{averageRating ge 6 and averageRating lt 7}" class="fa fa-trophy" style="color: #CD7F32;" aria-hidden="true"></i>
+                    <i th:if="*{averageRating ge 7 and averageRating lt 8}" class="fa fa-trophy" style="color: #C0C0C0;" aria-hidden="true"></i>
+                    <i th:if="*{averageRating ge 8 and averageRating lt 9}" class="fa fa-trophy" style="color: #FFD700;" aria-hidden="true"></i>
+                    <i th:if="*{averageRating ge 9}" class="fa fa-diamond" style="color: #B9F2FF;" aria-hidden="true"></i>
+                    <span th:if="*{averageRating != null}" th:text="*{#numbers.formatDecimal(averageRating, 1, 2)}">[0.00]</span>
+                    <span th:if="*{averageRating == null}">No Rating</span>
+                </h2>
+                <h3 class="hidden-xs hidden-sm" th:text="${show.venue}" style="margin-top: 3px;">[venue]</h3>
+                <p th:if="${show.nugsId != null}">
+                    <a th:href="@{https://play.nugs.net/#/catalog/recording/} + ${show.nugsId}" data-ng-model="show.nugsId">
+                        nugs.net
+                    </a>
+                </p>
+                <p sec:authorize="hasRole('ROLE_MANAGE_SHOWS_PRIVILEGE')">
+                    <a th:href="@{/admin/edit-show(showId=${show.id})}">
+                        Edit show
+                    </a>
+                </p>
+            </div>
+
+            <table sec:authorize="isAuthenticated()" class="table show-set-table">
+                <thead>
+                    <tr>
+                        <th data-priority="1" class="song-column-header" style="width: 315px">SONG</th>
+                        <th class="hidden-xs hidden-sm text-right" style="width: 150px">LENGTH</th>
+                        <th class="hidden-xs" style="width: 130px">TYPE</th>
+                        <th class="hidden-xs hidden-sm" style="width: 275px">JAM</th>
+                        <th class="hidden-xs" style="width: 175px;">COMMUNITY RATING</th>
+                        <th data-priority="2" style="min-width: 242px;">MY RATING</th>
+                        <th class="hidden-xs hidden-sm"></th>
+                        <th class="hidden-xs text-center"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!--loop through sets-->
+                    <th:block th:each="set : ${show.sets}" th:object="${set}">
+                        <!--print set title-->
+                        <tr class="set-row">
+                            <td class="set-name" colspan="8" th:text="*{name}">[set title]</td>
+                        </tr>
+                        <!--loop through tracks-->
+                        <tr th:each="track, i : *{tracks}" th:object="${track}">
+                            <td>
+                                <a th:href="@{'/songs/' + ${track.id} + '/' + ${track.slug}}">
+                                    <span th:text="*{song}">[song name]</span>
+                                    <span th:if="${track.transition == 'ROUTINE'}"> > </span>
+                                    <span th:if="${track.transition == 'IMPROV'}">&nbsp;->&nbsp;</span>
+                                </a>
+                            </td>
+
+                            <td th:if="*{length > 60 && ((length % 60) > 9)}" th:text="*{length / 60} + ':' + *{length % 60}"
+                                class="hidden-xs hidden-sm text-right">[length]</td>
+                            <td th:if="*{length > 60 && ((length % 60) < 10)}" th:text="*{length / 60} + ':0' + *{length % 60}"
+                                class="hidden-xs hidden-sm text-right">[length]</td>
+                            <td th:if="*{length < 60 && !(length == null)}" th:text="'0:' + *{length}"
+                                class="hidden-xs hidden-sm text-right">[length]</td>
+                            <td th:if="*{length == null}" class="hidden-xs hidden-sm"></td>
+
+                            <td th:text="*{type}" class="hidden-xs">[type]</td>
+                            <td th:text="*{jam}" class="hidden-xs hidden-sm">[jam]</td>
+                            <td th:text="${#numbers.formatDecimal(track.averageRating, 0, 'COMMA', 2, 'POINT')}" class="hidden-xs">[avg rating]</td>
+                            <td>
+                                <form th:id="'track' + ${track.id} + 'Form'" th:object="${track.trackReviewForm}"
+                                      th:action="@{/shows/review}" method="post">
+                                    <input type="hidden" th:if="${track.trackReviewForm.id != null}"
+                                           th:value="*{id}" th:name="id" th:id="id" />
+                                    <input type="hidden" th:value="*{trackId}" th:name="trackId"
+                                           th:id="trackId"/>
+                                    <input type="hidden" th:name="username" th:value="*{username}"/>
+                                    <span th:id="'track' + ${track.id} + 'SliderLabel'">0.00</span>
+                                    <input th:id="'track' + ${track.id}" class="bs-slider"
+                                           th:name="score" data-slider-id='trackReviewSlider'
+                                           type="number" data-slider-min="0" data-slider-max="10"
+                                           data-slider-step="0.25" data-slider-value="0" data-slider-tooltip="hide"/>
+                                </form>
+                            </td>
+                            <td class="hidden-xs hidden-sm" style="text-align: center;">
+                                <a th:if="*{trackReviewForm.id != null}" href="javscript:" data-toggle="modal" th:data-target="'#trackId' + *{id} + 'CommentModal'">
+                                    <i th:if="*{trackReviewForm.comment == null}" class="fa fa-comment-o" aria-hidden="true"></i>
+                                    <i th:if="*{trackReviewForm.comment != null}" class="fa fa-comment-o" aria-hidden="true"
+                                       style="color: yellow;"></i>
+                                </a>
+                            </td>
+
+                            <div th:id="'trackId' + *{id} + 'CommentModal'" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+                                    <!-- Modal content-->
+                                    <div class="modal-content" style="background-color: #313131">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 th:text="'Comment on ' + *{song}" class="modal-title">Modal Header</h4>
+                                        </div>
+                                        <div class="row">
+                                            <div class="modal-body col-sm-8 col-sm-offset-2">
+                                                <form th:id="'editCommentForm' + *{id}" th:action="@{/shows/comment}" th:method="post"
+                                                      th:object="${track.trackReviewForm}">
+                                                    <input id="id" type="hidden" name="id" th:value="*{id}"/>
+                                                    <div class="form-group">
+                                                        <div class="col-sm-12">
+                                                            <textarea class="form-control" id="comment"
+                                                                      name="comment" rows="10" th:text="*{comment}">
+                                                            </textarea>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer" style="text-align: center;">
+                                            <button type="submit" class="btn btn-default" th:form="'editCommentForm' + *{trackReviewForm.id}">Submit</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <td class="hidden-xs">
+                                <form th:if="${track.trackReviewForm.id != null}" th:action="@{/shows/review}" th:method="delete">
+                                    <input type="hidden" name="reviewId" th:value="${track.trackReviewForm.id}" />
+                                    <input type="hidden" name="showId" th:value="${show.id}" />
+                                    <button type="submit" class="icon-button">
+                                        <i class="fa fa-trash" aria-hidden="true" style="color: #B33A3A"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+
+                    </th:block>
+                </tbody>
+            </table>
+
+            <table sec:authorize="isAnonymous()" class="table show-set-table" style="width: 100%">
+                <thead>
+                    <tr style="width: 100%">
+                        <th data-priority="1" style="width: 315px">SONG</th>
+                        <th class="hidden-xs hidden-sm text-right" style="width: 70px; margin-right: 40px;">LENGTH</th>
+                        <th style="width: 130px">TYPE</th>
+                        <th style="width: 175px;">JAM</th>
+                        <th style="width: 75px;">RATING</th>
+                        <th class="percent-wrap hidden-xs" style="width: 10%"></th>
+                        <th class="hidden-sm hidden-xs" style="width: 275px">NOTES</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <!--loop through sets-->
+                <th:block th:each="set : ${show.sets}" th:object="${set}">
+                    <!--print set title-->
+                    <tr class="set-row">
+                        <td class="set-name" colspan="8" th:text="*{name}">[set title]</td>
+                    </tr>
+                    <!--loop through tracks-->
+                    <tr th:each="track, i : *{tracks}" th:object="${track}">
+                        <td>
+                            <a th:href="@{'/songs/' + ${track.id} + '/' + ${track.slug}}">
+                                <span th:text="*{song}">[song name]</span>
+                                <span th:if="${track.transition == 'ROUTINE' and !i.last}"> > </span>
+                                <span th:if="${track.transition == 'IMPROV'}">&nbsp;->&nbsp;</span>
+                            </a>
+                        </td>
+
+                        <td th:if="*{length > 60 && ((length % 60) > 9)}" th:text="*{length / 60} + ':' + *{length % 60}" class="hidden-xs hidden-sm text-right">[length]</td>
+                        <td th:if="*{length > 60 && ((length % 60) < 10)}" th:text="*{length / 60} + ':0' + *{length % 60}" class="hidden-xs hidden-sm text-right">[length]</td>
+                        <td th:if="*{length < 60 && !(length == null)}" th:text="'0:' + *{length}" class="hidden-xs hidden-sm text-right">[length]</td>
+                        <td th:if="*{length == null}" class="hidden-xs hidden-sm text-right"></td>
+
+                        <td th:text="*{type}">[type]</td>
+                        <td th:text="*{jam}">[jam]</td>
+                        <td th:text="${#numbers.formatDecimal(track.averageRating, 0, 'COMMA', 2, 'POINT')}">[avg rating]</td>
+
+                        <td class="percent-wrap hidden-xs" style="vertical-align: middle;">
+                            <th:block th:if="*{averageRating != null}">
+                                <span class="span-percent-bar" th:if="*{averageRating gt 6.99 and averageRating lt 8}"
+                                      th:style="'background-color: #CD7F32; width: ' + ${(track.averageRating * 10)} + '%;'"></span>
+                                <span class="span-percent-bar" th:if="*{averageRating gt 7.99 and averageRating lt 9}"
+                                      th:style="'background-color: #C0C0C0; width: ' + ${(track.averageRating * 10)} + '%;'"></span>
+                                <span class="span-percent-bar" th:if="*{averageRating gt 8.99 and averageRating lt 9.5}"
+                                      th:style="'background-color: #FFD700; width: ' + ${(track.averageRating * 10)} + '%;'"></span>
+                                <span class="span-percent-bar" th:if="*{averageRating gt 9.49}"
+                                      th:style="'background-color: #B9F2FF; width: ' + ${(track.averageRating * 10)} + '%;'"></span>
+                            </th:block>
+                        </td>
+
+                        <td th:text="*{notes}" class="hidden-xs hidden-sm">[too many notes]</td>
+                    </tr>
+                </th:block>
+                </tbody>
+            </table>
+
+            <div sec:authorize="isAuthenticated()" id="add-comment-modal" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content" style="background-color: #313131">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 th:text="'Add set'" class="modal-title">Modal Header</h4>
+                        </div>
+                        <div class="row">
+                            <div class="modal-body col-sm-8 col-sm-offset-2">
+                                <form th:action="@{/admin/add-set}" id="addSetForm"
+                                      name="addSetForm" th:object="${set}" method="post">
+                                    <input type="hidden" th:field="*{showId}"/>
+                                    <div class="form-group">
+                                        <label class="control-label" for="set">Set</label>
+                                        <input placeholder="Set 1" type="text" class="form-control" id="set" th:field="*{name}"/>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="modal-footer" style="text-align: center;">
+                            <button type="submit" class="btn btn-default" form="addSetForm">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br/>
+
+            <h2>Latest Ratings</h2>
+            <table id="user-reviews" class="table show-set-table">
+                <thead>
+                    <tr>
+                        <th data-priority="1">User</th>
+                        <th data-priority="2">Date</th>
+                        <th data-priority="3">Song</th>
+                        <th data-priority="4">Rating</th>
+                        <th style="max-width: 650px;" data-priority="5">Comments</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="review : ${reviews}" th:object="${review}">
+                        <td><a th:href="@{'/user/' + *{user.username}}" th:text="*{user.username}">[user]</a></td>
+                        <td th:text="${#dates.format(review.reviewedOn, 'dd MMM yyyy')}"></td>
+                        <td>
+                            <a th:href="@{'/songs/' + ${review.track.id} + '/' + ${review.track.slug}}" th:text="${review.track.song}">[song]</a>
+                        </td>
+                        <td th:text="*{score}">[rating]</td>
+                        <td style="max-width: 650px;">
+                            <span th:if="*{comment}" th:text="*{comment}">[comments]</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+    <th:block layout:fragment="script">
+
+        <script type="text/javascript" th:inline="javascript">
+            var showId = [[${showId}]];
+        </script>
+
+        <script type="text/javascript" th:inline="javascript">
+
+            var trackReviewForms = [[${trackReviewForms}]];
+
+            trackReviewForms.forEach(function(trackReviewForm)
+            {
+                createSlider(trackReviewForm.trackId, trackReviewForm.score);
+            });
+
+            function createSlider(trackId, score) {
+                var mySlider = $('#track' + trackId).bootstrapSlider({
+                    formatter: function (value) {
+                        return 'Current value: ' + value;
+                    }
+                });
+
+                if (score != null) {
+                    mySlider.bootstrapSlider('setValue', score);
+                    $('#track' + trackId + 'SliderLabel').text(parseFloat(Math.round(score * 100) / 100).toFixed(2));
+                }
+            }
+
+            $(document).ready(function()
+            {
+                $(".bs-slider").on("slide", function (slideEvt)
+                {
+                    $('#' + slideEvt.target.id + 'SliderLabel').text(parseFloat(Math.round(slideEvt.value * 100) / 100).toFixed(2));
+                });
+
+                $(".bs-slider").on("slideStop", function (slideEvt)
+                {
+                    $('#' + slideEvt.target.id + 'Form').submit();
+                });
+            });
+
+        </script>
+
+        <script th:src="@{/webjars/angularjs/1.6.4/angular.min.js}"></script>
+        <script th:src="@{/webjars/angular-route/1.6.4/angular-route.min.js}"></script>
+        <script th:src="@{/webjars/angular-resource/1.6.4/angular-resource.min.js}"></script>
+
+
+        <script th:src="@{/app/app.js}"></script>
+        <script th:src="@{/app/services.js}"></script>
+        <script th:src="@{/app/controllers.js}"></script>
+    </th:block>
+</body>
+</html>

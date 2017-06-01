@@ -7,7 +7,7 @@
       xmlns:layout="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8"/>
-    <title>UMSpreadsheet</title>
+    <title>UMspreadsheet</title>
 
     <link rel="stylesheet" th:href="@{/css/admin/editShow.css}" />
     <link rel="stylesheet" th:href="@{/css/bootstrap-duration-picker.css}"/>
@@ -31,40 +31,60 @@
             <p th:if="${nextShow}" class="pull-right" style="margin-bottom: 0"><a th:href="@{/admin/edit-show(showId=${nextShow.id})}">Next</a></p>
 
             <h1 id="header-title">{{ (show.date | date:'yyyy/MM/dd') + ' ' + show.city + ', ' + show.state }}</h1>
-            <h1 id="header-title" style="margin-top: 1px;">{{ show.venue }}</h1>
+            <h1 id="sub-header-title">{{ show.venue }}</h1>
             <p data-ng-if="show.nugsId != null">
                 <a data-ng-href="https://play.nugs.net/#/catalog/recording/{{show.nugsId}}" data-ng-model="show.nugsId">
                     nugs.net URL
                 </a>
             </p>
 
-            <div class="col-md-4" style="margin-bottom: 15px;=">
-                <input type="text" class="form-control" data-ng-model="show.nugsId" data-ng-change="updateShow(show)"
-                       placeholder="nugs.net url here (https://play.nugs.net/#/catalog/recording/1210)..."
-                       data-ng-value="show.nugsId != null? 'https://play.nugs.net/#/catalog/recording/' + show.nugsId : null"/>
+            <div class="row">
+                <div class="col-xs-7 col-md-4" style="margin-bottom: 15px;=">
+                    <input type="text" class="form-control" data-ng-model="show.nugsId" data-ng-change="updateShow(show)"
+                           placeholder="nugs.net url here (https://play.nugs.net/#/catalog/recording/1210)..."
+                           data-ng-value="show.nugsId != null? 'https://play.nugs.net/#/catalog/recording/' + show.nugsId : null"
+                           data-ng-model-options="{debounce: 1000}"/>
+                </div>
             </div>
 
-            <div class="col-xs-12" style="margin-bottom: 5px">
-                <form data-ng-controller="SetController" role="form" class="form" data-ng-submit="addSet(show, newSet)">
-                    <div class="input-group col-md-3">
-                        <input type="text" class="form-control" data-ng-model="newSet"
-                               placeholder="Enter new set name (i.e. 'Set 2')..." />
-                        <span class="input-group-btn">
+            <div class="row">
+                <div class="col-xs-4 col-md-2" style="margin-bottom: 5px">
+                    <form data-ng-controller="SetController" role="form" class="form" data-ng-submit="addSet(show, newSet)">
+                        <div class="input-group">
+                            <input type="text" class="form-control" data-ng-model="newSet"
+                                   placeholder="Enter new set name (i.e. 'Set 2')..." data-ng-model-options="{debounce: 1000}" />
+                            <span class="input-group-btn">
                         <button class="btn btn-default" type="submit" data-ng-disabled="!newSet" title="Add">
                             <span class="glyphicon glyphicon-plus"></span>
                         </button>
                     </span>
-                    </div>
-                </form>
+                        </div>
+                    </form>
+                </div>
             </div>
+
+            <br/>
 
             <div>
 
-                <div data-ng-repeat="set in show.sets | orderBy: '+position'" data-ng-controller="SetController" class="col-xs-12"  style="background-color: #272D38;">
-                    <form class="form row" role="form">
-                        <div class="col-sm-5 col-md-3 form-group">
+                <div data-ng-repeat="set in show.sets | orderBy: '+position'" class="col-xs-12"  style="background-color: #272D38;">
+                    <form class="form row" role="form" data-ng-controller="SetController">
+                        <div class="col-xs-4 col-md-2 form-group">
                             <label style="color: #C5B358">{{set.name}}</label>
-                            <input type="text" data-ng-model="set.name" class="form-control" data-ng-change="updateSet(set)">
+                            <input type="text" data-ng-model="set.name" data-ng-model-options="{debounce: 1000}" class="form-control" data-ng-change="updateSet(set)">
+                        </div>
+                        <div class="form-group col-xs-2 col-md-1">
+                            <label>#</label>
+                            <input class="form-control" type="number" data-ng-model="set.position" data-ng-model-options="{debounce: 1000}"
+                                   data-ng-change="updateSet(set)"
+                                   data-ng-init="set.position == null ? updatePosition(set, $index + 1) : null ">
+                        </div>
+
+                        <div style="height: 58.8px; padding-top: 24px; text-align: center;" class="col-xs-3 col-sm-1">
+                            <button class="btn btn-danger" type="button" title="Delete"
+                                    data-ng-click="deleteSet(set)">
+                                <span style="margin-right: 0" class="fa fa-trash"></span>
+                            </button>
                         </div>
                         <div class="form-group col-sm-2 col-md-1">
                             <label>#</label>
@@ -87,32 +107,24 @@
                         <div class="col-sm-5 col-md-3 form-group">
                             <label data-ng-attr-for="{{'song-' + track.id }}">Song name</label>
                             <input data-ng-attr-id="{{'song-' + track.id }}" class="form-control" type="text"
-                                   data-ng-model="track.song" data-ng-change="updateTrack(track)">
+                                   data-ng-model="track.song" data-ng-change="updateTrack(track)" data-ng-model-options="{debounce: 1000}">
                         </div>
 
                         <div class="form-group col-md-2">
                             <label style="padding-left: 3px">Duration</label>
-                            <input after-tracks-render type="text" class="form-control">
-                        </div>
-
-                        <div class="col-md-2" style="margin-bottom: 15px; padding-top: 30px; height: 59px; display: flex; align-content: center; align-items: center;">
-                            <div class="radio">
-                                <label>
-                                    <input type="radio" value="NONE" name="transition"
-                                           data-ng-model="track.transition" data-ng-change="updateTrack(track)" />None<br/>
-                                </label>
-                                <label>
-                                    <input type="radio" value="ROUTINE" name="transition"
-                                           data-ng-model="track.transition" data-ng-change="updateTrack(track)" />&gt;<br/>
-                                </label>
-                                <label>
-                                    <input type="radio" value="IMPROV" name="transition"
-                                           data-ng-model="track.transition" data-ng-change="updateTrack(track)" />&rarr;<br/>
-                                </label>
-                            </div>
+                            <input after-tracks-render type="text" class="form-control" data-ng-model-options="{debounce: 1000}">
                         </div>
 
                         <div class="form-group col-md-1">
+                            <label for="transition" class="control-label">Transition</label>
+                            <select id="transition" class="form-control" data-ng-model="track.transition" data-ng-change="updateTrack(track)">
+                                <option value="NONE">,</option>
+                                <option value="ROUTINE">&gt;</option>
+                                <option value="IMPROV">&rarr;</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-2">
                             <label for="type" class="control-label">Type</label>
                             <select id="type" class="form-control" data-ng-model="track.type" data-ng-change="updateTrack(track)">
                                 <option value="NONE">None</option>
@@ -124,7 +136,7 @@
                             </select>
                         </div>
 
-                        <div class="form-group col-md-1">
+                        <div class="form-group col-md-2">
                             <label class="control-label" for="jam">Jam</label>
                             <select class="form-control" id="jam" data-ng-model="track.jam" data-ng-change="updateTrack(track)">
                                 <option value="NONE">None</option>
@@ -143,10 +155,10 @@
                             </select>
                         </div>
 
-                        <div class="form-group col-sm-2 col-md-2">
+                        <div class="form-group col-sm-2 col-md-1">
                             <label># in set</label>
                             <input class="form-control" type="number" data-ng-model="track.setPosition"
-                                   data-ng-change="updateTrack(track)"
+                                   data-ng-change="updateTrack(track)" data-ng-model-options="{debounce: 1000}"
                                    data-ng-init="track.setPosition == null ? updateSetPosition(track, $index + 1) : null ">
                         </div>
 
@@ -161,7 +173,8 @@
                     <form data-ng-controller="TrackController" role="form" class="form row"
                           data-ng-submit="addTrack(show, set, newTrack)">
                         <div class="input-group col-md-6 col-md-offset-3">
-                            <input type="text" class="form-control" data-ng-model="newTrack" placeholder="Enter the song name..." />
+                            <input type="text" class="form-control" data-ng-model="newTrack"
+                                   placeholder="Enter the song name..." />
                             <span class="input-group-btn">
                                 <button class="btn btn-default" type="submit" data-ng-disabled="!newTrack" title="Add">
                                     <span class="glyphicon glyphicon-plus"></span>
@@ -191,9 +204,9 @@
         <script th:src="@{/webjars/angular-resource/1.6.4/angular-resource.min.js}"></script>
 
 
-        <script th:src="@{/app/app.js}"></script>
-        <script th:src="@{/app/services.js}"></script>
-        <script th:src="@{/app/controllers.js}"></script>
+        <script th:src="@{/js/app/app.js}"></script>
+        <script th:src="@{/js/app/services.js}"></script>
+        <script th:src="@{/js/app/controllers.js}"></script>
 
     </th:block>
 </body>
