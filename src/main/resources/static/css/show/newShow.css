@@ -53,6 +53,14 @@ TRACKLIST TABLE
     color: #C5B358;
 }
 
+@media (max-width: 767px)
+{
+    .set-name
+    {
+        text-align: center;
+    }
+}
+
 /******************************************
 SLIDER
 ******************************************/

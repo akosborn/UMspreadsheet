@@ -65,7 +65,6 @@ public class Track
     private TrackReviewForm trackReviewForm;
 
     @Transient
-    @JsonIgnoreProperties({"track"})
     private TrackReview userTrackReview;
 
     public TrackReviewForm getTrackReviewForm()

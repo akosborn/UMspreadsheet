@@ -31,7 +31,7 @@ public class TrackReview
     private String comment;
 
     @ManyToOne
-    @JsonIgnoreProperties({"trackReviews", "userTrackReview"})
+    @JsonIgnoreProperties({"reviews", "userTrackReview", "show", "set"})
     private Track track;
 
     @NotNull

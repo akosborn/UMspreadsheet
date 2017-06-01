@@ -101,7 +101,9 @@
         // });
 
         $scope.addTrackReview = function (trackReview) {
+            console.log(trackReview);
             new TrackReview({
+                track: trackReview.track,
                 user: trackReview.user,
                 show: trackReview.show,
                 score: trackReview.score,
