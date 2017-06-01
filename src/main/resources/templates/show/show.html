@@ -42,7 +42,17 @@
                             <span data-ng-if="track.transition == 'ROUTINE'">&gt;</span>
                             <span data-ng-if="track.transition == 'IMPROV'">&rarr;</span>
                         </p>
-                        <p>{{ track.averageRating != null ?  (track.averageRating | number: 2) : 'Not rated' }}</p>
+                        <p>
+                            <i data-ng-if="track.averageRating >= 6 && track.averageRating < 7"
+                              class="fa fa-trophy bronze track-div-trophy" aria-hidden="true"></i>
+                            <i data-ng-if="track.averageRating >= 7 && track.averageRating < 8"
+                              class="fa fa-trophy silver track-div-trophy" aria-hidden="true"></i>
+                            <i data-ng-if="track.averageRating >= 8 && track.averageRating < 9"
+                              class="fa fa-trophy gold track-div-trophy" aria-hidden="true"></i>
+                            <i data-ng-if="track.averageRating >= 9"
+                              class="fa fa-diamond diamond track-div-trophy" aria-hidden="true"></i>
+                            {{ track.averageRating != null ?  (track.averageRating | number: 2) : 'Not rated' }}
+                        </p>
                         <p>{{ track.length != null ? (track.length | secondsToMinSec) : '&nbsp;' }}</p>
                         <p>{{ track.jam != null ? (track.jam | capitalize) : '&nbsp;' }}</p>
 

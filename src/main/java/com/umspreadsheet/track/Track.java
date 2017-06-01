@@ -9,6 +9,8 @@ import com.umspreadsheet.review.TrackReviewForm;
 import com.umspreadsheet.set.Set;
 import com.umspreadsheet.review.TrackReview;
 import com.umspreadsheet.show.Show;
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.*;
 import javax.persistence.Entity;
@@ -25,11 +27,11 @@ public class Track
     private Long id;
 
     @ManyToOne
-    @JsonIgnoreProperties({"sets", "showReviews"})
+    @JsonIgnoreProperties(value = {"sets", "showReviews"}, allowSetters = true)
     private Show show;
 
     @ManyToOne
-    @JsonIgnoreProperties({"tracks", "show"})
+    @JsonIgnoreProperties(value = {"tracks", "show"}, allowSetters = true)
     private Set set;
 
     private Integer setPosition;
@@ -51,6 +53,7 @@ public class Track
     @Enumerated(value = EnumType.STRING)
     private Jam jam;
 
+    @Cascade({CascadeType.DELETE})
     @JsonIgnoreProperties("track")
     @OneToMany(mappedBy = "track")
     private List<TrackReview> reviews;

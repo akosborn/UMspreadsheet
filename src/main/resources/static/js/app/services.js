@@ -78,7 +78,7 @@
             // ByUser: $resource('/api/track-reviews-by-user-track/:id', null)
     };
 
-    SetFactory.$inject = ['$resource'];
+    TrackReviewFactory.$inject = ['$resource'];
     angular.module('UMspreadsheet.services').factory("TrackReview", TrackReviewFactory);
 
 

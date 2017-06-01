@@ -1,5 +1,5 @@
 (function (angular) {
-    var ShowController = function ($scope, $window, Show, TrackReview) {
+    var ShowController = function ($scope, $window, Show) {
 
         $scope.showId = $window.showId;
 
@@ -19,7 +19,7 @@
 
     };
 
-    ShowController.$inject = ['$scope', '$window', 'Show', 'TrackReview'];
+    ShowController.$inject = ['$scope', '$window', 'Show'];
     angular.module("UMspreadsheet.controllers").controller("ShowController", ShowController);
 
 
@@ -30,19 +30,25 @@
         // })
 
         $scope.updateTrack = function (track) {
+            console.log('updateTrack()');
+            console.log(track);
             Track.update({id: track.id}, track);
         };
 
         $scope.updateSetPosition = function (track, setPosition) {
+            console.log('updateSetPosition()');
             console.log(track);
             track.setPosition = setPosition;
             Track.update({id: track.id}, track);
         };
 
         $scope.addTrack = function (show, set, song) {
+            console.log('Add track');
+            console.log(show);
+            console.log(set);
+            console.log(song);
             new Track({
                 song: song,
-                show: show,
                 set: set
             }).$save(function (track) {
                 $scope.set.tracks = $scope.set.tracks || [];
@@ -108,18 +114,16 @@
                 show: trackReview.show,
                 score: trackReview.score,
                 comment: trackReview.comment
-
             }).$save( function (savedTrackReview) {
                 $scope.track.userTrackReview = savedTrackReview;
             });
         };
 
         $scope.updateTrackReview = function (trackReview) {
-            console.log(trackReview);
             TrackReview.update({id: trackReview.id}, trackReview)
         };
     };
 
-    SetController.$inject = ['$scope', 'TrackReview'];
+    TrackReviewController.$inject = ['$scope', 'TrackReview'];
     angular.module("UMspreadsheet.controllers").controller("TrackReviewController", TrackReviewController);
 }(angular));

@@ -35,6 +35,7 @@ public class Show
     private Long numberOfReviews;
 
     @OneToMany(mappedBy = "show", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"show"})
     private List<ShowReview> showReviews;
 
     @OneToMany(mappedBy = "show")

@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,13 +61,19 @@ public class AdminAPIController
 
     @RequestMapping(value = "/shows/{id}")
     public @ResponseBody
-    Show findShow(@PathVariable Long id)
+    Show findShow(@PathVariable Long id, HttpServletRequest request)
     {
+        String referer = request.getHeader("referer");
+
         Show show = showService.findById(id);
         String username = getCurrentUsername();
         List<TrackReview> trackReviews = trackReviewService.findByUsernameAndShow(username, show.getId());
 
-        if (!username.equals("anonymousUser"))
+        boolean userAnon = username.equals("anonymousUser");
+        boolean showEdit = referer.contains("edit");
+
+
+        if (!username.equals("anonymousUser") && !referer.contains("edit"))
         {
             User user = userService.findByUsername(username);
             for (Set set : show.getSets())
@@ -116,6 +123,9 @@ public class AdminAPIController
     @RequestMapping(value = "/tracks", method = RequestMethod.POST)
     public @ResponseBody Track addTrack(@RequestBody Track track)
     {
+        Set set = setService.findById(track.getSet().getId());
+        track.setShow(set.getShow());
+
         Track savedTrack = trackService.save(track);
 
         return savedTrack;
@@ -124,6 +134,9 @@ public class AdminAPIController
     @RequestMapping(value = "/tracks/{id}", method = RequestMethod.PUT)
     public @ResponseBody Track updateTrack(@RequestBody Track track, @PathVariable Long id)
     {
+        Track retrievedTrack = trackService.findById(track.getId());
+        track.setSet(retrievedTrack.getSet());
+
         return trackService.save(track);
     }
 
