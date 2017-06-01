@@ -81,7 +81,7 @@
             }
         });
 
-    app.directive('createSlider', function ($timeout) {
+    app.directive('createSlider', function () {
             return {
                 link: function ($scope, element, attrs, controller) {
 
@@ -91,20 +91,10 @@
                         score = $scope.track.userTrackReview.score;
                     }
 
-                    // $timeout(function () {
-
-                        var slider = element.bootstrapSlider({
-                            tooltip: 'always',
-                            value: score
-                        });
-
-                        slider.on("slideStop", function (value) {
-                            // $scope.track.userTrackReview.score = value;
-                            // $scope.apply();
-                        });
-
-                        console.log('slider complete');
-                    // });
+                    var slider = element.bootstrapSlider({
+                        tooltip: 'always',
+                        value: score
+                    });
                 }
             }
         });

@@ -54,7 +54,7 @@ public class Track
     private Jam jam;
 
     @Cascade({CascadeType.DELETE})
-    @JsonIgnoreProperties("track")
+    @JsonIgnoreProperties({"track", "user"})
     @OneToMany(mappedBy = "track")
     private List<TrackReview> reviews;
 

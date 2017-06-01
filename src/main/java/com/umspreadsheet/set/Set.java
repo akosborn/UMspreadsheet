@@ -31,7 +31,7 @@ public class Set
     private Double averageRating;
 
     @ManyToOne
-    @JsonIgnoreProperties("sets")
+    @JsonIgnoreProperties(value = "sets", allowSetters = true)
     private Show show;
 
     private Integer position;
