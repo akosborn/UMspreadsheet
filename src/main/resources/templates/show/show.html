@@ -131,6 +131,7 @@
                     <div class="col-xs-12 dark-div review-div">
 
                         <div class="col-xs-8 col-sm-10">
+                            <p class="song-name">{{ review.track.song }}</p>
                             <p class="username">
                                 <a data-ng-href="/user/{{review.user.username}}">{{ review.user.username }}</a>
                                 <span>{{ review.reviewedOn | date:'yyyy/MM/dd' }}</span>
