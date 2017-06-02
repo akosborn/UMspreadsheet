@@ -7,7 +7,6 @@
 	<artifactId>umspreadsheet</artifactId>
 	<version>v1.3</version>
 	<packaging>war</packaging>
-	<!--<packaging>war</packaging>-->
 
 	<name>UMspreadsheet</name>
 	<description>Rate Umphrey's McGee shows</description>
