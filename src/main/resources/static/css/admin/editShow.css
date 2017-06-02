@@ -36,11 +36,6 @@ form .icon-button
     border: none;
 }
 
-#trackReviewSlider .slider-selection
-{
-    background: #BABABA;
-}
-
 .slider-track
 {
     box-shadow: inset 0 1px 2px rgba(0,0,0,0.3) !important;

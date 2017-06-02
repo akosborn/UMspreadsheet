@@ -98,7 +98,7 @@
             }
         });
 
-    app.directive('createSlider', function () {
+    app.directive('createSlider', function ($timeout) {
             return {
                 link: function ($scope, element, attrs, controller) {
 
@@ -112,6 +112,38 @@
                         tooltip: 'show',
                         value: score
                     });
+
+                    $timeout(function () {
+
+                        var value = $scope.track.userTrackReview.score;
+                        var selection = slider.parent().children().eq(0).children().eq(0).children().eq(1);
+                        slider.bootstrapSlider('setValue', score);
+
+                        var colorChange = function () {
+
+                            value = $scope.track.userTrackReview.score;
+
+                            if (value < 6)
+                                selection.css('background', '#F3F3F3');
+                            if (value >= 6 && value < 7)
+                                selection.css('background', '#CD7F32');
+                            if (value >= 7 && value < 8)
+                                selection.css('background', '#C0C0C0');
+                            if (value >= 8 && value < 9)
+                            {
+                                selection.css('background', '#FFD700');
+                            }
+                            if (value >= 9)
+                                selection.css('background', '#B9F2FF');
+
+                        };
+
+                        colorChange();
+
+                        element
+                            .slider()
+                            .on('slideStop', colorChange).data('value');
+                    });
                 }
             }
         });
@@ -119,8 +151,6 @@
     app.directive('createCommentModal', function () {
             return {
                 link: function ($scope, element, attrs, controller) {
-
-                    console.log(element.parent().next());
 
                     element.avgrund({
                         height: 200,
