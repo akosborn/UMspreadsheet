@@ -126,7 +126,7 @@
         };
 
         $scope.updateTrackReview = function (trackReview) {
-            TrackReview.GetRecentReviews.update({id: trackReview.id}, trackReview)
+            TrackReview.Standard.update({id: trackReview.id}, trackReview)
         };
     };
 
