@@ -103,10 +103,6 @@
 
     var TrackReviewController = function ($scope, TrackReview) {
 
-        // TrackReview.ByUser.get({id: $scope.track.id}, function (response) {
-        //     console.log(response);
-        // });
-
         $scope.getRecentReviews = function () {
             TrackReview.GetRecentReviews.query({id: $scope.showId}, function (response) {
                 $scope.recentReviews = response;
@@ -114,6 +110,7 @@
         };
 
         $scope.addTrackReview = function (trackReview) {
+
             new TrackReview.Standard({
                 track: trackReview.track,
                 user: trackReview.user,

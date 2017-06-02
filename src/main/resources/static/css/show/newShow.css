@@ -26,7 +26,7 @@ TRACKLIST TABLE
 
 .set-name
 {
-    font-family: "Julius Sans One", sans-serif;
+    font-family: "Maven Pro", sans-serif;
     font-size: 17px;
 }
 
@@ -37,7 +37,7 @@ TRACKLIST TABLE
 
 .track-div, .review-div
 {
-    margin-bottom: 6px;
+    margin-bottom: 2px;
     padding-right: 3px !important;
     padding-left: 3px !important;
 }
@@ -101,13 +101,39 @@ TRACKLIST TABLE
     color: darkgray;
 }
 
+.track-div .dark-div [class*="col-"]
+{
+    padding: 0 7px;
+}
+
+@media (min-width: 992px)
+{
+    .rating-div, .duration-div
+    {
+        text-align: right;
+    }
+
+    .jam-div, .type-div, .name-div, .edit-show-div
+    {
+        text-align: left;
+    }
+}
+
+@media (max-width: 991px)
+{
+    .rating-div, .duration-div, .jam-div, .type-div, .name-div, .edit-show-div
+    {
+        text-align: center;
+    }
+}
+
 /******************************************
 SLIDER
 ******************************************/
 .slider
 {
-    width: 80% !important;
-    margin-top: 32px;
+    width: 90% !important;
+    /*margin-top: 32px;*/
 }
 
 /******************************************

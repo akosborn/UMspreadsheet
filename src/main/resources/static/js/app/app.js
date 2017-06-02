@@ -17,6 +17,25 @@
         }
     });
 
+    app.filter('formatType', function() {
+        return function(input, $scope) {
+            if (input == 'NONE')
+                input = '';
+            else if (input == 'JIMMYSTEWART')
+                input = 'Jimmy Stewart';
+            else if (input == 'LYRICALSTEW')
+                input = 'Lyrical Stew';
+            else if (input == 'COVER')
+                input = 'Cover';
+            else if (input == 'MASHUP')
+                input = 'Mashup';
+            else if(input == 'NEWSONG')
+                input = 'New';
+
+            return input;
+        }
+    });
+
     app.directive('afterTracksRender', ['Track', function (Track) {
             return {
                 link: function ($scope, element, attrs, controller) {
@@ -90,8 +109,27 @@
                     }
 
                     var slider = element.bootstrapSlider({
-                        tooltip: 'always',
+                        tooltip: 'show',
                         value: score
+                    });
+                }
+            }
+        });
+
+    app.directive('createCommentModal', function () {
+            return {
+                link: function ($scope, element, attrs, controller) {
+
+                    console.log(element.parent().next());
+
+                    element.avgrund({
+                        height: 200,
+                        holderClass: 'custom',
+                        showClose: true,
+                        showCloseText: 'close',
+                        closeByEsc: true,
+                        onBlurContainer: '.container',
+                        template: element.parent().next().children([0])
                     });
                 }
             }

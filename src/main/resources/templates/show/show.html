@@ -10,13 +10,14 @@
     <title>UMspreadsheet</title>
 
     <link rel="stylesheet" th:href="@{/css/show/newShow.css}" />
+    <link rel="stylesheet" th:href="@{/css/avgrund/avgrund.css}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/9.7.2/css/bootstrap-slider.min.css" />
 
 </head>
 
 <body>
-    <div layout:fragment="content" data-ng-app="UMspreadsheet">
-        <div class="container" data-ng-controller="ShowController" ng-cloak="">
+    <div layout:fragment="content" data-ng-app="UMspreadsheet" data-ng-cloak>
+        <div class="container" data-ng-controller="ShowController">
 
             <div class="col-sm-8 title-header-div">
                 <h1 id="header-title">{{ (show.date | date:'yyyy/MM/dd') + ' ' + show.city + ', ' + show.state }}</h1>
@@ -37,7 +38,7 @@
                 </h1>
             </div>
 
-            <div class="row">
+            <div class="row edit-show-div">
                 <p style="padding-left: 30px" class="col-xs-12" sec:authorize="hasRole('ROLE_MANAGE_SHOWS_PRIVILEGE')">
                     <a data-ng-href="/admin/edit-show?showId={{show.id}}">
                         Edit show
@@ -48,44 +49,72 @@
             <br/>
 
             <div data-ng-repeat="set in show.sets | orderBy: '+position'" data-ng-controller="SetController"
-                 class="row set-div" equal-heights>
+                 class="row set-div">
 
                 <p class="set-name">{{set.name}}</p>
 
-                <div data-ng-repeat="track in set.tracks | orderBy: '+setPosition'" class="col-sm-4 col-md-3 track-div">
+                <div data-ng-repeat="track in set.tracks | orderBy: '+setPosition'" class="col-xs-12 track-div">
 
-                    <div class="col-md-12 dark-div text-center">
-                        <p class="song-name">{{track.song}}
-                            <sup>{{ track.type != null ? (track.type | limitTo: 2 : begin) : null }}</sup>
-                            <span data-ng-if="track.transition == 'NONE'"></span>
-                            <span data-ng-if="track.transition == 'ROUTINE'">&gt;</span>
-                            <span data-ng-if="track.transition == 'IMPROV'">&rarr;</span>
-                        </p>
-                        <p>
-                            <i data-ng-if="track.averageRating >= 6 && track.averageRating < 7"
-                              class="fa fa-trophy bronze track-div-trophy" aria-hidden="true"></i>
-                            <i data-ng-if="track.averageRating >= 7 && track.averageRating < 8"
-                              class="fa fa-trophy silver track-div-trophy" aria-hidden="true"></i>
-                            <i data-ng-if="track.averageRating >= 8 && track.averageRating < 9"
-                              class="fa fa-trophy gold track-div-trophy" aria-hidden="true"></i>
-                            <i data-ng-if="track.averageRating >= 9"
-                              class="fa fa-diamond diamond track-div-trophy" aria-hidden="true"></i>
-                            {{ track.averageRating != null ?  (track.averageRating | number: 2) : 'Not rated' }}
-                        </p>
-                        <p>{{ track.length != null ? (track.length | secondsToMinSec) : '&nbsp;' }}</p>
-                        <p>{{ track.jam != null ? (track.jam | capitalize) : '&nbsp;' }}</p>
+                    <div class="col-xs-12 dark-div">
+                        <div class="col-xs-12 col-md-3 col-lg-4 name-div">
+                            <p class="song-name">{{track.song}}
+                                <span data-ng-if="track.transition == 'NONE'"></span>
+                                <span data-ng-if="track.transition == 'ROUTINE'">&gt;</span>
+                                <span data-ng-if="track.transition == 'IMPROV'">&rarr;</span>
+                            </p>
+                        </div>
+                        <div class="col-xs-12 col-md-1 col-lg-1 rating-div">
+                            <p>
+                                <i data-ng-if="track.averageRating >= 6 && track.averageRating < 7"
+                                   class="fa fa-trophy bronze track-div-trophy" aria-hidden="true"></i>
+                                <i data-ng-if="track.averageRating >= 7 && track.averageRating < 8"
+                                   class="fa fa-trophy silver track-div-trophy" aria-hidden="true"></i>
+                                <i data-ng-if="track.averageRating >= 8 && track.averageRating < 9"
+                                   class="fa fa-trophy gold track-div-trophy" aria-hidden="true"></i>
+                                <i data-ng-if="track.averageRating >= 9"
+                                   class="fa fa-diamond diamond track-div-trophy" aria-hidden="true"></i>
+                                {{ track.averageRating != null ?  (track.averageRating | number: 2) : 'Not rated' }}
+                            </p>
+                        </div>
+                        <div class="col-xs-12 col-md-1 duration-div">
+                            <p>{{ track.length != null ? (track.length | secondsToMinSec) : '&nbsp;' }}</p>
+                        </div>
+                        <div class="col-md-2 col-lg-1 jam-div">
+                            <p>{{ track.jam != null ? (track.jam | capitalize) : '&nbsp;' }}</p>
+                        </div>
+                        <div class="col-md-2 col-lg-1 type-div">
+                            <p>{{ track.type != null ? (track.type | formatType) : '&nbsp;' }}</p>
+                        </div>
 
                         <form sec:authorize="isAuthenticated()" data-ng-controller="TrackReviewController">
 
-                            <textarea data-ng-disabled="!track.userTrackReview.id" class="form-control" rows="2"
-                                      data-ng-model="track.userTrackReview.comment"
-                                      placeholder="That's just like your opinion, man..."
-                                      data-ng-change="updateTrackReview(track.userTrackReview)"
-                                      data-ng-model-options="{debounce: 1000}"></textarea>
-                            <input data-ng-model="track.userTrackReview.score"
-                                   data-ng-change="track.userTrackReview.id == null ? addTrackReview(track.userTrackReview) : updateTrackReview(track.userTrackReview)"
-                                   create-slider class="bs-slider" type="number" data-slider-min="0" data-slider-max="10"
-                                   data-slider-step="0.25" data-slider-value="0" data-slider-tooltip="hide" data-ng-model-options="{debounce: 300}"/>
+                            <div class="col-xs-12 col-md-3 col-lg-4 text-center">
+                                <div class="col-xs-11">
+                                    <input data-ng-model="track.userTrackReview.score"
+                                           data-ng-change="track.userTrackReview.id == null ? addTrackReview(track.userTrackReview) : updateTrackReview(track.userTrackReview)"
+                                           create-slider class="bs-slider" type="number" data-slider-min="0" data-slider-max="10"
+                                           data-slider-step="0.25" data-slider-value="0" data-slider-tooltip="hide" data-ng-model-options="{debounce: 300}"/>
+                                </div>
+
+                                <div class="col-xs-1 text-center">
+                                    <a href="#"
+                                       data-ng-style="!track.userTrackReview.id ? { 'display' : 'none' } : ''">
+                                        <i create-comment-modal class="fa fa-comment-o" aria-hidden="true"></i>
+                                    </a>
+                                    <div style="display: none">
+                                        <div style="height: 90%;">
+                                            <label style="color: black">{{ track.song }}</label>
+                                            <textarea class="form-control" rows="1"
+                                                      data-ng-model="track.userTrackReview.comment"
+                                                      placeholder="That's just like your opinion, man..."
+                                                      data-ng-change="updateTrackReview(track.userTrackReview)"
+                                                      data-ng-model-options="{debounce: 750}" style="height: 90%;"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
 
                         </form>
 
@@ -100,26 +129,30 @@
                 <div data-ng-repeat="review in recentReviews" class="all-reviews-div">
 
                     <div class="col-xs-12 dark-div review-div">
-                        <p>{{ review.track.song }}</p>
-                        <p class="username">
-                            <a data-ng-href="/user/{{review.user.username}}">{{ review.user.username }}</a>
-                            <span>{{ review.reviewedOn | date:'yyyy/MM/dd' }}</span>
-                        </p>
-                        <hr class="pull-left" style="width: 90%; margin-right: 10%; margin-top: 1px; margin-bottom: 2px;"/><br/>
-                        <p class="comment">{{ review.comment }}</p>
-                        <p class="text-center">
-                            <i data-ng-if="review.score >= 6 && review.score < 7"
-                               class="fa fa-trophy bronze track-div-trophy" aria-hidden="true"></i>
-                            <i data-ng-if="review.score >= 7 && review.score < 8"
-                               class="fa fa-trophy silver track-div-trophy" aria-hidden="true"></i>
-                            <i data-ng-if="review.score >= 8 && review.score < 9"
-                               class="fa fa-trophy gold track-div-trophy" aria-hidden="true"></i>
-                            <i data-ng-if="review.score >= 9"
-                               class="fa fa-diamond diamond track-div-trophy" aria-hidden="true"></i>
-                            <i data-ng-if="review.score < 6"
-                               class="fa fa-diamond track-div-trophy" style="opacity: 0;" aria-hidden="true"></i>
-                            {{ (review.score | number: 2) }}
-                        </p>
+
+                        <div class="col-xs-8 col-sm-10">
+                            <p class="username">
+                                <a data-ng-href="/user/{{review.user.username}}">{{ review.user.username }}</a>
+                                <span>{{ review.reviewedOn | date:'yyyy/MM/dd' }}</span>
+                            </p>
+
+                            <p class="comment">{{ review.comment }}</p>
+                        </div>
+                        <div class="col-xs-4 col-sm-2">
+                            <p class="text-center">
+                                <i data-ng-if="review.score >= 6 && review.score < 7"
+                                   class="fa fa-trophy bronze track-div-trophy" aria-hidden="true"></i>
+                                <i data-ng-if="review.score >= 7 && review.score < 8"
+                                   class="fa fa-trophy silver track-div-trophy" aria-hidden="true"></i>
+                                <i data-ng-if="review.score >= 8 && review.score < 9"
+                                   class="fa fa-trophy gold track-div-trophy" aria-hidden="true"></i>
+                                <i data-ng-if="review.score >= 9"
+                                   class="fa fa-diamond diamond track-div-trophy" aria-hidden="true"></i>
+                                <i data-ng-if="review.score < 6"
+                                   class="fa fa-diamond track-div-trophy" style="opacity: 0;" aria-hidden="true"></i>
+                                {{ (review.score | number: 2) }}
+                            </p>
+                        </div>
                     </div>
 
                 </div>
@@ -134,6 +167,8 @@
         <script type="text/javascript" th:inline="javascript">
             var showId = [[${show.id}]];
         </script>
+
+        <script type="text/javascript"  th:src="@{/js/avgrund/jquery.avgrund.js}"></script>
 
         <script th:src="@{/webjars/angularjs/1.6.4/angular.min.js}"></script>
         <script th:src="@{/webjars/angular-route/1.6.4/angular-route.min.js}"></script>

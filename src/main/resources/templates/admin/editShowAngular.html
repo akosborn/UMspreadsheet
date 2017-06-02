@@ -67,7 +67,7 @@
 
             <div>
 
-                <div data-ng-repeat="set in show.sets | orderBy: '+position'" class="col-xs-12"  style="background-color: #272D38;">
+                <div data-ng-repeat="set in show.sets | orderBy: '+position'" class="col-xs-12">
                     <form class="form row" role="form" data-ng-controller="SetController">
                         <div class="col-xs-4 col-md-2 form-group">
                             <label style="color: #C5B358">{{set.name}}</label>
@@ -88,74 +88,79 @@
                         </div>
                     </form>
 
-                    <form data-ng-repeat="track in set.tracks | orderBy: '+setPosition'" data-ng-attr-id="{{'track-' + track.id}}" class="form row"
-                          data-ng-controller="TrackController" role="form" data-ng-submit="addTrack(newTrack)">
+                    <div class="col-xs-12">
+                        <form data-ng-repeat="track in set.tracks | orderBy: '+setPosition'" data-ng-attr-id="{{'track-' + track.id}}" class="form col-xs-12 dark-div"
+                              data-ng-controller="TrackController" role="form" data-ng-submit="addTrack(newTrack)" style="margin-bottom: 4px;">
 
-                        <div class="col-sm-5 col-md-3 form-group">
-                            <label data-ng-attr-for="{{'song-' + track.id }}">Song name</label>
-                            <input data-ng-attr-id="{{'song-' + track.id }}" class="form-control" type="text"
-                                   data-ng-model="track.song" data-ng-change="updateTrack(track)" data-ng-model-options="{debounce: 1000}">
-                        </div>
+                            <div class="col-sm-5 col-md-3 form-group" data-ng-class="track.song ? '' : 'has-error'">
+                                <label data-ng-attr-for="{{'song-' + track.id }}">Song name</label>
+                                <input data-ng-attr-id="{{'song-' + track.id }}" class="form-control" data-ng-class="track.song ? '' : 'form-control-error'" type="text"
+                                       data-ng-model="track.song" data-ng-change="updateTrack(track)" data-ng-model-options="{debounce: 1000}">
+                            </div>
 
-                        <div class="form-group col-md-2">
-                            <label style="padding-left: 3px">Duration</label>
-                            <input after-tracks-render type="text" class="form-control" data-ng-model-options="{debounce: 1000}">
-                        </div>
+                            <div class="form-group col-md-2" data-ng-class="track.length ? '' : 'has-error'">
+                                <label style="padding-left: 3px">Duration</label>
+                                <input after-tracks-render type="text" class="form-control" data-ng-class="track.duration ? '' : 'form-control-error'"
+                                       data-ng-model-options="{debounce: 1000}">
+                            </div>
 
-                        <div class="form-group col-md-1">
-                            <label for="transition" class="control-label">Transition</label>
-                            <select id="transition" class="form-control" data-ng-model="track.transition" data-ng-change="updateTrack(track)">
-                                <option value="NONE">,</option>
-                                <option value="ROUTINE">&gt;</option>
-                                <option value="IMPROV">&rarr;</option>
-                            </select>
-                        </div>
+                            <div class="form-group col-md-1">
+                                <label for="transition" class="control-label">Transition</label>
+                                <select id="transition" class="form-control" data-ng-model="track.transition" data-ng-change="updateTrack(track)">
+                                    <option value="NONE">,</option>
+                                    <option value="ROUTINE">&gt;</option>
+                                    <option value="IMPROV">&rarr;</option>
+                                </select>
+                            </div>
 
-                        <div class="form-group col-md-2">
-                            <label for="type" class="control-label">Type</label>
-                            <select id="type" class="form-control" data-ng-model="track.type" data-ng-change="updateTrack(track)">
-                                <option value="NONE">None</option>
-                                <option value="JIMMYSTEWART">Jimmy Stewart</option>
-                                <option value="LYRICALSTEW">Lyrical Stew</option>
-                                <option value="COVER">Cover</option>
-                                <option value="MASHUP">Mashup</option>
-                                <option value="NEWSONG">New song</option>
-                            </select>
-                        </div>
+                            <div class="form-group col-md-2" data-ng-class="track.type ? '' : 'has-error'">
+                                <label for="type" class="control-label">Type</label>
+                                <select id="type" class="form-control" data-ng-model="track.type" data-ng-change="updateTrack(track)"
+                                        data-ng-class="track.type ? '' : 'form-control-error'">
+                                    <option value="NONE">None</option>
+                                    <option value="JIMMYSTEWART">Jimmy Stewart</option>
+                                    <option value="LYRICALSTEW">Lyrical Stew</option>
+                                    <option value="COVER">Cover</option>
+                                    <option value="MASHUP">Mashup</option>
+                                    <option value="NEWSONG">New song</option>
+                                </select>
+                            </div>
 
-                        <div class="form-group col-md-2">
-                            <label class="control-label" for="jam">Jam</label>
-                            <select class="form-control" id="jam" data-ng-model="track.jam" data-ng-change="updateTrack(track)">
-                                <option value="NONE">None</option>
-                                <option value="BLISS">Bliss</option>
-                                <option value="DANCE">Dance</option>
-                                <option value="DARK">Dark</option>
-                                <option value="EMOTIONAL">Emotional</option>
-                                <option value="FUNK">Funk</option>
-                                <option value="INDUSTRIAL">Industrial</option>
-                                <option value="JAZZ">Jazz</option>
-                                <option value="METAL">Metal</option>
-                                <option value="PROG">Prog</option>
-                                <option value="REGGAE">Reggae</option>
-                                <option value="ROCK">Rock</option>
-                                <option value="SOARING">Soaring</option>
-                            </select>
-                        </div>
+                            <div class="form-group col-md-2" data-ng-class="track.jam ? '' : 'has-error'">
+                                <label class="control-label" for="jam">Jam</label>
+                                <select class="form-control" id="jam" data-ng-model="track.jam" data-ng-change="updateTrack(track)"
+                                        data-ng-class="track.jam ? '' : 'form-control-error'">
+                                    <option value="NONE">None</option>
+                                    <option value="BLISS">Bliss</option>
+                                    <option value="DANCE">Dance</option>
+                                    <option value="DARK">Dark</option>
+                                    <option value="EMOTIONAL">Emotional</option>
+                                    <option value="FUNK">Funk</option>
+                                    <option value="INDUSTRIAL">Industrial</option>
+                                    <option value="JAZZ">Jazz</option>
+                                    <option value="METAL">Metal</option>
+                                    <option value="PROG">Prog</option>
+                                    <option value="REGGAE">Reggae</option>
+                                    <option value="ROCK">Rock</option>
+                                    <option value="SOARING">Soaring</option>
+                                </select>
+                            </div>
 
-                        <div class="form-group col-sm-2 col-md-1">
-                            <label># in set</label>
-                            <input class="form-control" type="number" data-ng-model="track.setPosition"
-                                   data-ng-change="updateTrack(track)" data-ng-model-options="{debounce: 1000}"
-                                   data-ng-init="track.setPosition == null ? updateSetPosition(track, $index + 1) : null ">
-                        </div>
+                            <div class="form-group col-sm-2 col-md-1">
+                                <label># in set</label>
+                                <input class="form-control" type="number" data-ng-model="track.setPosition"
+                                       data-ng-change="updateTrack(track)" data-ng-model-options="{debounce: 1000}"
+                                       data-ng-init="track.setPosition == null ? updateSetPosition(track, $index + 1) : null ">
+                            </div>
 
-                        <div style="height: 58.8px; padding-top: 24px" class="col-xs-3 col-sm-1">
-                            <button class="pull-right btn btn-danger" type="button" title="Delete"
-                                    data-ng-click="deleteTrack(track)">
-                                <span style="margin-right: 0" class="fa fa-trash"></span>
-                            </button>
-                        </div>
-                    </form>
+                            <div style="height: 58.8px; padding-top: 24px" class="col-xs-3 col-sm-1">
+                                <button class="pull-right btn btn-danger" type="button" title="Delete"
+                                        data-ng-click="deleteTrack(track)">
+                                    <span style="margin-right: 0" class="fa fa-trash"></span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
 
                     <form data-ng-controller="TrackController" role="form" class="form row"
                           data-ng-submit="addTrack(show, set, newTrack)">
