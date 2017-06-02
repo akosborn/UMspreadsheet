@@ -110,7 +110,6 @@
         };
 
         $scope.addTrackReview = function (trackReview) {
-            console.log('addTrackReview()');
             new TrackReview.Standard({
                 track: trackReview.track,
                 user: trackReview.user,
