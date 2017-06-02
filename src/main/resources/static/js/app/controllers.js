@@ -114,7 +114,7 @@
         };
 
         $scope.addTrackReview = function (trackReview) {
-            new TrackReview({
+            new TrackReview.Standard({
                 track: trackReview.track,
                 user: trackReview.user,
                 show: trackReview.show,
@@ -126,7 +126,7 @@
         };
 
         $scope.updateTrackReview = function (trackReview) {
-            TrackReview.update({id: trackReview.id}, trackReview)
+            TrackReview.GetRecentReviews.update({id: trackReview.id}, trackReview)
         };
     };
 
