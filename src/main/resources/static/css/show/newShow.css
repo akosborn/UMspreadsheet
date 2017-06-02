@@ -37,7 +37,7 @@ TRACKLIST TABLE
 
 .track-div, .review-div
 {
-    margin-bottom: 6px;
+    margin-bottom: 2px;
     padding-right: 3px !important;
     padding-left: 3px !important;
 }
@@ -101,13 +101,18 @@ TRACKLIST TABLE
     color: darkgray;
 }
 
+.track-div .dark-div [class*="col-"]
+{
+    padding: 0 7px;
+}
+
 /******************************************
 SLIDER
 ******************************************/
 .slider
 {
-    width: 80% !important;
-    margin-top: 32px;
+    width: 90% !important;
+    /*margin-top: 32px;*/
 }
 
 /******************************************

@@ -1,12 +1,6 @@
 /*******************************
 GOOGLE CHARTS
 *******************************/
-chart-data-div
-{
-    margin-left: auto;
-    margin-right: auto;
-}
-
 [class*="chart_div"]
 {
     width: 100%;
@@ -56,7 +50,7 @@ HEADER
 
 #mobile-logo
 {
-
+    margin-bottom: -30px;
 }
 
 /*******************************

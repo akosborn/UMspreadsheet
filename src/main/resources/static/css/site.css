@@ -55,7 +55,7 @@ body
 {
     #header-statement
     {
-        max-width: 60%;
+        max-width: 80%;
     }
 }
 
@@ -174,7 +174,8 @@ body
     .dark-div
     {
         background: #272D38;
-        padding: 10px;
+        padding: 2px 1px;
+        border-radius: 5px;
     }
 
 
