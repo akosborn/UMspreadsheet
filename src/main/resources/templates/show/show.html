@@ -100,6 +100,7 @@
                 <div data-ng-repeat="review in recentReviews" class="all-reviews-div">
 
                     <div class="col-xs-12 dark-div review-div">
+                        <p>{{ review.track.song }}</p>
                         <p class="username">
                             <a data-ng-href="/user/{{review.user.username}}">{{ review.user.username }}</a>
                             <span>{{ review.reviewedOn | date:'yyyy/MM/dd' }}</span>
