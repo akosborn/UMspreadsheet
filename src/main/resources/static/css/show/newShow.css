@@ -30,24 +30,24 @@ TRACKLIST TABLE
     font-size: 17px;
 }
 
-.set-div
+.set-div, .all-review-div
 {
     margin-bottom: 15px;
 }
 
-.track-div
+.track-div, .review-div
 {
     margin-bottom: 6px;
     padding-right: 3px !important;
     padding-left: 3px !important;
 }
 
-.track-div p
+.track-div p, .review-div p
 {
     margin-bottom: 1px;
 }
 
-.dark-div .song-name
+.dark-div .song-name, .dark-div .username
 {
     font-size: 16px;
     color: #C5B358;
@@ -86,6 +86,19 @@ TRACKLIST TABLE
     {
         text-align: center;
     }
+}
+
+.review-div .comment
+{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.username span
+{
+    font-size: 12px;
+    padding-left: 5px;
+    color: darkgray;
 }
 
 /******************************************

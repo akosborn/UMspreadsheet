@@ -63,4 +63,9 @@ public class TrackReviewService
     {
         return trackReviewRepository.findAllByUserUsernameAndTrackShowIdOrderByTrackSetPositionAsc(username, id);
     }
+
+    public List<TrackReview> findByShowId(Long id)
+    {
+        return trackReviewRepository.findTop20ByTrackShowIdOrderByReviewedOnDesc(id);
+    }
 }

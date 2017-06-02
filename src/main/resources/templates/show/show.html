@@ -25,15 +25,15 @@
 
             <div class="col-sm-4 trophy-header-div">
                 <h1 class="trophy-header">
-                    <i data-ng-if="track.averageRating >= 6 && track.averageRating < 7"
+                    <i data-ng-if="show.averageRating >= 6 && show.averageRating < 7"
                        class="fa fa-trophy bronze track-div-trophy" aria-hidden="true"></i>
-                    <i data-ng-if="track.averageRating >= 7 && track.averageRating < 8"
+                    <i data-ng-if="show.averageRating >= 7 && show.averageRating < 8"
                        class="fa fa-trophy silver track-div-trophy" aria-hidden="true"></i>
-                    <i data-ng-if="track.averageRating >= 8 && track.averageRating < 9"
+                    <i data-ng-if="show.averageRating >= 8 && show.averageRating < 9"
                        class="fa fa-trophy gold track-div-trophy" aria-hidden="true"></i>
-                    <i data-ng-if="track.averageRating >= 9"
+                    <i data-ng-if="show.averageRating >= 9"
                        class="fa fa-diamond diamond track-div-trophy" aria-hidden="true"></i>
-                    {{ track.averageRating != null ?  (track.averageRating | number: 2) : 'Not rated' }}
+                    {{ show.averageRating != null ?  (show.averageRating | number: 2) : 'Not rated' }}
                 </h1>
             </div>
 
@@ -94,37 +94,36 @@
 
             </div>
 
-            <!--<div id="most-recent-show-header" th:object="${show}">-->
-                <!--<h2 id="show-title" th:text="${#dates.format(show.date, 'yyyy/MM/dd') + ' ' + show.city + ', '  + show.state}"></h2>-->
-                <!--<h3 class="hidden-md hidden-lg hidden-xl" th:text="${show.venue}" style="margin-top: 3px; margin-bottom: 2px;">[venue]</h3>-->
-                <!--<h2 id="show-rating-and-medal">-->
-                    <!--<i th:if="*{averageRating ge 6 and averageRating lt 7}" class="fa fa-trophy" style="color: #CD7F32;" aria-hidden="true"></i>-->
-                    <!--<i th:if="*{averageRating ge 7 and averageRating lt 8}" class="fa fa-trophy" style="color: #C0C0C0;" aria-hidden="true"></i>-->
-                    <!--<i th:if="*{averageRating ge 8 and averageRating lt 9}" class="fa fa-trophy" style="color: #FFD700;" aria-hidden="true"></i>-->
-                    <!--<i th:if="*{averageRating ge 9}" class="fa fa-diamond" style="color: #B9F2FF;" aria-hidden="true"></i>-->
-                    <!--<span th:if="*{averageRating != null}" th:text="*{#numbers.formatDecimal(averageRating, 1, 2)}">[0.00]</span>-->
-                    <!--<span th:if="*{averageRating == null}">No Rating</span>-->
-                <!--</h2>-->
-                <!--<h3 class="hidden-xs hidden-sm" th:text="${show.venue}" style="margin-top: 3px;">[venue]</h3>-->
-                <!--<p th:if="${show.nugsId != null}">-->
-                    <!--<a th:href="@{https://play.nugs.net/#/catalog/recording/} + ${show.nugsId}" data-ng-model="show.nugsId">-->
-                        <!--nugs.net-->
-                    <!--</a>-->
-                <!--</p>-->
-                <!--<p sec:authorize="hasRole('ROLE_MANAGE_SHOWS_PRIVILEGE')">-->
-                    <!--<a th:href="@{/admin/edit-show(showId=${show.id})}">-->
-                        <!--Edit show-->
-                    <!--</a>-->
-                <!--</p>-->
-            <!--</div>-->
+            <p class="set-name">Recent Ratings</p>
+            <div data-ng-controller="TrackReviewController" data-ng-init="getRecentReviews()" class="col-md-6">
 
+                <div data-ng-repeat="review in recentReviews" class="all-reviews-div">
 
+                    <div class="col-xs-12 dark-div review-div">
+                        <p class="username">
+                            <a data-ng-href="/user/{{review.user.username}}">{{ review.user.username }}</a>
+                            <span>{{ review.reviewedOn | date:'yyyy/MM/dd' }}</span>
+                        </p>
+                        <hr class="pull-left" style="width: 90%; margin-right: 10%; margin-top: 1px; margin-bottom: 2px;"/><br/>
+                        <p class="comment">{{ review.comment }}</p>
+                        <p class="text-center">
+                            <i data-ng-if="review.score >= 6 && review.score < 7"
+                               class="fa fa-trophy bronze track-div-trophy" aria-hidden="true"></i>
+                            <i data-ng-if="review.score >= 7 && review.score < 8"
+                               class="fa fa-trophy silver track-div-trophy" aria-hidden="true"></i>
+                            <i data-ng-if="review.score >= 8 && review.score < 9"
+                               class="fa fa-trophy gold track-div-trophy" aria-hidden="true"></i>
+                            <i data-ng-if="review.score >= 9"
+                               class="fa fa-diamond diamond track-div-trophy" aria-hidden="true"></i>
+                            <i data-ng-if="review.score < 6"
+                               class="fa fa-diamond track-div-trophy" style="opacity: 0;" aria-hidden="true"></i>
+                            {{ (review.score | number: 2) }}
+                        </p>
+                    </div>
 
+                </div>
 
-
-
-
-
+            </div>
 
         </div>
     </div>

@@ -55,27 +55,18 @@
     // };
 
     var TrackReviewFactory = function ($resource) {
-        return $resource('/api/track-reviews/:id', null,
-            {
-                'update': {
-                    method: 'PUT'
-                },
-                'remove': {
-                    method: 'DELETE'
-                }
-            });
-
-
-            // Standard: $resource('/api/track-reviews/:id', null,
-            //     {
-            //         'update': {
-            //             method: 'PUT'
-            //         },
-            //         'remove': {
-            //             method: 'DELETE'
-            //         }
-            //     }),
-            // ByUser: $resource('/api/track-reviews-by-user-track/:id', null)
+            return {
+                Standard: $resource('/api/track-reviews/:id', null,
+                    {
+                        'update': {
+                            method: 'PUT'
+                        },
+                        'remove': {
+                            method: 'DELETE'
+                        }
+                    }),
+                GetRecentReviews: $resource('/api/track-reviews/show/:id', null)
+            }
     };
 
     TrackReviewFactory.$inject = ['$resource'];
