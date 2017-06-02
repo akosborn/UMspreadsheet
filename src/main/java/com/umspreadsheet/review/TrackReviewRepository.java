@@ -26,4 +26,6 @@ public interface TrackReviewRepository extends CrudRepository<TrackReview, Long>
     TrackReview findAllByUserUsernameAndTrackIdOrderByTrackSetPositionAsc(String username, Long trackId);
 
     List<TrackReview> findAllByUserUsernameAndTrackShowIdOrderByTrackSetPositionAsc(String username, Long showId);
+
+    List<TrackReview> findTop20ByTrackShowIdOrderByReviewedOnDesc(Long id);
 }

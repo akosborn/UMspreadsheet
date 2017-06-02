@@ -107,6 +107,12 @@
         //     console.log(response);
         // });
 
+        $scope.getRecentReviews = function () {
+            TrackReview.GetRecentReviews.query({id: $scope.showId}, function (response) {
+                $scope.recentReviews = response;
+            })
+        };
+
         $scope.addTrackReview = function (trackReview) {
             new TrackReview({
                 track: trackReview.track,

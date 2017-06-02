@@ -206,6 +206,12 @@ public class AdminAPIController
         return trackReviewService.save(trackReview);
     }
 
+    @RequestMapping(value = "/track-reviews/show/{id}", method = RequestMethod.GET)
+    public @ResponseBody List getTrackReviewsByShow(@PathVariable Long id)
+    {
+        return trackReviewService.findByShowId(id);
+    }
+
 
     private String getCurrentUsername()
     {

@@ -74,8 +74,6 @@
                         {
                             trackElements[x].children[0].style.height = tallestBox + "px";
                         }
-
-                        console.log('height equalization');
                     });
                 }
             }
