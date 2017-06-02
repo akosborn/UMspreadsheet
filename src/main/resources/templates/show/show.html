@@ -38,7 +38,7 @@
                 </h1>
             </div>
 
-            <div class="row">
+            <div class="row edit-show-div">
                 <p style="padding-left: 30px" class="col-xs-12" sec:authorize="hasRole('ROLE_MANAGE_SHOWS_PRIVILEGE')">
                     <a data-ng-href="/admin/edit-show?showId={{show.id}}">
                         Edit show
@@ -49,21 +49,21 @@
             <br/>
 
             <div data-ng-repeat="set in show.sets | orderBy: '+position'" data-ng-controller="SetController"
-                 class="row set-div" equal-heights>
+                 class="row set-div">
 
                 <p class="set-name">{{set.name}}</p>
 
                 <div data-ng-repeat="track in set.tracks | orderBy: '+setPosition'" class="col-xs-12 track-div">
 
-                    <div class="col-md-12 dark-div">
-                        <div class="col-md-3 col-lg-4">
+                    <div class="col-xs-12 dark-div">
+                        <div class="col-xs-12 col-md-3 col-lg-4 name-div">
                             <p class="song-name">{{track.song}}
                                 <span data-ng-if="track.transition == 'NONE'"></span>
                                 <span data-ng-if="track.transition == 'ROUTINE'">&gt;</span>
                                 <span data-ng-if="track.transition == 'IMPROV'">&rarr;</span>
                             </p>
                         </div>
-                        <div class="col-md-1 col-lg-1 text-right">
+                        <div class="col-xs-12 col-md-1 col-lg-1 rating-div">
                             <p>
                                 <i data-ng-if="track.averageRating >= 6 && track.averageRating < 7"
                                    class="fa fa-trophy bronze track-div-trophy" aria-hidden="true"></i>
@@ -76,19 +76,19 @@
                                 {{ track.averageRating != null ?  (track.averageRating | number: 2) : 'Not rated' }}
                             </p>
                         </div>
-                        <div class="col-md-1 text-right">
+                        <div class="col-xs-12 col-md-1 duration-div">
                             <p>{{ track.length != null ? (track.length | secondsToMinSec) : '&nbsp;' }}</p>
                         </div>
-                        <div class="col-md-2 col-lg-1 text-left">
+                        <div class="col-md-2 col-lg-1 jam-div">
                             <p>{{ track.jam != null ? (track.jam | capitalize) : '&nbsp;' }}</p>
                         </div>
-                        <div class="col-md-2 col-lg-1 text-left">
+                        <div class="col-md-2 col-lg-1 type-div">
                             <p>{{ track.type != null ? (track.type | formatType) : '&nbsp;' }}</p>
                         </div>
 
                         <form sec:authorize="isAuthenticated()" data-ng-controller="TrackReviewController">
 
-                            <div class="col-md-4 text-center">
+                            <div class="col-xs-12 col-md-3 col-lg-4 text-center">
                                 <div class="col-xs-11">
                                     <input data-ng-model="track.userTrackReview.score"
                                            data-ng-change="track.userTrackReview.id == null ? addTrackReview(track.userTrackReview) : updateTrackReview(track.userTrackReview)"
@@ -129,7 +129,7 @@
                 <div data-ng-repeat="review in recentReviews" class="all-reviews-div">
 
                     <div class="col-xs-12 dark-div review-div">
-                        <div class="col-xs-10">
+                        <div class="col-xs-8 col-sm-10">
                             <p class="username">
                                 <a data-ng-href="/user/{{review.user.username}}">{{ review.user.username }}</a>
                                 <span>{{ review.reviewedOn | date:'yyyy/MM/dd' }}</span>
@@ -137,7 +137,7 @@
 
                             <p class="comment">{{ review.comment }}</p>
                         </div>
-                        <div class="col-xs-2">
+                        <div class="col-xs-4 col-sm-2">
                             <p class="text-center">
                                 <i data-ng-if="review.score >= 6 && review.score < 7"
                                    class="fa fa-trophy bronze track-div-trophy" aria-hidden="true"></i>

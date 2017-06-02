@@ -106,6 +106,27 @@ TRACKLIST TABLE
     padding: 0 7px;
 }
 
+@media (min-width: 992px)
+{
+    .rating-div, .duration-div
+    {
+        text-align: right;
+    }
+
+    .jam-div, .type-div, .name-div, .edit-show-div
+    {
+        text-align: left;
+    }
+}
+
+@media (max-width: 991px)
+{
+    .rating-div, .duration-div, .jam-div, .type-div, .name-div, .edit-show-div
+    {
+        text-align: center;
+    }
+}
+
 /******************************************
 SLIDER
 ******************************************/
