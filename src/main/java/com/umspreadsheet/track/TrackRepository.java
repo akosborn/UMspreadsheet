@@ -28,7 +28,7 @@ public interface TrackRepository extends JpaRepository<Track, Long>, JpaSpecific
     @Query(value = FIND_ALL_IDS, nativeQuery = true)
     List<BigInteger> findAllIds();
 
-    List<Track> findTop20ByOrderByAverageRatingDesc();
+    List<Track> findTop10ByOrderByAverageRatingDesc();
 
     List<Track> findByShow_Id(Long id);
 }

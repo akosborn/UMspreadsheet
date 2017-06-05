@@ -31,9 +31,9 @@ public class ShowService
         return showRepository.findTop20ByOrderByDateDesc();
     }
 
-    public List<Show> findTopTwentyShows()
+    public List<Show> findTopTenShows()
     {
-        return showRepository.findTop20ByOrderByAverageRatingDesc();
+        return showRepository.findTop10ByOrderByAverageRatingDesc();
     }
 
     public Page<Show> getByAverageRating(PageRequest pageRequest)

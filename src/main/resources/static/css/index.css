@@ -141,3 +141,11 @@ D3 VISUALIZATIONS
 {
     fill: #0080FF;
 }
+
+@media (max-width: 630px)
+{
+    .bar-label
+    {
+        display: none;
+    }
+}

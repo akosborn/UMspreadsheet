@@ -27,8 +27,8 @@ public class HomeController
     @RequestMapping("/")
     public String home(Model model)
     {
-        model.addAttribute("topTwentySongs", trackService.findTopTwenty());
-        model.addAttribute("topTwentyShows", showService.findTopTwentyShows());
+        model.addAttribute("topTenSongs", trackService.findTopTen());
+        model.addAttribute("topTenShows", showService.findTopTenShows());
         model.addAttribute("lastThreeShows", setNumberOfReviews(showService.getLastThreeShows()));
         model.addAttribute("lastTwoShows", showService.getLastTwoShows());
 
