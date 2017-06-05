@@ -23,7 +23,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/api")
-public class AdminAPIController
+public class APIController
 {
     private TrackService trackService;
     private ShowService showService;
@@ -32,8 +32,8 @@ public class AdminAPIController
     private SimpleUserService userService;
 
     @Autowired
-    public AdminAPIController(TrackService trackService, ShowService showService, SetService setService,
-                              TrackReviewService trackReviewService, SimpleUserService userService)
+    public APIController(TrackService trackService, ShowService showService, SetService setService,
+                         TrackReviewService trackReviewService, SimpleUserService userService)
     {
         this.trackService = trackService;
         this.showService = showService;
