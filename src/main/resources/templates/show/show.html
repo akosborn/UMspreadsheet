@@ -57,11 +57,13 @@
 
                     <div class="col-xs-12 dark-div">
                         <div class="col-xs-12 col-md-2 col-lg-3 name-div">
-                            <p class="song-name">{{track.song}}
-                                <span data-ng-if="track.transition == 'NONE'"></span>
-                                <span data-ng-if="track.transition == 'ROUTINE'">&gt;</span>
-                                <span data-ng-if="track.transition == 'IMPROV'">&rarr;</span>
-                            </p>
+                            <a data-ng-href="/songs/{{track.id}}/{{track.slug}}">
+                                <p class="song-name">{{track.song}}
+                                    <span data-ng-if="track.transition == 'NONE'"></span>
+                                    <span data-ng-if="track.transition == 'ROUTINE'">&gt;</span>
+                                    <span data-ng-if="track.transition == 'IMPROV'">&rarr;</span>
+                                </p>
+                            </a>
                         </div>
                         <div class="col-xs-12 col-md-1 duration-div">
                             <p>{{ track.length != null ? (track.length | secondsToMinSec) : '&nbsp;' }}</p>
