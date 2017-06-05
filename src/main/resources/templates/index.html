@@ -104,8 +104,8 @@
 
                     function ShowGraph()
                     {
-                        var topTwentyShows,
-                            topTwentyShowsSize,
+                        var topTenShows,
+                            topTenShowsSize,
                             maxRating,
                             minRating,
                             width,
@@ -120,17 +120,15 @@
 
                         this.create = function ()
                         {
-                            topTwentyShows = [[${topTwentyShows}]];
-                            topTwentyShowsSize = topTwentyShows.length;
-                            maxRating = d3.max(topTwentyShows, function (d) { return d.averageRating; });
-                            minRating = d3.min(topTwentyShows, function (d) { return d.averageRating; });
+                            topTenShows = [[${topTenShows}]];
+                            topTenShowsSize = topTenShows.length;
+                            maxRating = d3.max(topTenShows, function (d) { return d.averageRating; });
+                            minRating = d3.min(topTenShows, function (d) { return d.averageRating; });
 
                             width = parseInt(d3.select("#top_show_chart_div").style("width"));
                             height = parseInt(d3.select("#top_show_chart_div").style("height"));
 
-                            console.log('Show chart div: ' + width + 'x' + height);
-
-                            barWidth = (width / 2) / topTwentyShowsSize;
+                            barWidth = (width / 2) / topTenShowsSize;
 
                             yScale = d3.scaleLinear()
                                 .domain([minRating * 0.90, maxRating])
@@ -163,7 +161,7 @@
                             graph.call(toolTip);
 
                             bars = graph.selectAll("rect")
-                                .data(topTwentyShows)
+                                .data(topTenShows)
                                 .enter()
                                 .append("rect")
                                 .attr("class", "bar")
@@ -196,7 +194,7 @@
                                 });
 
                                bars
-                                   .data(topTwentyShows)
+                                   .data(topTenShows)
                                    .transition()
                                    .delay(function (d, i) {
                                        return (i * 50)
@@ -210,9 +208,10 @@
                                    });
 
                                labels = graph.selectAll("text")
-                                   .data(topTwentyShows)
+                                   .data(topTenShows)
                                    .enter()
                                    .append("text")
+                                   .classed("bar-label", true)
                                    .text(function (d) {
                                        return roundToTwoPlaces(d.averageRating)
                                    })
@@ -220,11 +219,11 @@
                                    .style("font-size", "0px")
                                    .attr("y", height)
                                    .attr("x", function (d, i) {
-                                       return (2 * barWidth * i)
+                                       return (2 * barWidth * i) + 5;
                                    });
 
                                labels
-                                   .data(topTwentyShows)
+                                   .data(topTenShows)
                                    .transition()
                                    .delay(function (d, i) {
                                        return (i * 50)
@@ -235,21 +234,17 @@
                                        return height - (yScale(d.averageRating) - 10)
                                    })
                                    .attr("x", function (d, i) {
-                                       return (2 * barWidth * i)
+                                       return (2 * barWidth * i) + 5;
                                    });
                            };
 
                         this.resize = function ()
                         {
-                            console.log("resizeShows() called");
-
                             // Find new dimensions
                             width = parseInt(d3.select("#top_show_chart_div").style("width"));
                             height = parseInt(d3.select("#top_show_chart_div").style("height"));
 
-                            console.log('New show chart div: ' + width + 'x' + height);
-
-                            barWidth = (width / 2) / topTwentyShowsSize;
+                            barWidth = (width / 2) / topTenShowsSize;
 
                             graph
                                 .attr("width", width);
@@ -261,7 +256,7 @@
                             yAxis.scale(yScale);
 
                             bars
-                                .data(topTwentyShows)
+                                .data(topTenShows)
                                 .attr("width", barWidth)
                                 .attr("x", function (d, i) {
                                     return (2 * barWidth * i)
@@ -271,20 +266,20 @@
                                 });
 
                             labels
-                                .data(topTwentyShows)
+                                .data(topTenShows)
                                 .attr("y", function (d) {
                                     return height - (yScale(d.averageRating) - 10)
                                 })
                                 .attr("x", function (d, i) {
-                                    return (2 * barWidth * i)
+                                    return (2 * barWidth * i) + 5;
                                 });
                         }
                     }
 
                     function SongGraph()
                     {
-                        var topTwentySongs,
-                            topTwentySongsSize,
+                        var topTenSongs,
+                            topTenSongsSize,
                             maxRating,
                             minRating,
                             width,
@@ -299,18 +294,15 @@
 
                         this.create = function createSongGraph()
                         {
-                            topTwentySongs = [[${topTwentySongs}]];
-                            topTwentySongsSize = topTwentySongs.length;
-                            maxRating = d3.max(topTwentySongs, function (d) { return d.averageRating; });
-                            minRating = d3.min(topTwentySongs, function (d) { return d.averageRating; });
-                            console.log(minRating);
+                            topTenSongs = [[${topTenSongs}]];
+                            topTenSongsSize = topTenSongs.length;
+                            maxRating = d3.max(topTenSongs, function (d) { return d.averageRating; });
+                            minRating = d3.min(topTenSongs, function (d) { return d.averageRating; });
 
                             width = parseInt(d3.select("#top_song_chart_div").style("width"));
                             height = parseInt(d3.select("#top_song_chart_div").style("height"));
 
-                            console.log('Song chart div: ' + width + 'x' + height);
-
-                            barWidth = (width / 2) / topTwentySongsSize;
+                            barWidth = (width / 2) / topTenSongsSize;
 
                             yScale = d3.scaleLinear()
                                 .domain([minRating * 0.90, maxRating])
@@ -345,7 +337,7 @@
                             graph.call(toolTip);
 
                             bars = graph.selectAll("rect")
-                                .data(topTwentySongs)
+                                .data(topTenSongs)
                                 .enter()
                                 .append("rect")
                                 .attr("class", "bar")
@@ -376,7 +368,7 @@
                                 });
 
                             bars
-                                .data(topTwentySongs)
+                                .data(topTenSongs)
                                 .transition()
                                 .delay(function (d, i) { return (i * 50) })
                                 .duration(1000)
@@ -384,23 +376,24 @@
                                 .attr("height", function (d) { return yScale(d.averageRating) });
 
                             labels = graph.selectAll("text")
-                                .data(topTwentySongs)
+                                .data(topTenSongs)
                                 .enter()
                                 .append("text")
+                                .classed("bar-label", true)
                                 .text(function (d) { return roundToTwoPlaces(d.averageRating) })
                                 .attr("fill", "black")
                                 .style("font-size", "0px")
                                 .attr("y", height)
-                                .attr("x", function (d, i) { return (2 * barWidth * i) });
+                                .attr("x", function (d, i) { return (2 * barWidth * i) + 5 });
 
                             labels
-                                .data(topTwentySongs)
+                                .data(topTenSongs)
                                 .transition()
                                 .delay(function (d, i) { return (i * 50) })
                                 .duration(1000)
                                 .style("font-size", "11px")
                                 .attr("y", function (d) { return height - (yScale(d.averageRating) - 10) })
-                                .attr("x", function (d, i) { return (2 * barWidth * i) });
+                                .attr("x", function (d, i) { return (2 * barWidth * i) + 5});
                         };
 
                         this.resize = function ()
@@ -413,7 +406,7 @@
 
                             console.log('New song chart div: ' + width + 'x' + height);
 
-                            barWidth = (width / 2) / topTwentySongsSize;
+                            barWidth = (width / 2) / topTenSongsSize;
 
                             graph
                                 .attr("width", width);
@@ -425,15 +418,15 @@
                             yAxis.scale(yScale);
 
                             bars
-                                .data(topTwentySongs)
+                                .data(topTenSongs)
                                 .attr("width", barWidth)
                                 .attr("x", function (d, i) { return (2 * barWidth * i) })
                                 .attr("height", function (d) { return yScale(d.averageRating) });
 
                             labels
-                                .data(topTwentySongs)
+                                .data(topTenSongs)
                                 .attr("y", function (d) { return height - (yScale(d.averageRating) - 10) })
-                                .attr("x", function (d, i) { return (2 * barWidth * i) });
+                                .attr("x", function (d, i) { return (2 * barWidth * i) + 5 });
                         }
                     }
 
