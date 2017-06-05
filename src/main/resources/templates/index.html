@@ -372,7 +372,7 @@
                                 .on("mouseover", toolTip.show)
                                 .on("mouseout", toolTip.hide)
                                 .on("click", function (d) {
-                                    var url = window.location + "songs/" + d.id + "/" + d.slug;
+                                    var url = window.location + "shows/" + d.show.id + "/" + d.show.slug;
                                     window.location = url;
                                 });
 
