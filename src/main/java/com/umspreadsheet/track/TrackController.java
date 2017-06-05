@@ -4,7 +4,6 @@ import com.umspreadsheet.criteria.SearchCriteria;
 import com.umspreadsheet.exception.DataNotFoundException;
 import com.umspreadsheet.helper.ControllerHelper;
 import com.umspreadsheet.review.TrackReviewService;
-import com.umspreadsheet.show.Show;
 import com.umspreadsheet.show.ShowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -135,7 +134,7 @@ public class TrackController
     {
         Track retrievedTrack = trackService.findById(id);
         model.addAttribute("track", retrievedTrack);
-        model.addAttribute("reviews", trackReviewService.findByTrack(retrievedTrack));
+        model.addAttribute("reviews", trackReviewService.findThirtyByTrack(retrievedTrack));
 
         return "/track/track";
     }

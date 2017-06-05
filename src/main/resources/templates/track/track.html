@@ -20,7 +20,9 @@
         <div id="#home-container" class="container">
 
             <div id="most-recent-show-header" th:object="${track}">
-                <h2 id="show-title" th:text="*{song}"></h2>
+                <a th:href="@{'/shows/' + *{show.id} + '/' + *{show.slug}}">
+                    <h2 id="show-title" th:text="*{song}"></h2>
+                </a>
                 <h2 class="pull-right show-rating-and-medal">
                     <i th:if="*{averageRating ge 6 and averageRating lt 7}" class="fa fa-trophy" style="color: #CD7F32;" aria-hidden="true"></i>
                     <i th:if="*{averageRating ge 7 and averageRating lt 8}" class="fa fa-trophy" style="color: #C0C0C0;" aria-hidden="true"></i>
