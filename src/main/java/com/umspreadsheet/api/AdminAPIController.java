@@ -189,7 +189,15 @@ public class AdminAPIController
     public @ResponseBody
     TrackReview addTrackReview(@RequestBody TrackReview trackReview)
     {
-        return trackReviewService.save(trackReview);
+        // Make sure not a duplicate
+        TrackReview duplicateReview = trackReviewService.findByUsernameAndTrackId(getCurrentUsername(),
+                trackReview.getTrack().getId());
+
+        // If not a duplicate, save; if a duplicate, return the original
+        if (duplicateReview == null)
+            return trackReviewService.save(trackReview);
+        else
+            return duplicateReview;
     }
 
     @RequestMapping(value = "/track-reviews/{id}", method = RequestMethod.DELETE)

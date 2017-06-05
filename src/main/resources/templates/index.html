@@ -85,7 +85,6 @@
                     var showsGraph = new ShowGraph();
                     var songsGraph = new SongGraph();
 
-                    var roundToOnePlace = d3.format(".1f");
                     var roundToTwoPlaces = d3.format(".2f");
                     var dateFormat = d3.timeFormat("%b %e, %y");
 
@@ -215,7 +214,7 @@
                                    .enter()
                                    .append("text")
                                    .text(function (d) {
-                                       return roundToOnePlace(d.averageRating)
+                                       return roundToTwoPlaces(d.averageRating)
                                    })
                                    .attr("fill", "black")
                                    .style("font-size", "0px")
@@ -388,7 +387,7 @@
                                 .data(topTwentySongs)
                                 .enter()
                                 .append("text")
-                                .text(function (d) { return roundToOnePlace(d.averageRating) })
+                                .text(function (d) { return roundToTwoPlaces(d.averageRating) })
                                 .attr("fill", "black")
                                 .style("font-size", "0px")
                                 .attr("y", height)
