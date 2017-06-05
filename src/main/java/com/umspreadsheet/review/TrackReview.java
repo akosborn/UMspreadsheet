@@ -1,9 +1,10 @@
 package com.umspreadsheet.review;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.umspreadsheet.track.Track;
 import com.umspreadsheet.user.User;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.SafeHtml;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -27,6 +28,8 @@ public class TrackReview
     @JsonIgnoreProperties({"trackReviews"})
     private User user;
 
+    @SafeHtml
+    @Length(max = 5000)
     @Column(columnDefinition = "TEXT")
     private String comment;
 

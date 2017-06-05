@@ -123,7 +123,7 @@
         };
 
         $scope.updateTrackReview = function (trackReview) {
-            TrackReview.Standard.update({id: trackReview.id}, trackReview)
+            TrackReview.Standard.update({id: trackReview.id}, trackReview);
         };
     };
 

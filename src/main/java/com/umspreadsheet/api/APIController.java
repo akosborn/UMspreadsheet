@@ -15,9 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -209,8 +211,14 @@ public class APIController
 
     @RequestMapping(value = "/track-reviews/{id}", method = RequestMethod.PUT)
     public @ResponseBody
-    TrackReview updateTrackReview(@RequestBody TrackReview trackReview, @PathVariable Long id)
+    TrackReview updateTrackReview(@Valid @RequestBody TrackReview trackReview, @PathVariable Long id,
+                                  BindingResult bindingResult)
     {
+        if (bindingResult.hasErrors())
+        {
+            return trackReview;
+        }
+
         return trackReviewService.save(trackReview);
     }
 
