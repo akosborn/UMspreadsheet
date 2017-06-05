@@ -119,10 +119,8 @@
                         var selection = slider.parent().children().eq(0).children().eq(0).children().eq(1);
                         slider.bootstrapSlider('setValue', score);
 
-                        var colorChange = function () {
-
-                            value = $scope.track.userTrackReview.score;
-
+                        var colorChange = function (value) {
+                            
                             if (value < 6)
                                 selection.css('background', '#F3F3F3');
                             if (value >= 6 && value < 7)
@@ -138,11 +136,13 @@
 
                         };
 
-                        colorChange();
+                        colorChange($scope.track.userTrackReview.score);
 
                         element
                             .slider()
-                            .on('slideStop', colorChange).data('value');
+                            .on('slide', function (slideEvent) {
+                                colorChange(slideEvent.value);
+                            }).data('value');
                     });
                 }
             }

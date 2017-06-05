@@ -109,7 +109,18 @@ public class TrackController
         if (year == null && month == null && day == null && rating == null && jam == null && type == null && song == null)
             page = trackService.criteriaTest(specification, new PageRequest(pageNumber, 15, Sort.Direction.DESC, "show.date"));
         else
-            page = trackService.criteriaTest(specification, new PageRequest(pageNumber, 15, Sort.Direction.DESC, "averageRating"));
+        {
+            Sort.Order averageRatingOrder = new Sort.Order(Sort.Direction.DESC, "averageRating");
+            Sort.Order dateOrder = new Sort.Order(Sort.Direction.ASC, "show.date");
+
+            List<Sort.Order> sortOrders = new ArrayList<>();
+            sortOrders.add(averageRatingOrder);
+            sortOrders.add(dateOrder);
+
+            Sort sort = new Sort(sortOrders);
+
+            page = trackService.criteriaTest(specification, new PageRequest(pageNumber, 15, sort));
+        }
         Integer totalPages = page.getTotalPages();
 
         model.addAttribute("totalPages", totalPages);

@@ -226,10 +226,21 @@ public class ShowController
         Page<Show> page;
 
         // Sort the shows by date from newest to oldest if the page is visited via nav bar; otherwise, sort by average rating descending
-        if (year == null && month == null && day == null & rating == null)
+        if (year == null && month == null && day == null && rating == null)
             page = showService.getShowsByFilter(specification, new PageRequest(pageNumber, PAGE_SIZE, Sort.Direction.DESC, "date"));
         else
-            page = showService.getShowsByFilter(specification, new PageRequest(pageNumber, PAGE_SIZE, Sort.Direction.DESC, "averageRating"));
+        {
+            Sort.Order averageRatingOrder = new Sort.Order(Sort.Direction.DESC, "averageRating");
+            Sort.Order dateOrder = new Sort.Order(Sort.Direction.ASC, "date");
+
+            List<Sort.Order> sortOrders = new ArrayList<>();
+            sortOrders.add(averageRatingOrder);
+            sortOrders.add(dateOrder);
+
+            Sort sort = new Sort(sortOrders);
+
+            page = showService.getShowsByFilter(specification, new PageRequest(pageNumber, PAGE_SIZE, sort));
+        }
 
         Integer totalPages = page.getTotalPages();
         List<Show> shows = page.getContent();

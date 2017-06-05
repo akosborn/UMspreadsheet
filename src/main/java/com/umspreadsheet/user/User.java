@@ -67,6 +67,7 @@ public class User
 
     @OneToMany(mappedBy = "user")
     @JsonIgnoreProperties("user")
+    @OrderBy("reviewedOn DESC")
     private List<TrackReview> trackReviews;
 
     @NotNull

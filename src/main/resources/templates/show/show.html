@@ -39,7 +39,7 @@
             </div>
 
             <div class="row edit-show-div">
-                <p style="padding-left: 30px" class="col-xs-12" sec:authorize="hasRole('ROLE_MANAGE_SHOWS_PRIVILEGE')">
+                <p class="col-xs-12" sec:authorize="hasRole('ROLE_MANAGE_SHOWS_PRIVILEGE')">
                     <a data-ng-href="/admin/edit-show?showId={{show.id}}">
                         Edit show
                     </a>
@@ -49,7 +49,7 @@
             <br/>
 
             <div data-ng-repeat="set in show.sets | orderBy: '+position'" data-ng-controller="SetController"
-                 class="row set-div">
+                 class="set-div">
 
                 <p class="set-name">{{set.name}}</p>
 
@@ -123,8 +123,9 @@
 
             </div>
 
-            <p class="set-name">Recent Ratings</p>
-            <div data-ng-controller="TrackReviewController" data-ng-init="getRecentReviews()" class="col-md-6">
+            <div data-ng-controller="TrackReviewController" data-ng-init="getRecentReviews()" class="col-md-6" style="padding: 0">
+
+                <p class="set-name" style="margin-top: 15px;">Recent Ratings</p>
 
                 <div data-ng-repeat="review in recentReviews" class="all-reviews-div">
 
