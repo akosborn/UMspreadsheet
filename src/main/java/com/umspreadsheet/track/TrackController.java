@@ -3,6 +3,8 @@ package com.umspreadsheet.track;
 import com.umspreadsheet.criteria.SearchCriteria;
 import com.umspreadsheet.exception.DataNotFoundException;
 import com.umspreadsheet.helper.ControllerHelper;
+import com.umspreadsheet.model.Jam;
+import com.umspreadsheet.model.Type;
 import com.umspreadsheet.review.TrackReviewService;
 import com.umspreadsheet.show.ShowService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,10 +95,18 @@ public class TrackController
         }
 
         if (type != null)
-            builder.with("type", ":", type);
+        {
+            // Capitalize type string and get its enum value
+            Type modelType = Type.valueOf(type.toUpperCase());
+            builder.with("type", ":", modelType);
+        }
 
         if (jam != null)
-            builder.with("jam", ":", jam);
+        {
+            // Capitalize jam string and get its enum value
+            Jam modelJam = Jam.valueOf(jam.toUpperCase());
+            builder.with("jam", ":", modelJam);
+        }
 
         if (song != null)
             builder.with("song", ":", song);
