@@ -30,8 +30,6 @@
         // })
 
         $scope.updateTrack = function (track) {
-            console.log('updateTrack()');
-            console.log(track);
             Track.update({id: track.id}, track);
         };
 
