@@ -20,7 +20,9 @@
         <div id="#home-container" class="container">
 
             <div id="most-recent-show-header" th:object="${track}">
-                <h2 id="show-title" th:text="*{song}"></h2>
+                <a th:href="@{'/shows/' + *{show.id} + '/' + *{show.slug}}">
+                    <h2 id="show-title" th:text="*{song}"></h2>
+                </a>
                 <h2 class="pull-right show-rating-and-medal">
                     <i th:if="*{averageRating ge 6 and averageRating lt 7}" class="fa fa-trophy" style="color: #CD7F32;" aria-hidden="true"></i>
                     <i th:if="*{averageRating ge 7 and averageRating lt 8}" class="fa fa-trophy" style="color: #C0C0C0;" aria-hidden="true"></i>
@@ -34,28 +36,37 @@
 
             <br/>
 
-            <div th:each="review : ${reviews}" th:object="${review}" class="comment-div" style="margin-bottom: 20px;">
-                <div class="comment-body-div">
-                    <h3 class="show-rating-and-medal" style="color: #C5B358; margin-bottom: 5px;">
-                        <i th:if="*{track.averageRating ge 6 and track.averageRating lt 7}" class="fa fa-trophy" style="color: #CD7F32;" aria-hidden="true"></i>
-                        <i th:if="*{track.averageRating ge 7 and track.averageRating lt 8}" class="fa fa-trophy" style="color: #C0C0C0;" aria-hidden="true"></i>
-                        <i th:if="*{track.averageRating ge 8 and track.averageRating lt 9}" class="fa fa-trophy" style="color: #FFD700;" aria-hidden="true"></i>
-                        <i th:if="*{track.averageRating ge 9}" class="fa fa-diamond" style="color: #B9F2FF;" aria-hidden="true"></i>
-                        <span th:if="*{score != null}" th:text="*{#numbers.formatDecimal(score, 1, 2)}">[0.00]</span>
-                        <span th:if="*{score == null}">No Rating</span>
-                    </h3>
+            <div class="col-xs-12">
 
-                    <p th:text="*{comment}">UMSpreadsheet was created to serve as a community-based resource for umphreaks.
-                        This resource allows participants to give a rating to every song over Umphrey's entire career in an
-                        effort to create a rather unique view of the music we love.  The goal is to help people find and listen
-                        to music that they may not have discovered on their own, plain and simple.</p>
+                <div th:each="review : ${reviews}" class="all-reviews-div">
+
+                    <div class="row dark-div review-div">
+
+                        <div class="col-xs-8 col-sm-10">
+                            <p class="username">
+                                <a th:href="@{'/user/' + ${review.user.username}}" th:text="${review.user.username}">{{ review.user.username }}</a>
+                                <span th:text="${#dates.format(review.reviewedOn, 'yyy/M/d')}">{{ review.reviewedOn | date:'yyyy/MM/dd' }}</span>
+                            </p>
+
+                            <p class="comment" th:text="${review.comment}">{{ review.comment }}</p>
+                        </div>
+                        <div class="col-xs-4 col-sm-2">
+                            <p class="pull-right">
+                                <i th:if="${review.score ge 6 and review.score lt 7}" class="fa fa-trophy bronze track-div-trophy"
+                                   aria-hidden="true"></i>
+                                <i th:if="${review.score ge 7 and review.score lt 8}" class="fa fa-trophy silver track-div-trophy"
+                                   aria-hidden="true"></i>
+                                <i th:if="${review.score ge 8 and review.score lt 9}" class="fa fa-trophy gold track-div-trophy"
+                                   aria-hidden="true"></i>
+                                <i th:if="${review.score ge 9}" class="fa fa-diamond diamond track-div-trophy" aria-hidden="true"></i>
+
+                                <span th:text="${#numbers.formatDecimal(review.score, 1, 2)}"></span>
+                            </p>
+                        </div>
+                    </div>
+
                 </div>
-                <div class="comment-footer-div">
-                    <p style="font-size: 10px;">
-                        <a th:href="@{'/user/' + *{user.username}}"><span th:text="*{user.username}">[user]</span></a>
-                        <span th:text="'posted ' + *{#dates.format(reviewedOn, 'MMM dd yyyy HH:mm') + ' CST'}"></span>
-                    </p>
-                </div>
+
             </div>
 
         </div>

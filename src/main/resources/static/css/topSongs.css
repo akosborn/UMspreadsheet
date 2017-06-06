@@ -21,7 +21,7 @@ SONG
 
 .show-header
 {
-    border-bottom: solid thick darkgray;
+    border-bottom: solid thin darkgray;
     padding-bottom: 5px;
 }
 

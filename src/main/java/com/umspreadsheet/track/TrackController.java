@@ -3,8 +3,9 @@ package com.umspreadsheet.track;
 import com.umspreadsheet.criteria.SearchCriteria;
 import com.umspreadsheet.exception.DataNotFoundException;
 import com.umspreadsheet.helper.ControllerHelper;
+import com.umspreadsheet.model.Jam;
+import com.umspreadsheet.model.Type;
 import com.umspreadsheet.review.TrackReviewService;
-import com.umspreadsheet.show.Show;
 import com.umspreadsheet.show.ShowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -94,10 +95,18 @@ public class TrackController
         }
 
         if (type != null)
-            builder.with("type", ":", type);
+        {
+            // Capitalize type string and get its enum value
+            Type modelType = Type.valueOf(type.toUpperCase());
+            builder.with("type", ":", modelType);
+        }
 
         if (jam != null)
-            builder.with("jam", ":", jam);
+        {
+            // Capitalize jam string and get its enum value
+            Jam modelJam = Jam.valueOf(jam.toUpperCase());
+            builder.with("jam", ":", modelJam);
+        }
 
         if (song != null)
             builder.with("song", ":", song);
@@ -135,7 +144,7 @@ public class TrackController
     {
         Track retrievedTrack = trackService.findById(id);
         model.addAttribute("track", retrievedTrack);
-        model.addAttribute("reviews", trackReviewService.findByTrack(retrievedTrack));
+        model.addAttribute("reviews", trackReviewService.findThirtyByTrack(retrievedTrack));
 
         return "/track/track";
     }

@@ -55,17 +55,6 @@
                 <button class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
             </form>
 
-            <hr style="max-width: 300px"/>
-            <!-- GOOGLE SIGNIN -->
-            <form id="gl_signin" th:action="@{/signin/google}" method="post" class="form-signin">
-                <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-                <div class="form-actions">
-                    <button class="btn btn-social btn-google" type="submit">
-                        <span class="fa fa-google"></span> Sign Up with Google
-                    </button>
-                </div>
-            </form>
-
         </div> <!-- /container -->
 
     </div>

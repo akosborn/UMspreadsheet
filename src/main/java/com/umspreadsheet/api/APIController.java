@@ -15,15 +15,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
 @RequestMapping("/api")
-public class AdminAPIController
+public class APIController
 {
     private TrackService trackService;
     private ShowService showService;
@@ -32,8 +34,8 @@ public class AdminAPIController
     private SimpleUserService userService;
 
     @Autowired
-    public AdminAPIController(TrackService trackService, ShowService showService, SetService setService,
-                              TrackReviewService trackReviewService, SimpleUserService userService)
+    public APIController(TrackService trackService, ShowService showService, SetService setService,
+                         TrackReviewService trackReviewService, SimpleUserService userService)
     {
         this.trackService = trackService;
         this.showService = showService;
@@ -209,8 +211,14 @@ public class AdminAPIController
 
     @RequestMapping(value = "/track-reviews/{id}", method = RequestMethod.PUT)
     public @ResponseBody
-    TrackReview updateTrackReview(@RequestBody TrackReview trackReview, @PathVariable Long id)
+    TrackReview updateTrackReview(@Valid @RequestBody TrackReview trackReview, @PathVariable Long id,
+                                  BindingResult bindingResult)
     {
+        if (bindingResult.hasErrors())
+        {
+            return trackReview;
+        }
+
         return trackReviewService.save(trackReview);
     }
 

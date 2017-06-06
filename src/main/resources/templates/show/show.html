@@ -56,13 +56,28 @@
                 <div data-ng-repeat="track in set.tracks | orderBy: '+setPosition'" class="col-xs-12 track-div">
 
                     <div class="col-xs-12 dark-div">
-                        <div class="col-xs-12 col-md-3 col-lg-4 name-div">
-                            <p class="song-name">{{track.song}}
-                                <span data-ng-if="track.transition == 'NONE'"></span>
-                                <span data-ng-if="track.transition == 'ROUTINE'">&gt;</span>
-                                <span data-ng-if="track.transition == 'IMPROV'">&rarr;</span>
-                            </p>
+                        <div class="col-xs-12 col-md-2 col-lg-3 name-div">
+                            <a data-ng-href="/songs/{{track.id}}/{{track.slug}}">
+                                <p class="song-name">{{track.song}}
+                                    <span data-ng-if="track.transition == 'NONE'"></span>
+                                    <span data-ng-if="track.transition == 'ROUTINE'">&gt;</span>
+                                    <span data-ng-if="track.transition == 'IMPROV'">&rarr;</span>
+                                </p>
+                            </a>
                         </div>
+                        <div class="col-xs-12 col-md-1 duration-div">
+                            <p>{{ track.length != null ? (track.length | secondsToMinSec) : '&nbsp;' }}</p>
+                        </div>
+                        <div class="col-md-2 col-lg-1 type-div">
+                            <p>{{ track.type != null ? (track.type | formatType) : '&nbsp;' }}</p>
+                        </div>
+                        <div class="col-md-2 col-lg-1 jam-div">
+                            <p>{{ track.jam != null ? (track.jam | capitalize) : '&nbsp;' }}</p>
+                        </div>
+                        <div class="col-md-2 col-lg-1 jam-div">
+                            <p style="font-size: 10px;">{{ track.notes != null ? track.notes : '&nbsp;' }}</p>
+                        </div>
+
                         <div class="col-xs-12 col-md-1 col-lg-1 rating-div">
                             <p>
                                 <i data-ng-if="track.averageRating >= 6 && track.averageRating < 7"
@@ -76,19 +91,10 @@
                                 {{ track.averageRating != null ?  (track.averageRating | number: 2) : 'Not rated' }}
                             </p>
                         </div>
-                        <div class="col-xs-12 col-md-1 duration-div">
-                            <p>{{ track.length != null ? (track.length | secondsToMinSec) : '&nbsp;' }}</p>
-                        </div>
-                        <div class="col-md-2 col-lg-1 jam-div">
-                            <p>{{ track.jam != null ? (track.jam | capitalize) : '&nbsp;' }}</p>
-                        </div>
-                        <div class="col-md-2 col-lg-1 type-div">
-                            <p>{{ track.type != null ? (track.type | formatType) : '&nbsp;' }}</p>
-                        </div>
 
                         <form sec:authorize="isAuthenticated()" data-ng-controller="TrackReviewController">
 
-                            <div class="col-xs-12 col-md-3 col-lg-4 text-center">
+                            <div class="col-xs-12 col-md-2 col-lg-4 text-center">
                                 <div class="col-xs-11">
                                     <input data-ng-model="track.userTrackReview.score"
                                            data-ng-change="track.userTrackReview.id == null ? addTrackReview(track.userTrackReview) : updateTrackReview(track.userTrackReview)"
@@ -141,7 +147,7 @@
                             <p class="comment">{{ review.comment }}</p>
                         </div>
                         <div class="col-xs-4 col-sm-2">
-                            <p class="text-center">
+                            <p class="pull-right">
                                 <i data-ng-if="review.score >= 6 && review.score < 7"
                                    class="fa fa-trophy bronze track-div-trophy" aria-hidden="true"></i>
                                 <i data-ng-if="review.score >= 7 && review.score < 8"

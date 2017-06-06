@@ -6,7 +6,7 @@
              xmlns:layout="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8"/>
-    <title>UMSpreadsheet</title>
+    <title>UMspreadsheet</title>
 
     <link th:href="@{/css/login.css}" rel="stylesheet"/>
 </head>
@@ -65,20 +65,7 @@
                 <br/>
                 <a th:href="@{/signin/reset-password}">Forgot password</a>
             </form>
-
-            <hr style="max-width: 300px"/>
-
-            <!-- GOOGLE SIGNIN -->
-            <form id="gl_signin" th:action="@{/signin/google}" method="post" class="form-signin">
-                <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
-                <div class="form-actions">
-                    <button class="btn btn-social btn-google" type="submit">
-                        <span class="fa fa-google"></span> Sign in with Google
-                    </button>
-                </div>
-            </form>
-
-        </div> <!-- /container -->
+        </th:block>
 
     </div>
 </body>

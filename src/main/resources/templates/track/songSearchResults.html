@@ -132,11 +132,11 @@
                         <div class="col-sm-9 col-lg-7">
                             <select class="form-control" id="type" name="type">
                                 <option value="">--</option>
-                                <option value="JS">Jimmy Stewart</option>
-                                <option value="LS">Lyrical Stew</option>
-                                <option value="C">Cover</option>
-                                <option value="M">Mashup</option>
-                                <option value="N">New song</option>
+                                <option value="jimmyStewart">Jimmy Stewart</option>
+                                <option value="lyricalStew">Lyrical Stew</option>
+                                <option value="cover">Cover</option>
+                                <option value="mashup">Mashup</option>
+                                <option value="new">New song</option>
                             </select>
                         </div>
                     </div>
@@ -146,18 +146,18 @@
                         <div class="col-sm-9 col-lg-7">
                             <select class="form-control" id="jam" name="jam">
                                 <option value="">--</option>
-                                <option value="Bliss">Bliss</option>
-                                <option value="Dance">Dance</option>
-                                <option value="Dark">Dark</option>
-                                <option value="Emotional">Emotional</option>
-                                <option value="Funk">Funk</option>
-                                <option value="Industrial">Industrial</option>
-                                <option value="Jazz">Jazz</option>
-                                <option value="Metal">Metal</option>
-                                <option value="Prog">Prog</option>
-                                <option value="Reggae">Reggae</option>
-                                <option value="Rock">Rock</option>
-                                <option value="Soaring">Soaring</option>
+                                <option value="bliss">Bliss</option>
+                                <option value="dance">Dance</option>
+                                <option value="dark">Dark</option>
+                                <option value="emotional">Emotional</option>
+                                <option value="funk">Funk</option>
+                                <option value="industrial">Industrial</option>
+                                <option value="jazz">Jazz</option>
+                                <option value="metal">Metal</option>
+                                <option value="prog">Prog</option>
+                                <option value="reggae">Reggae</option>
+                                <option value="rock">Rock</option>
+                                <option value="soaring">Soaring</option>
                             </select>
                         </div>
                     </div>
@@ -185,7 +185,8 @@
                     <div class="show-header">
 
                         <a class="show-url" th:href="@{'/shows/' + *{show.id} + '/' + *{show.slug}}">
-                            <h5 th:text="*{#dates.format(show.date, 'yyyy/MM/dd') + ' ' + show.city + ', ' + show.state}">[date, city, st]</h5>
+                            <h5 th:text="*{#dates.format(show.date, 'yyyy/MM/dd') + ' ' + show.city + ', ' + show.state}"
+                                style="margin-bottom: 1px">[date, city, st]</h5>
                         </a>
                         <a th:href="@{'/songs/' + *{id} + '/' + *{slug}}">
                             <h4 th:text="*{song}">
