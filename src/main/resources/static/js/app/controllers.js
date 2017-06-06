@@ -34,17 +34,11 @@
         };
 
         $scope.updateSetPosition = function (track, setPosition) {
-            console.log('updateSetPosition()');
-            console.log(track);
             track.setPosition = setPosition;
             Track.update({id: track.id}, track);
         };
 
         $scope.addTrack = function (show, set, song) {
-            console.log('Add track');
-            console.log(show);
-            console.log(set);
-            console.log(song);
             new Track({
                 song: song,
                 set: set
@@ -108,7 +102,6 @@
         };
 
         $scope.addTrackReview = function (trackReview) {
-            console.log('adding trackreview');
             new TrackReview.Standard({
                 track: trackReview.track,
                 user: trackReview.user,
