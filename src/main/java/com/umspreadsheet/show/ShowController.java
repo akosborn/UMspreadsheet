@@ -116,6 +116,12 @@ public class ShowController
             }
         }
 
+        Show previousShow = showService.findPrevious(show.getDate());
+        Show nextShow = showService.findNext(show.getDate());
+
+        model.addAttribute("previousShow", previousShow);
+        model.addAttribute("nextShow", nextShow);
+
         model.addAttribute("trackReviewForms", trackReviewForms);
         model.addAttribute("reviews", trackReviewService.getAllByShow(show));
 
