@@ -80,6 +80,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                         .antMatchers("/", "/signin/**", "/signup/**", "/resources/**", "/disconnect/facebook",
                                 "/shows/**", "/songs/**", "/wormblog/**", "/about/**", "/signup-confirm", "/song/*/*",
                                 "/user/*", "/reset-password", "/change-password").permitAll()
+                    .antMatchers(HttpMethod.POST, "/api/track-reviews").hasAnyRole("USER_PRIVILEGE", "MOD_PRIVILEGE")
+                    .antMatchers(HttpMethod.PUT, "/api/track-reviews/**").hasAnyRole("USER_PRIVILEGE", "MOD_PRIVILEGE")
                     .antMatchers(HttpMethod.GET,"/api/**").permitAll()
                     .antMatchers(HttpMethod.DELETE, "/api/**").hasRole("MOD_PRIVILEGE")
                     .antMatchers(HttpMethod.POST, "/api/**").hasRole("MOD_PRIVILEGE")
