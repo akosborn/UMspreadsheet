@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorator="layouts/site"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+    <title>UMSpreadsheet</title>
+
+    <link rel="stylesheet" th:href="@{/css/topSongs.css}"/>
+    <link rel="stylesheet" th:href="@{/css/wormblog/wormblog.css}"/>
+</head>
+<body>
+
+    <div layout:fragment="content">
+        <div class="container">
+            <h1 id="header-title" class="text-center">UMspreadsheet Nugs.net Playlists</h1>
+
+            <div class="container">
+                <a href="https://t.co/5yKDnIu7g8" target="_blank">
+                    <p>UMspreadsheet Vol. 1</p>
+                </a>
+                <a href="https://t.co/zkOnZl4Kt6" target="_blank">
+                    <p>UMspreadsheet Vol. 2</p>
+                </a>
+                <a href="https://t.co/kqTNwrHS7m" target="_blank">
+                    <p>UMspreadsheet Vol. 3</p>
+                </a>
+            </div>
+
+        </div>
+    </div>
+
+    <th:block layout:fragment="script">
+
+    </th:block>
+
+</body>

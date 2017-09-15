@@ -79,7 +79,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                     .authorizeRequests()
                         .antMatchers("/", "/signin/**", "/signup/**", "/resources/**", "/disconnect/facebook",
                                 "/shows/**", "/songs/**", "/wormblog/**", "/about/**", "/signup-confirm", "/song/*/*",
-                                "/user/*", "/reset-password", "/change-password").permitAll()
+                                "/user/*", "/reset-password", "/change-password", "/playlists").permitAll()
                     .antMatchers(HttpMethod.GET,"/api/**").permitAll()
                     .antMatchers(HttpMethod.DELETE, "/api/**").hasRole("MOD_PRIVILEGE")
                     .antMatchers(HttpMethod.POST, "/api/**").hasRole("MOD_PRIVILEGE")
