@@ -42,7 +42,7 @@ server:
   port: 8443
   ssl:
     key-store: /etc/letsencrypt/live/umspreadsheet.com/keystore.p12
-    key-store-password: smellthemitten1348
+    key-store-password: nothingtoo1348
     key-store-type: PKCS12
     key-alias: tomcat
 security:
