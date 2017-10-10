@@ -47,6 +47,7 @@ public class Show
     private String notes;
 
     private String nugsId;
+    private String archiveId;
 
     @Transient
     private String slug;
@@ -149,6 +150,21 @@ public class Show
     public void setNugsId(String nugsId)
     {
         this.nugsId = nugsId;
+    }
+
+    public String getArchiveId()
+    {
+        return archiveId;
+    }
+
+    public void setArchiveId(String archiveId)
+    {
+        this.archiveId = archiveId;
+    }
+
+    public void setSlug(String slug)
+    {
+        this.slug = slug;
     }
 
     public String getSlug()
