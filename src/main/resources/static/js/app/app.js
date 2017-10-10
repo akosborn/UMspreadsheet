@@ -3,6 +3,15 @@
     angular.module("UMspreadsheet.services", []);
     var app = angular.module("UMspreadsheet", ["ngResource", "UMspreadsheet.controllers", "UMspreadsheet.services"]);
 
+    app.config(function($sceDelegateProvider) {
+        $sceDelegateProvider.resourceUrlWhitelist([
+            // Allow same origin resource loads.
+            'self',
+            // Allow loading from our assets domain. **.
+            'https://archive.org/**'
+        ]);
+    });
+
     app.filter('secondsToMinSec', function ($filter) {
        return function (seconds) {
            return $filter('date')(new Date(0, 0, 0).setSeconds(seconds), 'm:ss');

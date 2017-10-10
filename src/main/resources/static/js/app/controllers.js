@@ -8,13 +8,23 @@
         });
 
         $scope.updateShow = function (show) {
+
             // parse full url for nugsId
-            if (show.nugsId.indexOf("/")) {
+            if (show.nugsId !== null && show.nugsId.indexOf("/")) {
                 var splitURL = show.nugsId.split("/");
                 show.nugsId = splitURL[splitURL.length - 1];
             }
 
+            if (show.archiveId !== null && show.archiveId.indexOf("/")) {
+                var splitURL = show.archiveId.split("/");
+                show.archiveId = splitURL[splitURL.length - 1];
+            }
+
             Show.update({id: show.id}, show);
+        };
+
+        $scope.getArchiveIframeSrc = function (archiveId) {
+            return 'https://archive.org/embed/' + archiveId + '&playlist=1';
         };
 
     };

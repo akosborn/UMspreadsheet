@@ -46,6 +46,14 @@
                            data-ng-model-options="{debounce: 1000}"/>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-xs-7 col-md-4" style="margin-bottom: 15px;=">
+                    <input type="text" class="form-control" data-ng-model="show.archiveId" data-ng-change="updateShow(show)"
+                           placeholder="archive.org URL here (https://archive.org/details/um2017-08-24.RodeM5.flacaud)..."
+                           data-ng-value="show.archiveId != null? 'https://archive.org/embed/' + show.archiveId : null"
+                           data-ng-model-options="{debounce: 1000}"/>
+                </div>
+            </div>
 
             <div class="row">
                 <div class="col-xs-4 col-md-2" style="margin-bottom: 5px">
