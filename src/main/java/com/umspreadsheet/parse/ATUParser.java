@@ -11,24 +11,56 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
+@Component
 public class ATUParser
 {
-    public static void parse(ShowService showService, SetService setService, TrackService trackService,
-                             int maxYear, int minYear) throws ParseException
+    private TrackService trackService;
+    private ShowService showService;
+    private SetService setService;
+
+    @Autowired
+    public ATUParser(TrackService trackService, ShowService showService, SetService setService)
+    {
+        this.trackService = trackService;
+        this.showService = showService;
+        this.setService = setService;
+    }
+
+    // checks previous day for new show once a day at 0400 server time
+    @Scheduled(cron = "0 0 4 * * *")
+    public void parse() throws ParseException
     {
         try
         {
-            for (int i = maxYear; i >= minYear; i--)
-            {
-                Document document = Jsoup.connect("http://allthings.umphreys.com/setlists/" + i + ".html").get();
+            LocalDate todaysDate = LocalDate.now();
+            LocalDate yesterdaysDate = todaysDate.minusDays(1);
 
+            // extract ints from yesterday's date
+            int year = yesterdaysDate.getYear();
+            int month = yesterdaysDate.getMonthValue();
+            int day = yesterdaysDate.getDayOfMonth();
+
+            Document document = Jsoup.connect("http://allthings.umphreys.com/setlists/?date=" + year + "-" +
+                    String.format("%02d", month) + "-" + String.format("%02d", day)).get();
+
+            // check if there was a show the previous day and proceed to parse it if there was
+            Element header = document.getElementsByTag("h3").first();
+            String headerText = header.text();
+
+            if (!headerText.equals("No Shows Found"))
+            {
                 Elements setlistSections = document.getElementsByClass("setlist");
 
                 // Loop through <section>'s with class="setlist"
