@@ -10,6 +10,7 @@ import org.springframework.boot.web.servlet.ErrorPage;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /*
 * Configuration for dev environment
@@ -37,6 +38,7 @@ import org.springframework.http.HttpStatus;
 //Configuration for war
 @EnableConfigurationProperties
 @SpringBootApplication(exclude = SocialWebAutoConfiguration.class)
+@EnableScheduling
 public class Application extends SpringBootServletInitializer
 {
 	@Bean
