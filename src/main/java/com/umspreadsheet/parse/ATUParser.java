@@ -38,109 +38,123 @@ public class ATUParser
         this.setService = setService;
     }
 
+    private List<LocalDate> getDatesInRange(LocalDate fromDate, LocalDate toDate)
+    {
+        List<LocalDate> dates = new ArrayList<>();
+
+        for (LocalDate date = fromDate;
+             date.isBefore(toDate) || date.isEqual(toDate);
+             date = date.plusDays(1))
+        {
+            dates.add(date);
+        }
+
+        return dates;
+    }
+
     // checks previous day for new show once a day at 0400 server time
-    @Scheduled(cron = "0 0 4 * * *")
-    public void parse() throws ParseException
+//    @Scheduled(cron = "0 0 4 * * *")
+    public void parse(LocalDate fromDate, LocalDate toDate) throws ParseException
     {
         try
         {
-            LocalDate todaysDate = LocalDate.now();
-            LocalDate yesterdaysDate = todaysDate.minusDays(1);
-
-            // extract ints from yesterday's date
-            int year = yesterdaysDate.getYear();
-            int month = yesterdaysDate.getMonthValue();
-            int day = yesterdaysDate.getDayOfMonth();
-
-            Document document = Jsoup.connect("http://allthings.umphreys.com/setlists/?date=" + year + "-" +
-                    String.format("%02d", month) + "-" + String.format("%02d", day)).get();
-
-            // check if there was a show the previous day and proceed to parse it if there was
-            Element header = document.getElementsByTag("h3").first();
-            String headerText = header.text();
-
-            if (!headerText.equals("No Shows Found"))
+            for (LocalDate localDate : getDatesInRange(fromDate, toDate))
             {
-                Elements setlistSections = document.getElementsByClass("setlist");
+                // extract ints from yesterday's date
+                int year = localDate.getYear();
+                int month = localDate.getMonthValue();
+                int day = localDate.getDayOfMonth();
 
-                // Loop through <section>'s with class="setlist"
-                for (Element setlistSection : setlistSections)
+                Document document = Jsoup.connect("http://allthings.umphreys.com/setlists/?date=" + year + "-" +
+                        String.format("%02d", month) + "-" + String.format("%02d", day)).get();
+
+                // check if there was a show the previous day and proceed to parse it if there was
+                Element header = document.getElementsByTag("h3").first();
+                String headerText = header.text();
+
+                if (!headerText.equals("No Shows Found"))
                 {
-                    Show show = new Show();
+                    Elements setlistSections = document.getElementsByClass("setlistsolo");
 
-                    // Parse and set date
-                    DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                    Date date = dateFormat.parse(setlistSection.id());
-                    show.setDate(date);
-
-                    // Get <h3> containing date, city, state, and venue
-                    Elements anchors = setlistSection.getElementsByClass("splashtitle").get(0).getAllElements();
-
-                    String venue = anchors.get(2).text();
-                    show.setVenue(venue);
-
-                    String city = anchors.get(3).text();
-                    show.setCity(city);
-
-                    String state = anchors.get(4).text();
-                    show.setState(state);
-
-                    List<Set> sets = new ArrayList<>();
-                    // Get set-containing paragraphs
-                    //Elements setParagraphs = setlistSection.getElementsByTag("p");
-                    Elements setParagraphs = setlistSection.select("section > p");
-                    for (Element setParagraph : setParagraphs)
+                    // Loop through <section>'s with class="setlist"
+                    for (Element setlistSection : setlistSections)
                     {
-                        Set set = new Set();
+                        Show show = new Show();
 
-                        String setName = setParagraph.getElementsByTag("b").text();
-                        setName = setName.split(":")[0];
-                        set.setName(setName);
+                        // Parse and set date
+                        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                        Date date = dateFormat.parse(setlistSection.id());
+                        show.setDate(date);
 
-                        List<Track> tracks = new ArrayList<>();
-                        Elements songAnchors = setParagraph.getElementsByTag("a");
-                        for (Element songAnchor : songAnchors)
+                        // Get <h3> containing date, city, state, and venue
+                        Elements anchors = setlistSection.getElementsByClass("splashtitle").get(0).getAllElements();
+
+                        String venue = anchors.get(2).text();
+                        show.setVenue(venue);
+
+                        String city = anchors.get(3).text();
+                        show.setCity(city);
+
+                        String state = anchors.get(4).text();
+                        show.setState(state);
+
+                        List<Set> sets = new ArrayList<>();
+                        // Get set-containing paragraphs
+                        //Elements setParagraphs = setlistSection.getElementsByTag("p");
+                        Elements setParagraphs = setlistSection.select("section > p");
+                        for (Element setParagraph : setParagraphs)
                         {
-                            Track track = new Track();
+                            Set set = new Set();
 
-                            String song = songAnchor.text();
-                            track.setSong(song);
+                            String setName = setParagraph.getElementsByTag("b").text();
+                            setName = setName.split(":")[0];
+                            set.setName(setName);
 
-                            String transition;
-                            // Check if the end of the show has been reached and break out of loop if so
-                            if (songAnchor.nextSibling() != null)
-                                transition = songAnchor.nextSibling().toString();
-                            else
-                                break;
+                            List<Track> tracks = new ArrayList<>();
+                            Elements songAnchors = setParagraph.getElementsByTag("a");
+                            for (Element songAnchor : songAnchors)
+                            {
+                                Track track = new Track();
 
-                            // If song has notes, add them
-                            if (songAnchor.nextSibling().nodeName().equals("sup"))
-                                track.setNotes(songAnchor.nextSibling().attr("title"));
+                                String song = songAnchor.text();
+                                track.setSong(song);
 
-                            track.setTransition(Transition.NONE);
+                                String transition;
+                                // Check if the end of the show has been reached and break out of loop if so
+                                if (songAnchor.nextSibling() != null)
+                                    transition = songAnchor.nextSibling().toString();
+                                else
+                                    break;
 
-                            if (transition.contains("&gt;"))
-                                track.setTransition(Transition.ROUTINE);
-                            else if (transition.contains("-&gt;"))
-                                track.setTransition(Transition.IMPROV);
+                                // If song has notes, add them
+                                if (songAnchor.nextSibling().nodeName().equals("sup"))
+                                    track.setNotes(songAnchor.nextSibling().attr("title"));
 
-                            tracks.add(track);
+                                track.setTransition(Transition.NONE);
+
+                                if (transition.contains("&gt;"))
+                                    track.setTransition(Transition.ROUTINE);
+                                else if (transition.contains("-&gt;"))
+                                    track.setTransition(Transition.IMPROV);
+
+                                tracks.add(track);
+                            }
+                            set.setTracks(tracks);
+                            sets.add(set);
                         }
-                        set.setTracks(tracks);
-                        sets.add(set);
-                    }
-                    show.setSets(sets);
+                        show.setSets(sets);
 
-                    Show savedShow = showService.save(show);
-                    for (Set set : show.getSets())
-                    {
-                        set.setShow(savedShow);
-                        Set savedSet = setService.save(set);
-                        for (Track track : set.getTracks())
+                        Show savedShow = showService.save(show);
+                        for (Set set : show.getSets())
                         {
-                            track.setSet(savedSet);
-                            track.setShow(savedShow);
-                            trackService.save(track);
+                            set.setShow(savedShow);
+                            Set savedSet = setService.save(set);
+                            for (Track track : set.getTracks())
+                            {
+                                track.setSet(savedSet);
+                                track.setShow(savedShow);
+                                trackService.save(track);
+                            }
                         }
                     }
                 }

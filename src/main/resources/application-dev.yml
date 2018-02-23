@@ -2,9 +2,9 @@ spring:
   application:
     name: umspreadsheet
   datasource:
-    url: jdbc:mysql://localhost/umspreadsheet_dev?autoReconnect=true&useSSL=false
-    username: root
-    password: Osbo_789
+    url: jdbc:mysql://umspreadsheet-dev.cigisldrqwld.us-east-1.rds.amazonaws.com:3306/umspreadsheet_dev
+    username: umspreadsheet
+    password: smellthemitten1348
   jpa:
     hibernate:
       ddl-auto: update
@@ -23,8 +23,8 @@ spring:
         app-secret: AfBOG29GRoCyWTUpe8v3mgA3
   mail:
     host: smtp.gmail.com
-    username: andrewosborn93@gmail.com
-    password: rolltid3
+    username: umspreadsheethelp@gmail.com
+    password: nothingtoo1348
     port: 587
     properties:
         mail:
