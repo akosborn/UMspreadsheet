@@ -6,4 +6,4 @@ might not have discovered otherwise.
 
 Technologies used include Java, Spring Boot, Spring Data, MySQL, Thymeleaf, Twitter Bootstrap, JavaScript, and JQuery.
 
-![alt text](readme_images/ums_home.png?raw=true "Home")
+![alt text](readme_images/ums_home.PNG?raw=true "Home")
