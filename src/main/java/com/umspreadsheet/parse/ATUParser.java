@@ -39,7 +39,6 @@ public class ATUParser
     }
 
     // checks previous day for new show once a day at 0400 server time
-    @Scheduled(cron = "0 0 4 * * ?")
     public void parse() throws ParseException
     {
         System.out.println("ATUParser");
