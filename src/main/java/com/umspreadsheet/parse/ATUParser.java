@@ -11,26 +11,22 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
-@Component
 public class ATUParser
 {
     private TrackService trackService;
     private ShowService showService;
     private SetService setService;
 
-    @Autowired
     public ATUParser(TrackService trackService, ShowService showService, SetService setService)
     {
         this.trackService = trackService;
@@ -39,7 +35,6 @@ public class ATUParser
     }
 
     // checks previous day for new show once a day at 0400 server time
-    @Scheduled(cron = "0 0 4 * * ?")
     public void parse() throws ParseException
     {
         System.out.println("ATUParser");

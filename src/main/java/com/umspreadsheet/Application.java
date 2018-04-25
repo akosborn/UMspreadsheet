@@ -36,7 +36,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 //Configuration for war
 @EnableConfigurationProperties
 @SpringBootApplication(exclude = SocialWebAutoConfiguration.class)
-@EnableScheduling
 public class Application extends SpringBootServletInitializer
 {
 	@Bean
