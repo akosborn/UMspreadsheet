@@ -38,12 +38,12 @@ debug: false
 
 CLOUDINARY_URL: cloudinary://619785555338512:1RQzh1bhPGp0r_1kLZvnHZ8LBYg@umspreadsheet
 
-server:
-  port: 8443
-  ssl:
-    key-store: /etc/letsencrypt/live/umspreadsheet.com/keystore.p12
-    key-store-password: smellthemitten1348
-    key-store-type: PKCS12
-    key-alias: tomcat
-security:
-  require-ssl: true
+#server:
+#  port: 8443
+#  ssl:
+#    key-store: /etc/letsencrypt/live/umspreadsheet.com/keystore.p12
+#    key-store-password: smellthemitten1348
+#    key-store-type: PKCS12
+#    key-alias: tomcat
+#security:
+#  require-ssl: false
