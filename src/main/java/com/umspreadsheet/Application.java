@@ -17,7 +17,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 * */
 @EnableConfigurationProperties
 @SpringBootApplication(exclude = SocialWebAutoConfiguration.class)
-@EnableScheduling
 public class Application
 {
 	@Bean

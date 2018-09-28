@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.umspreadsheet</groupId>
 	<artifactId>umspreadsheet</artifactId>
-	<version>1.3.2-RELEASE</version>
-	<packaging>war</packaging>
+	<version>dev</version>
+	<packaging>jar</packaging>
 
 	<name>UMspreadsheet</name>
 	<description>Rate Umphrey's McGee shows</description>
@@ -85,14 +85,14 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
-        <!-- https://mvnrepository.com/artifact/org.thymeleaf.extras/thymeleaf-extras-springsecurity4 -->
-        <dependency>
-            <groupId>org.thymeleaf.extras</groupId>
-            <artifactId>thymeleaf-extras-springsecurity4</artifactId>
+		<!-- https://mvnrepository.com/artifact/org.thymeleaf.extras/thymeleaf-extras-springsecurity4 -->
+		<dependency>
+			<groupId>org.thymeleaf.extras</groupId>
+			<artifactId>thymeleaf-extras-springsecurity4</artifactId>
 			<version>3.0.0.RELEASE</version>
 			<!-- version MUST be specified, as default isn't supported by Spring Social config -->
 			<!-- http://stackoverflow.com/questions/37270322/spring-boot-security-thymeleaf-iprocessordialect-class-missing -->
-        </dependency>
+		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
@@ -137,17 +137,17 @@
 			<version>3.1.1-1</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.webjars.bower/tether -->
-        <dependency>
-            <groupId>org.webjars.bower</groupId>
-            <artifactId>tether</artifactId>
-            <version>1.4.0</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.webjars/font-awesome -->
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>font-awesome</artifactId>
-            <version>4.7.0</version>
-        </dependency>
+		<dependency>
+			<groupId>org.webjars.bower</groupId>
+			<artifactId>tether</artifactId>
+			<version>1.4.0</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.webjars/font-awesome -->
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>font-awesome</artifactId>
+			<version>4.7.0</version>
+		</dependency>
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>bootstrap-social</artifactId>
@@ -184,24 +184,31 @@
 			<version>1.10.2</version>
 		</dependency>
 
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>angularjs</artifactId>
-            <version>1.6.4</version>
-        </dependency>
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>angularjs</artifactId>
+			<version>1.6.4</version>
+		</dependency>
 
-        <dependency>
-            <groupId>org.webjars.bower</groupId>
-            <artifactId>angular-route</artifactId>
-            <version>1.6.4</version>
-        </dependency>
+		<dependency>
+			<groupId>org.webjars.bower</groupId>
+			<artifactId>angular-route</artifactId>
+			<version>1.6.4</version>
+		</dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.webjars.bower/angular-resource -->
-        <dependency>
-            <groupId>org.webjars.bower</groupId>
-            <artifactId>angular-resource</artifactId>
-            <version>1.6.4</version>
-        </dependency>
+		<!-- https://mvnrepository.com/artifact/org.webjars.bower/angular-resource -->
+		<dependency>
+			<groupId>org.webjars.bower</groupId>
+			<artifactId>angular-resource</artifactId>
+			<version>1.6.4</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.8.5</version>
+		</dependency>
+
 
 	</dependencies>
 
@@ -211,19 +218,19 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			<plugin>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>2.6</version>
-				<configuration>
-					<webResources>
-						<resource>
-							<directory>src/main/.ebextensions</directory>
-							<targetPath>.ebextensions</targetPath>
-							<filtering>true</filtering>
-						</resource>
-					</webResources>
-				</configuration>
-			</plugin>
+			<!--<plugin>-->
+				<!--<artifactId>maven-war-plugin</artifactId>-->
+				<!--<version>2.6</version>-->
+				<!--<configuration>-->
+					<!--<webResources>-->
+						<!--<resource>-->
+							<!--<directory>src/main/.ebextensions</directory>-->
+							<!--<targetPath>.ebextensions</targetPath>-->
+							<!--<filtering>true</filtering>-->
+						<!--</resource>-->
+					<!--</webResources>-->
+				<!--</configuration>-->
+			<!--</plugin>-->
 		</plugins>
 	</build>
 
