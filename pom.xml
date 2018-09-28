@@ -6,7 +6,7 @@
 	<groupId>com.umspreadsheet</groupId>
 	<artifactId>umspreadsheet</artifactId>
 	<version>v1.5.4</version>
-	<packaging>war</packaging>
+	<packaging>dev</packaging>
 
 	<name>UMspreadsheet</name>
 	<description>Rate Umphrey's McGee shows</description>
