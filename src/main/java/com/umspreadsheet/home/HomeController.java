@@ -35,7 +35,7 @@ public class HomeController
 
         Show show = showService.findById((long) 401);
 
-        return "index";
+        return "/index";
     }
 
     private List<Show> setNumberOfReviews(List<Show> shows)
