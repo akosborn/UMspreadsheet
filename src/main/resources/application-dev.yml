@@ -11,6 +11,7 @@ spring:
     Show-sql: false
   thymeleaf:
     cache: false
+    prefix: classpath:/templates
   social:
       facebook:
         app-id: 1121868971273792
