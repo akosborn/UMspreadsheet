@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-// Configuration for war
+// Configuration for local
 @EnableConfigurationProperties
 @SpringBootApplication(exclude = SocialWebAutoConfiguration.class)
 public class Application
