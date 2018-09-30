@@ -2,7 +2,7 @@ spring:
   application:
     name: umspreadsheet
   datasource:
-    url: jdbc:mysql://localhost/umspreadsheet_dev?autoReconnect=true&useSSL=false
+    url: jdbc:mysql://localhost/umspreadsheet?autoReconnect=true&useSSL=false
     username: root
     password: Osbo_789
   jpa:
