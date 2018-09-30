@@ -76,28 +76,28 @@ public class InitialDataLoader implements ApplicationListener<ContextRefreshedEv
         userService.save(user);
 
         // Find Role in database and assign it to user "andrew"
-        Role modRole = roleService.findByName("ROLE_MOD");
-        user = new User();
-        user.setEmail("mod@umspreadsheet.com");
-        user.setPassword("password");
-        user.setUsername("mod");
-        user.setIsNotBanned(true);
-        user.setIsNotSuspended(true);
-        user.setIsEnabled(true);
-        user.setRoles(new ArrayList<>(Arrays.asList(modRole)));
-        userService.save(user);
+//        Role modRole = roleService.findByName("ROLE_MOD");
+//        user = new User();
+//        user.setEmail("mod@umspreadsheet.com");
+//        user.setPassword("password");
+//        user.setUsername("mod");
+//        user.setIsNotBanned(true);
+//        user.setIsNotSuspended(true);
+//        user.setIsEnabled(true);
+//        user.setRoles(new ArrayList<>(Arrays.asList(modRole)));
+//        userService.save(user);
 
         // Find Role in database and assign it to user "andrew"
-        Role userRole = roleService.findByName("ROLE_USER");
-        user = new User();
-        user.setEmail("user@umspreadsheet.com");
-        user.setPassword("password");
-        user.setUsername("user");
-        user.setIsNotBanned(true);
-        user.setIsNotSuspended(true);
-        user.setIsEnabled(true);
-        user.setRoles(new ArrayList<>(Arrays.asList(userRole)));
-        userService.save(user);
+//        Role userRole = roleService.findByName("ROLE_USER");
+//        user = new User();
+//        user.setEmail("user@umspreadsheet.com");
+//        user.setPassword("password");
+//        user.setUsername("user");
+//        user.setIsNotBanned(true);
+//        user.setIsNotSuspended(true);
+//        user.setIsEnabled(true);
+//        user.setRoles(new ArrayList<>(Arrays.asList(userRole)));
+//        userService.save(user);
 
         alreadySetup = true;
     }
