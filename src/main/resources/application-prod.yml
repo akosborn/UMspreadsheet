@@ -2,9 +2,9 @@ spring:
   application:
     name: umspreadsheet
   datasource:
-    url: jdbc:mysql://umspreadsheet-dev.cigisldrqwld.us-east-1.rds.amazonaws.com:3306/umspreadsheet_dev
-    username: umspreadsheet
-    password: smellthemitten1348
+    url: jdbc:mysql://localhost:3306/umspreadsheet?autoReconnect=true&useSSL=false
+    username: umspreadsheet_app
+    password: allin1348time
   jpa:
     hibernate:
       ddl-auto: none
@@ -38,12 +38,12 @@ debug: false
 
 CLOUDINARY_URL: cloudinary://619785555338512:1RQzh1bhPGp0r_1kLZvnHZ8LBYg@umspreadsheet
 
-server:
-  port: 8443
-  ssl:
-    key-store: /etc/letsencrypt/live/umspreadsheet.com/keystore.p12
-    key-store-password: smellthemitten1348
-    key-store-type: PKCS12
-    key-alias: tomcat
-security:
-  require-ssl: true
+#server:
+#  port: 8443
+#  ssl:
+#    key-store: /etc/letsencrypt/live/umspreadsheet.com/keystore.p12
+#    key-store-password: smellthemitten1348
+#    key-store-type: PKCS12
+#    key-alias: tomcat
+#security:
+#  require-ssl: true
