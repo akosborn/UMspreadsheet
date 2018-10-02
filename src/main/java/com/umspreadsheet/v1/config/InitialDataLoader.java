@@ -1,0 +1,130 @@
+package com.umspreadsheet.v1.config;
+
+import com.umspreadsheet.v1.privilege.Privilege;
+import com.umspreadsheet.v1.privilege.PrivilegeService;
+import com.umspreadsheet.v1.role.Role;
+import com.umspreadsheet.v1.role.RoleService;
+import com.umspreadsheet.v1.user.User;
+import com.umspreadsheet.v1.user.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.*;
+
+// http://www.baeldung.com/role-and-privilege-for-spring-security-registration
+//@Component
+public class InitialDataLoader implements ApplicationListener<ContextRefreshedEvent>
+{
+    private boolean alreadySetup = false;
+    private UserService userService;
+    private RoleService roleService;
+    private PrivilegeService privilegeService;
+
+    @Autowired
+    public InitialDataLoader(UserService userService, RoleService roleService,
+                             PrivilegeService privilegeService)
+    {
+        this.userService = userService;
+        this.roleService = roleService;
+        this.privilegeService = privilegeService;
+    }
+
+    @Override
+    @Transactional
+    public void onApplicationEvent(ContextRefreshedEvent event)
+    {
+        if (alreadySetup)
+            return;
+
+        // Create admin privileges. "ROLE" prefix is required by Spring unless changed
+        Privilege adminPrivilege = createPrivilegeIfNotFound("ROLE_ADMIN_PRIVILEGE");
+        Privilege manageShowsPrivilege = createPrivilegeIfNotFound("ROLE_MANAGE_SHOWS_PRIVILEGE");
+        Privilege manageUsersPrivilege = createPrivilegeIfNotFound("ROLE_MANAGE_USERS_PRIVILEGE");
+        Privilege sendEmailPrivilege = createPrivilegeIfNotFound("ROLE_SEND_EMAIL_PRIVILEGE");
+        Privilege postToWormBlogPrivilege = createPrivilegeIfNotFound("ROLE_POST_TO_WORMBLOG_PRIVILEGE");
+
+        // Create mod privileges
+        Privilege modPrivilege = createPrivilegeIfNotFound("ROLE_MOD_PRIVILEGE");
+
+        // Create user privilege
+        Privilege userPrivilege = createPrivilegeIfNotFound("ROLE_USER_PRIVILEGE");
+
+        // Add appropriate privileges to lists
+        List<Privilege> adminPrivileges = Arrays.asList(adminPrivilege, modPrivilege, manageShowsPrivilege,
+                manageUsersPrivilege, sendEmailPrivilege, postToWormBlogPrivilege);
+        List<Privilege> modPrivileges = Arrays.asList(modPrivilege, manageShowsPrivilege, postToWormBlogPrivilege);
+        List<Privilege> userPrivileges = Arrays.asList(userPrivilege);
+
+        // If roles don't exist, create them
+        createRoleIfNotFound("ROLE_ADMIN", adminPrivileges);
+        createRoleIfNotFound("ROLE_MOD", modPrivileges);
+        createRoleIfNotFound("ROLE_USER", userPrivileges);
+
+        User user;
+        // Find adminRole in database and assign it to user "andrew"
+        Role adminRole = roleService.findByName("ROLE_ADMIN");
+        user = new User();
+        user.setEmail("andrewosborn93@gmail.com");
+        user.setUsername("andrew4bama");
+        user.setPassword("password");
+        user.setIsNotBanned(true);
+        user.setIsEnabled(true);
+        user.setRoles(new ArrayList<>(Arrays.asList(adminRole)));
+        userService.save(user);
+
+        // Find Role in database and assign it to user "andrew"
+//        Role modRole = roleService.findByName("ROLE_MOD");
+//        user = new User();
+//        user.setEmail("mod@umspreadsheet.com");
+//        user.setPassword("password");
+//        user.setUsername("mod");
+//        user.setIsNotBanned(true);
+//        user.setIsNotSuspended(true);
+//        user.setIsEnabled(true);
+//        user.setRoles(new ArrayList<>(Arrays.asList(modRole)));
+//        userService.save(user);
+
+        // Find Role in database and assign it to user "andrew"
+//        Role userRole = roleService.findByName("ROLE_USER");
+//        user = new User();
+//        user.setEmail("user@umspreadsheet.com");
+//        user.setPassword("password");
+//        user.setUsername("user");
+//        user.setIsNotBanned(true);
+//        user.setIsNotSuspended(true);
+//        user.setIsEnabled(true);
+//        user.setRoles(new ArrayList<>(Arrays.asList(userRole)));
+//        userService.save(user);
+
+        alreadySetup = true;
+    }
+
+    @Transactional
+    private Privilege createPrivilegeIfNotFound(String name)
+    {
+        Privilege privilege = privilegeService.findByName(name);
+        if (privilege == null)
+        {
+            privilege = new Privilege(name);
+            privilegeService.save(privilege);
+        }
+
+        return privilege;
+    }
+
+    @Transactional
+    private Role createRoleIfNotFound(String name, Collection<Privilege> privileges)
+    {
+        Role role = roleService.findByName(name);
+        if (role == null)
+        {
+            role = new Role(name);
+            role.setPrivileges(privileges);
+            roleService.save(role);
+        }
+
+        return role;
+    }
+}
