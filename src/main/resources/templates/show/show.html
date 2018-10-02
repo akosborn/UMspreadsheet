@@ -27,6 +27,7 @@
             <div class="col-sm-8 title-header-div">
                 <h1 id="header-title">{{ (show.date | date:'yyyy/MM/dd') + ' ' + show.city + ', ' + show.state }}</h1>
                 <h1 id="sub-header-title" style="margin-top: 1px;">{{ show.venue }}</h1>
+                <p><a th:href="@{'https://play.nugs.net/#/catalog/recording/' + ${show.nugsId}}">Nugs.net</a></p>
             </div>
 
             <div class="col-sm-4 trophy-header-div">

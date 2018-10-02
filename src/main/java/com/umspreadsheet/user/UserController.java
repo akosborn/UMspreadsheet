@@ -50,7 +50,7 @@ public class UserController
             model.addAttribute("formErrors", true);
         }
 
-        return "user/profile";
+        return "/user/profile";
     }
 
     @RequestMapping(value = "/user/{username}", method = RequestMethod.POST)
