@@ -39,6 +39,7 @@ public class Show
     private List<ShowReview> showReviews;
 
     @OneToMany(mappedBy = "show")
+    @JsonIgnoreProperties({"show"})
     @Cascade(value = { CascadeType.DELETE })
     private List<Set> sets;
     private Double averageRating;

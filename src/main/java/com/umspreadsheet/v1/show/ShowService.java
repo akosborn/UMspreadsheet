@@ -82,6 +82,6 @@ public class ShowService
     }
 
     public Page<Show> loadByDate(PageRequest pageRequest) {
-        return showRepository.findAllByOrderByDateDesc(pageRequest);
+        return showRepository.findAll(pageRequest);
     }
 }
