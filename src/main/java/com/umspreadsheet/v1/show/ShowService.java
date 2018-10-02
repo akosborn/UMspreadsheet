@@ -80,4 +80,8 @@ public class ShowService
     {
         return showRepository.findTop1ByDateAfterOrderByDateAsc(date);
     }
+
+    public Page<Show> loadByDate(PageRequest pageRequest) {
+        return showRepository.findAllByOrderByDateDesc(pageRequest);
+    }
 }

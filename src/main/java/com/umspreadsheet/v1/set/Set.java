@@ -26,7 +26,7 @@ public class Set
     //@JsonIgnoreProperties("set")
     @OneToMany(mappedBy = "set")
     @Cascade({CascadeType.DELETE})
-    @JsonIgnoreProperties(value = {"set"}, allowSetters = true)
+    @JsonIgnoreProperties(value = {"set", "show"}, allowSetters = true)
     private List<Track> tracks;
 
     private Double averageRating;
