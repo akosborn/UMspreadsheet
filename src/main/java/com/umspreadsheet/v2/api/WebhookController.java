@@ -24,7 +24,7 @@ public class WebhookController {
 
             String hash = Base64.encodeBase64String(sha256HMAC.doFinal(crcToken.getBytes("UTF-8")));
             Map<String, String> response = new HashMap<>();
-            response.put("response_token", "sha256" + hash);
+            response.put("response_token", "sha256=" + hash);
             return response;
         } catch (Exception e) {
             e.printStackTrace();
