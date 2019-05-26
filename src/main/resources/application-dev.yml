@@ -32,7 +32,7 @@ spring:
             smtp:
                 starttls:
                     enable: true
-    test-connection: true
+    test-connection: false
 
 debug: false
 
