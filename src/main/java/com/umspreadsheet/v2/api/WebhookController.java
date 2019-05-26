@@ -16,8 +16,8 @@ public class WebhookController {
     @GetMapping("/twitter")
     public Map<String, String> twitterCrc(@RequestParam("crc_token") String crcToken) {
         final String consumerSecret = "171sGMoHkEoWC0dPXNWRuQ5nimFZNzru4KSq5y5TBDN7rZAiaa";
-        SecretKeySpec secretKey = new SecretKeySpec(consumerSecret.getBytes("UTF-8"), "HmacSHA256");
         try {
+            SecretKeySpec secretKey = new SecretKeySpec(consumerSecret.getBytes("UTF-8"), "HmacSHA256");
             Mac sha256HMAC = null;
             sha256HMAC = Mac.getInstance("HmacSHA256");
             sha256HMAC.init(secretKey);
