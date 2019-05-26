@@ -2,11 +2,16 @@ package com.umspreadsheet.v2.api;
 
 import com.umspreadsheet.v1.show.Show;
 import com.umspreadsheet.v1.show.ShowService;
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
 
 @RestController
 @RequestMapping("/api/shows")
@@ -40,15 +45,5 @@ public class ShowController {
                         )
                 )
         );
-    }
-
-    @PostMapping("/webhook")
-    public void twitterWebhook() {
-        System.out.println("Test");
-    }
-
-    @GetMapping("/webhook")
-    public String twitter() {
-        return "You did it.";
     }
 }
