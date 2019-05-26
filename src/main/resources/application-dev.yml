@@ -3,8 +3,8 @@ spring:
     name: umspreadsheet
   datasource:
     url: jdbc:mysql://97.85.55.224:3306/umspreadsheet?autoReconnect=true&useSSL=false
-    username: root
-    password: Osbo_789
+    username: test
+    password: password
   jpa:
     hibernate:
       ddl-auto: update
