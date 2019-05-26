@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/shows")
@@ -42,5 +40,15 @@ public class ShowController {
                         )
                 )
         );
+    }
+
+    @PostMapping("/webhook")
+    public void twitterWebhook() {
+        System.out.println("Test");
+    }
+
+    @GetMapping("/webhook")
+    public String twitter() {
+        return "You did it.";
     }
 }

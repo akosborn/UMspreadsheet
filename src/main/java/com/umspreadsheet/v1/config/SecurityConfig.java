@@ -59,6 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
     @Override
     protected void configure(HttpSecurity http) throws Exception
     {
+        http.csrf().disable(); // TODO: 8/19/2018 Remove before deploying
         http
                 .formLogin()
                     .loginPage("/signin")
@@ -87,8 +88,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                 .and()
                     .rememberMe()
                 .and()
-                    .csrf()
-                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
+                    .cors();
 
 
                 http.sessionManagement()
