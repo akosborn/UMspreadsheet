@@ -39,8 +39,9 @@ public class WebhookController {
     @PostMapping("/twitter")
     public void twitter(@RequestBody Map<String, Object> body) {
         if (body.get("tweet_create_events") != null) {
-            logger.info(body.toString());
-            logger.info(body.get("entities").toString());
+            if (((Map) body.get("tweet_create_events")).get("tweet_create_events") != null) {
+                logger.info(((Map) body.get("tweet_create_events")).get("tweet_create_events").toString());
+            }
         }
     }
 }
