@@ -77,7 +77,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                                 "/user/*", "/reset-password", "/change-password", "/playlists").permitAll()
                     .antMatchers(HttpMethod.POST, "/api/track-reviews").hasAnyRole("USER_PRIVILEGE", "MOD_PRIVILEGE")
                     .antMatchers(HttpMethod.PUT, "/api/track-reviews/**").hasAnyRole("USER_PRIVILEGE", "MOD_PRIVILEGE")
-                    .antMatchers(HttpMethod.POST, "/api/webhooks/twitter").permitAll()
+                    .antMatchers(HttpMethod.POST, "/api/webhooks/twitter").access("hasIpAddress('199.59.148.0/22') or hasIpAddress('199.16.156.0/22')")
                     .antMatchers(HttpMethod.GET,"/api/**").permitAll()
                     .antMatchers(HttpMethod.DELETE, "/api/**").hasRole("MOD_PRIVILEGE")
                     .antMatchers(HttpMethod.POST, "/api/**").hasRole("MOD_PRIVILEGE")
