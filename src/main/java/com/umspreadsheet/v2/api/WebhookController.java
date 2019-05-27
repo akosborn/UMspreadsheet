@@ -1,5 +1,6 @@
 package com.umspreadsheet.v2.api;
 
+import com.google.gson.Gson;
 import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -7,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,6 +39,6 @@ public class WebhookController {
 
     @PostMapping("/twitter")
     public void twitter(@RequestBody Map<String, Object> body) {
-        logger.info(body.toString());
+        logger.info(new Gson().toJson(body));
     }
 }
