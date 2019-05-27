@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,8 +40,8 @@ public class WebhookController {
     @PostMapping("/twitter")
     public void twitter(@RequestBody Map<String, Object> body) {
         if (body.get("tweet_create_events") != null) {
-            if (((Map) body.get("tweet_create_events")).get("tweet_create_events") != null) {
-                logger.info(((Map) body.get("tweet_create_events")).get("tweet_create_events").toString());
+            if (body.get("tweet_create_events") != null) {
+                logger.info(((ArrayList) body.get("tweet_create_events")).get(0).toString());
             }
         }
     }
