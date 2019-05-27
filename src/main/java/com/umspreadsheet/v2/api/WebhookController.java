@@ -37,8 +37,10 @@ public class WebhookController {
     }
 
     @PostMapping("/twitter")
-    public void twitter(@RequestBody Object body) {
-        logger.info("Test from /api/webhooks/twitter");
-        logger.info(body.toString());
+    public void twitter(@RequestBody Map<String, Object> body) {
+        if (body.get("tweet_create_events") != null) {
+            logger.info(body.toString());
+            logger.info(body.get("entities").toString());
+        }
     }
 }
