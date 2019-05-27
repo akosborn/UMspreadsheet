@@ -105,7 +105,7 @@ public class TweetCreateEvent {
      * 
      */
     @JsonProperty("in_reply_to_user_id")
-    public Integer inReplyToUserId = 0;
+    public Long inReplyToUserId;
     /**
      * The In_reply_to_user_id_str Schema
      * <p>
