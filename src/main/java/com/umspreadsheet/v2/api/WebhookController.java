@@ -1,6 +1,8 @@
 package com.umspreadsheet.v2.api;
 
 import org.apache.commons.codec.binary.Base64;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import javax.crypto.Mac;
@@ -11,6 +13,8 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/webhooks/")
 public class WebhookController {
+
+    Logger logger = LoggerFactory.getLogger(WebhookController.class);
 
     // https://developer.twitter.com/en/docs/accounts-and-users/subscribe-account-activity/guides/securing-webhooks.html
     @GetMapping("/twitter")
@@ -35,5 +39,6 @@ public class WebhookController {
     @PostMapping("/twitter")
     public void twitter(@RequestBody Map<String, Object> body) {
         System.out.println(body);
+        logger.info(body.toString());
     }
 }
