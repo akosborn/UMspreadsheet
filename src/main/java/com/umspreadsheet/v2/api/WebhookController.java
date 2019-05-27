@@ -38,7 +38,7 @@ public class WebhookController {
     }
 
     @PostMapping("/twitter")
-    public void twitter(@RequestBody Map<String, Object> body) {
-        logger.info(new Gson().toJson(body));
+    public void twitter(@RequestBody Twitter body) {
+        logger.info(body.tweetCreateEvents.get(0).text);
     }
 }
