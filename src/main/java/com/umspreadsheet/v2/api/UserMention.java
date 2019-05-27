@@ -54,7 +54,7 @@ public class UserMention {
      * 
      */
     @JsonProperty("id")
-    public Integer id = 0;
+    public Long id;
     /**
      * The Id_str Schema
      * <p>
