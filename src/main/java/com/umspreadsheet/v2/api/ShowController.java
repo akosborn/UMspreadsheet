@@ -3,6 +3,8 @@ package com.umspreadsheet.v2.api;
 import com.umspreadsheet.v1.show.Show;
 import com.umspreadsheet.v1.show.ShowService;
 import org.apache.commons.codec.binary.Base64;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,6 +20,9 @@ import javax.crypto.spec.SecretKeySpec;
 public class ShowController {
 
     private ShowService showService;
+
+    Logger logger = LoggerFactory.getLogger(WebhookController.class);
+
 
     @Autowired
     public ShowController(ShowService showService) {
@@ -37,6 +42,7 @@ public class ShowController {
                                 @RequestParam(value = "size", defaultValue = "5") int size,
                                 @RequestParam(value = "sort-by", defaultValue = "date") String sortBy,
                                 @RequestParam(value = "sort-dir", defaultValue = "desc") String sortDir) {
+        logger.info("Test from /api/shows");
         return showService.loadByDate(
                 new PageRequest(page, size,
                         new Sort(
