@@ -21,9 +21,6 @@ public class ShowController {
 
     private ShowService showService;
 
-    Logger logger = LoggerFactory.getLogger(WebhookController.class);
-
-
     @Autowired
     public ShowController(ShowService showService) {
         this.showService = showService;
@@ -42,7 +39,6 @@ public class ShowController {
                                 @RequestParam(value = "size", defaultValue = "5") int size,
                                 @RequestParam(value = "sort-by", defaultValue = "date") String sortBy,
                                 @RequestParam(value = "sort-dir", defaultValue = "desc") String sortDir) {
-        logger.info("Test from /api/shows");
         return showService.loadByDate(
                 new PageRequest(page, size,
                         new Sort(
