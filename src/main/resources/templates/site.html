@@ -3,7 +3,8 @@
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
-      xmlns:layout="http://www.w3.org/1999/xhtml">
+      xmlns:layout="http://www.w3.org/1999/xhtml"
+      th:fragment="layout (head,content)">
 <head>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-114743221-1"></script>
@@ -101,7 +102,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a th:href="@{'/user/' + ${#authentication.getName()}}">
+                                    <a th:href="@{'/user/' + ${#authentication.getPrincipal().getName()}}">
                                         <span class="glyphicon glyphicon-user">&nbsp;</span>Profile
                                     </a>
                                 </li>
@@ -130,12 +131,12 @@
         </nav>
 
         <!-- all content in implementing pages goes here -->
-        <div layout:fragment="content"></div>
+        <div th:replace="${content}"></div>
     </div>
 
         <footer class="site-footer">
             <div class="container" style="text-align: center;">
-                &copy; 2017 UMspreadsheet
+                &copy; 2019 UMspreadsheet
                 <span layout:fragment="footer">
 
                 </span>

@@ -26,7 +26,7 @@ public class TrackReviewService
 
     public void delete(Long id)
     {
-        trackReviewRepository.delete(id);
+        trackReviewRepository.deleteById(id);
     }
 
     public List<TrackReview> findByUserAndShow(Show show, User user)
@@ -36,7 +36,7 @@ public class TrackReviewService
 
     public TrackReview findById(Long id)
     {
-        return trackReviewRepository.findOne(id);
+        return trackReviewRepository.findById(id).get();
     }
 
     public List<TrackReview> getTenMostRecentReviews()
