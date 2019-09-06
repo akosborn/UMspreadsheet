@@ -4,13 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class WormBlogService
-{
+public class WormBlogService {
+
     private WormBlogRepository wormBlogRepository;
 
     @Autowired
-    public WormBlogService(WormBlogRepository wormBlogRepository)
-    {
+    public WormBlogService(WormBlogRepository wormBlogRepository) {
         this.wormBlogRepository = wormBlogRepository;
     }
 
@@ -26,6 +25,6 @@ public class WormBlogService
 
     public void delete(Long id)
     {
-        wormBlogRepository.delete(id);
+        wormBlogRepository.deleteById(id);
     }
 }

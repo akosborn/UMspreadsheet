@@ -53,7 +53,7 @@ public class ShowService
 
     public Show findById(Long id)
     {
-        return showRepository.findById(id);
+        return showRepository.findById(id).get();
     }
 
     public List<BigInteger> findAllShowIds()

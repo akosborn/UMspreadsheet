@@ -33,7 +33,7 @@ public class TrackService
 
     public Track findById(Long id)
     {
-        return trackRepository.findOne(id);
+        return trackRepository.findById(id).get();
     }
 
     public Page<Track> getByAverageRating(PageRequest pageRequest)
@@ -68,6 +68,6 @@ public class TrackService
 
     public void delete(Long id)
     {
-        trackRepository.delete(id);
+        trackRepository.deleteById(id);
     }
 }

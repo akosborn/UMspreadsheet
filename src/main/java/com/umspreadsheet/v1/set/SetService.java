@@ -21,11 +21,11 @@ public class SetService
 
     public Set findById(Long id)
     {
-        return setRepository.findOne(id);
+        return setRepository.findById(id).get();
     }
 
     public void delete(Long id)
     {
-        setRepository.delete(id);
+        setRepository.deleteById(id);
     }
 }
