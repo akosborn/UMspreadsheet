@@ -1,10 +1,12 @@
 package com.umspreadsheet.v1.track;
 
 import com.umspreadsheet.v1.show.Show;
+import com.umspreadsheet.v2.api.TrackSpecifications;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
@@ -69,5 +71,11 @@ public class TrackService
     public void delete(Long id)
     {
         trackRepository.delete(id);
+    }
+
+    public Page<Track> loadAll(String song, PageRequest pageRequest) {
+        // Add specifications via AND keyword
+        Specification<Track> spec = Specifications.where(TrackSpecifications.hasName(song));
+        return trackRepository.findAll(spec, pageRequest);
     }
 }
