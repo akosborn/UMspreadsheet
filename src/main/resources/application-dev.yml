@@ -4,7 +4,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost/umspreadsheet?autoReconnect=true&useSSL=false
     username: root
-    password: Osbo_789
+    password: password
   jpa:
     hibernate:
       ddl-auto: update
@@ -14,17 +14,17 @@ spring:
   social:
       facebook:
         app-id: 1121868971273792
-        app-secret: 401ec59dd72250d20f1035df912af9a6
+        app-secret: secret
       twitter:
         app-id: Vjz71FPnLEJMwpjAIfvpf1dAl
-        app-secret: AqG4qwAxWEV9O0OYce8IDtDk2Xe8CwdYchYONj2TtKwWpAGOmY
+        app-secret: secret
       google:
         app-id: 964513099769-moqm18t6ftg0rhflraouctiunitv6sjv.apps.googleusercontent.com
-        app-secret: AfBOG29GRoCyWTUpe8v3mgA3
+        app-secret: secret
   mail:
     host: smtp.gmail.com
     username: andrewosborn93@gmail.com
-    password: Osbo_7891011
+    password: password
     port: 587
     properties:
         mail:
