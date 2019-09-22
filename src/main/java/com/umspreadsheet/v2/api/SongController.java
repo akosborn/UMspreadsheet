@@ -1,7 +1,6 @@
 package com.umspreadsheet.v2.api;
 
-import com.umspreadsheet.v1.track.Track;
-import com.umspreadsheet.v1.track.TrackService;
+import com.umspreadsheet.v1.track.Song;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,14 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(value = "http://localhost:4200")
 @RestController
-@RequestMapping("/api/tracks")
-public class TrackController {
+@RequestMapping("/api/songs")
+public class SongController {
 
-    private TrackService trackService;
+    private SongService songService;
 
     @Autowired
-    public TrackController(TrackService trackService, SongService songService) {
-        this.trackService = trackService;
+    public SongController(SongService songService) {
+        this.songService = songService;
     }
 
     /**
@@ -32,14 +31,12 @@ public class TrackController {
      * @return Tracks sorted by default values or request params
      */
     @RequestMapping("")
-    public Page<Track> getAll(@RequestParam(value = "song", required = false) String song,
-                              @RequestParam(value = "page", defaultValue = "0") int page,
-                              @RequestParam(value = "size", defaultValue = "5") int size,
-                              @RequestParam(value = "sort-by", defaultValue = "show.date") String sortBy,
-                              @RequestParam(value = "sort-dir", defaultValue = "desc") String sortDir) {
-        return trackService.loadAll(
-                song,
-                new PageRequest(page, size,
+    public Page<Song> getAll(@RequestParam(value = "page", defaultValue = "0") int page,
+                             @RequestParam(value = "size", required = false) Integer size,
+                             @RequestParam(value = "sort-by", defaultValue = "name") String sortBy,
+                             @RequestParam(value = "sort-dir", defaultValue = "asc") String sortDir) {
+        return songService.loadAll(
+                new PageRequest(page, size == null ? Integer.MAX_VALUE : size,
                         new Sort(
                                 sortDir.equals("asc") ? Sort.Direction.ASC : Sort.Direction.DESC,
                                 sortBy

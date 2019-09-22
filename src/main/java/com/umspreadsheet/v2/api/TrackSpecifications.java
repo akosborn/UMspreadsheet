@@ -10,7 +10,7 @@ public class TrackSpecifications {
             if (name == null) {
                 return criteriaBuilder.isTrue(criteriaBuilder.literal(true)); // No filtering
             }
-            return criteriaBuilder.equal(root.get("song"), name);
+            return criteriaBuilder.equal(root.get("song").get("name"), name);
         };
     }
 }
