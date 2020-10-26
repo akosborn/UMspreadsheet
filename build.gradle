@@ -1,0 +1,50 @@
+plugins {
+	id 'org.springframework.boot' version '2.3.4.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+	id 'groovy'
+}
+
+group = 'com.akosborn'
+version = '2.0.0'
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	implementation 'org.springframework.social:spring-social-security:1.1.6.RELEASE'
+	implementation 'com.cloudinary:cloudinary:1.0.14'
+	implementation 'org.jsoup:jsoup:1.13.1'
+	implementation 'com.google.code.gson:gson:2.8.6'
+
+	implementation 'org.springframework.social:spring-social-core:1.1.6.RELEASE'
+	implementation 'org.codehaus.groovy:groovy'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+	implementation('org.springframework.boot:spring-boot-starter-validation')
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly 'com.h2database:h2'
+	runtimeOnly 'mysql:mysql-connector-java'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+	testImplementation 'org.springframework.security:spring-security-test'
+}
+
+test {
+	useJUnitPlatform()
+}

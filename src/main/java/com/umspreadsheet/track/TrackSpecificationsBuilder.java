@@ -3,7 +3,6 @@ package com.umspreadsheet.track;
 import com.umspreadsheet.criteria.SearchCriteria;
 import com.umspreadsheet.criteria.SpecificationsBuilder;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.jpa.domain.Specifications;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +46,7 @@ public class TrackSpecificationsBuilder implements SpecificationsBuilder
         Specification<Track> result = specifications.get(0);
         for (int i = 1; i < specifications.size(); i++)
         {
-            result = Specifications.where(result).and(specifications.get(i));
+            result = Specification.where(result).and(specifications.get(i));
         }
 
         return result;

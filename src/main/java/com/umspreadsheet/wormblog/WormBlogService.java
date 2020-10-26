@@ -26,6 +26,6 @@ public class WormBlogService
 
     public void delete(Long id)
     {
-        wormBlogRepository.delete(id);
+        wormBlogRepository.deleteById(id);
     }
 }

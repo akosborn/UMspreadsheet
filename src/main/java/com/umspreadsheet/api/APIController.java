@@ -10,7 +10,6 @@ import com.umspreadsheet.track.Track;
 import com.umspreadsheet.track.TrackService;
 import com.umspreadsheet.user.SimpleUserService;
 import com.umspreadsheet.user.User;
-import com.umspreadsheet.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,10 +17,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/api")
@@ -54,9 +55,10 @@ public class APIController
     }
 
     @RequestMapping(value = "/tracks/{id}")
-    public @ResponseBody Track findATrack(@PathVariable Long id)
+    public @ResponseBody
+    Optional<Track> findATrack(@PathVariable Long id)
     {
-        Track track = trackService.findById(id);
+        Optional<Track> track = trackService.findById(id);
 
         return track;
     }
@@ -67,7 +69,7 @@ public class APIController
     {
         String referer = request.getHeader("referer");
 
-        Show show = showService.findById(id);
+        Show show = showService.findById(id).orElseThrow(() -> new EntityNotFoundException());
         String username = getCurrentUsername();
         List<TrackReview> trackReviews = trackReviewService.findByUsernameAndShow(username, show.getId());
 
@@ -110,8 +112,10 @@ public class APIController
     public @ResponseBody List findShow()
     {
         List<Show> shows = new ArrayList<>();
-        shows.add(showService.findById((long) 400));
-        shows.add(showService.findById((long) 401));
+        showService.findById((long) 400)
+                .ifPresent(shows::add);
+        showService.findById((long) 401)
+                .ifPresent(shows::add);
 
         return shows;
     }
@@ -125,8 +129,8 @@ public class APIController
     @RequestMapping(value = "/tracks", method = RequestMethod.POST)
     public @ResponseBody Track addTrack(@RequestBody Track track)
     {
-        Set set = setService.findById(track.getSet().getId());
-        track.setShow(set.getShow());
+        Optional<Set> set = setService.findById(track.getSet().getId());
+        set.ifPresent(set1 -> track.setShow(set1.getShow()));
 
         Track savedTrack = trackService.save(track);
 
@@ -136,8 +140,8 @@ public class APIController
     @RequestMapping(value = "/tracks/{id}", method = RequestMethod.PUT)
     public @ResponseBody Track updateTrack(@RequestBody Track track, @PathVariable Long id)
     {
-        Track retrievedTrack = trackService.findById(track.getId());
-        track.setSet(retrievedTrack.getSet());
+        Optional<Track> retrievedTrack = trackService.findById(track.getId());
+        retrievedTrack.ifPresent(value -> track.setSet(value.getSet()));
 
         return trackService.save(track);
     }
@@ -153,7 +157,7 @@ public class APIController
     public @ResponseBody
     Set findSet(@PathVariable Long id)
     {
-        Set set = setService.findById(id);
+        Set set = setService.findById(id).orElse(null);
 
         return set;
     }
@@ -182,7 +186,7 @@ public class APIController
 
     @RequestMapping(value = "/track-reviews/{id}")
     public @ResponseBody
-    TrackReview findTrackReview(@PathVariable Long id)
+    Optional<TrackReview> findTrackReview(@PathVariable Long id)
     {
         return trackReviewService.findById(id);
     }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ShowRepository extends JpaRepository<Show, Long>, JpaSpecificationExecutor<Show>
@@ -40,7 +41,7 @@ public interface ShowRepository extends JpaRepository<Show, Long>, JpaSpecificat
 
     List<Show> findTop20ByOrderByDateDesc();
 
-    Show findById(Long id);
+    Optional<Show> findById(Long id);
 
     @Query(value = FIND_ALL_IDS, nativeQuery = true)
     List<BigInteger> findAllIds();

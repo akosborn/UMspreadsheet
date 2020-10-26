@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.persistence.EntityNotFoundException;
 import java.math.BigInteger;
 import java.util.*;
 
@@ -57,7 +58,7 @@ public class ShowController
         else
             pageNumber -= 1;
 
-        Page<Show> page = showService.getByAverageRating(new PageRequest(pageNumber, PAGE_SIZE));
+        Page<Show> page = showService.getByAverageRating(PageRequest.of(pageNumber, PAGE_SIZE));
         Integer totalPages = page.getTotalPages();
 
         // If user requests page that doesn't exist, throw DataNotFoundException
@@ -77,7 +78,7 @@ public class ShowController
             DataNotFoundException
     {
         String username = getCurrentUsername();
-        Show show = showService.findById(id);
+        Show show = showService.findById(id).orElse(null);
 
         if (show == null)
             throw new DataNotFoundException("Show with id=" + id + " not found.");
@@ -89,7 +90,8 @@ public class ShowController
         model.addAttribute("set", setDTO);
 
         Track track = new Track();
-        track.setShow(showService.findById(id));
+        showService.findById(id)
+                .ifPresent(track::setShow);
         model.addAttribute("track", track);
 
         List<TrackReview> trackReviews = trackReviewService.findByUserAndShow(show, userService.findByUsername
@@ -135,7 +137,7 @@ public class ShowController
     {
         trackReviewService.delete(reviewId);
 
-        Show show = showService.findById(showId);
+        Show show = showService.findById(showId).orElseThrow(EntityNotFoundException::new);
         String slug = show.getSlug();
 
         redirectAttributes.addFlashAttribute("reviewDeleted", "true");
@@ -147,7 +149,8 @@ public class ShowController
     public String jumpToShowReviews(@RequestParam("showId") Long showId, RedirectAttributes redirectAttributes)
     {
         redirectAttributes.addAttribute("showId", showId);
-        String slug = showService.findById(showId).getSlug();
+        Show show = showService.findById(showId).orElseThrow(EntityNotFoundException::new);
+        String slug = show.getSlug();
 
         return "redirect:/shows/" + showId + "/" + slug + "#user-reviews";
     }
@@ -156,7 +159,7 @@ public class ShowController
     public String randomShow()
     {
         Long randomShowId = getRandomShow();
-        Show randomShow = showService.findById(randomShowId);
+        Show randomShow = showService.findById(randomShowId).orElseThrow(EntityNotFoundException::new);
         String slug = randomShow.getSlug();
 
         return "redirect:/shows/" + randomShowId + "/" + slug;
@@ -172,7 +175,7 @@ public class ShowController
 
         trackReview.setScore(trackReviewForm.getScore());
         trackReview.setUser(userService.findByUsername(trackReviewForm.getUsername()));
-        trackReview.setTrack(trackService.findById(trackReviewForm.getTrackId()));
+        trackReview.setTrack(trackService.findById(trackReviewForm.getTrackId()).orElseThrow(EntityNotFoundException::new));
         trackReview.setComment(trackReviewForm.getComment());
 
         TrackReview savedTrackReview = trackReviewService.save(trackReview);
@@ -189,7 +192,7 @@ public class ShowController
     @RequestMapping(value = "/shows/comment", method = RequestMethod.POST)
     public String saveComment(TrackReviewForm trackReviewForm, RedirectAttributes redirectAttributes)
     {
-        TrackReview retrievedReview = trackReviewService.findById(trackReviewForm.getId());
+        TrackReview retrievedReview = trackReviewService.findById(trackReviewForm.getId()).orElseThrow(EntityNotFoundException::new);
         retrievedReview.setComment(trackReviewForm.getComment());
 
         TrackReview savedReview = trackReviewService.save(retrievedReview);
@@ -233,7 +236,7 @@ public class ShowController
 
         // Sort the shows by date from newest to oldest if the page is visited via nav bar; otherwise, sort by average rating descending
         if (year == null && month == null && day == null && rating == null)
-            page = showService.getShowsByFilter(specification, new PageRequest(pageNumber, PAGE_SIZE, Sort.Direction.DESC, "date"));
+            page = showService.getShowsByFilter(specification, PageRequest.of(pageNumber, PAGE_SIZE, Sort.Direction.DESC, "date"));
         else
         {
             Sort.Order averageRatingOrder = new Sort.Order(Sort.Direction.DESC, "averageRating");
@@ -243,9 +246,9 @@ public class ShowController
             sortOrders.add(averageRatingOrder);
             sortOrders.add(dateOrder);
 
-            Sort sort = new Sort(sortOrders);
+            Sort sort = Sort.by(sortOrders);
 
-            page = showService.getShowsByFilter(specification, new PageRequest(pageNumber, PAGE_SIZE, sort));
+            page = showService.getShowsByFilter(specification, PageRequest.of(pageNumber, PAGE_SIZE, sort));
         }
 
         Integer totalPages = page.getTotalPages();

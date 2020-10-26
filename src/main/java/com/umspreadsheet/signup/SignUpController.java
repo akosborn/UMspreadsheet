@@ -6,11 +6,8 @@ import com.umspreadsheet.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;
-import org.springframework.social.connect.Connection;
-import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -25,37 +22,35 @@ import java.util.*;
 public class SignUpController
 {
     private SimpleUserService simpleUserService;
-    private ProviderSignInUtils providerSignInUtils;
     private ApplicationEventPublisher applicationEventPublisher;
     private MessageSource messageSource;
 
     @Autowired
-    public SignUpController(SimpleUserService simpleUserService, ProviderSignInUtils providerSignInUtils,
+    public SignUpController(SimpleUserService simpleUserService,
                             ApplicationEventPublisher applicationEventPublisher, MessageSource messageSource)
     {
         this.simpleUserService = simpleUserService;
-        this.providerSignInUtils = providerSignInUtils;
         this.applicationEventPublisher = applicationEventPublisher;
         this.messageSource = messageSource;
     }
 
-    @RequestMapping(value = "/signup", method = RequestMethod.GET)
-    public String signUpForm(WebRequest webRequest, Model model)
-    {
-        Connection<?> connection = providerSignInUtils.getConnectionFromSession(webRequest);
-        if (connection != null)
-        {
-            webRequest.setAttribute("message", "Your " + StringUtils.capitalize(connection.getKey().getProviderId()
-            ) + " is not associated with a UMSpreadsheet account. Please, sign up.", WebRequest.SCOPE_REQUEST);
-            model.addAttribute("signUpForm", SignUpForm.fromProviderUser(connection.fetchUserProfile()));
-        }
-        else
-        {
-            model.addAttribute("signUpForm", new SignUpForm());
-        }
-
-        return "/auth/signup";
-    }
+//    @RequestMapping(value = "/signup", method = RequestMethod.GET)
+//    public String signUpForm(WebRequest webRequest, Model model)
+//    {
+//        Connection<?> connection = providerSignInUtils.getConnectionFromSession(webRequest);
+//        if (connection != null)
+//        {
+//            webRequest.setAttribute("message", "Your " + StringUtils.capitalize(connection.getKey().getProviderId()
+//            ) + " is not associated with a UMSpreadsheet account. Please, sign up.", WebRequest.SCOPE_REQUEST);
+//            model.addAttribute("signUpForm", SignUpForm.fromProviderUser(connection.fetchUserProfile()));
+//        }
+//        else
+//        {
+//            model.addAttribute("signUpForm", new SignUpForm());
+//        }
+//
+//        return "/auth/signup";
+//    }
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public String signUp(@Valid SignUpForm signUpForm, BindingResult formBinding,

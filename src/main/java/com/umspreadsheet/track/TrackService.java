@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TrackService
@@ -31,9 +32,9 @@ public class TrackService
         return trackRepository.findTop10ByOrderByAverageRatingDesc();
     }
 
-    public Track findById(Long id)
+    public Optional<Track> findById(Long id)
     {
-        return trackRepository.findOne(id);
+        return trackRepository.findById(id);
     }
 
     public Page<Track> getByAverageRating(PageRequest pageRequest)
@@ -68,6 +69,6 @@ public class TrackService
 
     public void delete(Long id)
     {
-        trackRepository.delete(id);
+        trackRepository.deleteById(id);
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ShowService
@@ -51,7 +52,7 @@ public class ShowService
         return showRepository.findTop3ByOrderByDateDesc();
     }
 
-    public Show findById(Long id)
+    public Optional<Show> findById(Long id)
     {
         return showRepository.findById(id);
     }

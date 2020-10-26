@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TrackReviewService
@@ -26,7 +27,7 @@ public class TrackReviewService
 
     public void delete(Long id)
     {
-        trackReviewRepository.delete(id);
+        trackReviewRepository.deleteById(id);
     }
 
     public List<TrackReview> findByUserAndShow(Show show, User user)
@@ -34,9 +35,9 @@ public class TrackReviewService
         return trackReviewRepository.findAllByUserAndShow(show, user);
     }
 
-    public TrackReview findById(Long id)
+    public Optional<TrackReview> findById(Long id)
     {
-        return trackReviewRepository.findOne(id);
+        return trackReviewRepository.findById(id);
     }
 
     public List<TrackReview> getTenMostRecentReviews()

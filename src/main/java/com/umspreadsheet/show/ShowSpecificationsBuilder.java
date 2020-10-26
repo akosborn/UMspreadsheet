@@ -4,7 +4,6 @@ package com.umspreadsheet.show;
 import com.umspreadsheet.criteria.SpecificationsBuilder;
 import com.umspreadsheet.criteria.SearchCriteria;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.jpa.domain.Specifications;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +47,7 @@ public class ShowSpecificationsBuilder implements SpecificationsBuilder
         Specification<Show> result = specifications.get(0);
         for (int i = 1; i < specifications.size(); i++)
         {
-            result = Specifications.where(result).and(specifications.get(i));
+            result = Specification.where(result).and(specifications.get(i));
         }
 
         return result;

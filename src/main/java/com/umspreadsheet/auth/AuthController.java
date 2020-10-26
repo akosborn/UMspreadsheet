@@ -5,14 +5,11 @@ import com.umspreadsheet.signin.UserSecurityService;
 import com.umspreadsheet.user.PasswordDTO;
 import com.umspreadsheet.user.SimpleUserService;
 import com.umspreadsheet.user.User;
-import com.umspreadsheet.user.UserService;
 import com.umspreadsheet.utils.SessionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
@@ -24,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.Locale;
 import java.util.UUID;
@@ -33,19 +29,17 @@ import java.util.UUID;
 public class AuthController
 {
     private SimpleUserService userService;
-    private MailSender mailSender;
     private MessageSource messageSource;
     private UserSecurityService userSecurityService;
     private PasswordResetTokenService passwordResetTokenService;
     private SessionUtils sessionUtils;
 
     @Autowired
-    public AuthController(SimpleUserService userService, MailSender mailSender, MessageSource messageSource,
+    public AuthController(SimpleUserService userService, MessageSource messageSource,
                           UserSecurityService userSecurityService, PasswordResetTokenService passwordResetTokenService,
                           SessionUtils sessionUtils)
     {
         this.userService = userService;
-        this.mailSender = mailSender;
         this.messageSource = messageSource;
         this.userSecurityService = userSecurityService;
         this.passwordResetTokenService = passwordResetTokenService;
@@ -92,7 +86,6 @@ public class AuthController
 
         String token = UUID.randomUUID().toString();
         userService.createPasswordResetTokenForUser(user, token);
-        mailSender.send(constructResetTokenEmail(getAppUrl(request), request.getLocale(), token, user));
 
         return "redirect:/signin/reset-password";
     }

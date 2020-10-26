@@ -3,6 +3,8 @@ package com.umspreadsheet.set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class SetService
 {
@@ -19,13 +21,13 @@ public class SetService
         return setRepository.save(set);
     }
 
-    public Set findById(Long id)
+    public Optional<Set> findById(Long id)
     {
-        return setRepository.findOne(id);
+        return setRepository.findById(id);
     }
 
     public void delete(Long id)
     {
-        setRepository.delete(id);
+        setRepository.deleteById(id);
     }
 }

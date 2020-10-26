@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.MessageSource;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
@@ -16,14 +15,12 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
 {
     private UserService userService;
     private MessageSource messageSource;
-    private JavaMailSender mailSender;
 
     @Autowired
-    public RegistrationListener(UserService userService, MessageSource messageSource, JavaMailSender mailSender)
+    public RegistrationListener(UserService userService, MessageSource messageSource)
     {
         this.userService = userService;
         this.messageSource = messageSource;
-        this.mailSender = mailSender;
     }
 
     @Override
@@ -49,6 +46,5 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
         email.setSubject(subject);
         email.setText(user.getUsername() + ", \n\n" + message + " " + "http://www.umspreadsheet.com" + confirmationURL +
                         "\n\n" + ignoreEmailMessage);
-        mailSender.send(email);
     }
 }

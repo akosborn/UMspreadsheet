@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.text.ParseException;
 import java.util.*;
@@ -108,7 +109,8 @@ public class AdminController
     {
         Set set = new Set();
         set.setName(setDTO.getName());
-        set.setShow(showService.findById(setDTO.getShowId()));
+        showService.findById(setDTO.getShowId())
+                .ifPresent(set::setShow);
 
         setService.save(set);
 
@@ -120,8 +122,8 @@ public class AdminController
     @RequestMapping(value = "/add-track", method = RequestMethod.POST)
     public String addTrack(Track track, RedirectAttributes redirectAttributes)
     {
-        track.setShow(showService.findById(track.getShow().getId()));
-        //track.setSet(setService.findById(track.getSetId()));
+        showService.findById(track.getShow().getId())
+                .ifPresent(track::setShow);
 
         Track savedTrack = trackService.save(track);
 
@@ -135,7 +137,7 @@ public class AdminController
     public String editTrack(Track track, RedirectAttributes redirectAttributes)
     {
         // Retrieve specified track from database
-        Track oldTrack = trackService.findById(track.getId());
+        Track oldTrack = trackService.findById(track.getId()).orElseThrow(EntityNotFoundException::new);
 
         // Update variables that may have changed
         oldTrack.setSong(track.getSong());
@@ -158,7 +160,7 @@ public class AdminController
     public String editShowPage(@RequestParam(value = "showId") Long showId, Model model) throws
             DataNotFoundException
     {
-        Show show = showService.findById(showId);
+        Show show = showService.findById(showId).orElse(null);
 
         if (show == null)
             throw new DataNotFoundException("Show with id=" + showId + " not found.");

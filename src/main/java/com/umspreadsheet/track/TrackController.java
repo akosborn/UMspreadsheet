@@ -48,7 +48,7 @@ public class TrackController
         else
             pageNumber -= 1;
 
-        Page<Track> page = trackService.getByAverageRating(new PageRequest(pageNumber, 15));
+        Page<Track> page = trackService.getByAverageRating(PageRequest.of(pageNumber, 15));
         Integer totalPages = page.getTotalPages();
 
         // If user requests page that doesn't exist, throw DataNotFoundException
@@ -116,7 +116,7 @@ public class TrackController
 
         // Sort the tracks by date from newest to oldest if the page is visited via nav bar; otherwise, sort by average rating descending
         if (year == null && month == null && day == null && rating == null && jam == null && type == null && song == null)
-            page = trackService.criteriaTest(specification, new PageRequest(pageNumber, 15, Sort.Direction.DESC, "show.date"));
+            page = trackService.criteriaTest(specification, PageRequest.of(pageNumber, 15, Sort.Direction.DESC, "show.date"));
         else
         {
             Sort.Order averageRatingOrder = new Sort.Order(Sort.Direction.DESC, "averageRating");
@@ -126,9 +126,9 @@ public class TrackController
             sortOrders.add(averageRatingOrder);
             sortOrders.add(dateOrder);
 
-            Sort sort = new Sort(sortOrders);
+            Sort sort = Sort.by(sortOrders);
 
-            page = trackService.criteriaTest(specification, new PageRequest(pageNumber, 15, sort));
+            page = trackService.criteriaTest(specification, PageRequest.of(pageNumber, 15, sort));
         }
         Integer totalPages = page.getTotalPages();
 
@@ -142,7 +142,7 @@ public class TrackController
     @RequestMapping(value = "/songs/{id}/{slug}", method = RequestMethod.GET)
     public String songPage(@PathVariable Long id, Model model)
     {
-        Track retrievedTrack = trackService.findById(id);
+        Track retrievedTrack = trackService.findById(id).orElse(null);
         model.addAttribute("track", retrievedTrack);
         model.addAttribute("reviews", trackReviewService.findThirtyByTrack(retrievedTrack));
 
@@ -153,8 +153,11 @@ public class TrackController
     public String randomShow()
     {
         Long randomTrackId = getRandomTrack();
-        Track randomTrack = trackService.findById(randomTrackId);
-        String slug = randomTrack.getSlug();
+        Track randomTrack = trackService.findById(randomTrackId).orElse(null);
+        String slug = "";
+        if (randomTrack != null) {
+            slug = randomTrack.getSlug();
+        }
 
         return "redirect:/songs/" + randomTrackId + "/" + slug;
     }
