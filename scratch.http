@@ -1,0 +1,11 @@
+GET http://localhost:8080/api/deviation
+Accept: application/json
+###
+
+GET https://www.phantasytour.com/api/bands/9/shows
+Accept: application/json
+
+###
+
+GET https://www.phantasytour.com/api/shows/53575/setlist
+Accept: application/json

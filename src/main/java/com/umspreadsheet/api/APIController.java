@@ -13,7 +13,6 @@ import com.umspreadsheet.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Controller
+@RestController
 @RequestMapping("/api")
 public class APIController
 {
@@ -33,16 +32,23 @@ public class APIController
     private SetService setService;
     private TrackReviewService trackReviewService;
     private SimpleUserService userService;
+    private TrackStatsService trackStatsService;
 
     @Autowired
     public APIController(TrackService trackService, ShowService showService, SetService setService,
-                         TrackReviewService trackReviewService, SimpleUserService userService)
+                         TrackReviewService trackReviewService, SimpleUserService userService, TrackStatsService trackStatsService)
     {
         this.trackService = trackService;
         this.showService = showService;
         this.setService = setService;
         this.trackReviewService = trackReviewService;
         this.userService = userService;
+        this.trackStatsService = trackStatsService;
+    }
+
+    @GetMapping("/deviation")
+    public List<StandardDeviationTrack> findTracksByStdDeviation() {
+        return trackStatsService.getTracksByDeviation();
     }
 
     @RequestMapping(value = "/tracks")

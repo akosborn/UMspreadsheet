@@ -77,7 +77,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                         .deleteCookies("JSESSIONID")
                 .and()
                     .authorizeRequests()
-                        .antMatchers("/", "/signin/**", "/signup/**", "/resources/**", "/disconnect/facebook",
+                        .antMatchers("/", "/h2-console", "/signin/**", "/signup/**", "/resources/**", "/disconnect/facebook",
                                 "/shows/**", "/songs/**", "/wormblog/**", "/about/**", "/signup-confirm", "/song/*/*",
                                 "/user/*", "/reset-password", "/change-password", "/playlists").permitAll()
                     .antMatchers(HttpMethod.POST, "/api/track-reviews").hasAnyRole("USER_PRIVILEGE", "MOD_PRIVILEGE")
