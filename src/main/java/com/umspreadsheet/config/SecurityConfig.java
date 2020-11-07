@@ -83,6 +83,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                     .antMatchers(HttpMethod.POST, "/api/track-reviews").hasAnyRole("USER_PRIVILEGE", "MOD_PRIVILEGE")
                     .antMatchers(HttpMethod.PUT, "/api/track-reviews/**").hasAnyRole("USER_PRIVILEGE", "MOD_PRIVILEGE")
                     .antMatchers(HttpMethod.GET,"/api/**").permitAll()
+                    .antMatchers(HttpMethod.POST, "/api/webhooks/twitter").permitAll()
                     .antMatchers(HttpMethod.DELETE, "/api/**").hasRole("MOD_PRIVILEGE")
                     .antMatchers(HttpMethod.POST, "/api/**").hasRole("MOD_PRIVILEGE")
                     .antMatchers(HttpMethod.PUT, "/api/**").hasRole("MOD_PRIVILEGE")
@@ -94,6 +95,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                     .rememberMe()
                 .and()
                     .csrf()
+                        .ignoringAntMatchers("/api/**")
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
 
 

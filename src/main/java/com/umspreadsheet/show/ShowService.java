@@ -81,4 +81,8 @@ public class ShowService
     {
         return showRepository.findTop1ByDateAfterOrderByDateAsc(date);
     }
+
+    public Show findByDate(Date date) {
+        return showRepository.findByDate(date);
+    }
 }

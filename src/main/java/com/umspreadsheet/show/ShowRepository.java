@@ -51,4 +51,6 @@ public interface ShowRepository extends JpaRepository<Show, Long>, JpaSpecificat
     Show findTop1ByDateBeforeOrderByDateDesc(Date date);
 
     Show findTop1ByDateAfterOrderByDateAsc(Date date);
+
+    Show findByDate(Date date);
 }
