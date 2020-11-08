@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigInteger;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -28,4 +29,6 @@ public interface TrackRepository extends JpaRepository<Track, Long>, JpaSpecific
     List<Track> findTop10ByOrderByAverageRatingDesc();
 
     List<Track> findByShow_Id(Long id);
+
+    List<Track> findAllBySongLikeAndShowDate(String song, Date date);
 }

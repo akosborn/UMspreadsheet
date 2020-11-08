@@ -8,6 +8,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.math.BigInteger;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -70,5 +71,9 @@ public class TrackService
     public void delete(Long id)
     {
         trackRepository.deleteById(id);
+    }
+
+    public List<Track> findBySongAndShowDate(String song, Date date) {
+        return trackRepository.findAllBySongLikeAndShowDate(song, date);
     }
 }

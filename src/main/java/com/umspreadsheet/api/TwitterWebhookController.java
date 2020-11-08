@@ -4,6 +4,8 @@ import com.umspreadsheet.review.TrackReview;
 import com.umspreadsheet.review.TrackReviewService;
 import com.umspreadsheet.show.Show;
 import com.umspreadsheet.show.ShowService;
+import com.umspreadsheet.track.Track;
+import com.umspreadsheet.track.TrackService;
 import com.umspreadsheet.user.User;
 import com.umspreadsheet.user.UserService;
 import org.slf4j.Logger;
@@ -27,6 +29,7 @@ public class TwitterWebhookController {
     final private ShowService showService;
     final private TrackReviewService reviewService;
     final private UserService userService;
+    final private TrackService trackService;
 
     @Value("${twitter.consumer.secret}")
     String twitterConsumerSecret;
@@ -34,10 +37,11 @@ public class TwitterWebhookController {
     final private Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    public TwitterWebhookController(ShowService showService, TrackReviewService reviewService, UserService userService) {
+    public TwitterWebhookController(ShowService showService, TrackReviewService reviewService, UserService userService, TrackService trackService) {
         this.showService = showService;
         this.reviewService = reviewService;
         this.userService = userService;
+        this.trackService = trackService;
     }
 
     @PostMapping("/twitter")
@@ -51,19 +55,42 @@ public class TwitterWebhookController {
         String twitterUserId = (String) twitterUser.get("id_str");
 
         User user = userService.findByUserId(twitterUserId);
-        if (user != null) {
-            String tweetText = (String) tweetCreateEvents.get(0).get("text");
-            log.info(tweetText);
+        if (user == null) {
+            log.info("User not found with matching Twitter ID \"${}\". Creating user.", twitterUserId);
+            user = new User();
+            user.setUserId(twitterUserId);
+            user.setUsername(twitterUserId);
+            user.setTwitterHandle((String) twitterUser.get("screen_name"));
+            user.setEmail(twitterUserId + "@umspreadsheet.com");
+            user.setPassword(UUID.randomUUID().toString());
+            user.setIsEnabled(true);
+            user = userService.save(user);
+        }
 
-            String[] stringItems = tweetText.split("\\s+");
-            // "text": "@user Rate 2019-5-1 4"
-            // "text": "@<me> <action> <show date YYYY-M-D> <rating>
+        String tweetText = (String) tweetCreateEvents.get(0).get("text");
+        log.info(tweetText);
 
-            String action = stringItems[1];
-            Date date = new SimpleDateFormat("yyyy-M-d").parse(stringItems[2]);
-            double rating = Double.parseDouble(stringItems[3]);
+        String[] stringItems = tweetText.split("\\s+");
+        // "text": "@user Rate 2019-5-1 Roulette 4"
+        // "text": "@<me> <action> <show date YYYY-M-D> <song name> <rating>
 
-            if (action.equalsIgnoreCase("Rate")) {
+        int songWords = stringItems.length - 4;
+
+        String action = stringItems[1];
+        Date date = new SimpleDateFormat("yyyy-M-d").parse(stringItems[2]);
+
+        StringBuilder songNameBuilder = new StringBuilder(stringItems[3]);
+        for (int i = 4; i < stringItems.length - 1; i++) {
+            songNameBuilder.append(" ");
+            songNameBuilder.append(stringItems[i]);
+        }
+        String songName = songNameBuilder.toString();
+
+        double rating = Double.parseDouble(stringItems[stringItems.length - 1]);
+
+        if (action.equalsIgnoreCase("Rate")) {
+            List<Track> tracks = trackService.findBySongAndShowDate(songName, date);
+            if (tracks.size() > 0) {
                 Show show = this.showService.findByDate(date);
                 if (show != null) {
                     log.info("Found show {}", show.toString());
@@ -74,7 +101,11 @@ public class TwitterWebhookController {
                     review.setScore(rating);
                     this.reviewService.save(review);
                 }
+            } else {
+                log.warn("No tracks found matching date \"${}\" and song name \"${}\"", date, songName);
             }
+        } else {
+            log.warn("Unrecognized action \"${}\"", action);
         }
     }
 
