@@ -29,4 +29,6 @@ application-windows-dev.yaml
 application-dev.yml
 application-prod.yml
 
-.gradle/
+### Gradle ###
+.gradle
+!gradle-wrapper.jar
