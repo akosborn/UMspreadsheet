@@ -28,3 +28,5 @@ application-linux-dev.yaml
 application-windows-dev.yaml
 application-dev.yml
 application-prod.yml
+
+.gradle/

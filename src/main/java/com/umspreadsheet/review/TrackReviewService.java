@@ -69,4 +69,8 @@ public class TrackReviewService
     {
         return trackReviewRepository.findTop20ByTrackShowIdOrderByReviewedOnDesc(id);
     }
+
+    public TrackReview findFirstByUserAndTrack(User user, Track track) {
+        return trackReviewRepository.findFirstByUserAndTrack(user, track);
+    }
 }

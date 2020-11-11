@@ -30,5 +30,6 @@ public interface TrackRepository extends JpaRepository<Track, Long>, JpaSpecific
 
     List<Track> findByShow_Id(Long id);
 
+    @Query(value = "from Track t left join Show s on s = t.show where s.date = :date and upper(t.song) like upper(:song)")
     List<Track> findAllBySongLikeAndShowDate(String song, Date date);
 }

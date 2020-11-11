@@ -26,7 +26,6 @@ import java.util.*;
 @RequestMapping("api/webhooks")
 public class TwitterWebhookController {
 
-    final private ShowService showService;
     final private TrackReviewService reviewService;
     final private UserService userService;
     final private TrackService trackService;
@@ -37,8 +36,7 @@ public class TwitterWebhookController {
     final private Logger log = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    public TwitterWebhookController(ShowService showService, TrackReviewService reviewService, UserService userService, TrackService trackService) {
-        this.showService = showService;
+    public TwitterWebhookController(TrackReviewService reviewService, UserService userService, TrackService trackService) {
         this.reviewService = reviewService;
         this.userService = userService;
         this.trackService = trackService;
@@ -91,15 +89,20 @@ public class TwitterWebhookController {
         if (action.equalsIgnoreCase("Rate")) {
             List<Track> tracks = trackService.findBySongAndShowDate(songName, date);
             if (tracks.size() > 0) {
-                Show show = this.showService.findByDate(date);
-                if (show != null) {
-                    log.info("Found show {}", show.toString());
+                if (tracks.size() == 1) {
+                    Track track = tracks.get(0);
+                    log.info("Found song {}", track.toString());
 
-                    TrackReview review = new TrackReview(show.getSets().get(0).getTracks().get(1));
+                    TrackReview review = reviewService.findFirstByUserAndTrack(user, track);
+                    if (review == null) {
+                        review = new TrackReview(track);
+                    }
                     review.setUser(user);
                     review.setReviewedOn(new Date());
                     review.setScore(rating);
-                    this.reviewService.save(review);
+                    reviewService.save(review);
+                } else {
+                    log.warn("More than one track found matching date \"${}\" and song name \"${}\"", date, songName);
                 }
             } else {
                 log.warn("No tracks found matching date \"${}\" and song name \"${}\"", date, songName);
@@ -111,7 +114,7 @@ public class TwitterWebhookController {
 
     @GetMapping("/twitter")
     public Map<String, String> handleChallenge(@RequestParam("crc_token") String token) throws NoSuchAlgorithmException, InvalidKeyException {
-        byte[] hmacSha256 = null;
+        byte[] hmacSha256;
         Mac mac = Mac.getInstance("HmacSHA256");
         SecretKeySpec secretKeySpec = new SecretKeySpec(this.twitterConsumerSecret.getBytes(), "HmacSHA256");
         mac.init(secretKeySpec);
