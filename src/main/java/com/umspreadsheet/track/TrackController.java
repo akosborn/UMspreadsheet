@@ -6,6 +6,7 @@ import com.umspreadsheet.helper.ControllerHelper;
 import com.umspreadsheet.model.Jam;
 import com.umspreadsheet.model.Type;
 import com.umspreadsheet.review.TrackReviewService;
+import com.umspreadsheet.show.Show;
 import com.umspreadsheet.show.ShowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,15 +27,13 @@ public class TrackController
 {
     private TrackService trackService;
     private TrackReviewService trackReviewService;
-    private ShowService showService;
+
+    private static final int PAGE_SIZE = 50;
 
     @Autowired
-    public TrackController(TrackService trackService,
-                           TrackReviewService trackReviewService, ShowService showService)
-    {
+    public TrackController(TrackService trackService, TrackReviewService trackReviewService) {
         this.trackService = trackService;
         this.trackReviewService = trackReviewService;
-        this.showService = showService;
     }
 
     // Top-rated songs page
