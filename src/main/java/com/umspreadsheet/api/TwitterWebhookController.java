@@ -2,8 +2,6 @@ package com.umspreadsheet.api;
 
 import com.umspreadsheet.review.TrackReview;
 import com.umspreadsheet.review.TrackReviewService;
-import com.umspreadsheet.show.Show;
-import com.umspreadsheet.show.ShowService;
 import com.umspreadsheet.track.Track;
 import com.umspreadsheet.track.TrackService;
 import com.umspreadsheet.user.User;
@@ -30,7 +28,7 @@ public class TwitterWebhookController {
     final private UserService userService;
     final private TrackService trackService;
 
-    @Value("${twitter.consumer.secret}")
+    @Value("${twitter.consumer-secret}")
     String twitterConsumerSecret;
 
     final private Logger log = LoggerFactory.getLogger(this.getClass());

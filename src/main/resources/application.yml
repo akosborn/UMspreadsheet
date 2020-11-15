@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: umspreadsheet
+server:
+  port: 8080
+
+twitter:
+  consumer-secret: ${TWITTER_CONSUMER_SECRET}

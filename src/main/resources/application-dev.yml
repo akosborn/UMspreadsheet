@@ -1,6 +1,4 @@
 spring:
-  application:
-    name: umspreadsheet
   datasource:
     url: jdbc:mysql://localhost:3306/umspreadsheet_dev?autoReconnect=true&useSSL=false&serverTimezone=America/Detroit&allowPublicKeyRetrieval=true
     username: umspreadsheet
