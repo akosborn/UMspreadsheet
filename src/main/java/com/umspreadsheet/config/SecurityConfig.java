@@ -85,7 +85,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                     .antMatchers(HttpMethod.GET,"/api/**").permitAll()
                     .antMatchers(HttpMethod.POST, "/api/webhooks/twitter").permitAll()
                     .antMatchers(HttpMethod.DELETE, "/api/**").hasRole("MOD_PRIVILEGE")
-                    .antMatchers(HttpMethod.POST, "/api/**").hasRole("MOD_PRIVILEGE")
+                    .antMatchers(HttpMethod.POST, "/api/**").permitAll()
                     .antMatchers(HttpMethod.PUT, "/api/**").hasRole("MOD_PRIVILEGE")
                     .antMatchers("/admin", "/admin/edit-show-angular").hasRole("MOD_PRIVILEGE")
                     .antMatchers("/admin/manage-users/**").hasRole("MANAGE_USERS_PRIVILEGE")

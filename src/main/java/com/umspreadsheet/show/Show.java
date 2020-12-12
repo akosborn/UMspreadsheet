@@ -22,7 +22,7 @@ public class Show
     public Show(){}
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Temporal(TemporalType.DATE)
@@ -39,7 +39,7 @@ public class Show
     private List<ShowReview> showReviews;
 
     @OneToMany(mappedBy = "show")
-    @Cascade(value = { CascadeType.DELETE })
+    @Cascade(value = { CascadeType.DELETE, CascadeType.PERSIST })
     private List<Set> sets;
     private Double averageRating;
 
