@@ -2,6 +2,7 @@ package com.umspreadsheet.show;
 
 import com.umspreadsheet.set.Set;
 import com.umspreadsheet.set.SetDTO;
+import com.umspreadsheet.track.Track;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -42,6 +43,13 @@ public class ShowAPIController {
         show.setState(showDTO.getState());
         show.setCity(showDTO.getCity());
         show.setVenue(showDTO.getVenue());
+        for (Set set : showDTO.getSets()) {
+            set.setShow(show);
+            for (Track track : set.getTracks()) {
+                track.setSet(set);
+                track.setShow(show);
+            }
+        }
         show.setSets(showDTO.getSets());
 
         return showService.save(show);

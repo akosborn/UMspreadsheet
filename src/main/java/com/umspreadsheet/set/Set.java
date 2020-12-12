@@ -25,7 +25,7 @@ public class Set
 
     //@JsonIgnoreProperties("set")
     @OneToMany(mappedBy = "set")
-    @Cascade({CascadeType.DELETE})
+    @Cascade({CascadeType.DELETE, CascadeType.PERSIST})
     @JsonIgnoreProperties(value = {"set"}, allowSetters = true)
     private List<Track> tracks;
 
